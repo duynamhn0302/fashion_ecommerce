@@ -460,6 +460,7 @@ ol {
 }
 
 .main-menu .sub-menu {
+	word-wrap: break-word;
 	position: absolute;
 	list-style: none;
 	width: 220px;
@@ -493,6 +494,51 @@ ol {
 	color: #f51167;
 }
 
+
+.sub-menu li:hover .sub-sub-menu {
+	visibility: visible;
+	opacity: 1;
+	margin-top: 0;
+}
+
+.sub-menu li:hover>a {
+	color: #f51167;
+}
+
+.sub-menu .sub-sub-menu {
+	word-wrap: break-word;
+	position: absolute;
+	list-style: none;
+	width: 220px;
+	left: 100%;
+	top: 0;
+	padding: 20px 0;
+	visibility: hidden;
+	opacity: 0;
+	margin-left: 0px;
+	background: #fff;
+	z-index: 99;
+	-webkit-transition: all 0.4s;
+	-o-transition: all 0.4s;
+	transition: all 0.4s;
+	-webkit-box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.05);
+	box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.05);
+}
+
+.sub-menu .sub-sub-menu li {
+	display: block;
+}
+
+.sub-menu .sub-sub-menu li a {
+	display: block;
+	color: #000;
+	margin-right: 0;
+	padding: 8px 20px;
+}
+
+.sub-menu .sub-sub-menu li a:hover {
+	color: #f51167;
+}
 .nav-switch {
 	display: none;
 }

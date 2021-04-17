@@ -5,13 +5,14 @@ CREATE TABLE `TaiKhoan` (
 	`maso` INT NOT NULL AUTO_INCREMENT,
 	`username` varchar(100) NOT NULL,
 	`password` varchar(255) NOT NULL,
-	`hoten` varchar(255) NOT NULL,
-	`ngaysinh` varchar(10) NOT NULL,
-	`sdt` VARCHAR(255) NOT NULL,
+	`hoten` varchar(255) ,
+	`ngaysinh` varchar(10),
+	`sdt` VARCHAR(255) ,
 	`email` varchar(255) NOT NULL,
 	`avatar` varchar(500) NOT NULL,
 	`vaitro` INT NOT NULL,
 	`status` BINARY NOT NULL,
+	`ngaymo` date,
 	PRIMARY KEY (`maso`)
 );
 
@@ -29,6 +30,7 @@ CREATE TABLE `SanPham` (
 	`danhmuccap2` INT NOT NULL,
 	`cuahang` INT NOT NULL,
 	`status` BINARY NOT NULL,
+	`ngaymo` date,
 	PRIMARY KEY (`maso`)
 );
 
@@ -52,6 +54,7 @@ CREATE TABLE `Cuahang` (
 	`email` varchar(50) NOT NULL,
 	`taikhoan` INT NOT NULL,
 	`status` BINARY NOT NULL,
+	`ngaymo` date,
 	PRIMARY KEY (`maso`)
 );
 
@@ -82,7 +85,7 @@ CREATE TABLE `DonHang` (
 CREATE TABLE `ChiTietTinhTrangDon` (
 	`donhang` INT NOT NULL,
 	`tinhtrang` INT NOT NULL,
-	`ngaythang` varchar(10) NOT NULL,
+	`ngaythang` date NOT NULL,
 	PRIMARY KEY (`donhang`,`tinhtrang`)
 );
 
@@ -97,7 +100,7 @@ CREATE TABLE `ChiTietDonHang` (
 CREATE TABLE `BinhLuan` (
 	`taikhoan` INT NOT NULL,
 	`sanpham` INT NOT NULL,
-	`ngaythang` varchar(10) NOT NULL,
+	`ngaythang` date NOT NULL,
 	`noidung` varchar(3000) NOT NULL,
 	PRIMARY KEY (`taikhoan`,`sanpham`)
 );
@@ -105,7 +108,7 @@ CREATE TABLE `BinhLuan` (
 CREATE TABLE `DiemDanhGia` (
 	`taikhoan` INT NOT NULL,
 	`sanpham` INT NOT NULL,
-	`ngaythang` varchar(10) NOT NULL,
+	`ngaythang` date NOT NULL,
 	`sosao` FLOAT NOT NULL,
 	PRIMARY KEY (`taikhoan`,`sanpham`)
 );
@@ -161,12 +164,12 @@ VALUES ("tinhtrangchoxacnhan", 0),
 ("tinhtrangdagiao", 2),
 ("tinhtrangdahuy", 3);
 
-INSERT INTO taikhoan (username, password, hoten,ngaysinh, sdt, email, avatar, vaitro, status)
-VALUES ("lyduynam", "123456", "Lý Duy Nam","15/03/2000", "0123456789", "lyduynam@gmail.com","images/default_avatar.png", 0, 1),
-("lehoangphuc", "123456", "Lê Hoàng Phúc", "01/01/2000", "0123456789","lehoangphuc@gmail.com","images/default_avatar.png", 1, 1),
-("luuthiennhan", "123456", "Lưu Thiện Nhân", "01/01/2000", "0123456789", "luuthiennhan@gmail.com", "images/default_avatar.png",0, 1),
-("nguyenanhduy", "123456", "Nguyễn Anh Duy","01/01/2000", "0123456789", "nguyenanhduy@gmail.com", "images/default_avatar.png",0, 1),
-("admin", "123456", "Admin","15/03/2000", "0123456789", "adminFashionEcommerce@gmail.com","images/default_avatar.png", 2, 1);
+INSERT INTO taikhoan (username, password, hoten,ngaysinh, sdt, email, avatar, vaitro, status, ngaymo)
+VALUES ("lyduynam", "123456", "Lý Duy Nam","15/03/2000", "0123456789", "lyduynam@gmail.com","images/default_avatar.png", 0, 1, "2021/04/05"),
+("lehoangphuc", "123456", "Lê Hoàng Phúc", "01/01/2000", "0123456789","lehoangphuc@gmail.com","images/default_avatar.png", 1, 1, "2021/04/05"),
+("luuthiennhan", "123456", "Lưu Thiện Nhân", "01/01/2000", "0123456789", "luuthiennhan@gmail.com", "images/default_avatar.png",0, 1, "2021/04/05"),
+("nguyenanhduy", "123456", "Nguyễn Anh Duy","01/01/2000", "0123456789", "nguyenanhduy@gmail.com", "images/default_avatar.png",0, 1, "2021/04/05"),
+("admin", "123456", "Admin","15/03/2000", "0123456789", "adminFashionEcommerce@gmail.com","images/default_avatar.png", 2, 1, "2021/04/05");
 
 INSERT INTO danhmuccap1 (ten)
 VALUES ("Áo"),
@@ -190,20 +193,20 @@ VALUES ("Áo sơ mi", 1),
 ("Balo", 4),
 ("Túi xách", 4);
 
-insert into cuahang (ten, sdt, email, taikhoan, `status`)
-VALUES("Cửa hàng 1", "123456789", "shop1@gmail.com", 2, 1);
+insert into cuahang (ten, sdt, email, taikhoan, `status`, ngaymo)
+VALUES("Cửa hàng 1", "123456789", "shop1@gmail.com", 2, 1, "2021/04/05");
 
-insert into sanpham (ten, noisx, mota, kichthuoc, gioitinhsudung, giaban, soluong, diemdanhgia, luotdanhgia, danhmuccap2, cuahang, `status`)
-VALUES ("Áo thun trắng" , "Việt Nam", "Áo màu trắng rất xinh", "L", 0, 100000, 5, 5.0, 1, 2, 1, 1),
-("Quần tây đen" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 200000, 5, 0.0, 0, 6, 1, 1),
-("Quần tây đen 2" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,5, 0, 0, 6, 1, 1),
-("Quần tây đen 3" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 1500000, 0, 0, 0, 6, 1, 1),
-("Quần tây đen 4" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,5, 0, 0, 6, 1, 1),
-("Quần tây đen 5" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,1, 0, 0, 6, 1, 1),
-("Quần tây đen 6" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,5, 0, 0, 6, 1, 1),
-("Quần tây đen 7" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,10, 0, 0, 6, 1, 1),
-("Quần tây đen 8" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,5, 0, 0, 6, 1, 1),
-("Quần tây đen 9" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,0, 0, 0, 6, 1, 1);
+insert into sanpham (ten, noisx, mota, kichthuoc, gioitinhsudung, giaban, soluong, diemdanhgia, luotdanhgia, danhmuccap2, cuahang, `status`, ngaymo)
+VALUES ("Áo thun trắng" , "Việt Nam", "Áo màu trắng rất xinh", "L", 0, 100000, 5, 5.0, 1, 2, 1, 1, "2021/04/05"),
+("Quần tây đen" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 200000, 5, 0.0, 0, 6, 1, 1, "2021/04/05"),
+("Quần tây đen 2" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,5, 0, 0, 6, 1, 1, "2021/04/05"),
+("Quần tây đen 3" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 1500000, 0, 0, 0, 6, 1, 1, "2021/04/05"),
+("Quần tây đen 4" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,5, 0, 0, 6, 1, 1, "2021/04/05"),
+("Quần tây đen 5" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,1, 0, 0, 6, 1, 1, "2021/04/05"),
+("Quần tây đen 6" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,5, 0, 0, 6, 1, 1, "2021/04/05"),
+("Quần tây đen 7" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,10, 0, 0, 6, 1, 1, "2021/04/05"),
+("Quần tây đen 8" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,5, 0, 0, 6, 1, 1, "2021/04/05"),
+("Quần tây đen 9" , "Việt Nam", "Chiếc quần màu đen rất xinh", "L", 0, 150000,0, 0, 0, 6, 1, 1, "2021/04/05");
 
 insert into hinhanhsanpham (sanpham, link)
 values (1, "images/white t-shirt.jpg"),
@@ -243,17 +246,17 @@ values (1, 1, 150000, 1),
 (3, 7, 150000, 1);
 
 insert into ChiTietTinhTrangDon
-VALUES (1, 0, "08/04/2021"),
-(1, 1, "09/04/2021"),
-(1, 2, "10/04/2021"),
-(2, 0, "08/04/2021"),
-(2, 1, "09/04/2021"),
-(3, 0, "08/04/2021"),
-(3, 3, "09/04/2021");
+VALUES (1, 0, "2021/04/08"),
+(1, 1, "2021/04/09"),
+(1, 2, "2021/04/10"),
+(2, 0, "2021/04/08"),
+(2, 1, "2021/04/09"),
+(3, 0, "2021/04/08"),
+(3, 3, "2021/04/09");
 
 INSERT into binhluan
-values (1, 1, "04/09/2021", "san phẩm rất tốt");
+values (1, 1,  "2021/04/09", "san phẩm rất tốt");
 
 insert into diemdanhgia 
-values (1, 1, "04/09/2021", 5.0);
+values (1, 1,  "2021/04/09", 5.0);
 
