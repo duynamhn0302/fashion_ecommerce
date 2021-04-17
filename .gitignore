@@ -1,0 +1,9 @@
+.vs
+Debug
+.Debug
+log
+.log
+db
+.db
+node_modules/
+*.db
