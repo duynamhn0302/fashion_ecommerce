@@ -1,3 +1,4 @@
+const express = require('express');
 const router = express.Router();
 //Xem thông tin cá nhân
 router.get('/', async function (req, res) {

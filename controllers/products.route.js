@@ -1,3 +1,4 @@
+const express = require('express');
 const router = express.Router();
 //Xem ds tất cả sản phẩm
 router.get('/', async function (req, res) {

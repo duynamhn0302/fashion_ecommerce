@@ -1,3 +1,4 @@
+const express = require('express');
 const router = express.Router();
 //Xem màn hình shop
 router.get('/', async function (req, res) {

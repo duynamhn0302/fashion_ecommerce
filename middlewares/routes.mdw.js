@@ -3,7 +3,9 @@ const db = require("../utils/db");
 module.exports = function (app) {
   //home
   app.get('/', async function (req, res) {
-
+      res.render("index",{
+        layout: false
+      })
    });
 
   app.get('/login', async function (req, res) {
