@@ -7,8 +7,9 @@ module.exports = function (app) {
    });
 
   app.get('/login', async function (req, res) {
-
+    res.render("login",{layout: false});
    });
+   
   app.get('/signup', async function (req, res) {
 
    });
@@ -22,6 +23,7 @@ module.exports = function (app) {
   app.use('/users/', require('../controllers/users.route'));
   app.use('/shops/', require('../controllers/shops.route'));
   app.use('/admin/', require('../controllers/admin.route'));
+  app.use('/account/',require('../controllers/account.route'));
 
   app.get('/err', function (req, res) {
     throw new Error('Error!');
