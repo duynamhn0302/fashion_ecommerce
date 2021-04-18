@@ -8,6 +8,7 @@ $(document).ready(function(){
     var tries = 0;
     var h = input.height();
     $('.spanColor').height(h+23);
+    $('#username').focus();
 
     input.on('focus',function(){
         topbar.removeClass('error success');
