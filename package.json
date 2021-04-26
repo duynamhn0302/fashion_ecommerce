@@ -24,7 +24,6 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "bcrypt": "^5.0.0",
-    "morgan": "^1.10.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-handlebars": "^5.2.0",
@@ -36,6 +35,7 @@
     "get-video-id": "^3.1.5",
     "google-auth-library": "^6.1.4",
     "googleapis": "^67.0.0",
+    "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "mysql2": "^2.2.5",
     "node-pre-gyp": "^0.17.0",

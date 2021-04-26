@@ -1,0 +1,115 @@
+<body>
+	<div class="page_wrapper">
+		<div class="title_container">
+			<h2 class="title">Trang cá nhân</h2>
+		</div>
+		<section class="body_container">
+			<div class="tabs_container">
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget">
+						<ul>
+							<li><a class="li_tab" href="">Cập nhật thông tin cá nhân</a></li>
+							<li><a class="li_tab" href="">Danh sách yêu thích</a></li>
+							<li><a class="li_tab" href="">Giỏ hàng</a></li>
+							<li><a class="li_tab" href="">Lịch sử đơn hàng</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="content_container">
+				<div class="update_profile_title">
+					<h4>Cập nhật thông tin cá nhân</h4>
+				</div>
+				<div class="update_profile_container">
+					<div class="container overflow-hidden">
+						<div class="row gy-5">
+							<div class="col-3">
+								<div class="form-floating mb-3" style="margin-top: 15px">
+									<div class="avatar_holder">
+										<div class="avatar_image">
+											<img src="/resources/images/default_avatar.png" alt="avatar">
+										</div>
+										<div class="avatar_change_holder">
+											<img src="/resources/img/icons/camera.png" alt="change-icon">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5">
+								<form action="" method="post">
+									<div class="form-floating mb-3">
+										<input type="email" class="form-control" id="emailInput"
+											value="name@example.com" placeholder="name@example.com">
+										<label for="emailInput">Địa chỉ email</label>
+									</div>
+									<div class="form-floating mb-3">
+										<input type="text" class="form-control" id="nameInput" value="Nguyễn Văn A"
+											placeholder="Nguyen Van A">
+										<label for="floatingInput">Họ tên</label>
+									</div>
+									<div class="form-floating mb-3">
+										<input type="number" class="form-control" id="phoneInput" value="0987123456"
+											placeholder="0987123456">
+										<label for="phoneInput">Số điện thoại</label>
+									</div>
+								</form>
+								<div class="mb-3 save_btn_group">
+									<!-- Button trigger modal -->
+									<button type="button" class="btn change_password_btn" data-bs-toggle="modal"
+										data-bs-target="#changePasswordModal">
+										Thay đổi mật khẩu
+									</button>
+
+									<button type="button" class="btn save_change_btn">
+										Lưu
+									</button>
+
+									<!-- Modal -->
+									<div class="modal fade" id="changePasswordModal" tabindex="-1"
+										aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="changePasswordModalLabel">Thay đổi mật
+														khẩu</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form action="" method="post">
+														<div class="form-floating mb-3">
+															<input type="password" class="form-control" id="emailInput"
+																placeholder="name@example.com">
+															<label for="emailInput">Mật khẩu hiện tại</label>
+														</div>
+														<div class="form-floating mb-3">
+															<input type="password" class="form-control" id="nameInput"
+																placeholder="Nguyen Van A">
+															<label for="floatingInput">Nhập lại mật khẩu</label>
+														</div>
+														<div class="form-floating mb-3">
+															<input type="password" class="form-control" id="phoneInput"
+																placeholder="0987123456">
+															<label for="phoneInput">Mật khẩu mới</label>
+														</div>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">Đóng</button>
+													<button type="button" class="btn change_password_btn change_password_confirm">Thay
+														đổi</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</div>
+</body>
