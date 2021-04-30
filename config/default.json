@@ -3,7 +3,7 @@
     "host": "localhost",
     "port": 3306,
     "user": "root",
-    "password": "Nguyen6Anh4Duy",
+    "password": "NHAN",   
     "database": "fashion_ecommerce",
     "waitForConnections": true,
     "connectionLimit": 50,
@@ -12,5 +12,4 @@
   "paginate": {
     "limit": 9
   }
-
 }

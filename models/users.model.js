@@ -25,10 +25,10 @@ module.exports = {
     //     return rows[0];
     // },
 
-    // async add(user){
-    //     const [result, fields] = await db.add(user,'user');
-    //     return result;
-    // },
+    async add(user){
+        const [result, fields] = await db.add(user,'taikhoan');
+        return result;
+    },
 
     // async patch(user){
     //     var condition={user_id: user.user_id};

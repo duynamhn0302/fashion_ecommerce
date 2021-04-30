@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<title>Sign up?</title>
+	<meta charset="UTF-8">
+	<meta name="description" content=" Divisima | eCommerce Template">
+	<meta name="keywords" content="divisima, eCommerce, creative, html, signup">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="/resources/img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="/resources/css/login.css"/>
+
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+    <div class="signin">
+        <a href="/login" >Đăng nhập</a>
+    </div>
+    <button id="findpass">Nhập thông tin</button>
+    {{!-- <form method="POST" name="signup_form" id="signup_form" action="/signup"> --}}
+        <div class="form form_signup">
+            <div class="forceColor"></div>
+            <div class="topbar">
+                <div class="spanColor"></div>
+                <input type="text" class="input" id="fullname" name="fullname" placeholder="Họ và Tên"/>
+            </div>
+            <div class="topbar">
+                <div class="spanColor"></div>
+                <input type="email" class="input" id="email" name="email" placeholder="E-mail"/>
+            </div>
+            <div class="topbar">
+                <div class="spanColor"></div>
+                <input type="text" class="input" id="username" name="username" placeholder="Tên đăng nhập"/>
+            </div>
+            <div class="topbar">
+                <div class="spanColor"></div>
+                <input type="password" class="input" id="password" name="password" placeholder="Mật khẩu"/>
+            <div class="topbar">
+                <div class="spanColor"></div>
+                <input type="password" class="input" id="password1" name="password1" placeholder="Nhập lại mật khẩu"/>
+        </div>
+        <button class="submit" id="submit">Đăng ký</button>
+    {{!-- </form> --}}
+    </div>
+
+    <!--====== Javascripts & Jquery ======-->
+	<script src="/resources/js/jquery-3.2.1.min.js"></script>
+    <script src="/resources/js/signup.js"></script>
+</body>
+</html>

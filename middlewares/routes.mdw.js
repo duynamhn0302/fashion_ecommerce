@@ -11,14 +11,9 @@ module.exports = function (app) {
    });
    
   app.get('/signup', async function (req, res) {
-
+    res.render('signup',{layout: false});
    });
-  app.post('/login', async function (req, res) {
-
-   });
-  app.post('/signup', async function (req, res) {
-
-   });
+  
   app.use('/products/', require('../controllers/products.route'));
   app.use('/users/', require('../controllers/users.route'));
   app.use('/shops/', require('../controllers/shops.route'));
