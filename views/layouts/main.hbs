@@ -89,19 +89,18 @@
 					<li><a href="#">Jewelry
 							<span class="new">New</span>
 						</a></li>
-					<li><a href="#">show</a>
+					<li><a href="#">Danh mục</a>
 						<ul class="sub-menu">
-							<li>
-								<a href="#">Sneaksdadsadsadsadasdasdasdasdasdsaers</a>
-								<ul class="sub-sub-menu">
-									<li><a href="#">a</a></li>
-									<li><a href="#">b</a></li>
-								</ul>
-							</li>
-							<li><a href="#">Sandals</a></li>
-							<li><a href="#">Formal Shoes</a></li>
-							<li><a href="#">Boots</a></li>
-							<li><a href="#">Flip Flops</a></li>
+							{{#each this.cateMenu}}
+								<li>
+									<a href="#">{{cateNameLV1}}</a>
+									<ul class="sub-sub-menu">
+										{{#each this.listSubMenu}}
+											<li><a href="#">{{ten}}</a></li>
+										{{/each}}
+									</ul>
+								</li>
+							{{/each}}
 						</ul>
 					</li>
 					<li><a href="#">Pages</a>

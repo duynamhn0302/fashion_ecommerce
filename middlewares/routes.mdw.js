@@ -2,9 +2,9 @@
 const db = require("../utils/db");
 module.exports = function (app) {
   //home
-  app.get('/', async function (req, res) {
-      res.render("index")
-   });
+  // app.get('/', async function (req, res) {
+  //     res.render("index")
+  //  });
 
   app.get('/login', async function (req, res) {
     res.render("login",{layout: false});
@@ -14,6 +14,8 @@ module.exports = function (app) {
     res.render('signup',{layout: false});
    });
   
+
+  app.all('/',require('../controllers/category.route'));
   app.use('/products/', require('../controllers/products.route'));
   app.use('/users/', require('../controllers/users.route'));
   app.use('/shops/', require('../controllers/shops.route'));
