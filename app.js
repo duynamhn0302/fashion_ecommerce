@@ -2,6 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 require('express-async-errors');
 var Handlebars = require('handlebars');
+const session = require('express-session');
+const config = require('./config/default.json');
 
 Handlebars.registerHelper("inc", function(value, options)
 {
@@ -9,6 +11,19 @@ Handlebars.registerHelper("inc", function(value, options)
 });
 
 const app = express();
+//store session
+// const sessionStore = new MySQLStore(config.mysql);
+
+app.set('trust proxy', 1)
+app.use(session({
+  secret: 'SECRET_KEY',
+  resave: false,
+  saveUnitialized: true,
+  // store: sessionStore,
+  cookie: {
+    //secure: true
+  }
+}));
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({

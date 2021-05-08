@@ -1,5 +1,5 @@
-
 const db = require("../utils/db");
+
 module.exports = function (app) {
   //home
   // app.get('/', async function (req, res) {
@@ -13,6 +13,26 @@ module.exports = function (app) {
   app.get('/signup', async function (req, res) {
     res.render('signup',{layout: false});
    });
+
+  app.post('/logout', async function (req, res) {
+    req.session.auth = false;
+    req.session.authUser = null;
+    req.session.retUrl = null;
+    console.log("Logging out");
+  
+    const url = req.headers.referer || '/';
+    console.log(url);
+    res.redirect(url);
+  });
+
+  // router.get('/logout', async function (req, res) {
+  //   req.session.auth = false;
+  //   req.session.authUser = null;
+  //   req.session.retUrl = null;
+  //   console.log("Logging out");
+  
+  //   res.redirect('/');
+  // })
   
 
   app.all('/',require('../controllers/category.route'));
