@@ -1,4 +1,6 @@
 const db = require("../utils/db");
+const productModel = require('../models/products.model');
+const cartModel = require('../models/cart.model');
 
 module.exports = function (app) {
   //home
@@ -34,6 +36,79 @@ module.exports = function (app) {
   //   res.redirect('/');
   // })
   
+  app.post('/add_to_cart', async function (req,res){    //nhan vao hai tham so tu body la -----id, quantity--------
+    const product = await productModel.getSingleProductById(req.body.id);
+    const quantity = +req.body.quantity;
+    if(req.session.auth === false){   //nguoi dung chua dang nhap
+      console.log(false);
+      res.json(false);
+    }else{
+      console.log(true);
+      req.session.authUser = {maso: 5};         //này là để test mù ko có hàm
+      const checkCart = await cartModel.checkCustomerHaveCart(req.session.authUser.maso);
+      console.log(checkCart);
+      var cart = null;
+      if(checkCart === null){   //nguoi dung chua co cart
+        const data={
+          taikhoan: req.session.authUser.maso,
+          tongsosanpham: quantity,
+          tonggiatien: quantity*product.giaban,
+        }
+        cart = await cartModel.addCartForCustomer(data);   //them gio hang moi cho khach hang, neu chua khoi tao
+        if(cart===null) res.json(false);  //add khong thanh cong
+        const data1={
+          sanpham: product.maso,
+          giohang: cart.maso || cart.insertId,
+          soluong: quantity,
+        }
+        await cartModel.addToCartDetail(data1);
+      }else{        //nguoi dung da co cart
+        // const data={
+        //   tongsosanpham: checkCart.tongsosanpham + quantity,   //quantity la so luong san pham them vao gio hang
+        //   tonggiatien: checkCart.tonggiatien + product.giaban*quantity,
+        // }
+        // const temp = {taikhoan: req.session.authUser.maso};
+        // cart = await cartModel.modifyCartForCustomer(data,temp);  //cong them tien, them so luong san pham
+        // if(cart !== null){
+        //   const data1={
+        //     soluong: quantity,
+        //     sanpham: product.maso,
+        //   }
+        //   const condition = {
+        //     giohang: checkCart.maso,
+        //   }
+        //   await cartModel.modifyCartDetail(data1,condition);
+        // }
+        const check = await cartModel.checkIfProductInCart(req.body.id,checkCart.maso);
+        if(check === null){     //sp chua co trong gio hang
+          const data1={
+            sanpham: product.maso,
+            giohang: checkCart.maso,
+            soluong: quantity,
+          }
+          await cartModel.addToCartDetail(data1);
+        }else{      //sp co trong gio hang roi, chi can sua quantity thoi
+          const data1={
+            soluong: quantity,
+            
+          }
+          const condition = {
+            giohang: checkCart.maso,
+            sanpham: product.maso,
+          }
+          await cartModel.modifyCartDetail2(data1,condition);
+        }
+        const sum = await cartModel.sumProductInCart(checkCart.maso);
+        const data={
+          tongsosanpham: sum.sl,   //quantity la so luong san pham them vao gio hang
+          tonggiatien: sum.tonggia,
+        }
+        const temp = {taikhoan: req.session.authUser.maso};
+        cart = await cartModel.modifyCartForCustomer(data,temp);  //cong them tien, them so luong san pham
+      }
+    }
+    res.json(true);
+  });
 
   app.all('/',require('../controllers/category.route'));
   app.use('/products/', require('../controllers/products.route'));
