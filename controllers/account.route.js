@@ -18,7 +18,10 @@ router.post('/check-account',async function(req,res,next){
         req.session.authUser = user;
         req.session.auth = true;
     }
-    res.json({return_mode : return_mode});
+    res.json({
+        return_mode : return_mode,
+        retUrl : req.session.retUrl,
+    });
 });
 
 router.post('/create-account',async function(req,res,next){

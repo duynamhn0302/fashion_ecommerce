@@ -42,10 +42,12 @@ $(document).ready(function(){
         if(checktkNull() === false){return;}
         if(checkpassNull() === false){return;}
         var return_mode = 0;
+        var retUrl = '/';
         var username = $('#username').val();
         var pass = $('#password').val();
         $.post("/account/check-account",{username: username, password: pass},function(data, status){
             return_mode = data.return_mode;
+            retUrl = data.retUrl;
             if(tries<=2){
                 if(return_mode === 2){
                     setTimeout(function(){
@@ -59,7 +61,8 @@ $(document).ready(function(){
                     article.addClass('active');
                     tries=0;
                     setTimeout(function(){
-                        window.location.replace('/');
+                        const url = retUrl || '/';
+                        window.location.replace(url);
                     },500);
                 }else{
                     if(return_mode === 1){
