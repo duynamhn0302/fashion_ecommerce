@@ -1,0 +1,320 @@
+*{
+    box-sizing: border-box;
+}
+
+.top{
+    background-color:whitesmoke;
+    padding-bottom:125px;
+}
+
+#left{
+    width: 1%;
+}
+
+#center{
+    width:15%;
+}
+
+#center div{
+    text-align: center;
+}
+
+#logo{
+    height:fit-content;
+    margin-bottom: 30px;
+}
+
+#logo img{
+    height: 53px;
+    width: 190px;
+}
+
+#avatar img{
+    width: 100px;
+    height: 100px;
+}
+
+#accountName{
+    width: 104px;
+    height: 24px;
+    font-family: Montserrat, sans-serif;
+    font-size: 16px;
+    size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: 0.15px;
+    color: rgb(35, 39, 49);
+    text-align: center;
+}
+
+#role{
+    width: 72px;
+    height: 24px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.71;
+    letter-spacing: 0.3px;
+}
+
+.myButton {
+	background:linear-gradient(to bottom, #e32619 5%, #eb675e 100%);
+	background-color:#e32619;
+	border-radius:8px;
+	border:1px solid #ffffff;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:13px 40px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #b23e35;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #eb675e 5%, #e32619 100%);
+    background-color:#eb675e;
+    text-decoration: none;
+    color:#ffffff;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+#linkage *{
+    text-align: left !important;
+    line-height: 40px;
+}
+
+dt div{
+    padding-left:30px;
+}
+
+dd div{
+    padding-left:60px;
+}
+
+dt,dd {
+    text-align:left;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+dt div a,dl div a{
+    font-size: 20px;
+    white-space: nowrap;
+    font-variant: tabular-nums;
+}
+
+.link:hover{
+    display: block;
+    background-color:rgb(221, 221, 221);
+    cursor: pointer;
+    text-decoration: none;
+    color: #df322f!important;
+}
+
+#ex1,#ex2{
+    display: none;
+}
+
+/*------------Information section-------------------*/
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.title{
+    width: 226px;
+    height: 32px;
+    margin-top:100px;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.33;
+    color: #232731;
+}
+
+.avatar-block{
+    display: flex;
+    margin-bottom: 39px;
+    margin-top: 55px;
+    text-align: center;
+    font-family: Montserrat;
+    color: rgba(0,0,0,.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+}
+
+.avatar-size{
+    width:150px;
+    height:150px;
+}
+
+.text{
+    margin-left: 32px;
+    display: block;
+    text-align:center;
+    width:100%;
+}
+
+.username{
+    text-align: left;
+    height: 29px;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    color: #232731;
+    margin-bottom: 15px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+}
+
+.teacher-info{
+    margin-bottom: 15px;
+    text-align: left;
+    font-family: Montserrat;
+    height: 100%;
+    color: rgba(0,0,0,.65);
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+.teacher-id{
+    /*float:left;*/
+    margin-right: 30px;
+    text-align: center;
+    display:flex;
+}
+
+.tc-title{
+    height: 24px;
+    font-family: Open Sans,sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #232731;
+    margin-right: 5px;
+}
+
+.tc-value{
+    height: 24px;
+    font-family: Open Sans,sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #232731;
+    font-weight: 700;
+}
+
+.basic-info-1{
+    border-bottom: 1px solid #d8d8d8;
+    padding-bottom: 28px;
+    display: inline-block;
+}
+
+button, input{
+    overflow: visible;
+}
+
+.input-box{
+    box-sizing: border-box;
+    height: 72px;
+    margin-right:30px;
+    margin-bottom: 16px;
+    display: block;
+    width: 46%;
+    flex: 0 0 auto;
+    float: left;
+}
+
+.label{
+    font-size: 16px;
+    line-height: 1.5;
+    color: #232731;
+    width: 100%;
+    height: 24px;
+    font-family: Montserrat;
+    font-weight: 600;
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.input-type{
+    height: 40px;
+    padding-left: 16px;
+    border-radius: 4px;
+    border: 1px solid #b0b5c1;
+    background-color: #f9fafc;
+    font-family: Open Sans,sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #232731;
+    width: 100%;
+    /**/
+    position: relative;
+    display: inline-block;
+}
+
+.choose-gender{
+    float: left;
+    margin-top: 8px;
+    font-family: Open Sans,sans-serif;
+    box-sizing: border-box;
+}
+
+.form-check{
+    float: left;
+    margin-right:20px;
+}
+
+.input-container{
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.input-element{
+    padding-left: 15px;
+    flex-grow: 1;
+    font-family: Open Sans,sans-serif;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid #b0b5c1;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: .15px;
+    color: #4a4a4a;
+    margin-right: 8px;
+}
+
+.remove{
+    border:none;
+    cursor: pointer;
+}
+
+.submit{
+    background-color: lightskyblue;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    height: 40px;
+    width: 240px;
+    margin-top:30px;
+    margin-left:650px;
+    position: absolute;
+}
+
+#finp{
+    margin-top:50px;
+    width:100%;
+}

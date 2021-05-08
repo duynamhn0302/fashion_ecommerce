@@ -1,0 +1,156 @@
+<form method="POST" action="/lecturer/information">
+    <div style="width:90%;margin-left:50px;">
+        <div class="title">Thông tin cá nhân</div>
+        <div class="avatar-block">
+            <div id="avatar-upload">
+                {{!-- {{#if acc.avatar}}
+                    <img id="inner-avatar" src="{{acc.avatar}}" alt="Avatar" class="rounded-circle avatar-size">
+                {{else}}
+                    {{#if nu}}
+                        <img id="inner-avatar" src="/public/images/female_lecturer.jpg" alt="Avatar" class="rounded-circle avatar-size">
+                    {{else}}
+                        <img id="inner-avatar" src="/public/images/male_lecturer.jpg" alt="Avatar" class="rounded-circle avatar-size">
+                    {{/if}}
+                {{/if}} --}}
+
+                <img id="inner-avatar" src="/resources/img/shop/ltn.jpg" alt="Avatar" class="rounded-circle avatar-size">
+            </div>
+            <input type="hidden" name="ava" id="ava" value=""/>
+            <div class="text">
+                <div class="username">Shopee Trading</div>
+                <div class="teacher-info clearfix">
+                    <div class="teacher-id">
+                        <div class="tc-title">Mã giảng viên:</div>
+                        <div class="tc-value">123123</div>
+                    </div>
+                    <div class="teacher-id">
+                        <div class="tc-title">Ngày tham gia:</div>
+                        <div class="tc-value"><time datetime="1607052597177">11/1/2021</time></div>
+                    </div>
+                    <div class="teacher-id">
+                        <div class="tc-title">Pháp nhân kí hợp đồng:</div>
+                        <div class="tc-value">EDM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="basic-info-1">
+            <div class="input-box">
+                <div class="label"><label for="username">Họ và tên</label></div>
+                <input value="Shopee Trading" type="text" name="username" id="username" class="input-type">
+            </div>
+            <div class="input-box">
+                <div class="label">Giới tính</div>
+                <div class="choose-gender">
+                    <div class="form-check">
+                        {{#if nam}}
+                            <input class="form-check-input" type="radio" name="gender" id="nam" value="Nam" checked>
+                        {{else}}
+                            <input class="form-check-input" type="radio" name="gender" id="nam" value="Nam">
+                        {{/if}}
+                        <label class="form-check-label" for="nam">Nam</label>
+                    </div>
+                    <div class="form-check">
+                        {{#if nu}}
+                            <input class="form-check-input" type="radio" name="gender" id="nu" value="Nữ" checked>
+                        {{else}}
+                            <input class="form-check-input" type="radio" name="gender" id="nu" value="Nữ">
+                        {{/if}}
+                        <label class="form-check-label" for="nu">Nữ</label>
+                    </div>
+                    <div class="form-check">
+                        {{#if else}}
+                            <input class="form-check-input" type="radio" name="gender" id="khac" value="Khác">
+                        {{else}}
+                            <input class="form-check-input" type="radio" name="gender" id="khac" value="Khác" checked>
+                        {{/if}}
+                        <label class="form-check-label" for="khac">Khác</label>
+                    </div>
+                </div>
+            </div>
+            <div class="input-box">
+                <div class="label"><label for="sdt">Số điện thoại</label></div>
+                <input type="text" name="sdt" class="input-type" value="123123">
+            </div>
+            <div class="input-box">
+                <div class="label"><label id="dob" for="datepicker">10/05/2000</label></div>
+                <input id="datepicker" name="dob" width="276" value="" placeholder="yyyy-mm-dd"/>
+                <script>
+                    var str = $('#dob').html().substring(0,10);
+                    $('#dob').html("Ngày sinh:   "+str);
+                    var date = $('#datepicker').datepicker({
+                        uiLibrary: 'bootstrap4',
+                        format: 'yyyy-mm-dd'
+                    });
+                    $('#datepicker').change(function(){
+                        $('#dob').html("Ngày sinh");
+                    });
+                    
+                    /*
+                    var content = $('#hid').val.toISOString().substring(0,10);
+                    $datepicker.datepicker('setDate', new Date(content));
+                    var dateParts = content.split("-");
+                    var newDate = new Date( dateParts[0], parseInt( dateParts[1] )-1, dateParts[2]);
+                    $('#datepicker').dateSelected(new Date(newDate));
+                    $('#datepicker').datepicker('setDate', new Date(newDate));
+                    */
+                </script>
+            </div>
+            <div class="input-box">
+                <div class="label"><label for="diachi">Địa chỉ</label></div>
+                <input type="text" name="address" id="diachi" class="input-type" value="{{acc.address}}">
+            </div>
+            <div class="input-box">
+                <div class="label"><label for="email">Email đăng ký tài khoản</label></div>
+                <input value="phucyugi@gmail.com" type="email" name="email" id="email" class="input-type" disabled>
+            </div>
+        </div>
+        <div class="basic-info-2">
+            <div class="tieusu-box">
+                <div class="label">Tiểu sử giảng viên</div>
+                <div class="input-container">
+                    <textarea id="des" name="des" placeholder="VD: Được biết đến không chỉ là một giảng viên xuất sắc của Khoa Quản trị Kinh doanh" class="input-element" value="">
+                    </textarea>
+                    <!--<button class="remove"><i class="fas fa-times-circle    "></i></button>-->
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary submit">Lưu</button>
+    </div>
+</form>
+<form id="avt" method="POST" enctype="multipart/form-data" action="/lecturer/useravt">
+    <div style="display:none;" id="avatar">
+        <input type="file" id="input-41" name="avatar">
+    </div>
+</form>
+<script>
+    $('#avatar-upload').on('click',function(){
+        $('#input-41').click();
+    });
+    
+    $('#input-41').change(function(){
+        
+        $('#avt').submit();
+        $.getJSON({
+            url: '/lecturer/get_user_avtURL',
+            success: function(data){
+                if(data!==null){
+                    
+                    $('#inner-avatar').attr('src',data);
+                    $('#ava').attr('value',data);
+                    alert($('#ava').val());
+                }
+                else    alert("Không load được hình !!!");
+            },
+        });
+    });
+
+    $('.remove').on('click',function(){
+        $('#des').val("");
+    })
+
+    $("#input-41").fileinput({
+        allowedFileTypes: ["image"],
+        theme: 'fa'
+    });
+</script>
