@@ -29,6 +29,8 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({
   extended: true
 }));
+//---local---
+require('./middlewares/locals.mdw')(app);
 app.use('/resources', express.static('resources'));
 require('./middlewares/view.mdw')(app);
 require('./middlewares/routes.mdw')(app);

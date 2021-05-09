@@ -2464,3 +2464,89 @@ ol {
 		display: none;
 	}
 }
+
+.amount-cart{
+    position: absolute;
+    margin-top: -3px;
+    margin-left: 22px;
+    padding: 2px 8px 2px 8px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #d10d0d;
+    border-radius: 5px;
+}
+
+.container-authen{
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
+.container-name-user{
+    display: flex;
+    flex-direction: row;
+    padding: 7px 8px 5px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.image-auth{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.name-user-auth{
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.down-icon-auth{
+    margin-left: 5px;
+}
+
+.option-authen-menu{
+    background: white;
+    height: auto;
+    width: 200px;
+    border-radius: 8px;
+    box-shadow: 0 0 3px #d1d1d1;
+    position: absolute;
+    margin-top: 20px;
+    flex-direction: column;
+	display: none;
+	z-index:50;
+	transition: ease-in-out;
+}
+
+.option-authen-menu::after{
+    content: "";
+    position: absolute;
+    right: 90px;
+    top: -30px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+    margin-top: 10px;
+}
+
+.option-item-auth{
+    padding: 10px 0px 10px 20px;
+}
+
+.option-item-auth:hover{
+    background-color: rgb(241, 241, 241);
+}
+
+.option-item-auth:hover .option-select-auth{
+    color: #d60e0e;
+	text-decoration: none;
+}
+
+.option-select-auth{
+    color: rgb(94, 91, 91);
+    font-size: 13px;
+}
+.line-user{
+    margin: 0;
+}
