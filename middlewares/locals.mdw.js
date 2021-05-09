@@ -1,4 +1,4 @@
-const categoryModel=require('../models/products.model');
+const productsModels =require('../models/products.model');
 const userModel = require('../models/users.model');
 const cartModel=require('../models/cart.model');
 
@@ -39,8 +39,8 @@ module.exports=function(app){
         next();
     });
 
-    app.use(async function(req,res,next){
-        // res.locals.lcCategories=await categoryModel.all();
+    app.use(async function (req, res, next) {
+        res.locals.lcCategories = await productsModels.allCategories();
         next();
-    });
+      });
 }

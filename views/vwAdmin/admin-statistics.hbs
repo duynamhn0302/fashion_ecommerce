@@ -1,0 +1,114 @@
+
+
+<div class="main-body-container">
+  <form>
+    <!-- THỐNG KÊ -->
+    <div class="danhsachtaikhoan">
+      <p class="title-1">THỐNG KÊ</p>
+      <h4><a href="#topshop">Cửa hàng bán nhiều sản phẩm nhất</a></h4>  
+      <h4><a href="#topcustomer">Người dùng mua hàng nhiều nhất</a></h4> 
+      <h4><a href="#account">Số lượng người dùng, cửa hàng</a></h4>  
+
+      <!-- topshop -->
+      <div id="topshop">
+        <br>
+        <h3 id="title3">Cửa hàng bán nhiều sản phẩm nhất</h3> 
+        <div class=search>
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <input id="myInput" type="text" placeholder="Tìm kiếm...">
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Thứ tự</th>
+              <th>Cửa hàng</th>
+              <th>Email</th>
+              <th>Số điện thoại</th>
+              <th>Số lượng hàng bán</th>
+              <th>Doanh số</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+            {{#each shops}}
+            <tr>
+              <td>{{inc @index}}</td>
+              <td>{{ten}}</td>
+              <td>{{email}}</td>
+              <td>{{sdt}}</td>
+              <td>{{soluong}}</td>
+              <td>{{doanhso}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- topcustomer -->
+      <div id="topcustomer">
+        <br>
+        <h3 id="title3">Người dùng mua hàng nhiều nhất</h3> 
+        <div class=search>
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <input id="myInput1" type="text" placeholder="Tìm kiếm...">
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Thứ tự</th>
+              <th>Khách hàng</th>
+              <th>Tài khoản</th>
+              <th>Email</th>
+              <th>Số điện thoại</th>
+              <th>Số đơn đã mua</th>
+              <th>Số tiền đã mua</th>
+            </tr>
+          </thead>
+          <tbody id="myTable1">
+            {{#each customers}}
+              <tr>
+                <td>{{inc @index}}</td>
+                <td>{{hoten}}</td>
+                <td>{{username}}</td>
+                <td>{{email}}</td>
+                <td>{{sdt}}</td>
+                <td>{{soluongdon}}</td>
+                <td>{{tienmua}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- account -->
+      <div id="account">
+        <br>
+        <h3 id="title3">Số lượng người dùng, cửa hàng</h3> 
+        <div class=search>
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <input id="myInput2" type="text" placeholder="Tìm kiếm...">
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Thời điểm</th>
+              <th>Người dùng</th>
+              <th>Cửa hàng</th>
+            </tr>
+          </thead>
+          <tbody id="myTable2">
+            {{#each countUserShop}}
+              <tr>
+                <td>{{time}}</td>
+                <td>{{users}}</td>
+                <td>{{shops}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+
+
+    </div>
+  </form>
+</div> 

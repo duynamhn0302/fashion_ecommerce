@@ -5,9 +5,30 @@ const auth = require('./auth.mdw');
 
 module.exports = function (app) {
   //home
-  // app.get('/', async function (req, res) {
-  //     res.render("index")
-  //  });
+  app.get('/', async function (req, res) {
+    const categories = await productModel.allCategories()
+    const top10New = await productModel.topNNew(10);
+    for(var i = 0; i < top10New.length; i++) {
+      const images = await productModel.getImages(top10New[i].maso)
+      console.log(images)
+      top10New[i].avatar = images[0].link;
+    };
+    
+    const top8Seller = await productModel.topNSeller(8)
+    for(var i = 0; i < top8Seller.length; i++) {
+      const images = await productModel.getImages(top8Seller[i].maso)
+      top8Seller[i].avatar = images[0].link;
+    }
+    const top8Categories = await productModel.topNCategories(8);
+    res.render("index",{
+      categories,
+      top10New,
+      top4Seller: top8Seller.slice(0, 4),
+      top4_8Seller: top8Seller.slice(4, 8),
+      top8Seller,
+      top8Categories
+    })
+  });
 
   app.get('/login',auth.auth_reverse,async function (req, res) {
     res.render("login",{layout: false});
@@ -28,15 +49,6 @@ module.exports = function (app) {
     res.redirect(url);
   });
 
-  // router.get('/logout', async function (req, res) {
-  //   req.session.auth = false;
-  //   req.session.authUser = null;
-  //   req.session.retUrl = null;
-  //   console.log("Logging out");
-  
-  //   res.redirect('/');
-  // })
-  
   app.post('/add_to_cart',auth.authUser, async function (req,res){    //nhan vao hai tham so tu body la -----id, quantity--------
     const product = await productModel.getSingleProductById(req.body.id);
     const quantity = +req.body.quantity;
@@ -114,7 +126,10 @@ module.exports = function (app) {
     res.render("dangkymoshop",{layout: false});
   })
   
+
+
   app.all('/',require('../controllers/category.route'));
+  app.use('/admin/', require('../controllers/admin.route'))
   app.use('/products/', require('../controllers/products.route'));
   app.use('/users/', require('../controllers/users.route'));
   app.use('/shops/', require('../controllers/shops.route'));

@@ -124,25 +124,29 @@
 				<!-- menu -->
 				<ul class="main-menu">
 					<li><a href="/">Trang chủ</a></li>
+                    <li><a href="#">Danh mục</a>
+                        <ul class="sub-menu">
+                            {{#each lcCategories}}
+                                <li>
+                                    <a href="/products/byCat1/{{maso}}">{{ten}}</a>
+                                    {{#if existsCate2}}
+                                        <ul class="sub-sub-menu">
+                                            {{#each cate2}}
+                                            <li><a href="/products/byCat2/{{maso}}">{{ten}}</a></li>
+                                            {{/each}}
+                                        </ul>
+                                    {{/if}}
+                                <li>
+                            {{/each}}
+						</ul>
+					</li>
 					<li><a href="#">Nam</a></li>
 					<li><a href="#">Nữ</a></li>
 					<li><a href="#">Jewelry
-							<span class="new">New</span>
-						</a></li>
-					<li><a href="#">Danh mục</a>
-						<ul class="sub-menu">
-							{{#each this.cateMenu}}
-								<li>
-									<a href="#">{{cateNameLV1}}</a>
-									<ul class="sub-sub-menu">
-										{{#each this.listSubMenu}}
-											<li><a href="#">{{ten}}</a></li>
-										{{/each}}
-									</ul>
-								</li>
-							{{/each}}
-						</ul>
-					</li>
+						<span class="new">New</span>
+					    </a>
+                    </li>
+					
 					<li><a href="#">Pages</a>
 						<ul class="sub-menu">
 							<li><a href="./product.html">Product Page</a></li>
