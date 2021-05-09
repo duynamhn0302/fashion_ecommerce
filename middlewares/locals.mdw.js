@@ -1,8 +1,9 @@
 const categoryModel=require('../models/products.model');
-//const cartModel=require('../models/cart.model');
+const userModel = require('../models/users.model');
+const cartModel=require('../models/cart.model');
 
 module.exports=function(app){
-    app.use(function (req,res,next){
+    app.use(async function (req,res,next){
         if(typeof(req.session.auth) === 'undefined'){
           req.session.auth = false;
         }
@@ -12,7 +13,28 @@ module.exports=function(app){
         // }
         // res.locals.cid = null;
         res.locals.auth = req.session.auth;
-        res.locals.authUser = req.session.authUser;
+        if(typeof(req.session.authUser) !== 'undefined' && req.session.authUser!==null){
+            res.locals.authUser = await userModel.singleByUsername(req.session.authUser.username);
+            const tempCart = await cartModel.checkCustomerHaveCart(req.session.authUser.maso);
+            if(tempCart===null){   //chua co cart
+                res.locals.cart = {
+                    sl: 0,
+                    sanpham: null,  //mang chua cac san pham trong gio hang
+                }
+            }
+            else{
+                res.locals.cart = {
+                    sl: tempCart.tongsosanpham,
+                    sanpham: null,
+                }
+            }
+        }else{
+            res.locals.cart = {
+                sl: 0,
+                sanpham: null,  //mang chua cac san pham trong gio hang
+            }
+        }
+        // console.log(res.locals.cart);
         // res.locals.cartSummary=cartModel.getNumberOfItems(req.session.cart);
         next();
     });

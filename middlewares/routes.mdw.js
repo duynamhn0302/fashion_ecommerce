@@ -1,6 +1,7 @@
 const db = require("../utils/db");
 const productModel = require('../models/products.model');
 const cartModel = require('../models/cart.model');
+const auth = require('./auth.mdw');
 
 module.exports = function (app) {
   //home
@@ -8,15 +9,15 @@ module.exports = function (app) {
   //     res.render("index")
   //  });
 
-  app.get('/login', async function (req, res) {
+  app.get('/login',auth.auth_reverse,async function (req, res) {
     res.render("login",{layout: false});
    });
    
-  app.get('/signup', async function (req, res) {
+  app.get('/signup',auth.auth_reverse,async function (req, res) {
     res.render('signup',{layout: false});
    });
 
-  app.post('/logout', async function (req, res) {
+  app.post('/logout',auth.auth, async function (req, res) {
     req.session.auth = false;
     req.session.authUser = null;
     req.session.retUrl = null;
@@ -36,7 +37,7 @@ module.exports = function (app) {
   //   res.redirect('/');
   // })
   
-  app.post('/add_to_cart', async function (req,res){    //nhan vao hai tham so tu body la -----id, quantity--------
+  app.post('/add_to_cart',auth.authUser, async function (req,res){    //nhan vao hai tham so tu body la -----id, quantity--------
     const product = await productModel.getSingleProductById(req.body.id);
     const quantity = +req.body.quantity;
     if(req.session.auth === false){   //nguoi dung chua dang nhap
@@ -46,7 +47,6 @@ module.exports = function (app) {
       console.log(true);
       req.session.authUser = {maso: 5};         //này là để test mù ko có hàm
       const checkCart = await cartModel.checkCustomerHaveCart(req.session.authUser.maso);
-      console.log(checkCart);
       var cart = null;
       if(checkCart === null){   //nguoi dung chua co cart
         const data={
@@ -110,6 +110,10 @@ module.exports = function (app) {
     res.json(true);
   });
 
+  app.get('/open_shop',auth.authUser,function(req, res){
+    res.render("dangkymoshop",{layout: false});
+  })
+  
   app.all('/',require('../controllers/category.route'));
   app.use('/products/', require('../controllers/products.route'));
   app.use('/users/', require('../controllers/users.route'));

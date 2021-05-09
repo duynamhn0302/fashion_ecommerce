@@ -2478,8 +2478,10 @@ ol {
 }
 
 .container-authen{
-    margin-top: 10px;
-    margin-left: 40px;
+	text-emphasis: ellipsis;
+	max-lines: 1;
+	max-width: line;
+	transition: all 0.4s;
 }
 
 .container-name-user{
@@ -2498,7 +2500,10 @@ ol {
 
 .name-user-auth{
     margin-top: 5px;
-    margin-left: 10px;
+	margin-left: 10px;
+	max-width: 125px;
+	max-lines: 1;
+	overflow: hidden;
 }
 
 .down-icon-auth{
