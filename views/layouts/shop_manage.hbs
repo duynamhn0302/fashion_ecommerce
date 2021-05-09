@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="images/icon.png" sizes="32x32"/>
     <title>EduOYK</title>
+    <link rel="stylesheet" href="/resources/css/shop_bill.css">
+    <link rel="stylesheet" href="/resources/css/nav_bar_shop.css">
     <link rel="stylesheet" href="/resources/css/shop_manage.css">
     <link rel="stylesheet" href="/resources/css/shop_income.css">
     <link rel="stylesheet" href="/resources/css/star.css">
@@ -19,7 +21,73 @@
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div class="d-flex top">
+    <nav class="sidebar">
+        <div class="container_img_defaul">
+            <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img_shop_default">
+            <div class="text_menu">Seller Center</div>
+        </div>
+        <ul>
+            <li class="emply">
+                <a href="#">
+                    <i class="fas fa-home icon_func"></i>
+                    <div class="text_func_menu">
+                        Trang chủ
+                    </div>
+                </a>
+            </li>
+            <li class="emply">
+                <a href="#" class="feat-btn">
+                    <i class="fas fa-shopping-cart icon_func"></i>
+                    <div class="text_func_menu">
+                        Đơn hàng
+                    </div>
+                    <span class="fas fa-caret-down first"></span>
+                </a>
+                <ul class="feat-show">
+                    <li>
+                        <a href="#">Division giao hàng</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="emply">
+                <a href="#" class="product-btn">
+                    <i class="fab fa-product-hunt icon_func"></i>
+                    <div class="text_func_menu">
+                        Sản phẩm
+                    </div>
+                    <span class="fas fa-caret-down second"></span>
+                </a>
+                <ul class="product-show">
+                    <li>
+                        <a href="#">Danh sách sản phẩm</a>
+                    </li>
+                    <li>
+                        <a href="#">Tạo mới sản phẩm</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <script>
+            $('.feat-btn').click(function(){
+                $('nav ul .feat-show').toggleClass("show");
+                $('nav ul .first').toggleClass("rotate");
+                $('nav ul .icon_func').toggleClass("stay")
+            });
+            $('.product-btn').click(function(){
+                $('nav ul .product-show').toggleClass("show1");
+                $('nav ul .second').toggleClass("rotate");
+                $('nav ul .icon_func').toggleClass("stay")
+            });
+            $('nav ul .emply').click(function(){
+                $(this).addClass("active").siblings().removeClass("active");
+            });
+        </script>
+
+    </nav>
+    {{{body}}}
+
+
+    {{!-- <div class="d-flex top">
         <div id="left"></div>
         <div id="center" class="justify-content-center">
             <br/>
@@ -28,11 +96,11 @@
             </div>
             <div id="avatar">
                 <img id="inner-avatar" src="/resources/img/shop/ltn.jpg" alt="Avatar" class="rounded-circle">
-                {{!-- {{#if authUser.avatar}}
+                {{#if authUser.avatar}}
                     <img id="inner-avatar" src="{{authUser.avatar}}" alt="Avatar" class="rounded-circle">
                 {{else}}
                     <img id="inner-avatar" src="/public/images/logo2.jpg" alt="Avatar" class="rounded-circle">
-                {{/if}} --}}
+                {{/if}}
             </div>
             <div><span id="accountName">Shopee Trading</span></div>
             <div><span id="role">Shop</span></div>
@@ -51,26 +119,26 @@
                     </dd>
                     <dd>
                         <div id="ex2"><a class="link" href="javascript:;"><i class="fas fa-film    "></i>     Kho học liệu</a></div>
-                    </dd>
+                    </dd> --}}
                     <script>
-                        $("#ex").on('click',function(){
+                        /*$("#ex").on('click',function(){
                             $("#ex1").toggle('slow');
                             $("#ex2").toggle('slow');
                         })
                         $("#ex2").on('click',function(event){
                             alert('Tính năng này hiện đang tạm khóa');
                             event.preventDefault();
-                        })
+                        })*/
                     </script>
-                    <dt>
+                    {{!-- <dt>
                         <form id="frmLogOut" method="POST" action="/account/logout"></form>
                         <div><a class="text-danger link " href="/account/logout"><i class="fas fa-power-off    "></i>     Đăng xuất</a></div>
                     </dt>
                 </dl>
             </div>
-        </div>
-        {{{body}}}
-    </div>
+        </div> --}}
+
+    {{!-- </div> --}}
     {{!-- {{>footer-index}} --}}
 </body>
 </html>

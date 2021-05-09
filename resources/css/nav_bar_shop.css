@@ -1,0 +1,147 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+.sidebar{
+    position: fixed;
+    width: 250px;
+    left: 0;
+    height: 100%;
+    background: #1b1b1b;
+    /* overflow-y: auto; */
+    z-index: 2;
+    left: 0px;
+    transition: all 0.4s ease;
+}
+
+.sidebar.show{
+    left: -250px;
+}
+
+.text_menu{
+    color: white;
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 65px;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-left: 15px;
+}
+
+nav ul{
+    background: #1b1b1b;
+    height: 100%;
+    width: 100%;
+    list-style: none;
+}
+
+nav ul li{
+    line-height: 60px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+nav ul li a{
+    position: relative;
+    color: rgba(245, 245, 245, 0.815);
+    text-decoration: none;
+    font-size: 15px;
+    padding-left: 30px;
+    font-weight: 400;
+    display: block;
+    width: 100%;
+    border-left: 3px solid transparent;
+}
+
+nav ul li.active a{
+    color: white;
+    border-left-color: #f51167;
+    text-decoration: none;
+}
+
+nav ul li a:hover{
+    text-decoration: none;
+    color: white;
+}
+
+nav ul ul{
+    position: static;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+
+nav ul .feat-show.show{
+    max-height: 100px;
+}
+
+nav ul .product-show.show1{
+    max-height: 100px;
+}
+
+nav ul ul li{
+    line-height: 42px;
+    border-bottom: none;
+}
+
+nav ul ul li a{
+    font-size: 15px;
+    color: rgba(245, 245, 245, 0.815);
+    padding-left: 80px;
+}
+
+nav ul li.active ul li a{
+    color: #e6e6e6;
+    background: #1b1b1b;
+    border-left-color: transparent;
+}
+
+nav ul ul li a:hover{
+    color: cyan!important;
+    background: #1e1e1e!important;
+}
+
+nav ul li a span{
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    font-size: 22px;
+    transition: transform 0.4s;
+}
+
+nav ul li a span.rotate{
+    transform: translateY(-50%) rotate(-180deg);
+}
+
+nav ul li .icon_func.stay{
+    transform: translateY(-50%);
+}
+
+.img_shop_default{
+    width: 32px;
+    height: 32px;
+    margin: auto 0 auto 20px;
+}
+
+.container_img_defaul{
+    display: flex;
+    flex-direction: row;
+    background: #1e1e1e;
+}
+
+.icon_func{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 10px;
+    color: rgba(245, 245, 245, 0.815);
+}
+
+.text_func_menu{
+    margin-left: 30px;
+}
