@@ -1,0 +1,114 @@
+<div class="container_income">
+    <div class="container_income_navbar">
+        <div class="btn_show">
+            <span class="fas fa-bars"></span>
+        </div>
+        <script>
+            $('.btn_show').click(function(){
+                $('.container_income').toggleClass("show");
+                $('.sidebar').toggleClass("show");
+            });
+        </script>
+
+        <div class="title_bar">
+            Danh sách đơn hàng - Division giao hàng
+        </div>
+
+        <div class="account_bar">
+            <div class="account_bar_inner">
+                <div class="img_shop_account">
+                    <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img_account_inner">
+                </div>
+                <div class="name_account">
+                    Divisia Shop
+                </div>
+                <div class="down_arrow">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="func_account_bar" id="func_auth_bar">
+                <div class="func_acc" id="pass_shop">
+                    Thay đổi mật khẩu
+                </div>
+                <div class="func_acc" id="info_shop">Thông tin Shop</div>
+                <div><hr class="inline"></div>
+                <div class="func_acc" id="log_out_shop">Đăng xuất</div>
+            </div>
+            <script>
+                document.addEventListener("click", (evt) => {
+                    const deactive_authe_menu = document.getElementById("func_auth_bar");
+                    if (event.target.closest(".account_bar_inner")) {
+                        deactive_authe_menu.style.display="block";
+                        return;
+                        }
+                    deactive_authe_menu.style.display="none";
+                    });
+            </script>
+        </div>
+    </div>
+
+    <div class="container_bill">
+        <div class="container_bill_items">
+            <div class="link_path">
+                <span class="root_link">Trang trủ</span>
+                <span class="fas fa-greater-than" style="color: rgb(180, 180, 180); font-size: 13px;"></span>
+                <span class="root_link" style="font-weight: 500;">Danh sách đơn hàng - Division</span>
+            </div>
+
+            <div class="input_search">
+                <input type="text" placeholder="Nhập tối đa 20 mã ĐH cách nhau bằng dấu ','" class="input_search_menu" height="10">
+
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Trong khoảng thời gian
+                    </div>
+                    <div class="combo_box">
+                        <div class="combo_box_select">
+                            <span class="selected">Toàn thời gian</span>
+                            <i class="fas fa-caret-down"></i>
+                        </div>
+                    </div>
+                    <div class="drop-down-cbx">
+                        <div class="item-select-cbx first-item active">
+                            Toàn thời gian
+                        </div>
+                        <div class="item-select-cbx second-item">
+                            30 ngày qua
+                        </div>
+                        <div class="item-select-cbx third-item">
+                            7 ngày qua
+                        </div>
+                        <div class="item-select-cbx four-item">
+                            Hôm nay
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    //combo_box_select
+                    $('.combo_box_select').click(function(){
+                        $('.drop-down-cbx').toggleClass("show");
+                    });
+                    $('.first-item').click(function(){
+                        $('.selected').text("Toàn thời gian");
+                    });
+                    $('.second-item').click(function(){
+                        $('.selected').text("30 ngày qua");
+                    });
+                    $('.third-item').click(function(){
+                        $('.selected').text("7 ngày qua");
+                    });
+                    $('.four-item').click(function(){
+                        $('.selected').text("Hôm nay");
+                    });
+                    $('.item-select-cbx').click(function(){
+                        $(this).addClass("active").siblings().removeClass("active");
+                    });
+                </script>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

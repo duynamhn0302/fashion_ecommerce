@@ -3,23 +3,33 @@
     --text_magin_left: 15px;
 }
 
-.container{
+.container_in{
     position: relative;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .container_income{
-    width: 90%;
-    margin-left: 50px;
-    height: auto;
+    width: 100%;
+    height: 110vh;
     display: flex;
     flex-direction: column;
     position: relative;
+    padding-left: 250px;
+    transition: all 0.4s ease;
+    background-color: whitesmoke;
+}
+
+.container_income.show{
+    padding-left: 0px;
 }
 
 .container_income_img{
     background-color: rgb(238, 20, 20);
     width: 100%;
     height: 200px;
+    z-index: 1;
 }
 .image_shop{
     position: absolute;
@@ -40,7 +50,7 @@
 }
 .warning_text{
     margin-left: 20px;
-    bottom: -30px;
+    bottom: -10px;
     margin-top: 10px;
     position: absolute;
     width: 70%;
@@ -52,16 +62,21 @@
     width: 100%;
     height: 50px;
     box-shadow: 0 0 5px #d1d1d1;
+    display: flex;
+    flex-direction: row;
+    position: relative;
 }
 
 .container_income_items{
     position: relative;
     margin-top: 10px;
-    background-color: whitesmoke;
+    background-color: white;
     width: 100%;
     height: 100%;
     display: flex;
     flex-wrap: nowrap;
+    border-radius: 10px;
+    box-shadow: 0 0 2px #d1d1d1;
 }
 
 .container_item_include{
@@ -76,18 +91,19 @@
 .container_item_rate{
     margin-top: 15px;
     background-color: white;
-    height: 100%;
+    height: 380px;
     width: 23%;
     border-radius: 5px;
     box-shadow: 0 0 5px #d1d1d1;
 }
 
 .container_item_ic{
-    width: 250px;
-    height: 90%;
+    width: 30%;
+    height: 350px;
     margin-top: 15px;
     border-radius: 5px;
     box-shadow: 0 0 5px #d1d1d1;
+    position: relative;
 }
 
 .product_selling{
@@ -161,7 +177,6 @@
 }
 
 .func_btn{
-    width: 210px;
     padding: 5px;
     display: flex;
     flex-direction: row;
@@ -169,7 +184,8 @@
 
 .container_btn{
     position: absolute;
-    bottom: 50px;
+    bottom: 15px;
+    width: 100%;
 }
 
 .product_rate_star{
@@ -252,3 +268,102 @@
     box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
 }
 
+.account_bar{
+    width: 200px;
+    height: 100%;
+    right: 0;
+    position: absolute;
+}
+
+.account_bar_inner{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 90%;
+    cursor: pointer;
+    margin: auto auto;
+    justify-content: space-evenly;
+}
+
+.account_bar_inner:hover{
+    background-color: #ececec;
+    cursor: pointer;
+}
+
+.img_shop_account{
+    width: 32px;
+    height: 32px;
+    margin: auto 0 auto 0;
+}
+
+.name_account{
+    margin: auto 0 auto 10px;
+    color: black;
+}
+
+.down_arrow{
+    margin: auto 0 auto 10px;
+    color: black;
+}
+
+.img_account_inner{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.func_account_bar{
+    width: 80%;
+    background-color: white;
+    z-index: 2;
+    position: relative;
+    margin-left: 20px;
+    margin-top: 5px;
+    border-radius: 8px;
+    display: none;
+}
+
+.inline{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.func_acc{
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+#pass_shop:hover{
+    cursor: pointer;
+    background-color: #ececec;
+}
+
+#info_shop:hover{
+    cursor: pointer;
+    background-color: #ececec;
+}
+
+#log_out_shop:hover{
+    cursor: pointer;
+    background-color: #ececec;
+}
+
+.btn_show{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px;
+    cursor: pointer;
+}
+
+.btn_show span{
+    padding: 5px;
+}
+
+.btn_show:hover span{
+    background: #ececec;
+    border-radius: 3px;
+    cursor: pointer;
+}

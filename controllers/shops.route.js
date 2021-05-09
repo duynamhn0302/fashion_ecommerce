@@ -19,6 +19,12 @@ router.get('/incomes', async function (req, res) {
       });
 })
 
+router.get('/bills', async function (req, res) {
+  res.render('vwShop/shop_bill',{
+      layout: 'shop_manage.hbs'
+    });
+})
+
 
 //Xem thông tin shop
 router.get('/information', async function (req, res) {
