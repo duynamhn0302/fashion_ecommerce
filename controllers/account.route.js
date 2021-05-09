@@ -17,6 +17,7 @@ router.post('/check-account',async function(req,res,next){
         return_mode = 2;    //->    username có tồn tại, nhập đúng mật khẩu, đăng nhập thành công
         req.session.authUser = user;
         req.session.auth = true;
+        
     }
     res.json({
         return_mode : return_mode,

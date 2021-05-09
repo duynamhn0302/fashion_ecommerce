@@ -77,7 +77,15 @@
 						<p>Quantity</p>
                         <div id="quan" class="pro-qty"><input type="text" value="1"></div>
                     </div>
-					<a href="#" class="site-btn">SHOP NOW</a>
+					<a  href="#" class="site-btn sb-line sb-dark"><span>Mua ngay</span></a>
+					<form method="POST" class ="frmAddToCart" id="frmAddToCart{{maso}}" action="/add_to_cart">
+						<input  type="hidden" name="id" value="{{maso}}">
+						<a  href="javascript: $('#frmAddToCart{{maso}}').submit();"class="site-btn sb-line sb-dark"><span>Thêm vào giỏ</span></a>
+					</form>
+					<form method="POST" class ="frmLove" id="frmAddToCart{{maso}}" action="/love">
+						<input  type="hidden" name="id" value="{{maso}}">
+						<a href="javascript: $('#frmLove{{maso}}').submit();"class="site-btn"><span>Yêu thích</span></a>
+					</form>
 					<div id="accordion" class="accordion-area">
 						<div class="panel">
 							<div class="panel-header" id="headingOne">
@@ -207,5 +215,5 @@
 		</div>
 	</section>
 	<!-- RELATED PRODUCTS section end -->
-
+<script src="/resources/js/submitAjax.js"></script>
 

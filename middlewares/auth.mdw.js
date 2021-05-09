@@ -66,7 +66,7 @@ module.exports = {
     // },
 
     authUser(req,res,next){
-        if(req.session.auth===false || req.session.authUser.role!==0){
+        if(req.session.auth===false || req.session.authUser.vaitro!==0){
             req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
         }
@@ -74,7 +74,7 @@ module.exports = {
     },
 
     authShop(req,res,next){
-        if(req.session.auth===false || req.session.authUser.role!==1){
+        if(req.session.auth===false || req.session.authUser.vaitro!==1){
             req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
         }
@@ -82,7 +82,9 @@ module.exports = {
     },
 
     authAdmin(req,res,next){
-        if(req.session.auth===false || req.session.authUser.role!==2){
+        
+        if(req.session.auth===false || req.session.authUser.vaitro!==2){
+            console.log(req.session.authUser.role)
             req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
         }

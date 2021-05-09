@@ -49,9 +49,15 @@ module.exports = function (app) {
     res.redirect(url);
   });
 
-  app.post('/add_to_cart',auth.authUser, async function (req,res){    //nhan vao hai tham so tu body la -----id, quantity--------
-    const product = await productModel.getSingleProductById(req.body.id);
-    const quantity = +req.body.quantity;
+  app.post('/add_to_cart',auth.authUser, async function (req,res){ 
+    //nhan vao hai tham so tu body la -----id, quantity--------
+    const product = await productModel.getSingleProductById(+req.body.id);
+    
+    var quantity
+    if (req.body.quantity)
+      quantity = +req.body.quantity;
+    else 
+      quantity = 1;
     if(req.session.auth === false){   //nguoi dung chua dang nhap
       console.log(false);
       res.json(false);

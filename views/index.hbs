@@ -1,6 +1,5 @@
 
 
-
 	<!-- Hero section -->
 	<section class="hero-section">
 		<div class="hero-slider owl-carousel">
@@ -98,8 +97,17 @@
 							</a>
 							<div class="pi-links">
 								<a href="#" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
-								<a href="#" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
-								<a href="#" class="add-card"><i class="flaticon-heart"></i><span>Yêu thích</span></a>
+								<form method="POST" class ="frmAddToCart" id="frmAddToCart{{maso}}" action="/add_to_cart">
+									<input  type="hidden" name="id" value="{{maso}}">
+									<a href="javascript: addToCart('#frmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
+								</form>
+								<form method="POST" class ="frmLove" id = "frmLove{{maso}}" action="/love">
+									<input  type="hidden" name="id" value="{{maso}}">
+									
+								
+									<a  href="javascript: love('#frmLove{{maso}}');" class="add-card"><i class="flaticon-heart"></i><span>Yêu thích</span></a>
+								</form>
+								
 							</div>
 						</div>
 						<a href="/products/{{maso}}">
@@ -142,8 +150,17 @@
 							</a>
 							<div class="pi-links">
 								<a href="#" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
-								<a href="#" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
-								<a href="#" class="add-card"><i class="flaticon-heart"></i><span>Yêu thích</span></a>
+								<form method="POST" class ="frmAddToCart" id="frmAddToCart{{maso}}" action="/add_to_cart">
+									<input  type="hidden" name="id" value="{{maso}}">
+									<a href="javascript: addToCart('#frmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
+								</form>
+								<form method="POST" class ="frmLove" id = "frmLove{{maso}}" action="/love">
+									<input  type="hidden" name="id" value="{{maso}}">
+									
+								
+									<a  href="javascript: love('#frmLove{{maso}}');" class="add-card"><i class="flaticon-heart"></i><span>Yêu thích</span></a>
+								</form>
+								
 							</div>
 						</div>
 						<a href="/products/{{maso}}">
@@ -177,12 +194,6 @@
 			</div>
 		</div>
 	</section>
-	<!-- Banner section end  -->
-
-
-	<!-- Footer section -->
 	
-	<!-- Footer section end -->
 
-
-
+<script src="/resources/js/submitAjax.js"></script>

@@ -15,7 +15,7 @@ $(document).ready(function(){
 
     $('body').keypress(function(e){
         if(e.keyCode==13)
-        submit.click();
+            submit.click();
     });
 
     function checkHovaTen(){
@@ -92,7 +92,7 @@ $(document).ready(function(){
         var username = $('#username').val();
         var pass = $('#password').val();
         $.post("/account/check-account",{username: username, password: pass},function(data, status){
-            return_mode = data.return_mode;
+            var return_mode = data.return_mode;
             if(return_mode === 0){     //tai khoan chua co nguoi su dung, co the dang ky
                 const bodyData = {
                     fullname: $('#fullname').val(),

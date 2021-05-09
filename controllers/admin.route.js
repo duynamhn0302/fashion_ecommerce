@@ -2,13 +2,12 @@ const express = require('express');
 const router = express.Router();
 const shopModel = require('../models/shop.model');
 const usersModel = require('../models/users.model');
-const auth = require('../middlewares/routes.mdw');
+const auth = require('../middlewares/auth.mdw');
 const productsModel = require('../models/products.model');
-const authAdmin = auth.authAdmin
 //Admin
   //admin channel
 //view account info
-router.get('/',   async function (req, res, next){
+router.get('/',  auth.authAdmin, async function (req, res, next){
     let user = res.locals.authUser;
     const accounts = await usersModel.allUser()
     const shops = await shopModel.allShop()
@@ -20,7 +19,7 @@ router.get('/',   async function (req, res, next){
     })
 });
 //view statistics
-router.get('/statistics',   async function (req, res, next){
+router.get('/statistics', auth.authAdmin,  async function (req, res, next){
     try {
         const shops = await shopModel.topNShop(30) // Top shop
         const customers = await usersModel.topNUser(30) // Top customer
@@ -39,7 +38,7 @@ router.get('/statistics',   async function (req, res, next){
       }
 });
 //view products
-router.get('/products',  async function (req, res, next){
+router.get('/products', auth.authAdmin, async function (req, res, next){
     const products = await productsModel.allProduct()
     console.log(products)
     res.status(200).render("vwAdmin/admin-products", {
@@ -49,19 +48,22 @@ router.get('/products',  async function (req, res, next){
 });
   
 
-router.post('/admin/deleteAccount', async (req, res) =>{
+router.post('/deleteAccount', async (req, res) =>{
     const id = req.body.id;
     console.log(id)
+    const url = req.session.retUrl;
     res.redirect(url);
 });
-router.post('/admin/deleteShop',  async (req, res) =>{
+router.post('/deleteShop',  async (req, res) =>{
     const id = req.body.id;
     console.log(id)
+    const url = req.session.retUrl;
     res.redirect(url);
 });
 router.post('/admin/deleteProduct', async (req, res)=>{
     const id = req.body.id;
     console.log(id)
+    const url = req.session.retUrl;
     res.redirect(url);
 });
 module.exports = router;
