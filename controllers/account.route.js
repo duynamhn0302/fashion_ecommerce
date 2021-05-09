@@ -48,4 +48,28 @@ router.post('/create-account',async function(req,res,next){
     res.json({});
 }); 
 
+router.post('/add-shop',async function(req,res){
+    const name= req.body.name;
+    const email = req.body.email;
+    const phone = req.body.phone;
+
+    const check = await userModel.checkShop(req.session.authUser.maso);
+    console.log(check);
+    if(!check){
+        res.json({return_mode: 0});
+    }else{
+        const data = {
+            email: email,
+            ngaymo: null,
+            sdt: phone,
+            status: true,
+            taikhoan: req.session.authUser.maso,
+            ten: name,
+          }
+          const shopduocadd = await userModel.addShop(data);
+          console.log(shopduocadd);
+          res.json({return_mode: 1,masoshop: shopduocadd.insertId || null});
+    } 
+  })
+
 module.exports = router;

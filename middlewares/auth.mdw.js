@@ -18,6 +18,19 @@ module.exports = {
         next();
     },
 
+    auth_reverse(req,res,next){
+        if(req.session.auth===true){
+            req.session.retUrl = req.originalUrl;
+        }else
+        /*else{
+            if (req.session.authUser.role===1)
+            {
+                return res.redirect('/lecturer');
+            }
+        }*/
+        next();
+    },
+
     // authIndex(req,res,next){
     //     if(req.session.auth===true)
     //     {
@@ -60,7 +73,7 @@ module.exports = {
         next();
     },
 
-    authLecturer(req,res,next){
+    authShop(req,res,next){
         if(req.session.auth===false || req.session.authUser.role!==1){
             req.session.retUrl = req.originalUrl;
             return res.redirect('/login');

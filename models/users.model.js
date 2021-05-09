@@ -92,4 +92,16 @@ module.exports = {
     //     const [rows, fields] = await db.add(cat,'category');
     //     return rows;
     // }
+
+    async checkShop(userId){
+        const [rows, fields] = await db.load(`SELECT * FROM cuahang WHERE taikhoan = ${userId}`);
+        console.log(rows);
+        if(rows.length===0) return true;
+        return false;
+    },
+
+    async addShop(data){
+        const [rows,fields] = await db.add(data,'cuahang');
+        return rows;
+    },
 }
