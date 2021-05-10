@@ -102,6 +102,10 @@ body {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
+
+  .input-mb10{
+    margin-bottom:10px !important;
+  }
   
   .form {
     margin: 0 auto;
@@ -115,9 +119,9 @@ body {
     width: 350px;
     padding: 20px;
     overflow: hidden;
-    background-color: black;
+    background-color: rgba(0,0,0,0);
     border: 1px solid rgba(255, 255, 255, 0.5);
-    background: inherit;
+    /* background: inherit; */
     -moz-border-radius: 12px;
     -webkit-border-radius: 12px;
     border-radius: 12px;
@@ -211,6 +215,7 @@ body {
   .form .topbar .input:hover {
     border: 1px solid white;
   }
+
   .form .submit {
     padding: 10px 20px;
     width: 100%;
@@ -309,7 +314,23 @@ body {
   }
 
 .form_signup{
-  top: 17%;
+  top: 25%;
+}
+
+.logo{
+  margin-top:150px;
+  margin-left: 44%;
+  position: fixed;
+}
+
+.logo-signup{
+  top:16%;
+  left:44%;
+  position: fixed;
+}
+
+div>a{
+  cursor: default;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -320,7 +341,26 @@ body {
     background: rgba(255, 255, 255, 0.76);
   }
 
-  .form_signup{
+  .logo{
+    margin-left: 39%;
+  }
+
+  .logo-signup{
+    left:39%;
+  }
+
+  /* .form_signup{
     top: 10%;
+  } */
+}
+
+@media only screen and (max-width: 500px) {
+  .logo{
+    margin-left: 30%;
+  }
+
+  .logo-signup{
+    left:30%;
   }
 }
+
