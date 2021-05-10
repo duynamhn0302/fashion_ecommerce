@@ -70,6 +70,8 @@ router.post('/add-shop',async function(req,res){
           const shopduocadd = await userModel.addShop(data);
           console.log(shopduocadd);
           res.json({return_mode: 1,masoshop: shopduocadd.insertId || null});
+
+          //chua bien role cua nguoi dung thanh 2
     } 
   })
 
