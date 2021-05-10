@@ -51,5 +51,19 @@ module.exports = {
         FROM (SELECT a.*,b.giaban FROM chitietgiohang a JOIN sanpham b ON a.sanpham=b.maso WHERE a.giohang = ${cartId})as c `);
         if(rows.length === 0)   return null;
         return rows[0];
+    },
+
+    async getAllProductsWithUserId(userId) {
+        const [rows, fields] = await db.load(`select sanpham.ten, sanpham.giaban, sanpham.maso, sanpham.kichthuoc, sanpham.cuahang, chitietgiohang.soluong
+        from sanpham join chitietgiohang on sanpham.maso = chitietgiohang.sanpham join giohang on giohang.maso = chitietgiohang.giohang
+        where taikhoan = '${userId}'`);
+        return rows.length ? rows : null;
+    },
+
+    async getShopNameFromProductId(productId) {
+        const [rows, fields] = await db.load(`SELECT cuahang.ten 
+        FROM cuahang JOIN sanpham ON cuahang.maso = sanpham.cuahang
+        WHERE sanpham.maso = '${productId}'`);
+        return rows.length ? rows[0] : null;
     }
 }
