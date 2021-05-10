@@ -86,7 +86,15 @@
 										<hr class="line-user">
 										<div class="option-item-auth">
 											<form method="POST" id="frmLogout" action="/logout"></form>
-											<a href="javascript: $('#frmLogout').submit();" class="option-select-auth">Đăng xuất</a>
+											{{!-- <a href="javascript: $('#frmLogout').submit();" class="option-select-auth">Đăng xuất</a> --}}
+											<script>
+												function logout(){
+													$.post('/logout',function(data,status){
+														window.location.replace(data.location);
+													})
+												}
+											</script>
+											<a href="javascript: logout();" class="option-select-auth">Đăng xuất</a>
 										</div>
 									</div>
 									<script>

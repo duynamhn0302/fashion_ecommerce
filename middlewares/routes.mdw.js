@@ -9,8 +9,11 @@ module.exports = function (app) {
     const categories = await productModel.allCategories()
     const top10New = await productModel.topNNew(10);
     
-    // res.locals.auth = req.session.auth;
-    // res.locals.authUser = req.session.authUser;
+    if(req.session.auth === true) res.locals.auth = req.session.auth;
+    if(typeof(req.session.authUser) === 'undefined' || req.session.authUser === null) res.locals.authUser = null;
+    else{
+      res.locals.authUser = req.session.authUser;
+    }
 
     console.log(res.locals.authUser);
     for(var i = 0; i < top10New.length; i++) {
@@ -43,25 +46,16 @@ module.exports = function (app) {
     res.render('signup',{layout: false});
    });
 
-  app.get('/logout', async function (req, res) {
-    req.session.auth = false;
-    req.session.authUser = null;
-    req.session.retUrl = null;
-    console.log("Logging out");
-  
-    res.redirect('/');
-  })
   app.post('/logout',auth.auth, async function (req, res) {
     req.session.auth = false;
     req.session.authUser = null;
     req.session.retUrl = null;
-    res.locals.auth = req.session.auth;
-    res.locals.authUser = req.session.authUser;
-    console.log("Logging out");
+    req.session.logout = 1;
+    console.log("Logging out post");
   
-    const url = '/';
-    console.log(url);
-    res.redirect('/logout');
+    req.session.retUrl = req.headers.referer || '/';
+    // console.log(url);
+    res.json({location:req.session.retUrl});
   });
 
   app.post('/add_to_cart',auth.authUser, async function (req,res){ 

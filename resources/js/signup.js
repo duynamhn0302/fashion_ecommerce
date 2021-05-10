@@ -93,7 +93,6 @@ $(document).ready(function(){
         var pass = $('#password').val();
         $.post("/account/check-account",{username: username, password: pass},function(data, status){
             var return_mode = data.return_mode;
-            var retUrl = data.retUrl;
             if(return_mode === 0){     //tai khoan chua co nguoi su dung, co the dang ky
                 const bodyData = {
                     fullname: $('#fullname').val(),
@@ -116,7 +115,7 @@ $(document).ready(function(){
                 topbar.addClass('success');
                 form.addClass('goAway');
                 setTimeout(function(){
-                    window.location.replace(retUrl);
+                    window.location.replace('account/verification');
                 },500);
             }else{
                 $('#username').addClass('error');

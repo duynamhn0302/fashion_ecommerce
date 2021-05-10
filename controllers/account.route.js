@@ -34,18 +34,20 @@ router.post('/create-account',async function(req,res,next){
         ngaysinh: null,
         sdt: null,
         vaitro: 0,
-        avatar: 'images/default_avatar.png',
+        avatar: '/resources/images/default_avatar.png',
         status: true,
         ngaymo: null,
     }
-    const user = await userModel.add(data);
-    if(user === null){
-        res.status(406);
-    }else{
-        req.session.authUser = data;    //dang ky thanh cong, dang nhap luon
-        req.session.auth = true;
-        console.log(req.session.authUser);
-    }
+    // const user = await userModel.add(data);
+    // if(user === null){
+    //     res.status(406);
+    // }else{
+    //     req.session.authUser = data;
+    //     req.session.auth = false;
+    //     console.log(req.session.authUser);
+    // }
+    req.session.data = data
+    req.session.auth = false;
     res.json({});
 }); 
 
@@ -73,6 +75,77 @@ router.post('/add-shop',async function(req,res){
 
           //chua bien role cua nguoi dung thanh 2
     } 
-  })
+  });
+
+router.get('/verification',function(req,res,next){
+    if(req.session.auth === true){
+        res.redirect('/');
+      }else{
+        res.render('otp',{
+          email: req.session.data.email,
+          layout: false,
+        });
+      }
+})
+
+const nodemailer = require('nodemailer');
+const speakeasy = require('speakeasy');
+let transporter = nodemailer.createTransport({
+  host: "localhost:3000", // hostname
+  secure: false, // use SSL
+  port: 25, // port for secure SMTP
+  service: 'gmail',
+  tls: {
+    rejectUnauthorized: false
+  },
+
+  auth: {
+    user: 'tt5335084@gmail.com',
+    pass: 'PHUC&123'
+  }
+});
+
+router.post('/send-otp',function(req,res,next){
+    //generate token
+    var secret = speakeasy.generateSecret({length:20});
+  req.session.tempsecret = secret.base32;
+  req.session.token = speakeasy.totp({
+    secret: req.session.tempsecret,
+    encoding: 'base32',
+    step: 20
+  });
+  let mailOptions = {
+    from: 'tt5335084@gmail.com',
+    to: req.session.data.email,
+    subject: 'Verify code', 
+    html: `<span>Your verification code is </span><h1>${req.session.token}</h1><br><p>This verification code will expires after 10mins.`
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      console.log(error);
+    }else{
+      console.log('Email sent: '+ info.response);
+    }
+  });
+  res.json(true);
+})
+
+router.post('/check-otp',async function(req,res){
+    var tokenValidates = speakeasy.totp.verify({
+      secret: req.session.tempsecret,
+      encoding: 'base32',
+      token: req.body.verification,
+      step:20,
+      window: 5
+    });
+    if(tokenValidates || req.body.verification === req.session.token){
+      const user = await userModel.add(req.session.data);
+      req.session.auth = true;
+      req.session.authUser = req.session.data;
+      req.session.data = null;
+      res.json({retUrl:req.session.retUrl || '/',check:true});
+    }
+    else res.json({retUrl:req.session.retUrl || '/',check:false});
+})
 
 module.exports = router;

@@ -329,7 +329,7 @@ body {
   position: fixed;
 }
 
-div>a{
+div>a.site-logo{
   cursor: default;
 }
 

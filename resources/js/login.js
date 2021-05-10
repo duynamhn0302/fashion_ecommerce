@@ -67,8 +67,13 @@ $(document).ready(function(){
                 }else{
                     if(return_mode === 1){
                         $('#findpass').text('Mật khẩu sai');
+                        $('#password').val('');
+                        $('#password').focus();
                     }else{
                         $('#findpass').text('Tài khoản không hợp lệ');
+                        $('#username').val('');
+                        $('#username').focus();
+                        $('#password').val('');
                     }
                     topbar.addClass('error');
                     tries++;
