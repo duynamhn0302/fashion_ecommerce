@@ -8,9 +8,14 @@ module.exports = function (app) {
   app.get('/', async function (req, res) {
     const categories = await productModel.allCategories()
     const top10New = await productModel.topNNew(10);
+    
+    // res.locals.auth = req.session.auth;
+    // res.locals.authUser = req.session.authUser;
+
+    console.log(res.locals.authUser);
     for(var i = 0; i < top10New.length; i++) {
       const images = await productModel.getImages(top10New[i].maso)
-      console.log(images)
+      
       top10New[i].avatar = images[0].link;
     };
     
@@ -38,15 +43,25 @@ module.exports = function (app) {
     res.render('signup',{layout: false});
    });
 
-  app.post('/logout',auth.auth, async function (req, res) {
+  app.get('/logout', async function (req, res) {
     req.session.auth = false;
     req.session.authUser = null;
     req.session.retUrl = null;
     console.log("Logging out");
   
-    const url = req.headers.referer || '/';
+    res.redirect('/');
+  })
+  app.post('/logout',auth.auth, async function (req, res) {
+    req.session.auth = false;
+    req.session.authUser = null;
+    req.session.retUrl = null;
+    res.locals.auth = req.session.auth;
+    res.locals.authUser = req.session.authUser;
+    console.log("Logging out");
+  
+    const url = '/';
     console.log(url);
-    res.redirect(url);
+    res.redirect('/logout');
   });
 
   app.post('/add_to_cart',auth.authUser, async function (req,res){ 
