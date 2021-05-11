@@ -50,14 +50,14 @@ router.get("/shopping-cart", async function (req, res) {
   //get products details
   let products = await cartModel.getAllProductsWithUserId(user.maso);
   let empty = products === null ? true : false;
-  //get product image
+  //get product
   if (!empty) {
-    await products.map(async product => {
+    await Promise.all(products.map(async product => {
       let images = await productsModel.getImages(product.maso);
-      let store = await cartModel.getShopNameFromProductId(product.maso);
+      let shop = await cartModel.getShopNameFromProductId(product.maso);
       product.hinhanh = images[0].link;
-      product.cuahang = store.ten;
-    })
+      product.cuahang = shop.ten;
+    }))
   }
 
   res.render("../views/users_views/Cart.hbs", {
@@ -66,6 +66,18 @@ router.get("/shopping-cart", async function (req, res) {
     empty
   });
 });
+
+router.post('/change-amount-cart', async function (req, res) {
+  await cartModel.cartProductsAmountChanged(+req.body.masanpham, +req.body.soluong, +req.body.magiohang, +req.body.tongsanpham, req.body.tongiatien);
+})
+
+router.post('/remove-from-cart', async function (req, res) {
+  await cartModel.cartProductsRemoved(+req.body.masanpham, +req.body.magiohang);
+  let tonggia = await cartModel.sumProductInCart(+req.body.magiohang);
+  req.body.tongiatien = tonggia.tonggia;
+  await cartModel.cartProductsUpdateAfterRemoving(+req.body.tongsanpham - +req.body.soluong, req.body.tongiatien, req.body.magiohang);
+})
+
 
 //Xem đơn hàng
 router.get("/orders", async function (req, res) {});
