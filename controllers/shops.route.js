@@ -25,6 +25,12 @@ router.get('/bills', async function (req, res) {
     });
 })
 
+router.get('/new', async function (req, res) {
+  res.render('vwShop/shop_create_product',{
+      layout: 'shop_manage.hbs'
+    });
+})
+
 
 //Xem thông tin shop
 router.get('/information', async function (req, res) {
