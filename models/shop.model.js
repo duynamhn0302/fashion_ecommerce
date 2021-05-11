@@ -17,5 +17,11 @@ module.exports = {
         LIMIT ${n}`;
         const [rows, fields] = await db.load(sql);
         return rows;
+    },
+    async shopOfId(userId){
+        const sql = `SELECT * FROM cuahang WHERE taikhoan = ${userId}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
     }
 }

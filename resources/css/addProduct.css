@@ -1,0 +1,134 @@
+.w-90{
+    width:90%;
+}
+
+.w-100{
+    width:100%;
+}
+
+.wcb-50{
+    width:40%;
+}
+
+.add-shop-header{
+    margin-left:14px;
+    padding-top: 5px;
+    margin-bottom:-10px;
+    font-weight: bolder;
+}
+
+.add-shop-body{
+    padding-left:10px;
+}
+
+.add-shop-ttc-name{
+    margin-bottom:10px;
+}
+
+.important{
+    color:red;
+    font-size: smaller;
+}
+
+.add-shop-label{
+    font-weight: bolder;
+}
+
+.add-shop-ttc-category{
+    display:flex;
+    margin-bottom:10px;
+}
+
+.add-shop-category-1, .add-shop-category-2{
+    width:50%;
+}
+
+.add-shop-category-2{
+    display:none;
+}
+
+.margin-top-20{
+    margin-top:20px;
+}
+
+.ck-editor__editable {
+    min-height: 300px;
+}
+
+.r104{
+    margin-top: -10px;
+    margin-left:4px;
+}
+
+.container_bill_items{
+    padding-bottom:4px;
+}
+
+.container_income{
+    height:auto;
+}
+
+/* .fix{
+    position:fixed;
+    z-index:10; 
+}
+
+.account_bar{
+    z-index:120;
+} */
+
+.flex{
+    display:flex;
+}
+
+.right{
+    float:right;
+    position:relative;
+}
+
+.last_item{
+    padding:5px;
+}
+
+.bigger{
+    font-size: 19px;
+    margin-top:3px;
+}
+
+.btn_search_input{
+    padding-right:12px;
+    margin:5px;
+}
+
+.blue-btn{
+    background-color:rgb(10, 152, 235);
+}
+.red-btn{
+    background-color:red;
+}
+.white-btn{
+    background-color: white;
+    color:black;
+    border:1px solid black;
+    outline:none;
+}
+
+.last_container{
+    margin-bottom: 30px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+@media only screen and (max-width:830px){
+    .container_income{
+        padding-left: 0px;
+        z-index:100;
+    }
+    .sidebar{
+        z-index:0;
+    }
+}
