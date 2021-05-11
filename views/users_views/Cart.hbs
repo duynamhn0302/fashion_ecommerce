@@ -1,0 +1,83 @@
+<body>
+	<div class="page_wrapper">
+		<div class="title_container">
+			<h2 class="title">Trang cá nhân</h2>
+		</div>
+		<section class="body_container">
+			<div class="tabs_container">
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget">
+						<ul>
+							<li><a class="li_tab" href="/users/profile">Cập nhật thông tin cá nhân</a></li>
+							<li><a class="li_tab" href="">Danh sách yêu thích</a></li>
+							<li><a class="li_tab" href="/users/shopping-cart">Giỏ hàng</a></li>
+							<li><a class="li_tab" href="">Lịch sử đơn hàng</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="content_container">
+				<div class="cart_title">
+					<h4>Giỏ hàng</h4>
+				</div>
+				<div class="cart_container">
+					{{#if empty}}
+						<img src="/resources/images/none.png" alt="">
+					{{else}}
+					<div class="cart_list overflow-hidden">
+						<div class="row description_title">
+							<div class="col-6" id="product_description">
+								<span>Sản phẩm</span>
+							</div>
+							<div class="col-2">
+								<span>Số lượng</span>
+							</div>
+							<div class="col-2" id="price_description">
+								<span>Giá</span>
+							</div>
+						</div>
+						{{#each products}}
+						<div class="row single_product">
+							<div class="col-2 image_col">
+								<img id="product_image" src="{{hinhanh}}" alt="product-on-cart">
+							</div>
+							<div class="col-4 product_details">
+								<h4 id="product_name">{{ten}}</h4>
+								<span id="product_price">{{giaban}} đ</span>
+								<span id="product_id">#{{maso}}</span>
+								<span id="product_size">{{kichthuoc}}</span>
+								<span id="shop">{{cuahang}}</span>
+							</div>
+							<div class="col-2 product_quantity">
+								<div class="quantity">
+									<input type="number" min="1" step="1" value="{{soluong}}">
+								</div>
+							</div>
+							<div class="col-3 product_total_price">
+								<h4 class="product_price_total">{{giaban}} </h4><h4> đ</h4>
+							</div>
+							<div class="col-1 delete_button_container">
+								<button id="delete_button" type="submit"><i class="fas fa-trash"></i></button>
+							</div>
+						</div>
+						{{/each}}
+					</div>
+					{{/if}}
+				</div>
+				<div class="row temp_bill">
+					<div class="col-8">
+
+					</div>
+					<div class="col-2 total_price_container">
+						<h3 id="total_cart_price">0 đ</h3>
+						<button type="submit" class="site-btn sb-line sb-dark pay_btn">Thanh toán</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</div>
+</body>
+<!--====== Javascripts & Jquery ======-->
+<script src="/resources/js/jquery-3.2.1.min.js"></script>
+<script src="/resources/js/cart.js"></script>

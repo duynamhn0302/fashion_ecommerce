@@ -20,7 +20,8 @@ module.exports = {
 
     auth_reverse(req,res,next){
         if(req.session.auth===true){
-            req.session.retUrl = req.originalUrl;
+            // req.session.retUrl = req.originalUrl;    
+            req.session.retUrl = '/';
         }else
         /*else{
             if (req.session.authUser.role===1)

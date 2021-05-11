@@ -8,9 +8,9 @@
 				<div class="col-lg-3 col-sm-6">
 					<div class="footer-widget">
 						<ul>
-							<li><a class="li_tab" href="">Cập nhật thông tin cá nhân</a></li>
+							<li><a class="li_tab" href="/users/profile">Cập nhật thông tin cá nhân</a></li>
 							<li><a class="li_tab" href="">Danh sách yêu thích</a></li>
-							<li><a class="li_tab" href="">Giỏ hàng</a></li>
+							<li><a class="li_tab" href="/users/shopping-cart">Giỏ hàng</a></li>
 							<li><a class="li_tab" href="">Lịch sử đơn hàng</a></li>
 						</ul>
 					</div>
@@ -27,7 +27,7 @@
 								<div class="form-floating mb-3" style="margin-top: 15px">
 									<div class="avatar_holder">
 										<div class="avatar_image">
-											<img src="/resources/images/default_avatar.png" alt="avatar">
+											<img src="{{user.avatar}}" alt="avatar">
 										</div>
 										<div class="avatar_change_holder">
 											<img src="/resources/img/icons/camera.png" alt="change-icon">
@@ -36,20 +36,21 @@
 								</div>
 							</div>
 							<div class="col-5">
-								<form action="" method="post">
+								<form id="input_changed_submitting" action="/users/change-profile" method="post">
 									<div class="form-floating mb-3">
-										<input type="email" class="form-control" id="emailInput"
-											value="name@example.com" placeholder="name@example.com">
+										<input type="email" class="form-control form-control-input" id="emailInput"
+											value="{{user.email}}" placeholder="{{user.email}}" name="email" readonly>
 										<label for="emailInput">Địa chỉ email</label>
 									</div>
 									<div class="form-floating mb-3">
-										<input type="text" class="form-control" id="nameInput" value="Nguyễn Văn A"
-											placeholder="Nguyen Van A">
-										<label for="floatingInput">Họ tên</label>
+										<input type="text" class="form-control form-control-input" id="nameInput"
+											value="{{user.hoten}}" placeholder="{{user.hoten}}" name="hoten">
+										<label for="nameInput">Họ tên</label>
 									</div>
 									<div class="form-floating mb-3">
-										<input type="number" class="form-control" id="phoneInput" value="0987123456"
-											placeholder="0987123456">
+										<input type="number" class="form-control form-control-input" id="phoneInput"
+											value="{{user.sdt}}" placeholder="{{user.sdt}}" name="sdt" maxlength="11"
+											minlength="10">
 										<label for="phoneInput">Số điện thoại</label>
 									</div>
 								</form>
@@ -76,28 +77,34 @@
 														aria-label="Close"></button>
 												</div>
 												<div class="modal-body">
-													<form action="" method="post">
+													<form id="password_changed_submitting" action="/users/change-password" method="post">
 														<div class="form-floating mb-3">
-															<input type="password" class="form-control" id="emailInput"
-																placeholder="name@example.com">
-															<label for="emailInput">Mật khẩu hiện tại</label>
+															<input type="password"
+																class="form-control form-control-input-password"
+																id="currentPassword" placeholder="123"
+																name="current_password">
+															<label for="currentPassword">Mật khẩu hiện tại</label>
 														</div>
 														<div class="form-floating mb-3">
-															<input type="password" class="form-control" id="nameInput"
-																placeholder="Nguyen Van A">
-															<label for="floatingInput">Nhập lại mật khẩu</label>
+															<input type="password"
+																class="form-control form-control-input-password"
+																id="newPassword" placeholder="123" name="new_password">
+															<label for="newPassword">Mật khẩu mới</label>
 														</div>
 														<div class="form-floating mb-3">
-															<input type="password" class="form-control" id="phoneInput"
-																placeholder="0987123456">
-															<label for="phoneInput">Mật khẩu mới</label>
+															<input type="password"
+																class="form-control form-control-input-password"
+																id="newPasswordConfirmed" placeholder="123"
+																name="confirm_password">
+															<label for="newPasswordConfirmed">Nhập lại mật khẩu</label>
 														</div>
 													</form>
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary"
+													<button type="button" class="btn btn-secondary close_modal_btn"
 														data-bs-dismiss="modal">Đóng</button>
-													<button type="button" class="btn change_password_btn change_password_confirm">Thay
+													<button type="button"
+														class="btn change_password_btn change_password_confirm">Thay
 														đổi</button>
 												</div>
 											</div>
@@ -113,3 +120,6 @@
 
 	</div>
 </body>
+<!--====== Javascripts & Jquery ======-->
+<script src="/resources/js/jquery-3.2.1.min.js"></script>
+<script src="/resources/js/profile.js"></script>

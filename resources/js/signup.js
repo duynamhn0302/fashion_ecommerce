@@ -115,8 +115,7 @@ $(document).ready(function(){
                 topbar.addClass('success');
                 form.addClass('goAway');
                 setTimeout(function(){
-                    window.location.href = '/';
-                    // window.location.replace('/');
+                    window.location.replace('account/verification');
                 },500);
             }else{
                 $('#username').addClass('error');

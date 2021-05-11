@@ -27,6 +27,7 @@
 	<link rel="stylesheet" href="/resources/css/style.css" />
 
 	<link rel="stylesheet" href="/resources/css/profile.css">
+	<link rel="stylesheet" href="/resources/css/cart.css">
 
 
 	<!--[if lt IE 9]>
@@ -86,7 +87,15 @@
 										<hr class="line-user">
 										<div class="option-item-auth">
 											<form method="POST" id="frmLogout" action="/logout"></form>
-											<a href="javascript: $('#frmLogout').submit();" class="option-select-auth">Đăng xuất</a>
+											{{!-- <a href="javascript: $('#frmLogout').submit();" class="option-select-auth">Đăng xuất</a> --}}
+											<script>
+												function logout(){
+													$.post('/logout',function(data,status){
+														window.location.replace(data.location);
+													})
+												}
+											</script>
+											<a href="javascript: logout();" class="option-select-auth">Đăng xuất</a>
 										</div>
 									</div>
 									<script>
@@ -281,6 +290,9 @@
 <script src="/resources/js/jquery-ui.min.js"></script>
 <script src="/resources/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+{{!-- Notification xinh dep --}}
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<link rel="stylesheet" href="sweetalert2.min.css">
 </body>
 
 </html>

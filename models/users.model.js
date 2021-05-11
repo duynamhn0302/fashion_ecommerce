@@ -2,12 +2,12 @@ const db = require('../utils/db');
 
 module.exports = {
     async allUser(){
-        const sql = `select * from taikhoan `;
+        const sql = `select * from taikhoan` ;
         const [rows, fields] = await db.load(sql);
         return rows;
     },
     async singleByUsername(username){
-        const sql = `select * from taikhoan where username = '${username}'`;
+        const sql = `select * from TaiKhoan where username = '${username}'`;
         const [rows, fields] = await db.load(sql);
         if(rows.length === 0)
             return null;
@@ -15,7 +15,7 @@ module.exports = {
     },
 
     // async singleByEmail(email){
-    //     const sql = `select * from user where email= '${email}'`;
+    //     const sql = select * from user where email= '${email}';
     //     const [rows, fields] = await db.load(sql);
     //     if(rows.length === 0)
     //         return null;
@@ -23,7 +23,7 @@ module.exports = {
     // },
 
     // async singleById(id){
-    //     const sql = `select * from user where user_id= '${id}'`;
+    //     const sql = select * from user where user_id= '${id}';
     //     const [rows, fields] = await db.load(sql);
     //     if(rows.length === 0)
     //         return null;
@@ -31,16 +31,16 @@ module.exports = {
     // },
 
     async add(user){
-        const [result, fields] = await db.add(user,'taikhoan');
+        const [result, fields] = await db.add(user,'TaiKhoan');
         return result;
     },
 
-    // async patch(user){
-    //     var condition={user_id: user.user_id};
-    //     //delete (user.user_id);
-    //     const [result, fields] = await db.patch(user,condition,'user');
-    //     return result;
-    // },
+    async patch(user){
+        var condition={email: user.email};
+        //delete (user.user_id);
+        const [result, fields] = await db.patch(user, condition,'TaiKhoan');
+        return result;
+    },
 
     // async changeInfo(user) {
     //     let condition = {email: user.email};

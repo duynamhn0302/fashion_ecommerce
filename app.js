@@ -32,6 +32,28 @@ app.use(express.urlencoded({
 }));
 //---local---
 require('./middlewares/locals.mdw')(app);
+// app.use(async function (req,res,next){
+//   if(typeof(req.session.auth) === 'undefined'){
+//     req.session.auth = false;
+//   }
+//   if (req.session.auth===false){
+//     req.session.cart=[];
+//     req.session.shopCart=[];
+//   }
+//   else{
+//     // req.session.cart=await cartModel.getFaCartById(req.session.authUser.user_id);
+//     // req.session.shopCart= await cartModel.getBuyCartById(req.session.authUser.user_id)
+//   }
+//   res.locals.cid = null;
+//   res.locals.auth = req.session.auth;
+//   res.locals.authUser = req.session.authUser;
+//   res.locals.cartSummary=cartModel.getNumberOfItems(req.session.cart);
+//   res.locals.shopCartSummary=cartModel.getNumberOfItems(req.session.shopCart);
+//   res.locals.cartTotal=cartModel.getPriceOfItems(req.session.cart);
+//   res.locals.shopcartTotal=cartModel.getPriceOfItems(req.session.shopCart);
+//   next();
+// })
+
 app.use('/resources', express.static('resources'));
 require('./middlewares/view.mdw')(app);
 require('./middlewares/routes.mdw')(app);

@@ -8,9 +8,17 @@ module.exports = function (app) {
   app.get('/', async function (req, res) {
     const categories = await productModel.allCategories()
     const top10New = await productModel.topNNew(10);
+    
+    if(req.session.auth === true) res.locals.auth = req.session.auth;
+    if(typeof(req.session.authUser) === 'undefined' || req.session.authUser === null) res.locals.authUser = null;
+    else{
+      res.locals.authUser = req.session.authUser;
+    }
+
+    console.log(res.locals.authUser);
     for(var i = 0; i < top10New.length; i++) {
       const images = await productModel.getImages(top10New[i].maso)
-      console.log(images)
+      
       top10New[i].avatar = images[0].link;
     };
     
@@ -42,11 +50,12 @@ module.exports = function (app) {
     req.session.auth = false;
     req.session.authUser = null;
     req.session.retUrl = null;
-    console.log("Logging out");
+    req.session.logout = 1;
+    console.log("Logging out post");
   
-    const url = req.headers.referer || '/';
-    console.log(url);
-    res.redirect(url);
+    req.session.retUrl = req.headers.referer || '/';
+    // console.log(url);
+    res.json({location:req.session.retUrl});
   });
 
   app.post('/add_to_cart',auth.authUser, async function (req,res){ 
