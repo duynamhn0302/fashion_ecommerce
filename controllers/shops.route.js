@@ -1,4 +1,5 @@
 const express = require('express');
+const productModel = require('../models/products.model');
 const router = express.Router();
 //Xem màn hình shop
 router.get('/', async function (req, res) {
@@ -25,6 +26,12 @@ router.get('/bills', async function (req, res) {
     });
 })
 
+router.get('/new', async function (req, res) {
+  res.render('vwShop/shop_create_product',{
+      layout: 'shop_manage.hbs'
+    });
+})
+
 
 //Xem thông tin shop
 router.get('/information', async function (req, res) {
@@ -41,5 +48,10 @@ router.get('/information', async function (req, res) {
 router.post('/search', async function (req, res) {
   
 });
+
+router.post('/cat-1',async function(req,res){
+  const names = await productModel.allCategories();
+  res.json(names);
+})
 
 module.exports = router;

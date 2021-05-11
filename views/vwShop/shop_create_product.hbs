@@ -1,0 +1,245 @@
+{{!-- Css --}}
+<link rel="stylesheet" href="/resources/css/addProduct.css" />
+{{!-- Javascript --}}
+<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+
+<div class="container_income">
+    <div class="container_income_navbar fix">
+        <div class="btn_show">
+            <span class="fas fa-bars"></span>
+        </div>
+        <script>
+            $('.btn_show').click(function(){
+                $('.container_income').toggleClass("show");
+                $('.sidebar').toggleClass("show");
+            });
+        </script>
+
+        <div class="title_bar">
+            Đăng sản phẩm - Division sản phẩm
+        </div>
+
+        <div class="account_bar">
+            <div class="account_bar_inner">
+                <div class="img_shop_account">
+                    <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img_account_inner">
+                </div>
+                <div class="name_account">
+                    Divisia Shop
+                </div>
+                <div class="down_arrow">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="func_account_bar" id="func_auth_bar">
+                <div class="func_acc" id="pass_shop">
+                    Thay đổi mật khẩu
+                </div>
+                <div class="func_acc" id="info_shop">Thông tin Shop</div>
+                <div><hr class="inline"></div>
+                <div class="func_acc" id="log_out_shop">Đăng xuất</div>
+            </div>
+            <script>
+                document.addEventListener("click", (evt) => {
+                    const deactive_authe_menu = document.getElementById("func_auth_bar");
+                    if (event.target.closest(".account_bar_inner")) {
+                        deactive_authe_menu.style.display="block";
+                        return;
+                        }
+                    deactive_authe_menu.style.display="none";
+                    });
+            </script>
+        </div>
+    </div>
+
+    <div class="container_bill" style="margin-top:5px;">
+        <div class="container_bill_items">
+            <div class="link_path">
+                <span class="root_link">Trang trủ</span>
+                <span class="fas fa-greater-than" style="color: rgb(180, 180, 180); font-size: 13px;"></span>
+                <span class="root_link" style="font-weight: 500;">Đăng sản phẩm mới - Division</span>
+            </div>
+
+            
+        </div>
+    </div>
+    <div class="container_bill">
+        <div class="container_bill_items">
+            <div class="add-shop-header">1. Thông tin chung</div>
+            <div class="add-shop-ttc add-shop-body">
+                <hr>
+                <div class="add-shop-ttc-name ">
+                    <div>
+                        <i class="fas fa-star-of-life important"></i>
+                        <span class="add-shop-label">&nbsp;Tên sản phẩm</span>
+                    </div>
+                    <div style="margin-top:-10px;margin-left:4px;" class="w-50">
+                        <input type="text" class="input_search_menu w-90">
+                    </div>
+                </div>
+                <div class="add-shop-ttc-category">
+                    <div class="add-shop-category-1">
+                        <div>
+                            <i class="fas fa-star-of-life important"></i>
+                            <span class="add-shop-label">&nbsp;Danh mục</span>
+                        </div>
+                        <div class="container_combo_box w-90">
+                            <div class="title_combobox">
+                                Danh mục cấp 1
+                            </div>
+                            <div class="combo_box">
+                                <div class="combo_box_select">
+                                    <span class="selected">&nbsp;</span>
+                                    <i class="fas fa-caret-down drop-menu-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="drop-down-cbx disable wcb-50" id="cat-1-select">
+                                {{!-- day la noi add danh muc 1 --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-shop-category-2">
+                        <div>
+                            <i class="fas fa-star-of-life important"></i>
+                            <span class="add-shop-label">&nbsp;Danh mục cấp 2</span>
+                        </div>
+                        <div class="container_combo_box w-90">
+                            <div class="title_combobox">
+                                Danh mục cấp 2
+                            </div>
+                            <div class="combo_box ">
+                                <div class="combo_box_select">
+                                    <span class="selected" id="span-2">&nbsp;</span>
+                                    <i class="fas fa-caret-down drop-menu-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="drop-down-cbx disable wcb-50" id="cat-2-select">
+                                {{!-- day la noi add danh muc 2 --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container_bill">
+        <div class="container_bill_items">
+            <div class="add-shop-header">2. Mô tả sản phẩm</div>
+            <div class="add-shop-body">
+                <hr>
+                <div class="add-shop-ttc-category">
+                    <div class="add-shop-ttc-name w-50">
+                        <div>
+                            <i class="fas fa-star-of-life important"></i>
+                            <span class="add-shop-label">&nbsp;Nơi sản xuất</span>
+                        </div>
+                        <div class="w-100 r104" >
+                            <input type="text" class="input_search_menu w-90">
+                        </div>
+                    </div>
+                    <div class="add-shop-ttc-name w-50">
+                        <div>
+                            <i class="fas fa-star-of-life important"></i>
+                            <span class="add-shop-label">&nbsp;Kích thước</span>
+                        </div>
+                        <div class="w-100" style="margin-top:-10px;margin-left:4px;">
+                            <input type="text" class="input_search_menu w-90">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="add-shop-category-1">
+                        <div>
+                            <i class="fas fa-star-of-life important"></i>
+                            <span class="add-shop-label">&nbsp;Trang phục dành cho</span>
+                        </div>
+                        <div class="container_combo_box w-90">
+                            <div class="title_combobox">
+                                Sex
+                            </div>
+                            <div class="combo_box">
+                                <div class="combo_box_select">
+                                    <span class="selected">&nbsp;</span>
+                                    <i class="fas fa-caret-down drop-menu-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="drop-down-cbx disable wcb-50" id="sex">
+                                <div class="item-select-cbx first-item active">
+                                    Nam
+                                </div>
+                                <div class="item-select-cbx second-item">
+                                    Nữ
+                                </div>
+                                <div class="item-select-cbx third-item">
+                                    Cả 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-shop-ttc-name w-90 margin-top-20">
+                    <div>
+                        <i class="fas fa-star-of-life important"></i>
+                        <span class="add-shop-label">&nbsp;Nơi sản xuất</span>
+                    </div>
+                    <div style="margin-top:10px;margin-left:4px;">
+                        <div id="editor" class="margin-top-20 height-40vh" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container_bill">
+        <div class="container_bill_items">
+            <div class="add-shop-header">3. Vận hành</div>
+            <div class="add-shop-ttc add-shop-body">
+                <hr>
+                <div class="add-shop-ttc-name ">
+                    <div>
+                        <i class="fas fa-star-of-life important"></i>
+                        <span class="add-shop-label">&nbsp;Giá bán</span>
+                    </div>
+                    <div style="margin-top:-10px;margin-left:4px;" class="w-50">
+                        <input type="number" class="input_search_menu w-90">
+                    </div>
+                </div>
+                <div class="add-shop-ttc-name ">
+                    <div>
+                        <i class="fas fa-star-of-life important"></i>
+                        <span class="add-shop-label">&nbsp;Số lượng</span>
+                    </div>
+                    <div style="margin-top:-10px;margin-left:4px;" class="w-50">
+                        <input type="number" class="input_search_menu w-90">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container_bill last_container">
+        <div class="container_bill_items last_item">
+            <div class="clearfix">
+                <div class="btn_search_input right blue-btn">
+                    <i class="fas fa-save bigger"></i><span class="text_find">Lưu</span>
+                </div>
+                <div class="btn_search_input right red-btn">
+                    <i class="fas fa-trash-alt bigger"></i><span class="text_find">Xóa</span>
+                </div>
+                <div class="btn_search_input right white-btn">
+                    <i class="fas fa-home bigger"></i><span class="text_find">Quay về</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--====== Javascripts & Jquery ======-->
+    <script src="/resources/js/jquery-3.2.1.min.js"></script>
+    <script src="/resources/js/addProduct.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+</div>

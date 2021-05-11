@@ -65,7 +65,7 @@
                     <div class="combo_box">
                         <div class="combo_box_select">
                             <span class="selected">Toàn thời gian</span>
-                            <i class="fas fa-caret-down"></i>
+                            <i class="fas fa-caret-down drop-menu-down"></i>
                         </div>
                     </div>
                     <div class="drop-down-cbx">
@@ -85,30 +85,58 @@
                 </div>
 
                 <script>
-                    //combo_box_select
-                    $('.combo_box_select').click(function(){
-                        $('.drop-down-cbx').toggleClass("show");
+                    $(document).on('click', function(e) {
+                        if($(e.target).closest('.combo_box_select').not(this).length){
+                            $('.drop-down-cbx').removeClass("disable");
+                            $('.drop-down-cbx').toggleClass("show");
+
+                            $('.drop-menu-down').toggleClass("rotate");
+                        }else{      
+                            $('.drop-down-cbx').removeClass("show");
+                            $('.drop-down-cbx').toggleClass("disable");
+                        }
                     });
+
                     $('.first-item').click(function(){
                         $('.selected').text("Toàn thời gian");
+                        $('.drop-menu-down').toggleClass("rotate");
                     });
                     $('.second-item').click(function(){
                         $('.selected').text("30 ngày qua");
+                        $('.drop-menu-down').toggleClass("rotate");
                     });
                     $('.third-item').click(function(){
                         $('.selected').text("7 ngày qua");
+                        $('.drop-menu-down').toggleClass("rotate");
                     });
                     $('.four-item').click(function(){
                         $('.selected').text("Hôm nay");
+                        $('.drop-menu-down').toggleClass("rotate");
                     });
                     $('.item-select-cbx').click(function(){
                         $(this).addClass("active").siblings().removeClass("active");
                     });
                 </script>
+                <div class="ctn_seach_cbx">
+                    <div class="btn_search_input">
+                        <i class="fas fa-search"></i><span class="text_find">Tìm kiếm</span>
+                    </div>
+                </div>
 
+                <div class="ctn_reset_cbx">
+                    <div class="btn_reset_input">
+                        <i class="fas fa-undo-alt"></i>
+                        <span class="text_find">Tải lại</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="container_bill">
+        <div class="container_bill_items">
+                Tải lại
+        </div>
+    </div>
 
 </div>
