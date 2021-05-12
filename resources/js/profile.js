@@ -42,7 +42,8 @@ $(document).ready(function () {
 
   $(".form-control-input").each(function () {
     $(".save_change_btn").hide();
-    let label_value = $(this).siblings(`label[for='${$(this).attr("id")}']`)[0].innerHTML;
+    let label_value = $(this).siblings(`label[for='${$(this).attr("id")}']`)[0]
+      .innerHTML;
     $(this).on("input", function () {
       if ($(this).val() === "") {
         $(".save_change_btn").hide();
@@ -52,9 +53,8 @@ $(document).ready(function () {
       } else {
         $(".save_change_btn").show();
         $(this).removeClass("is-invalid");
-        $(this).siblings(
-          `label[for='${$(this).attr("id")}']`
-        )[0].innerHTML = label_value;
+        $(this).siblings(`label[for='${$(this).attr("id")}']`)[0].innerHTML =
+          label_value;
       }
       let new_state = getValuesArray();
       if (
@@ -150,5 +150,38 @@ $(document).ready(function () {
       return;
     }
     $("#password_changed_submitting").submit();
+  });
+
+  $(".avatar_holder").click(function () {
+    $("#changeAvatarModal").modal("toggle");
+  });
+
+  $.fn.fileinputBsVersion = "3.3.7";
+
+  $("#avatar").fileinput();
+
+  $("#avatar").fileinput({'showUpload':false, 'previewFileType':'any'});
+
+  var btnCust =
+    '<button type="button" class="btn btn-secondary" title="Add picture tags" ' +
+    "onclick=\"alert('Call your custom code here.')\">" +
+    '<i class="glyphicon glyphicon-tag"></i>' +
+    "</button>";
+  $("#avatar").fileinput({
+    overwriteInitial: true,
+    maxFileSize: 1500,
+    showClose: false,
+    showCaption: false,
+    showBrowse: false,
+    browseOnZoneClick: true,
+    removeLabel: "",
+    removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+    removeTitle: "Cancel or reset changes",
+    elErrorContainer: "#kv-avatar-errors-2",
+    msgErrorClass: "alert alert-block alert-danger",
+    defaultPreviewContent:
+      '<img src="/resources/images/default_avatar.png" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>',
+    layoutTemplates: { main2: "{preview} " + btnCust + " {remove} {browse}" },
+    allowedFileExtensions: ["jpg", "png", "gif"],
   });
 });

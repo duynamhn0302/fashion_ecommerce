@@ -1,10 +1,10 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 input::-webkit-outer-spin-button,
@@ -14,111 +14,130 @@ input::-webkit-inner-spin-button {
 }
 
 .page_wrapper {
-    margin: auto;
-    width: 90%;
-    padding-bottom: 5%;
+  margin: auto;
+  width: 90%;
+  padding-bottom: 5%;
 }
 
 .title {
-    color: #F51167;
+  color: #f51167;
 }
 
 .title_container {
-    padding: 5vh 0 5vh 0;
+  padding: 5vh 0 5vh 0;
 }
 
 .body_container {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-    .tabs_container {
-        flex: 1;
-    }
+.tabs_container {
+  flex: 1;
+}
 
-        .tabs_container > .col-lg-3 {
-            max-width: 100%;
-        }
+.tabs_container > .col-lg-3 {
+  max-width: 100%;
+}
 
-        .li_tab:hover {
-            color: #F51167 !important;
-            transition: all .75s;
-        }
+.li_tab:hover {
+  color: #f51167 !important;
+  transition: all 0.75s;
+}
 
+.content_container {
+  flex: 3;
+}
 
-    .content_container {
-        flex: 3;
-    }
+.update_profile_title {
+  padding-left: 15px;
+  margin-bottom: 2rem;
+}
 
-    .update_profile_title {
-        padding-left: 15px;
-        margin-bottom: 2rem;
-    }
+.avatar_holder {
+  width: fit-content;
+  margin: 0;
+  height: 180px;
+  width: 180px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  transition: border 0.15s ease-in;
+}
 
-    .avatar_holder {
-        width: fit-content;
-        margin: 0;
-        height: 180px;
-        width: 180px;
-        border-radius: 50%;
-        position: relative;
-        overflow: hidden;
-        display: block;
-        transition: border .15s ease-in;
-    }
+.avatar_holder:hover {
+  border: 2px solid #f51167;
+  cursor: pointer;
+}
 
-    .avatar_holder:hover {
-        border: 2px solid #F51167;
-        cursor: pointer;
-    }
+.avatar_holder:hover .avatar_change_holder {
+  padding-top: 10px;
+  height: 25%;
+}
 
-    .avatar_holder:hover .avatar_change_holder {
-        padding-top: 10px;
-        height: 25%;
-    }
+.avatar_holder:hover .avatar_change_holder > img {
+  height: 2em;
+}
 
-    .avatar_holder:hover .avatar_change_holder > img {
-        height: 2em;
-    }
+.avatar_image {
+  position: absolute;
+  background-color: aqua;
+}
+.avatar_image > img {
+  height: 180px;
+  width: 180px;
+  object-fit: cover;
+}
 
-        .avatar_image {
-            position: absolute;
-            background-color: aqua;
-        }
-            .avatar_image > img {
-                height: 180px;
-                width: 180px;
-                object-fit: cover;
-            }
+.avatar_change_holder {
+  position: absolute;
+  bottom: 0;
+  height: 0%;
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  transition: all 0.5s;
+  padding-top: 0;
+  background-color: #d3d3d3;
+  opacity: 0.5;
+}
 
-        .avatar_change_holder {
-            position: absolute;
-            bottom: 0;
-            height: 0%;
-            width: 180px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1;
-            transition: all .5s;
-            padding-top: 0;
-            background-color: #D3D3D3;
-            opacity: 0.5;
-        }
+.avatar_change_holder > img {
+  width: auto;
+  height: 0em;
+  margin-bottom: 10px;
+}
 
-            .avatar_change_holder > img {
-                width: auto;
-                height: 0em;
-                margin-bottom: 10px;
-            }
+.save_btn_group {
+  display: flex;
+  justify-content: space-between;
+}
 
+.change_password_btn,
+.save_change_btn {
+  background-color: #f51167;
+  color: whitesmoke;
+}
 
-    .save_btn_group {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .change_password_btn, .save_change_btn {
-        background-color: #F51167;
-        color: whitesmoke;
-    }
+.kv-avatar .krajee-default.file-preview-frame,.kv-avatar .krajee-default.file-preview-frame:hover {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+}
+.kv-avatar {
+    display: inline-block;
+}
+.kv-avatar .file-input {
+    display: table-cell;
+    width: 213px;
+}
+.kv-reqd {
+    color: red;
+    font-family: monospace;
+    font-weight: normal;
+}

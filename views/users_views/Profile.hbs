@@ -8,7 +8,8 @@
 				<div class="col-lg-3 col-sm-6">
 					<div class="footer-widget">
 						<ul>
-							<li><a class="li_tab" href="/users/profile" style="color: #f51167 !important">Cập nhật thông tin cá nhân</a></li>
+							<li><a class="li_tab" href="/users/profile" style="color: #f51167 !important">Cập nhật thông
+									tin cá nhân</a></li>
 							<li><a class="li_tab" href="">Danh sách yêu thích</a></li>
 							<li><a class="li_tab" href="/users/shopping-cart">Giỏ hàng</a></li>
 							<li><a class="li_tab" href="">Lịch sử đơn hàng</a></li>
@@ -77,7 +78,8 @@
 														aria-label="Close"></button>
 												</div>
 												<div class="modal-body">
-													<form id="password_changed_submitting" action="/users/change-password" method="post">
+													<form id="password_changed_submitting"
+														action="/users/change-password" method="post">
 														<div class="form-floating mb-3">
 															<input type="password"
 																class="form-control form-control-input-password"
@@ -110,6 +112,40 @@
 											</div>
 										</div>
 									</div>
+									<!-- Modal -->
+									<div class="modal fade" id="changeAvatarModal" tabindex="-1"
+										aria-labelledby="changeAvatarModal" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="changeAvatarModal">Thay đổi ảnh đại diện
+													</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form class="form form-vertical" action="/users/avatar-upload"
+														method="post" enctype="multipart/form-data">
+														<div class="kv-avatar">
+															<div class="file-loading">
+																<input id="avatar" name="avatar" type="file" required>
+															</div>
+														</div>
+														<div class="kv-avatar-hint">
+															<small>Select file < 1500 KB</small>
+														</div>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary close_modal_btn"
+														data-bs-dismiss="modal">Đóng</button>
+													<button type="button"
+														class="btn change_password_btn change_password_confirm">Thay
+														đổi</button>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -123,3 +159,14 @@
 <!--====== Javascripts & Jquery ======-->
 <script src="/resources/js/jquery-3.2.1.min.js"></script>
 <script src="/resources/js/profile.js"></script>
+{{!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all"
+	rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/piexif.min.js"
+	type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/sortable.min.js"
+	type="text/javascript"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+	crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fas/theme.min.js"></script> --}}
