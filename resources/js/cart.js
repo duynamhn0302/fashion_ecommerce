@@ -74,6 +74,15 @@ $(document).ready(function () {
       dataType: "json",
       data, // serializes form input
       success: function (response) {
+        if (response.empty) {
+          $(".cart_container").append(`<div class="empty_cart_container">
+          <img src="/resources/img/cart/empty-cart.svg" alt="empty-cart-photo">
+          <h3>Không có sản phẩm nào trong giỏ hàng</h3>
+          <button class="site-btn sb-line sb-dark pay_btn continue_shopping_btn">Tiếp tục mua sắm</button>
+        </div>`);
+          $(".temp_bill").remove();
+        }
+
         console.log(response);
       },
       error: function (err) {
@@ -82,12 +91,77 @@ $(document).ready(function () {
     });
   });
 
+  $(".hidden_pay_form").submit(function (event) {
+    event.preventDefault(); // prevent actual form submit
+    let form = $(this);
+    let url = form.attr("action");
+    let method = form.attr("method");
+    let data = form.serialize();
+    $.ajax({
+      type: method,
+      url,
+      dataType: "json",
+      data, // serializes form input
+      success: function (response) {
+        if (response.empty) {
+          $(".cart_container").html("");
+          $(".cart_container").append(`<div class="empty_cart_container">
+  <img src="/resources/img/cart/empty-cart.svg" alt="empty-cart-photo">
+  <h3>Không có sản phẩm nào trong giỏ hàng</h3>
+  <button class="site-btn sb-line sb-dark pay_btn continue_shopping_btn">Tiếp tục mua sắm</button>
+</div>`);
+          $(".temp_bill").remove();
+        }
+      },
+      error: function (err) {
+        console.log(err);
+      },
+    });
+  });
+
   $(".delete_button").each(function () {
-  $(this).click(function () {
+    $(this).click(function () {
+      swal
+        .fire({
+          title: "Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "green",
+          cancelButtonColor: "red",
+          confirmButtonText: "Vâng",
+          cancelButtonText: "Huỷ",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            swal.fire(
+              "Đã xoá",
+              "Sản phẩm vừa được xoá khỏi giỏ hàng",
+              "success"
+            );
+            let form = $(this)
+              .parent()
+              .siblings(".product_quantity")
+              .children(".hidden_amount_changed_form");
+            form.attr("action", "/users/remove-from-cart");
+            form.submit();
+            form.attr("action", "/users/change-amount-cart");
+            $(this).parent().parent().remove();
+            calculateAllProductTotalPrice();
+            getProductsNumber();
+          }
+        });
+    });
+  });
+
+  $(".continue_shopping_btn").click(function () {
+    location.href = "/";
+  });
+
+  $(".pay_btn").click(function () {
     swal
       .fire({
-        title: "Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?",
-        icon: "warning",
+        title: "Bạn muốn thanh toán giỏ hàng giỏ hàng?",
+        icon: "question",
         showCancelButton: true,
         confirmButtonColor: "green",
         cancelButtonColor: "red",
@@ -96,20 +170,24 @@ $(document).ready(function () {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          swal.fire("Đã xoá", "Sản phẩm vừa được xoá khỏi giỏ hàng", "success");
-          let form = $(this)
-            .parent()
-            .siblings(".product_quantity")
-            .children(".hidden_amount_changed_form");
-          form.attr("action", "/users/remove-from-cart");
-          form.submit();
-          form.attr("action", "/users/change-amount-cart");
-          $(this).parent().parent().remove();
+          swal.fire(
+            "Thanh toán thành công",
+            "Giỏ hàng của bạn vừa được thanh toán",
+            "success"
+          );
+          $(".hidden_pay_form")
+            .children("input")
+            .val(
+              $(".hidden_amount_changed_form")
+                .children('input[name="magiohang"]')
+                .val()
+            );
+          $(".hidden_pay_form").submit();
           calculateAllProductTotalPrice();
           getProductsNumber();
         }
       });
-  })});
+  });
 
   calculateSingleProductTotalPrice();
   calculateAllProductTotalPrice();

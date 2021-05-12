@@ -22,7 +22,11 @@
 				</div>
 				<div class="cart_container">
 					{{#if empty}}
-						<img src="/resources/images/none.png" alt="">
+					<div class="empty_cart_container">
+						<img src="/resources/img/cart/empty-cart.svg" alt="empty-cart-photo">
+						<h3>Không có sản phẩm nào trong giỏ hàng</h3>
+						<button class="site-btn sb-line sb-dark pay_btn continue_shopping_btn">Tiếp tục mua sắm</button>
+					</div>
 					{{else}}
 					<div class="cart_list overflow-hidden">
 						<div class="row description_title">
@@ -45,7 +49,7 @@
 								<h4 id="product_name">{{ten}}</h4>
 								<span id="product_price">{{giaban}} đ</span>
 								<span id="product_id">#{{maso}}</span>
-								<span id="product_size">{{kichthuoc}}</span>
+								<span id="product_size">Size {{kichthuoc}}</span>
 								<span id="shop">{{cuahang}}</span>
 							</div>
 							<div class="col-2 product_quantity">
@@ -69,15 +73,20 @@
 					</div>
 					{{/if}}
 				</div>
+				{{#unless empty}}
 				<div class="row temp_bill">
-					<div class="col-8">
-
+					<div class="col-8" style="display:flex; justify-content:flex-end;">
+						<span style="margin-top: 35px;">Tổng tiền</span>
 					</div>
 					<div class="col-2 total_price_container">
 						<h3 id="total_cart_price">0 đ</h3>
-						<button type="submit" class="site-btn sb-line sb-dark pay_btn">Thanh toán</button>
+						<button class="site-btn sb-line sb-dark pay_btn">Thanh toán</button>
+						<form class="hidden_pay_form" action="/users/pay-cart" method="post" hidden>
+							<input type="hidden" name="magiohang" value="">
+						</form>
 					</div>
 				</div>
+				{{/unless}}
 			</div>
 		</section>
 

@@ -74,5 +74,9 @@ module.exports = {
         const sql = `select * from sanpham where status = 1`;
         const [rows, fields] = await db.load(sql);
         return rows;
+    },
+    async reduceProductNumberAfterPayment(data, condition) {
+        const [rows, fields] = await db.patch(data, condition, 'sanpham');
+        return rows;
     }
 }

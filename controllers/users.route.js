@@ -76,7 +76,32 @@ router.post('/remove-from-cart', async function (req, res) {
   let tonggia = await cartModel.sumProductInCart(+req.body.magiohang);
   req.body.tongiatien = tonggia.tonggia;
   await cartModel.cartProductsUpdateAfterRemoving(+req.body.tongsanpham - +req.body.soluong, req.body.tongiatien, req.body.magiohang);
+
+  if (!(req.body.tongsanpham - req.body.soluong))
+    res.send({ empty: true })
 })
+
+router.post('/pay-cart', async function (req, res) {
+  let productsInCart = await cartModel.getProductsForPayment(+req.body.magiohang);
+  let cart = await cartModel.singleByCartId(+req.body.magiohang);
+  let createBillResult = await cartModel.createNewBill({ tonggiatien: cart.tonggiatien, taikhoan: cart.taikhoan, tongsosanpham: cart.tongsosanpham, tinhtrangdon: 1 });
+  let newBillId = createBillResult.insertId;
+
+  await Promise.all(productsInCart.map(async product => {
+    let productDetail = await productsModel.getSingleProductById(+product.sanpham);
+    let newProductDetail = { donhang: +newBillId, sanpham: product.sanpham, dongia: productDetail.giaban, soluong: product.soluong };
+    await cartModel.createNewBillDetail(newProductDetail);
+    //let newDate = new Date();
+    //await cartModel.addToHistoryAfterPayment({ donhang: +newBillId, tinhtrang: 1, ngaythang: newDate.toISOString() })
+    await cartModel.removeCartAfterPayment({ maso: +req.body.magiohang }, { giohang: +req.body.magiohang });
+    let productNumber = await productsModel.single(product.sanpham);
+    let productNumberLeft = productNumber.soluong - product.soluong;
+
+    await productsModel.reduceProductNumberAfterPayment({ soluong: productNumberLeft }, { maso: product.sanpham });
+  }))
+
+  res.send({ empty: true });
+});
 
 
 //Xem đơn hàng
