@@ -162,37 +162,22 @@
                                 <table>
                                     <tr id="header">
                                         <th>Mã đơn hàng</th>
-                                        <th>Tên đơn hàng</th>
+                                        <th>Khách hàng</th>
                                         <th>Doanh thu</th>
                                         <th>Trạng thái</th>
                                         <th>Thời gian</th>
-                                        <th>Xác nhận</th>
+                                        <th>Tình trạng</th>
                                     </tr>
-
+                                    {{#each this.getInfoBill}}
                                     <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
+                                        <td>{{maso}}</td>
+                                        <td>{{taikhoan}}</td>
+                                        <td>{{tonggiatien}}</td>
+                                        <td>{{TrangThai}}</td>
+                                        <td>{{ngayCapNhat}}</td>
+                                        <td>{{ten}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
-                                    </tr>
+                                    {{/each}}
                                 </table>
                             </div>
                         </div>
@@ -208,31 +193,16 @@
                                         <th>Thời gian</th>
                                         <th>Xác nhận</th>
                                     </tr>
-
+                                    {{#each this.getConfirmBill}}
                                     <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
+                                        <td>{{maso}}</td>
+                                        <td>{{taikhoan}}</td>
+                                        <td>{{tonggiatien}}</td>
+                                        <td>{{TrangThai}}</td>
+                                        <td>{{ngayCapNhat}}</td>
+                                        <td>{{ten}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
-                                    </tr>
+                                    {{/each}}
                                 </table>
                             </div>
                         </div>
@@ -249,30 +219,16 @@
                                         <th>Xác nhận</th>
                                     </tr>
 
+                                    {{#each this.getTravellingBill}}
                                     <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
+                                        <td>{{maso}}</td>
+                                        <td>{{taikhoan}}</td>
+                                        <td>{{tonggiatien}}</td>
+                                        <td>{{TrangThai}}</td>
+                                        <td>{{ngayCapNhat}}</td>
+                                        <td>{{ten}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
-                                    </tr>
+                                    {{/each}}
                                 </table>
                             </div>
                         </div>
@@ -288,31 +244,17 @@
                                         <th>Thời gian</th>
                                         <th>Xác nhận</th>
                                     </tr>
-
+                                    
+                                    {{#each this.getTravelledBill}}
                                     <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
+                                        <td>{{maso}}</td>
+                                        <td>{{taikhoan}}</td>
+                                        <td>{{tonggiatien}}</td>
+                                        <td>{{TrangThai}}</td>
+                                        <td>{{ngayCapNhat}}</td>
+                                        <td>{{ten}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
-                                    </tr>
+                                    {{/each}}
                                 </table>
                             </div>
                         </div>
@@ -327,31 +269,16 @@
                                         <th>Thời gian</th>
                                         <th>Xác nhận</th>
                                     </tr>
-
+                                    {{#each this.getDiscardBill}}
                                     <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
+                                        <td>{{maso}}</td>
+                                        <td>{{taikhoan}}</td>
+                                        <td>{{tonggiatien}}</td>
+                                        <td>{{TrangThai}}</td>
+                                        <td>{{ngayCapNhat}}</td>
+                                        <td>{{ten}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
-                                    </tr>
-                                    <tr>
-                                        <td>123</td>
-                                        <td>quần què</td>
-                                        <td>100.000 VND</td>
-                                        <td>Hoàn Thành</td>
-                                        <td>10/05/2000</td>
-                                        <td>Đã xác nhận</td>
-                                    </tr>
+                                    {{/each}}
                                 </table>
                             </div>
                         </div>
