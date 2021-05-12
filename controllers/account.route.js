@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userModel = require('../models/users.model');
+const shopModel = require('../models/shop.model');
 
 router.post('/check-account',async function(req,res,next){
     const username = req.body.username;
@@ -16,6 +17,11 @@ router.post('/check-account',async function(req,res,next){
     }else{
         return_mode = 2;    //->    username có tồn tại, nhập đúng mật khẩu, đăng nhập thành công
         req.session.authUser = user;
+        if(req.session.authUser.vaitro === 1){
+          const tempShop = await shopModel.shopOfId(req.session.authUser.maso);
+          if(tempShop !== null) req.session.shop = tempShop;
+          else req.session.shop === null;
+        }
         req.session.auth = true;
         
     }
@@ -142,6 +148,11 @@ router.post('/check-otp',async function(req,res){
       const user = await userModel.add(req.session.data);
       req.session.auth = true;
       req.session.authUser = req.session.data;
+      if(req.session.authUser.vaitro === 1){
+        const tempShop = await shopModel.shopOfId(req.session.authUser.maso);
+        if(tempShop !== null) req.session.shop = tempShop;
+        else req.session.shop === null;
+      }
       req.session.data = null;
       res.json({retUrl:req.session.retUrl || '/',check:true});
     }

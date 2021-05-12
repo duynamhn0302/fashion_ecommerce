@@ -64,7 +64,7 @@ input::-webkit-inner-spin-button {
 }
 
 .single_product {
-    padding-bottom: 20px;
+    padding-bottom: 40px;
 }
 
 .description_title {
@@ -112,7 +112,7 @@ input::-webkit-inner-spin-button {
     align-items: center;
 }
 
-#delete_button {
+.delete_button {
     background-color: white;
     outline: none;
     border: none;

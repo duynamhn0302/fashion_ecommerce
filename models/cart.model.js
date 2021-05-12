@@ -54,7 +54,7 @@ module.exports = {
     },
 
     async getAllProductsWithUserId(userId) {
-        const [rows, fields] = await db.load(`select sanpham.ten, sanpham.giaban, sanpham.maso, sanpham.kichthuoc, sanpham.cuahang, chitietgiohang.soluong
+        const [rows, fields] = await db.load(`select sanpham.ten, sanpham.giaban, sanpham.maso, sanpham.kichthuoc, sanpham.cuahang, chitietgiohang.soluong, chitietgiohang.giohang, sanpham.soluong as conlai
         from sanpham join chitietgiohang on sanpham.maso = chitietgiohang.sanpham join giohang on giohang.maso = chitietgiohang.giohang
         where taikhoan = '${userId}'`);
         return rows.length ? rows : null;
@@ -65,5 +65,25 @@ module.exports = {
         FROM cuahang JOIN sanpham ON cuahang.maso = sanpham.cuahang
         WHERE sanpham.maso = '${productId}'`);
         return rows.length ? rows[0] : null;
-    }
+    },
+
+    async cartProductsAmountChanged(productId, amount, cartId, all, totalPrice) {
+        const [rows, fields] = await db.load(`UPDATE chitietgiohang SET soluong = ${amount} WHERE sanpham = ${productId} and giohang = ${cartId}`);
+
+        const [rows1, fields1] = await db.load(`UPDATE giohang SET tongsosanpham = ${all}, tonggiatien = ${totalPrice} WHERE maso = ${cartId}`);
+
+        return rows.length && rows1.length ? rows : null;
+    },
+
+    async cartProductsRemoved(productId, cartId) {
+        const [rows, fields] = await db.load(`DELETE FROM chitietgiohang WHERE sanpham = ${productId} and giohang = ${cartId}`);
+
+        return rows.length ? rows : null;
+    },
+
+    async cartProductsUpdateAfterRemoving(all, totalPrice, cartId) {
+        const [rows, fields] = await db.load(`UPDATE giohang SET tongsosanpham = ${all}, tonggiatien = ${totalPrice} WHERE maso = ${cartId}`);
+
+        return rows.length ? rows : null;
+    },
 }
