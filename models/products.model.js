@@ -95,6 +95,9 @@ module.exports = {
     async delPic(productId){
         const condition = {sanpham:productId}
         const [rows,fields] = await db.del(condition,'hinhanhsanpham');
+    },
+    async reduceProductNumberAfterPayment(data, condition) {
+        const [rows, fields] = await db.patch(data, condition, 'sanpham');
         return rows;
     }
 }

@@ -10,7 +10,7 @@
 						<ul>
 							<li><a class="li_tab" href="/users/profile">Cập nhật thông tin cá nhân</a></li>
 							<li><a class="li_tab" href="">Danh sách yêu thích</a></li>
-							<li><a class="li_tab" href="/users/shopping-cart">Giỏ hàng</a></li>
+							<li><a class="li_tab" href="/users/shopping-cart" style="color: #f51167 !important">Giỏ hàng</a></li>
 							<li><a class="li_tab" href="">Lịch sử đơn hàng</a></li>
 						</ul>
 					</div>
@@ -22,7 +22,11 @@
 				</div>
 				<div class="cart_container">
 					{{#if empty}}
-						<img src="/resources/images/none.png" alt="">
+					<div class="empty_cart_container">
+						<img src="/resources/img/cart/empty-cart.svg" alt="empty-cart-photo">
+						<h3>Không có sản phẩm nào trong giỏ hàng</h3>
+						<button class="site-btn sb-line sb-dark pay_btn continue_shopping_btn">Tiếp tục mua sắm</button>
+					</div>
 					{{else}}
 					<div class="cart_list overflow-hidden">
 						<div class="row description_title">
@@ -45,34 +49,44 @@
 								<h4 id="product_name">{{ten}}</h4>
 								<span id="product_price">{{giaban}} đ</span>
 								<span id="product_id">#{{maso}}</span>
-								<span id="product_size">{{kichthuoc}}</span>
+								<span id="product_size">Size {{kichthuoc}}</span>
 								<span id="shop">{{cuahang}}</span>
 							</div>
 							<div class="col-2 product_quantity">
 								<div class="quantity">
-									<input type="number" min="1" step="1" value="{{soluong}}">
+									<input type="number" min="1" max="{{conlai}}" step="1" value="{{soluong}}">
 								</div>
+								<form class="hidden_amount_changed_form" action="/users/change-amount-cart" method="post" hidden>
+									<input type="hidden" name="soluong" value="{{soluong}}">
+									<input type="hidden" name="masanpham" value="{{maso}}">
+									<input type="hidden" name="magiohang" value="{{giohang}}">
+								</form>
 							</div>
 							<div class="col-3 product_total_price">
 								<h4 class="product_price_total">{{giaban}} </h4><h4> đ</h4>
 							</div>
 							<div class="col-1 delete_button_container">
-								<button id="delete_button" type="submit"><i class="fas fa-trash"></i></button>
+								<button class="delete_button" type="button"><i class="fas fa-trash"></i></button>
 							</div>
 						</div>
 						{{/each}}
 					</div>
 					{{/if}}
 				</div>
+				{{#unless empty}}
 				<div class="row temp_bill">
-					<div class="col-8">
-
+					<div class="col-8" style="display:flex; justify-content:flex-end;">
+						<span style="margin-top: 35px;">Tổng tiền</span>
 					</div>
 					<div class="col-2 total_price_container">
 						<h3 id="total_cart_price">0 đ</h3>
-						<button type="submit" class="site-btn sb-line sb-dark pay_btn">Thanh toán</button>
+						<button class="site-btn sb-line sb-dark pay_btn">Thanh toán</button>
+						<form class="hidden_pay_form" action="/users/pay-cart" method="post" hidden>
+							<input type="hidden" name="magiohang" value="">
+						</form>
 					</div>
 				</div>
+				{{/unless}}
 			</div>
 		</section>
 
