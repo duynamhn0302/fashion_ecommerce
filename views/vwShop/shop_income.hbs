@@ -62,38 +62,38 @@
                         Sản phẩm đang bán
                     </div>
                     <div class="product_selling_number">
-                        0
+                        {{#with countProductSelling}}
+                            {{SL}}
+                        {{/with}}
                     </div>
                     <div class="product_selling_func">
                         <div class="name_func">
                             Đang chờ duyệt
                         </div>
                         <div class="number_func">
-                            0
+                            {{#with countReviewProduct}}
+                                {{SoLuongDangDuyet}}
+                            {{/with}}
                         </div>
                     </div>
                     <div class="product_selling_func">
                         <div class="name_func">
-                            Bị từ chối trong 30 ngày
+                            Bị từ chối
                         </div>
                         <div class="number_func">
-                            0
+                            {{#with countDiscardProduct}}
+                                {{SoLuongDangDuyet}}
+                            {{/with}}
                         </div>
                     </div>
                     <div class="product_selling_func">
                         <div class="name_func">
-                            Bị khóa 30 ngày gần đây
+                            Bị khóa
                         </div>
                         <div class="number_func">
-                            0
-                        </div>
-                    </div>
-                    <div class="product_selling_func">
-                        <div class="name_func">
-                            Sắp hết tồn kho
-                        </div>
-                        <div class="number_func">
-                            0
+                            {{#with countBlockProduct}}
+                                {{SoLuongDangDuyet}}
+                            {{/with}}
                         </div>
                     </div>
                     <div class="container_btn">
@@ -112,25 +112,51 @@
                 <div class="container_item_ic" style="background-color:rgb(63, 104, 218)">
 
                     <div class="product_selling">
-                        Đơn hàng đang xử lý
+                        Đơn hàng chờ xác nhận
                     </div>
                     <div class="product_selling_number">
-                        0
+                        {{#with countWatingBill}}
+                        {{SoLuong}}
+                        {{/with}}
                     </div>
                     <div class="product_selling_func">
                         <div class="name_func">
-                            Cần xác nhận
+                            Đang xác nhận
                         </div>
                         <div class="number_func">
-                            0
+                            {{#with countConfirmingBill}}
+                            {{SoLuong}}
+                            {{/with}}
                         </div>
                     </div>
                     <div class="product_selling_func">
                         <div class="name_func">
-                            Cần in hóa đơn
+                            Đang giao
                         </div>
                         <div class="number_func">
-                            0
+                            {{#with countTravellingBill}}
+                            {{SoLuong}}
+                            {{/with}}
+                        </div>
+                    </div>
+                    <div class="product_selling_func">
+                        <div class="name_func">
+                            Đã giao
+                        </div>
+                        <div class="number_func">
+                            {{#with countTravelledBill}}
+                            {{SoLuong}}
+                            {{/with}}
+                        </div>
+                    </div>
+                    <div class="product_selling_func">
+                        <div class="name_func">
+                            Đã hủy
+                        </div>
+                        <div class="number_func">
+                            {{#with countRemoveBill}}
+                            {{SoLuong}}
+                            {{/with}}
                         </div>
                     </div>
                     <div class="container_btn">
@@ -149,14 +175,18 @@
                         Doanh thu hôm nay
                     </div>
                     <div class="product_selling_number">
-                        88,000đ
+                        {{#with moneyToday}}
+                        {{tongtien}}
+                        {{/with}}
                     </div>
                     <div class="product_selling_func">
                         <div class="name_func">
                             Tổng đơn hàng hôm nay
                         </div>
                         <div class="number_func">
-                            2
+                            {{#with countBillToday}}
+                            {{tongDon}}
+                            {{/with}}
                         </div>
                     </div>
                     <div class="product_selling_func">
@@ -164,7 +194,9 @@
                             Sản lượng bán hôm nay
                         </div>
                         <div class="number_func">
-                            2
+                            {{#with countAmountProductSellingToday}}
+                            {{tongSanPhamHomNay}}
+                            {{/with}}
                         </div>
                     </div>
                     <div class="product_selling_func">
@@ -172,7 +204,9 @@
                             30 ngày gần đây
                         </div>
                         <div class="number_func">
-                            390,000đ
+                            {{#with getMoneyMonth}}
+                            {{tongTienThang}}
+                            {{/with}}
                         </div>
                     </div>
                     <div class="container_btn">
