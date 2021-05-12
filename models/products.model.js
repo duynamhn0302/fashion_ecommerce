@@ -74,5 +74,30 @@ module.exports = {
         const sql = `select * from sanpham where status = 1`;
         const [rows, fields] = await db.load(sql);
         return rows;
+    },
+    async addProduct(data){
+        const [rows,fields] = await db.add(data,'sanpham');
+        return rows;
+    },
+    async modifyProduct(newdata,condition){
+        const [rows,fields] = await db.patch(newdata,condition,'sanpham');
+        return rows;
+    },
+    async delProduct(productId){
+        const condition = {maso:productId}
+        const [rows,fields] = await db.del(condition,'sanpham');
+        return rows;
+    },
+    async addPic(data){
+        const [rows,fields] = await db.add(data,'hinhanhsanpham');
+        return rows;
+    },
+    async delPic(productId){
+        const condition = {sanpham:productId}
+        const [rows,fields] = await db.del(condition,'hinhanhsanpham');
+    },
+    async reduceProductNumberAfterPayment(data, condition) {
+        const [rows, fields] = await db.patch(data, condition, 'sanpham');
+        return rows;
     }
 }

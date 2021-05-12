@@ -86,4 +86,43 @@ module.exports = {
 
         return rows.length ? rows : null;
     },
+
+    async getProductsForPayment(cartId) {
+        const [rows, fields] = await db.load(`SELECT * FROM chitietgiohang WHERE giohang = ${cartId}`);
+
+        return rows.length ? rows : null;
+    },
+
+    async singleByCartId(cartId) {
+        const [rows, fields] = await db.load(`SELECT * FROM giohang WHERE maso = ${cartId}`);
+
+        return rows.length ? rows[0] : null;
+    },
+
+    async createNewBill(entity) {
+        const [rows, fields] = await db.add(entity, 'donhang');
+
+        return rows;
+    },
+
+    async createNewBillDetail(entity) {
+        const [rows, fields] = await db.add(entity, 'chitietdonhang');
+
+        return rows;
+    },
+
+    // async addToHistoryAfterPayment(entity) {
+    //     //const [rows1, fields1] = await db.load('SET IDENTITY_INSERT lichsutinhtrangdon ON');
+
+    //     const [rows, fields] = await db.add(entity, 'lichsutinhtrangdon');
+
+    //     return rows;
+    // },
+
+    async removeCartAfterPayment(conditionForCart, conditionForCartDetail) {
+        const [rows1, fields1] = await db.del(conditionForCartDetail, 'chitietgiohang');
+        const [rows, fields] = await db.del(conditionForCart, 'giohang');
+
+        return [rows, rows1];
+    }
 }

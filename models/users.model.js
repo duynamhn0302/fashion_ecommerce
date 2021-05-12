@@ -7,39 +7,30 @@ module.exports = {
         return rows;
     },
     async singleByUsername(username){
-        const sql = `select * from TaiKhoan where username = '${username}'`;
+        const sql = `select * from taikhoan where username = '${username}'`;
         const [rows, fields] = await db.load(sql);
         if(rows.length === 0)
             return null;
         return rows[0];
     },
 
-    // async singleByEmail(email){
-    //     const sql = select * from user where email= '${email}';
-    //     const [rows, fields] = await db.load(sql);
-    //     if(rows.length === 0)
-    //         return null;
-    //     return rows[0];
-    // },
-
-    // async singleById(id){
-    //     const sql = select * from user where user_id= '${id}';
-    //     const [rows, fields] = await db.load(sql);
-    //     if(rows.length === 0)
-    //         return null;
-    //     return rows[0];
-    // },
-
     async add(user){
-        const [result, fields] = await db.add(user,'TaiKhoan');
+        const [result, fields] = await db.add(user,'taikhoan');
         return result;
     },
 
     async patch(user){
         var condition={email: user.email};
         //delete (user.user_id);
-        const [result, fields] = await db.patch(user, condition,'TaiKhoan');
+        const [result, fields] = await db.patch(user, condition,'taikhoan');
         return result;
+    },
+
+    async upgradeToShop(userId){
+        var condition = {maso: userId};
+        var new_data = {vaitro: 1};
+        const [rows,fields] = await db.patch(new_data,condition,'taikhoan');
+        return rows;
     },
 
     // async changeInfo(user) {
