@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userModel = require('../models/users.model');
 const shopModel = require('../models/shop.model');
+const moment = require('moment');
 
 router.post('/check-account',async function(req,res,next){
     const username = req.body.username;
@@ -32,6 +33,9 @@ router.post('/check-account',async function(req,res,next){
 });
 
 router.post('/create-account',async function(req,res,next){
+  var date = Date.now();
+  var update = moment(date).format("YYYY-MM-DD");
+
     const data = {
         hoten: req.body.fullname,
         email: req.body.email,
@@ -42,7 +46,7 @@ router.post('/create-account',async function(req,res,next){
         vaitro: 0,
         avatar: '/resources/images/default_avatar.png',
         status: true,
-        ngaymo: null,
+        ngaymo: update,
     }
     // const user = await userModel.add(data);
     // if(user === null){
@@ -67,9 +71,12 @@ router.post('/add-shop',async function(req,res){
     if(!check){
         res.json({return_mode: 0});
     }else{
+      var date = Date.now();
+      var update = moment(date).format("YYYY-MM-DD");
+
         const data = {
             email: email,
-            ngaymo: null,
+            ngaymo: update,
             sdt: phone,
             status: true,
             taikhoan: req.session.authUser.maso,
@@ -79,7 +86,7 @@ router.post('/add-shop',async function(req,res){
           console.log(shopduocadd);
           res.json({return_mode: 1,masoshop: shopduocadd.insertId || null});
 
-          //chua bien role cua nguoi dung thanh 2
+        
     } 
   });
 

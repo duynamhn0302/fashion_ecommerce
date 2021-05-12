@@ -55,7 +55,7 @@
     <div class="container_bill" style="margin-top:5px;">
         <div class="container_bill_items">
             <div class="link_path">
-                <span class="root_link">Trang trủ</span>
+                <span class="root_link">Trang chủ</span>
                 <span class="fas fa-greater-than" style="color: rgb(180, 180, 180); font-size: 13px;"></span>
                 <span class="root_link" style="font-weight: 500;">Đăng sản phẩm mới - Division</span>
             </div>
@@ -74,7 +74,7 @@
                         <span class="add-shop-label">&nbsp;Tên sản phẩm</span>
                     </div>
                     <div style="margin-top:-10px;margin-left:4px;" class="w-50">
-                        <input type="text" class="input_search_menu w-90">
+                        <input type="text" class="input_search_menu w-90" name="tensanpham" id="tensanpham">
                     </div>
                 </div>
                 <div class="add-shop-ttc-category">
@@ -109,7 +109,8 @@
                             </div>
                             <div class="combo_box ">
                                 <div class="combo_box_select">
-                                    <span class="selected" id="span-2">&nbsp;</span>
+                                    <span class="selected" id="span-2" data-maso="0">&nbsp;</span>
+                                    <input value="0" name="danhmuccap2" type="text" hidden id="danhmuccap2">
                                     <i class="fas fa-caret-down drop-menu-down" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -134,7 +135,7 @@
                             <span class="add-shop-label">&nbsp;Nơi sản xuất</span>
                         </div>
                         <div class="w-100 r104" >
-                            <input type="text" class="input_search_menu w-90">
+                            <input type="text" class="input_search_menu w-90" name="noisanxuat" id="noisanxuat">
                         </div>
                     </div>
                     <div class="add-shop-ttc-name w-50">
@@ -143,7 +144,7 @@
                             <span class="add-shop-label">&nbsp;Kích thước</span>
                         </div>
                         <div class="w-100" style="margin-top:-10px;margin-left:4px;">
-                            <input type="text" class="input_search_menu w-90">
+                            <input type="text" class="input_search_menu w-90" name="kichthuoc" id="kichthuoc">
                         </div>
                     </div>
                 </div>
@@ -159,7 +160,7 @@
                             </div>
                             <div class="combo_box">
                                 <div class="combo_box_select">
-                                    <span class="selected">&nbsp;</span>
+                                    <span class="selected" id="gioitinhsudung">Nam</span>
                                     <i class="fas fa-caret-down drop-menu-down" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -180,10 +181,46 @@
                 <div class="add-shop-ttc-name w-90 margin-top-20">
                     <div>
                         <i class="fas fa-star-of-life important"></i>
-                        <span class="add-shop-label">&nbsp;Nơi sản xuất</span>
+                        <span class="add-shop-label">&nbsp;Hình ảnh sản phẩm</span>
                     </div>
                     <div style="margin-top:10px;margin-left:4px;">
-                        <div id="editor" class="margin-top-20 height-40vh" ></div>
+                        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/piexif.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/sortable.min.js" type="text/javascript"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fas/theme.min.js"></script>
+                        <div class="file-loading">
+                            <input id="input-image-3" name="input-image" type="file" accept="image/*" multiple>
+                        </div>
+                        <script>
+                        $("#input-image-3").fileinput({
+                            uploadUrl: "/shops/upload-product-images",
+                            allowedFileExtensions: ["jpg", "png", "gif"],
+                            maxImageWidth: 200,
+                            maxImageHeight: 150,
+                            resizePreference: 'height',
+                            showPreview: true,
+                            maxFileCount: 8,
+                            theme: 'fas',
+                            resizeImage: true
+                        }).on('filepreupload', function() {
+                            $('#kv-success-box').html('');
+                        }).on('fileuploaded', function(event, data) {
+                            $('#kv-success-box').append(data.response.link);
+                            $('#kv-success-modal').modal('show');
+                        });
+                        </script>
+                    </div>
+                </div>
+                <div class="add-shop-ttc-name w-90 margin-top-20">
+                    <div>
+                        <i class="fas fa-star-of-life important"></i>
+                        <span class="add-shop-label">&nbsp;Mô tả chi tiết sản phẩm</span>
+                    </div>
+                    <div style="margin-top:10px;margin-left:4px;">
+                        <div id="editor" class="margin-top-20 height-40vh"></div>
                     </div>
                 </div>
             </div>
@@ -200,7 +237,7 @@
                         <span class="add-shop-label">&nbsp;Giá bán</span>
                     </div>
                     <div style="margin-top:-10px;margin-left:4px;" class="w-50">
-                        <input type="number" class="input_search_menu w-90">
+                        <input type="number" class="input_search_menu w-90" id="giaban" name="giaban">
                     </div>
                 </div>
                 <div class="add-shop-ttc-name ">
@@ -209,7 +246,7 @@
                         <span class="add-shop-label">&nbsp;Số lượng</span>
                     </div>
                     <div style="margin-top:-10px;margin-left:4px;" class="w-50">
-                        <input type="number" class="input_search_menu w-90">
+                        <input type="number" class="input_search_menu w-90" id="soluong" name="soluong">
                     </div>
                 </div>
             </div>
@@ -219,13 +256,13 @@
     <div class="container_bill last_container">
         <div class="container_bill_items last_item">
             <div class="clearfix">
-                <div class="btn_search_input right blue-btn">
+                <div class="btn_search_input right blue-btn" id="save">
                     <i class="fas fa-save bigger"></i><span class="text_find">Lưu</span>
                 </div>
-                <div class="btn_search_input right red-btn">
+                <div class="btn_search_input right red-btn" id="delete">
                     <i class="fas fa-trash-alt bigger"></i><span class="text_find">Xóa</span>
                 </div>
-                <div class="btn_search_input right white-btn">
+                <div class="btn_search_input right white-btn" id="back">
                     <i class="fas fa-home bigger"></i><span class="text_find">Quay về</span>
                 </div>
             </div>
@@ -234,12 +271,16 @@
 
     <!--====== Javascripts & Jquery ======-->
     <script src="/resources/js/jquery-3.2.1.min.js"></script>
-    <script src="/resources/js/addProduct.js"></script>
     <script>
+        var editor;
         ClassicEditor
             .create( document.querySelector( '#editor' ) )
+            .then( CKeditor => {
+                editor = CKeditor;
+            } )
             .catch( error => {
                 console.error( error );
             } );
     </script>
+    <script src="/resources/js/addProduct.js"></script>
 </div>
