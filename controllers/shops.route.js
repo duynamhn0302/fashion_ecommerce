@@ -4,6 +4,12 @@ const router = express.Router();
 router.get('/', async function (req, res) {
     res.redirect('information');
 });
+
+router.get('/shops-information/1', async function (req, res) {
+
+  res.render("vwShopInfo/shop_detail");
+});
+
 //Xem ds sản phẩm của shop
 router.get('/products', async function (req, res) {
   

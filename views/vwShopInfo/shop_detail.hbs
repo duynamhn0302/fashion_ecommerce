@@ -1,0 +1,149 @@
+
+<div class="container-shop-info">
+    <div class="container_header_shop">
+        <div class="container_name_shop">
+            <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img-shop">
+            <div class="name_of_shop">
+                Divisia Trading
+            </div>
+        </div>
+        <div class="container-feature-tab">
+            <div class="tab_triger">
+                <ul>
+                    <li>
+                        <label data-tab-target="#tab1" class="active_tab_title">Tất cả sản phẩm</label>
+                    </li>
+                    <li>
+                        <label data-tab-target="#tab2">Hồ sơ cửa hàng</label>
+                    </li>
+                    <li>
+                        <input type="text" placeholder="Tìm sản phẩm tại cửa hàng" width="100" class="btn-search-prd-shop">
+                        <button class="btn-search-prd-shoping">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <script>
+                        const tabs=document.querySelectorAll('[data-tab-target]');
+                        //const tabContents=document.querySelectorAll('[data-tab-content]');
+
+                        tabs.forEach(tab =>{
+                            tab.addEventListener('click',()=>{
+                                const tabsList=document.querySelectorAll('[data-tab-target]');
+                                tabsList.forEach(tabMember=>{
+                                    tabMember.classList.remove('active_tab_title');
+                                });
+
+                                /*const target=document.querySelector(tab.dataset.tabTarget)
+                                tabContents.forEach(tabContent =>{
+                                    tabContent.classList.remove('active_tab');
+                                });*/
+                                
+                                //target.classList.add('active_tab');
+                                tab.classList.add('active_tab_title');
+                            })
+                        }
+
+                        )
+            </script>
+        </div>
+    </div>
+
+    <div class="container_menu_product">
+        <div class="container_menu_sidebar">
+            <div class="tittle-menu-cate">
+                Danh mục sản phẩm
+            </div>
+            <div class="cate-sidebar">
+                <div class="cate-name-sidebar">
+                    Quần
+                </div>
+                <div class="catesub-name-sidebar">
+                    Quần Jean
+                </div>
+                <div class="catesub-name-sidebar">
+                    Quần thể dục
+                </div>
+            </div>
+
+            <div class="cate-sidebar">
+                <div class="cate-name-sidebar">
+                    Quần
+                </div>
+                <div class="catesub-name-sidebar">
+                    Quần Jean
+                </div>
+                <div class="catesub-name-sidebar">
+                    Quần thể dục
+                </div>
+            </div>
+        </div>
+
+        <div class="container_product_finding">
+            <div class="container-tab-name-select">
+                <div class="tab-name-select">Tất cả sản phẩm: </div>
+                <div class="number-result">10000 Kết quả</div>
+            </div>
+
+            <div class="container_product_sort">
+                <div class="sort-name-select">
+                    <div class="tittle-sort">Sắp xếp theo</div>
+                    <div class="sort-name selected-sort">Chọn lọc</div>
+                    <div class="sort-name">Hàng mới</div>
+                    <div class="sort-name">Bán chạy</div>
+                    <div class="sort-name">Giảm giá nhiều</div>
+                    <div class="sort-name">Giá thấp</div>
+                    <div class="sort-name">Giá cao</div>
+                </div>
+            </div>
+
+            <div class="container-contains-product">
+                <div class="row">
+
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <div class="tag-sale">ON SALE</div>
+                                <a href="/products/{{maso}}">
+                                    <img src="/resources/images/white t-shirt.jpg" alt="" style="height: 300px;">
+                                </a>
+                                <div class="pi-links">
+                                    <a href="#" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
+                                    <form method="POST" class ="frmAddToCart" id="frmAddToCart{{maso}}" action="/add_to_cart">
+                                        <input  type="hidden" name="id" value="{{maso}}">
+                                        <a href="javascript: addToCart('#frmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
+                                    </form>
+                                    <form method="POST" class ="frmLove" id = "frmLove{{maso}}" action="/love">
+                                        <input  type="hidden" name="id" value="{{maso}}">
+                                        
+                                    
+                                        <a  href="javascript: love('#frmLove{{maso}}');" class="add-card"><i class="flaticon-heart"></i><span>Yêu thích</span></a>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                            <a href="/products/{{maso}}">
+                                <div class="pi-text">
+                                    <h6>100000</h6>
+                                    <p>Áo thu trắng </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+
+                    
+                    
+                </div>
+
+            </div>
+
+            <div class="container-pagination">
+                <div class="btn-pagination">
+                    Xem thêm
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
