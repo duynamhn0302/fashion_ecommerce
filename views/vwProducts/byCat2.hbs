@@ -2,9 +2,8 @@
     <!-- Page info -->
     <div class="page-top-info">
         <div class="container">
-            <h4>Danh mục {{cateName}}</h4>
+            <h4>Danh mục {{cate1Name}}</h4>
             <div class="site-pagination">
-                <a href="/">Trang chủ</a> /
                 <a href="/products/byCat1/{{cate1Id}}">{{cate1Name}}</a> /
                 <a href="/products/byCat1/{{cate2Id}}">{{cate2Name}}</a> /
             </div>
@@ -67,12 +66,17 @@
 
                 <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
                     <div class="row">
+                        {{#if empty}}
+                            <h3>Hiện tại không có sản phẩm nào</h3>
+                        {{else}}
                         {{#each products}}
                             <div class="col-lg-4 col-sm-6">
                                 <div class="product-item" style="cursor: pointer;">
                                     <div class="pi-pic">
                                         {{!-- <div class="tag-sale">ON SALE</div> --}}
-                                        <img src="{{hinhanh}}" alt="product-image">
+                                        <a href="/products/detail/{{maso}}">
+                                            <img src="{{hinhanh}}" alt="product-image">
+                                        </a>
                                         <div class="pi-links">
                                             <a href="#" class="add-card"><i class="flaticon-bag"></i><span>THÊM VÀO GIỎ</span></a>
                                             <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
@@ -116,6 +120,7 @@
                             </nav>
                             {{/if}}
                         </div>
+                        {{/if}}
                     </div>
                 </div>
             </div>
