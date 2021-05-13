@@ -6,6 +6,51 @@ const moment = require('moment');
 const usersModel = require("../models/users.model");
 
 const router = express.Router();
+
+router.post('/add-to-cart',async function(req,res){
+  const productId = req.body.id;      // nhan vao hai bien la id,sl
+  const productQuantity = req.body.sl;
+
+  const check = cartModel.checkIfProductInCart(productId,req.session.cart.maso);
+  const product = productsModel.getSingleProductById(productId);
+  if(product===null){res.json(false);}    //id cua product la khong hop le, hay khong truy xuat duoc thi coi nhu vut
+  else{
+      if(check === null){   //chua co sp trong gio hang
+      const new_data = {
+        sanpham: productId,
+        giohang: req.session.cart.maso,
+        soluong: productQuantity,
+      }
+      await cartModel.addToCartDetail(new_data);
+    }else{    //nguoi dung da co sp trong gio hang, nen cong them
+      const new_data = {
+        soluong: productQuantity+check.soluong,
+      }
+      const condition = {
+        giohang: req.session.cart.maso,
+        sanpham: productId,
+      }
+      await cartModel.modifyCartDetail2(new_data,condition);
+    }
+    req.session.cart['tongsosanpham']= req.session.cart.tongsosanpham + productQuantity;
+    req.session.cart['tonggiatien']= req.session.cart.tonggiatien + productQuantity*product.giaban;
+    const condition1 = {
+      maso: req.session.cart.maso,
+    }
+    const modifyCart = {
+      tongsosanpham: req.session.cart.tongsosanpham,
+      tonggiatien: req.session.cart.tonggiatien,
+    }
+    await cartModel.modifyCartForCustomer(modifyCart,condition1);
+
+    res.json(true);
+  }
+})
+
+router.post('/buy-now',async function(req,res){
+  
+})
+
 //Xem thông tin cá nhân
 router.get("/profile", async function (req, res) {
   let user = req.session.authUser;

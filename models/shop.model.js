@@ -19,6 +19,34 @@ module.exports = {
         const [rows, fields] = await db.load(sql);
         return rows;
     },
+    async getCatByShopID(shopID){
+        const sql = `SELECT temp1.danhmuccap1,c.ten as Cat
+        FROM(
+            SELECT danhmuccap2,danhmuccap1,d.ten as subCat
+            FROM sanpham s join danhmuccap2 d on s.danhmuccap2=d.maso
+            WHERE s.cuahang=${shopID}
+            GROUP BY danhmuccap2,danhmuccap1) as temp1 join danhmuccap1 c on temp1.danhmuccap1=c.maso`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows;
+    },
+    async getSubCatByShopID(shopID){
+        const sql = `SELECT danhmuccap2,danhmuccap1,d.ten as subCat
+        FROM sanpham s join danhmuccap2 d on s.danhmuccap2=d.maso
+        WHERE s.cuahang=${shopID}
+        GROUP BY danhmuccap2,danhmuccap1`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows;
+    },
+    async getProductByShopID(shopID){
+        const sql = `SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
+        WHERE s.cuahang=${shopID}
+        GROUP BY maso`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows;
+    },
     async shopOfId(userId){
         const sql = `SELECT * FROM cuahang WHERE taikhoan = ${userId}`;
         const [rows,fields] = await db.load(sql);

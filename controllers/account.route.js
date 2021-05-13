@@ -24,7 +24,14 @@ router.post('/check-account',async function(req,res,next){
           else req.session.shop === null;
         }
         req.session.auth = true;
-        
+        req.session.cart = await cartModel.checkCustomerHaveCart(req.session.authUser.maso);
+        if(req.session.cart === null){    //truong hop ko tim thay cart cua user
+          req.session.cart = {
+            taikhoan: req.session.authUser.maso,
+            tongsosanpham: 0,
+            tonggiatien: 0,
+          }
+        }
     }
     res.json({
         return_mode : return_mode,
@@ -162,7 +169,13 @@ router.post('/check-otp',async function(req,res){
       req.session.authUser['maso'] = user.insertId;
 
       if(req.session.authUser.vaitro === 0 || req.session.authUser.vaitro === 1){
-        await cartModel.addCart(req.session.authUser.maso);
+        const cart = await cartModel.addCart(req.session.authUser.maso);
+        req.session.cart = {
+          maso: cart.insertId,
+          taikhoan: req.session.authUser.maso,
+          tongsosanpham: 0,
+          tonggiatien: 0,
+        }
       }
 
       if(req.session.authUser.vaitro === 1){
