@@ -103,6 +103,7 @@ router.get('/verification',function(req,res,next){
 
 const nodemailer = require('nodemailer');
 const speakeasy = require('speakeasy');
+const cartModel = require('../models/cart.model');
 let transporter = nodemailer.createTransport({
   host: "localhost:3000", // hostname
   secure: false, // use SSL
@@ -151,10 +152,19 @@ router.post('/check-otp',async function(req,res){
       step:20,
       window: 5
     });
+    console.log(tokenValidates);
+    console.log(req.body.verification);
+    console.log(req.session.token);
     if(tokenValidates || req.body.verification === req.session.token){
       const user = await userModel.add(req.session.data);
       req.session.auth = true;
       req.session.authUser = req.session.data;
+      req.session.authUser['maso'] = user.insertId;
+
+      if(req.session.authUser.vaitro === 0 || req.session.authUser.vaitro === 1){
+        await cartModel.addCart(req.session.authUser.maso);
+      }
+
       if(req.session.authUser.vaitro === 1){
         const tempShop = await shopModel.shopOfId(req.session.authUser.maso);
         if(tempShop !== null) req.session.shop = tempShop;
