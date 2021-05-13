@@ -105,6 +105,10 @@ router.post('/pay-cart', async function (req, res) {
 
 
 //Xem đơn hàng
-router.get("/orders", async function (req, res) {});
+router.get("/orders", async function (req, res) {
+  res.render("../views/users_views/Order.hbs", {
+    layout: "main.hbs",
+  });
+});
 
 module.exports = router;

@@ -1,0 +1,134 @@
+<body>
+    <!-- Page info -->
+    <div class="page-top-info">
+        <div class="container">
+            <h4>CAtegory PAge</h4>
+            <div class="site-pagination">
+                <a href="">Home</a> /
+                <a href="">Shop</a> /
+            </div>
+        </div>
+    </div>
+    <!-- Page info end -->
+
+
+    <!-- Category section -->
+    <section class="category-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 order-2 order-lg-1">
+                    <div class="filter-widget">
+                        <h2 class="fw-title">Categories</h2>
+                        <ul class="category-menu">
+                            <li><a href="#">Woman wear</a>
+                                <ul class="sub-menu">
+                                    <li><a href="#">Midi Dresses <span>(2)</span></a></li>
+                                    <li><a href="#">Maxi Dresses<span>(56)</span></a></li>
+                                    <li><a href="#">Prom Dresses<span>(36)</span></a></li>
+                                    <li><a href="#">Little Black Dresses <span>(27)</span></a></li>
+                                    <li><a href="#">Mini Dresses<span>(19)</span></a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Man Wear</a>
+                                <ul class="sub-menu">
+                                    <li><a href="#">Midi Dresses <span>(2)</span></a></li>
+                                    <li><a href="#">Maxi Dresses<span>(56)</span></a></li>
+                                    <li><a href="#">Prom Dresses<span>(36)</span></a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Children</a></li>
+                            <li><a href="#">Bags & Purses</a></li>
+                            <li><a href="#">Eyewear</a></li>
+                            <li><a href="#">Footwear</a></li>
+                        </ul>
+                    </div>
+                    <div class="filter-widget mb-0">
+                        <h2 class="fw-title">Size</h2>
+                        <div class="fw-size-choose">
+                            <div class="sc-item">
+                                <input type="radio" name="sc" id="xs-size">
+                                <label for="xs-size">XS</label>
+                            </div>
+                            <div class="sc-item">
+                                <input type="radio" name="sc" id="s-size">
+                                <label for="s-size">S</label>
+                            </div>
+                            <div class="sc-item">
+                                <input type="radio" name="sc" id="m-size" checked="">
+                                <label for="m-size">M</label>
+                            </div>
+                            <div class="sc-item">
+                                <input type="radio" name="sc" id="l-size">
+                                <label for="l-size">L</label>
+                            </div>
+                            <div class="sc-item">
+                                <input type="radio" name="sc" id="xl-size">
+                                <label for="xl-size">XL</label>
+                            </div>
+                            <div class="sc-item">
+                                <input type="radio" name="sc" id="xxl-size">
+                                <label for="xxl-size">XXL</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
+                    <div class="row">
+                        {{#each products}}
+                            <div class="col-lg-4 col-sm-6">
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        {{!-- <div class="tag-sale">ON SALE</div> --}}
+                                        <img src="{{hinhanh}}" alt="product-image">
+                                        <div class="pi-links">
+                                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO
+                                                    CART</span></a>
+                                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="pi-text">
+                                        <h6>{{giaban}} đ</h6>
+                                        <p>{{ten}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                        <div class="text-center w-100 pt-3">
+                            {{#if onlyOne}}
+                            {{else}}
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                <ul class="pagination">
+                                    <li class="page-item {{#if firstPage}}disabled{{/if}}">
+                                        <a href="?page={{prevPage}}" class="page-link" aria-label="Previous">
+                                            <i class="fas fa-angle-left"></i>
+                                        </a>
+                                    </li>
+                                    {{#each this.page_numbers}}
+                                    {{#if isCurrentPage}}
+                                    <li class="page-item active">
+                                        <a class="page-link" href="javascript:;">{{value}}</a>
+                                    </li>
+                                    {{else}}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{value}}">{{value}}</a>
+                                    </li>
+
+                                    {{/if}}
+                                    {{/each}}
+                                    <li class="page-item {{#if lastPage}}disabled{{/if}}">
+                                        <a href="?page={{nextPage}}" class="page-link" aria-label="Next">
+                                            <i class="fas fa-angle-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Category section end -->
+</body>

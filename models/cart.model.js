@@ -111,13 +111,13 @@ module.exports = {
         return rows;
     },
 
-    // async addToHistoryAfterPayment(entity) {
-    //     //const [rows1, fields1] = await db.load('SET IDENTITY_INSERT lichsutinhtrangdon ON');
+    async addToHistoryAfterPayment(entity) {
+        //const [rows1, fields1] = await db.load('SET IDENTITY_INSERT lichsutinhtrangdon ON');
 
-    //     const [rows, fields] = await db.add(entity, 'lichsutinhtrangdon');
+        const [rows, fields] = await db.add(entity, 'lichsutinhtrangdon');
 
-    //     return rows;
-    // },
+        return rows;
+    },
 
     async removeCartAfterPayment(conditionForCart, conditionForCartDetail) {
         const [rows1, fields1] = await db.del(conditionForCartDetail, 'chitietgiohang');

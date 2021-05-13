@@ -1,4 +1,5 @@
 const db = require('../utils/db');
+const { paginate } = require('./../config/default.json');
 
 module.exports = {
     async getSingleProductById(id){
@@ -47,7 +48,6 @@ module.exports = {
     async allCategories() {
         var sql = 'select * from danhmuccap1';
         var [cate1, fields1] = await db.load(sql);
-        
         for(var i = 0; i < cate1.length; i++){
            sql = 'select * from danhmuccap2 where danhmuccap2.danhmuccap1 =  "' + cate1[i].maso + '"';
            var [cate2, fields2] = await db.load(sql);
@@ -99,5 +99,14 @@ module.exports = {
     async reduceProductNumberAfterPayment(data, condition) {
         const [rows, fields] = await db.patch(data, condition, 'sanpham');
         return rows;
-    }
+    },
+    async getAllProductsByCate1Id(cate1Id, offset) {
+        const [rows, fields] = await db.load(`select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 where sanpham.status = 1 and danhmuccap1.maso = ${cate1Id} limit ${paginate.limit} offset ${offset}`)
+        return rows.length ? rows : null;
+    },
+    async countAllByCate1(cate1ID) {
+        const sql = `select COUNT(*) as total from (danhmuccap1 join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 WHERE sanpham.status = 1 and danhmuccap1.maso = ${cate1ID}`;
+        const [rows, fields] = await db.load(sql);
+        return rows[0].total;
+      },
 }
