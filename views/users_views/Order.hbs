@@ -97,20 +97,21 @@
                                     <table>
                                         <tr id="header">
                                             <th>Mã đơn hàng</th>
-                                            <th>Khách hàng</th>
-                                            <th>Doanh thu</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thời gian</th>
+                                            <th>Ngày mua</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
                                             <th>Tình trạng</th>
                                         </tr>
-                                        {{#each this.getInfoBill}}
+                                        {{#each allBills}}
                                         <tr>
                                             <td>{{maso}}</td>
-                                            <td>{{taikhoan}}</td>
+                                            <td>{{ngaymua}}</td>
+                                            <td>{{sanpham}}</td>
                                             <td>{{tonggiatien}}</td>
-                                            <td>{{TrangThai}}</td>
-                                            <td>{{ngayCapNhat}}</td>
-                                            <td>{{ten}}</td>
+                                            {{#when tinhtrangdon 'eq' 1}} <td>Đang chờ xác nhận</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 2}} <td>Đang giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 3}} <td>Đã giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 4}} <td>Đã huỷ</td> {{/when}}
                                         </tr>
                                         {{/each}}
                                     </table>
@@ -122,20 +123,21 @@
                                     <table>
                                         <tr id="header">
                                             <th>Mã đơn hàng</th>
-                                            <th>Tên đơn hàng</th>
-                                            <th>Doanh thu</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thời gian</th>
-                                            <th>Xác nhận</th>
+                                            <th>Ngày mua</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Tình trạng</th>
                                         </tr>
-                                        {{#each this.getConfirmBill}}
+                                        {{#each allYetConfirmed}}
                                         <tr>
                                             <td>{{maso}}</td>
-                                            <td>{{taikhoan}}</td>
+                                            <td>{{ngaymua}}</td>
+                                            <td>{{sanpham}}</td>
                                             <td>{{tonggiatien}}</td>
-                                            <td>{{TrangThai}}</td>
-                                            <td>{{ngayCapNhat}}</td>
-                                            <td>{{ten}}</td>
+                                            {{#when tinhtrangdon 'eq' 1}} <td>Đang chờ xác nhận</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 2}} <td>Đang giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 3}} <td>Đã giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 4}} <td>Đã huỷ</td> {{/when}}
                                         </tr>
                                         {{/each}}
                                     </table>
@@ -147,21 +149,22 @@
                                     <table>
                                         <tr id="header">
                                             <th>Mã đơn hàng</th>
-                                            <th>Tên đơn hàng</th>
-                                            <th>Doanh thu</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thời gian</th>
-                                            <th>Xác nhận</th>
+                                            <th>Ngày mua</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Tình trạng</th>
                                         </tr>
 
-                                        {{#each this.getTravellingBill}}
+                                        {{#each allTraveling}}
                                         <tr>
                                             <td>{{maso}}</td>
-                                            <td>{{taikhoan}}</td>
+                                            <td>{{ngaymua}}</td>
+                                            <td>{{sanpham}}</td>
                                             <td>{{tonggiatien}}</td>
-                                            <td>{{TrangThai}}</td>
-                                            <td>{{ngayCapNhat}}</td>
-                                            <td>{{ten}}</td>
+                                            {{#when tinhtrangdon 'eq' 1}} <td>Đang chờ xác nhận</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 2}} <td>Đang giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 3}} <td>Đã giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 4}} <td>Đã huỷ</td> {{/when}}
                                         </tr>
                                         {{/each}}
                                     </table>
@@ -173,21 +176,22 @@
                                     <table>
                                         <tr id="header">
                                             <th>Mã đơn hàng</th>
-                                            <th>Tên đơn hàng</th>
-                                            <th>Doanh thu</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thời gian</th>
-                                            <th>Xác nhận</th>
+                                            <th>Ngày mua</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Tình trạng</th>
                                         </tr>
 
-                                        {{#each this.getTravelledBill}}
+                                        {{#each allTraveled}}
                                         <tr>
                                             <td>{{maso}}</td>
-                                            <td>{{taikhoan}}</td>
+                                            <td>{{ngaymua}}</td>
+                                            <td>{{sanpham}}</td>
                                             <td>{{tonggiatien}}</td>
-                                            <td>{{TrangThai}}</td>
-                                            <td>{{ngayCapNhat}}</td>
-                                            <td>{{ten}}</td>
+                                            {{#when tinhtrangdon 'eq' 1}} <td>Đang chờ xác nhận</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 2}} <td>Đang giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 3}} <td>Đã giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 4}} <td>Đã huỷ</td> {{/when}}
                                         </tr>
                                         {{/each}}
                                     </table>
@@ -198,20 +202,21 @@
                                     <table>
                                         <tr id="header">
                                             <th>Mã đơn hàng</th>
-                                            <th>Tên đơn hàng</th>
-                                            <th>Doanh thu</th>
-                                            <th>Trạng thái</th>
-                                            <th>Thời gian</th>
-                                            <th>Xác nhận</th>
+                                            <th>Ngày mua</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Tình trạng</th>
                                         </tr>
-                                        {{#each this.getDiscardBill}}
+                                        {{#each allCanceled}}
                                         <tr>
                                             <td>{{maso}}</td>
-                                            <td>{{taikhoan}}</td>
+                                            <td>{{ngaymua}}</td>
+                                            <td>{{sanpham}}</td>
                                             <td>{{tonggiatien}}</td>
-                                            <td>{{TrangThai}}</td>
-                                            <td>{{ngayCapNhat}}</td>
-                                            <td>{{ten}}</td>
+                                            {{#when tinhtrangdon 'eq' 1}} <td>Đang chờ xác nhận</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 2}} <td>Đang giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 3}} <td>Đã giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 4}} <td>Đã huỷ</td> {{/when}}
                                         </tr>
                                         {{/each}}
                                     </table>

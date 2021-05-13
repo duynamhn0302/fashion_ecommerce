@@ -144,4 +144,11 @@ module.exports = {
     const [rows, fields] = await db.load(sql);
     return rows[0].c;
   },
+  async getPaidDate(billId, userId) {
+    const sql = `select chitiettinhtrangdon.ngaythang
+    from donhang join chitiettinhtrangdon on chitiettinhtrangdon.donhang = donhang.maso
+    where donhang.taikhoan = ${userId} and chitiettinhtrangdon.tinhtrang = 1 and donhang.maso = ${billId}`;
+    const [rows, fields] = await db.load(sql);
+    return rows.length ? rows[0].ngaythang : null;
+  }
 };

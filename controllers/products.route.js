@@ -50,13 +50,10 @@ router.get("/byCat1/:id", async function (req, res) {
   let allCategories = await productsModel.allCategories();
 
   if (allProductsFromCate1 !== null)
-    Promise.all(
-      await allProductsFromCate1.map(async (product) => {
-        let img = await productsModel.getImages(+product.maso);
-        product.hinhanh = img[0].link;
-        return product;
-      })
-    );
+    for (let i = 0; i < allProductsFromCate1.length; i++) {
+      let img = await productsModel.getImages(+allProductsFromCate1[i].maso);
+      allProductsFromCate1[i].hinhanh = img[0].link;
+    }
 
   res.render("../views/vwProducts/byCat1.hbs", {
     layout: "main.hbs",
@@ -104,13 +101,10 @@ router.get("/byCat2/:id", async function (req, res) {
   let allCategories = await productsModel.allCategories();
 
   if (allProductsFromCate2 !== null)
-    Promise.all(
-      await allProductsFromCate2.map(async (product) => {
-        let img = await productsModel.getImages(+product.maso);
-        product.hinhanh = img[0].link;
-        return product;
-      })
-    );
+    for (let i = 0; i < allProductsFromCate2.length; i++) {
+      let img = await productsModel.getImages(+allProductsFromCate2[i].maso);
+      allProductsFromCate2[i].hinhanh = img[0].link;
+    }
 
   res.render("../views/vwProducts/byCat2.hbs", {
     layout: "main.hbs",
@@ -134,9 +128,9 @@ router.get("/byCat2/:id", async function (req, res) {
 router.post("/search-result-most-relevant", async function (req, res) {
   let search_term = req.body.search_term;
   req.session.search_term = search_term;
-  if (search_term === '' || search_term.length < 3)
-    return res.redirect('/search/')
-  res.redirect('/products/search-result-most-relevant');
+  if (search_term === "" || search_term.length < 3)
+    return res.redirect("/search/");
+  res.redirect("/products/search-result-most-relevant");
 });
 
 router.get("/search-result-most-relevant", async function (req, res) {
@@ -182,7 +176,7 @@ router.get("/search-result-most-relevant", async function (req, res) {
     firstPage: +page === 1,
     lastPage: +page === nPages,
     onlyOne: nPages <= 1,
-    allCategories
+    allCategories,
   });
 });
 

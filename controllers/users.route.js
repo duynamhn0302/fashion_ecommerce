@@ -1,6 +1,7 @@
 const express = require("express");
 const cartModel = require("../models/cart.model");
 const productsModel = require("../models/products.model");
+const moment = require('moment');
 
 const usersModel = require("../models/users.model");
 
@@ -52,12 +53,12 @@ router.get("/shopping-cart", async function (req, res) {
   let empty = products === null ? true : false;
   //get product
   if (!empty) {
-    await Promise.all(products.map(async product => {
-      let images = await productsModel.getImages(product.maso);
-      let shop = await cartModel.getShopNameFromProductId(product.maso);
-      product.hinhanh = images[0].link;
-      product.cuahang = shop.ten;
-    }))
+    for (let i=0; i<products.length; i++) {
+      let images = await productsModel.getImages(products[i].maso);
+      let shop = await cartModel.getShopNameFromProductId(products[i].maso);
+      products[i].hinhanh = images[0].link;
+      products[i].cuahang = shop.ten;
+    }
   }
 
   res.render("../views/users_views/Cart.hbs", {
@@ -91,8 +92,8 @@ router.post('/pay-cart', async function (req, res) {
     let productDetail = await productsModel.getSingleProductById(+product.sanpham);
     let newProductDetail = { donhang: +newBillId, sanpham: product.sanpham, dongia: productDetail.giaban, soluong: product.soluong };
     await cartModel.createNewBillDetail(newProductDetail);
-    //let newDate = new Date();
-    //await cartModel.addToHistoryAfterPayment({ donhang: +newBillId, tinhtrang: 1, ngaythang: newDate.toISOString() })
+    let newDate = new Date();
+    await cartModel.addToHistoryAfterPayment({ tinhtrang: 1, ngaythang: newDate.toISOString() })
     await cartModel.removeCartAfterPayment({ maso: +req.body.magiohang }, { giohang: +req.body.magiohang });
     let productNumber = await productsModel.single(product.sanpham);
     let productNumberLeft = productNumber.soluong - product.soluong;
@@ -106,8 +107,60 @@ router.post('/pay-cart', async function (req, res) {
 
 //Xem đơn hàng
 router.get("/orders", async function (req, res) {
+  let userId = req.session.authUser.maso;
+  let allBills = await usersModel.getAllBillsFromUserId(userId);
+  let allYetConfirmed = await usersModel.getAllYetConfirmedBillsFromUserId(userId);
+  let allTraveling = await usersModel.getAllTravelingBillsFromUserId(userId);
+  let allTraveled = await usersModel.getAllTraveledBillsFromUserId(userId);
+  let allCanceled = await usersModel.getAllCanceledBillsFromUserId(userId);
+
+  if (allBills !== null)
+    for (let i = 0; i < allBills.length; i++) {
+      let product = await productsModel.single(allBills[i].sanpham);
+      let paidDate = await productsModel.getPaidDate(allBills[i].maso, userId);
+      allBills[i].sanpham = product.ten;
+      allBills[i].ngaymua = moment(paidDate).format("YYYY-MM-DD");
+    }
+
+  if (allYetConfirmed !== null)
+    for (let i = 0; i < allYetConfirmed.length; i++) {
+      let product = await productsModel.single(allYetConfirmed[i].sanpham);
+      let paidDate = await productsModel.getPaidDate(allYetConfirmed[i].maso, userId);
+      allYetConfirmed[i].sanpham = product.ten;
+      allYetConfirmed[i].ngaymua = moment(paidDate).format("YYYY-MM-DD");
+    }
+
+  if (allTraveling !== null)
+    for (let i = 0; i < allTraveling.length; i++) {
+      let product = await productsModel.single(allTraveling[i].sanpham);
+      let paidDate = await productsModel.getPaidDate(allTraveling[i].maso, userId);
+      allTraveling[i].sanpham = product.ten;
+      allTraveling[i].ngaymua = moment(paidDate).format("YYYY-MM-DD");
+    }
+
+  if (allTraveled !== null)
+    for (let i = 0; i < allTraveled.length; i++) {
+      let product = await productsModel.single(allTraveled[i].sanpham);
+      let paidDate = await productsModel.getPaidDate(allTraveled[i].maso, userId);
+      allTraveled[i].sanpham = product.ten;
+      allTraveled[i].ngaymua = moment(paidDate).format("YYYY-MM-DD");
+    }
+
+  if (allCanceled !== null)
+    for (let i = 0; i < allCanceled.length; i++) {
+      let product = await productsModel.single(allCanceled[i].sanpham);
+      let paidDate = await productsModel.getPaidDate(allCanceled[i].maso, userId);
+      allCanceled[i].sanpham = product.ten;
+      allCanceled[i].ngaymua = moment(paidDate).format("YYYY-MM-DD");
+    }
+
   res.render("../views/users_views/Order.hbs", {
     layout: "main.hbs",
+    allBills,
+    allYetConfirmed,
+    allTraveled,
+    allTraveling,
+    allCanceled
   });
 });
 
