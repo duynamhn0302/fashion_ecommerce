@@ -363,3 +363,8 @@ INSERT INTO `taikhoan` VALUES (5, 'admin', '123456', 'Admin', '15/03/2000', '012
 INSERT INTO `taikhoan` VALUES (6, '18127159', '12345678', 'Duy-Nam Ly', NULL, NULL, 'duynamvt79@gmail.com', 'images/default_avatar.png', 0, 0x31, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+ALTER TABLE `SanPham` ADD FULLTEXT (ten);
+ALTER TABLE `DanhMucCap1` ADD FULLTEXT (ten);
+ALTER TABLE `DanhMucCap2` ADD FULLTEXT (ten);
+ALTER TABLE `CuaHang` ADD FULLTEXT (ten);

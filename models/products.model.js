@@ -81,6 +81,16 @@ module.exports = {
     const [rows, fields] = await db.load(sql);
     return rows;
   },
+  async allProductWithOffset(offset) {
+    const sql = `select * from sanpham where status = 1 limit ${paginate.limit} offset ${offset}`;
+    const [rows, fields] = await db.load(sql);
+    return rows;
+  },
+  async countAllProducts() {
+    const sql = `select COUNT(*) as total from sanpham`;
+    const [rows, fields] = await db.load(sql);
+    return rows[0].total;
+  },
   async addProduct(data) {
     const [rows, fields] = await db.add(data, "sanpham");
     return rows;
@@ -150,5 +160,14 @@ module.exports = {
     where donhang.taikhoan = ${userId} and chitiettinhtrangdon.tinhtrang = 1 and donhang.maso = ${billId}`;
     const [rows, fields] = await db.load(sql);
     return rows.length ? rows[0].ngaythang : null;
-  }
+  },
+  async searchRelevantForShop(text, shopId) {
+    const sql = `select sanpham.*
+    from sanpham join cuahang on sanpham.cuahang = cuahang.maso
+    where
+    cuahang.maso = ${shopId} and
+    match(sanpham.ten) against ('${text}' IN NATURAL LANGUAGE MODE)`;
+    const [rows, fields] = await db.load(sql);
+    return rows;
+  },
 };

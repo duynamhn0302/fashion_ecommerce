@@ -129,8 +129,52 @@ router.post("/search-result-most-relevant", async function (req, res) {
   let search_term = req.body.search_term;
   req.session.search_term = search_term;
   if (search_term === "" || search_term.length < 3)
-    return res.redirect("/search/");
+    return res.redirect("/products/search/");
   res.redirect("/products/search-result-most-relevant");
+});
+
+router.get("/search", async function (req, res) {
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  let search_term = req.session.search_term;
+
+  const total = await productsModel.countAllProducts();
+  let nPages = Math.floor(total / paginate.limit);
+  if (total % paginate.limit > 0) nPages++;
+
+  const page_numbers = [];
+  for (var i = 1; i <= nPages; i++) {
+    page_numbers.push({
+      value: i,
+      isCurrentPage: i === +page,
+    });
+  }
+
+  let allCategories = await productsModel.allCategories();
+
+  const offset = (page - 1) * paginate.limit;
+  var list = await productsModel.allProductWithOffset(offset);
+
+  if (list !== null)
+    for (let i=0; i<list.length; i++) {
+        let img = await productsModel.getImages(+list[i].maso);
+        list[i].hinhanh = img[0].link;
+      }
+
+  res.render("../views/vwProducts/search_results.hbs", {
+    products: list,
+    page_numbers,
+    empty: !list.length,
+    n_result: total,
+    search_term,
+    prevPage: +page - 1,
+    nextPage: +page + 1,
+    firstPage: +page === 1,
+    lastPage: +page === nPages,
+    onlyOne: nPages <= 1,
+    allCategories,
+  });
 });
 
 router.get("/search-result-most-relevant", async function (req, res) {
@@ -157,19 +201,16 @@ router.get("/search-result-most-relevant", async function (req, res) {
   var list = await productsModel.searchRelevant(offset, search_term);
 
   if (list !== null)
-    Promise.all(
-      await list.map(async (product) => {
-        let img = await productsModel.getImages(+product.maso);
-        product.hinhanh = img[0].link;
-        return product;
-      })
-    );
+    for (let i=0; i<list.length; i++) {
+        let img = await productsModel.getImages(+list[i].maso);
+        list[i].hinhanh = img[0].link;
+      }
 
   res.render("../views/vwProducts/search_results.hbs", {
     products: list,
     page_numbers,
     empty: !list.length,
-    n_result: list.length,
+    n_result: total,
     search_term,
     prevPage: +page - 1,
     nextPage: +page + 1,
