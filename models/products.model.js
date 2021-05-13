@@ -51,6 +51,11 @@ module.exports = {
         for(var i = 0; i < cate1.length; i++){
            sql = 'select * from danhmuccap2 where danhmuccap2.danhmuccap1 =  "' + cate1[i].maso + '"';
            var [cate2, fields2] = await db.load(sql);
+           for (var j = 0; j < cate2.length; j++) {
+                sql = 'select COUNT(sanpham.maso) as quantity from (danhmuccap1 join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) left join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 where danhmuccap2.maso = ' + cate2[j].maso;
+                var [quantities, fields] = await db.load(sql);
+                cate2[j].quantity = quantities[0].quantity;
+           }
            cate1[i].cate2 = cate2;
            cate1[i].existsCate2 = (cate2.length != 0);
         }
@@ -104,9 +109,18 @@ module.exports = {
         const [rows, fields] = await db.load(`select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 where sanpham.status = 1 and danhmuccap1.maso = ${cate1Id} limit ${paginate.limit} offset ${offset}`)
         return rows.length ? rows : null;
     },
+    async getAllProductsByCate2Id(cate2Id, offset) {
+        const [rows, fields] = await db.load(`select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 where sanpham.status = 1 and danhmuccap2.maso = ${cate2Id} limit ${paginate.limit} offset ${offset}`)
+        return rows.length ? rows : null;
+    },
     async countAllByCate1(cate1ID) {
         const sql = `select COUNT(*) as total from (danhmuccap1 join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 WHERE sanpham.status = 1 and danhmuccap1.maso = ${cate1ID}`;
         const [rows, fields] = await db.load(sql);
         return rows[0].total;
-      },
+    },
+    async countAllByCate2(cate2ID) {
+        const sql = `select COUNT(*) as total from (danhmuccap1 join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 WHERE sanpham.status = 1 and danhmuccap2.maso = ${cate2ID}`;
+        const [rows, fields] = await db.load(sql);
+        return rows[0].total;
+    },
 }

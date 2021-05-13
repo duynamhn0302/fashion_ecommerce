@@ -1,6 +1,16 @@
 const db = require('../utils/db');
 
 module.exports = {
+    async addCart(userId){
+        const data = {
+            taikhoan: userId,
+            tongsosanpham: 0,
+            tonggiatien: 0,
+        }
+        const [rows,fields] = await db.add(data,'giohang');
+        return rows;
+    },
+
     async checkCustomerHaveCart(customerId){
         const sql = `SELECT * FROM giohang WHERE taikhoan = ${customerId}`;
         const [rows, fields] = await db.load(sql);
