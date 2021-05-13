@@ -27,26 +27,21 @@ module.exports = {
 
     async addCartForCustomer(data){
         const [rows, fields] = await db.add(data,'giohang');
-        console.log(rows[0]);
-        if(rows.length === 0) return null;
         return rows;
     },
 
     async modifyCartForCustomer(data,condition){
         const [rows, fields] = await db.patch(data, condition, 'giohang');
-        if(rows.length === 0) return null;
         return rows;
     },
 
     async addToCartDetail(data){
         const [rows, fields] = await db.add(data,'chitietgiohang');
-        if(rows.length === 0) return null;
         return rows;
     },
 
     async modifyCartDetail(data, condition){
         const [rows, fields] = await db.patch(data, condition, 'chitietgiohang');
-        if(rows.length === 0) return null;
         return rows;
     },
 
