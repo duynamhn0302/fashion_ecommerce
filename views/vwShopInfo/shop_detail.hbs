@@ -55,44 +55,30 @@
             <div class="tittle-menu-cate">
                 Danh mục sản phẩm
             </div>
+            {{#each this.category}}
             <div class="cate-sidebar">
                 <div class="cate-name-sidebar">
-                    Quần
+                    <a href="#">{{tenCap1}}</a>
                 </div>
+                {{#each this.tenCap2}}
                 <div class="catesub-name-sidebar">
-                    Quần Jean
+                    <a href="#">{{subCat}}</a>
                 </div>
-                <div class="catesub-name-sidebar">
-                    Quần thể dục
-                </div>
+                {{/each}}
             </div>
-
-            <div class="cate-sidebar">
-                <div class="cate-name-sidebar">
-                    Quần
-                </div>
-                <div class="catesub-name-sidebar">
-                    Quần Jean
-                </div>
-                <div class="catesub-name-sidebar">
-                    Quần thể dục
-                </div>
-            </div>
+            {{/each}}
         </div>
 
         <div class="container_product_finding">
             <div class="container-tab-name-select">
                 <div class="tab-name-select">Tất cả sản phẩm: </div>
-                <div class="number-result">10000 Kết quả</div>
+                <div class="number-result">{{totalProduct}} Kết quả</div>
             </div>
 
             <div class="container_product_sort">
                 <div class="sort-name-select">
                     <div class="tittle-sort">Sắp xếp theo</div>
                     <div class="sort-name selected-sort">Chọn lọc</div>
-                    <div class="sort-name">Hàng mới</div>
-                    <div class="sort-name">Bán chạy</div>
-                    <div class="sort-name">Giảm giá nhiều</div>
                     <div class="sort-name">Giá thấp</div>
                     <div class="sort-name">Giá cao</div>
                 </div>
@@ -100,13 +86,13 @@
 
             <div class="container-contains-product">
                 <div class="row">
-
+                    {{#each listProductByShopID}}
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
                             <div class="pi-pic">
                                 <div class="tag-sale">ON SALE</div>
                                 <a href="/products/{{maso}}">
-                                    <img src="/resources/images/white t-shirt.jpg" alt="" style="height: 300px;">
+                                    <img src="{{link}}" alt="" style="height: 300px;">
                                 </a>
                                 <div class="pi-links">
                                     <a href="#" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
@@ -125,13 +111,13 @@
                             </div>
                             <a href="/products/{{maso}}">
                                 <div class="pi-text">
-                                    <h6>100000</h6>
-                                    <p>Áo thu trắng </p>
+                                    <h6>{{giaban}}</h6>
+                                    <p>{{ten}} </p>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    
+                    {{/each}}
 
                     
                     

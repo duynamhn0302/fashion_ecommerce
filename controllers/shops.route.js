@@ -11,9 +11,37 @@ router.get('/', async function (req, res) {
     res.redirect('information');
 });
 
-router.get('/shops-information/1', async function (req, res) {
+router.get('/shops-information/:id', async function (req, res) {
+  let shopID = +req.params.id;
+  let listProductByShopID=await shopModel.getProductByShopID(shopID);
 
-  res.render("vwShopInfo/shop_detail");
+  let catList=await shopModel.getCatByShopID(shopID);
+  let subCatList=await shopModel.getSubCatByShopID(shopID);
+  // console.log(catList);
+  // console.log(subCatList);
+  let category=[];
+  for (item of catList)
+  {
+    let allCat={};
+    allCat.tenCap1=item.Cat;
+    let arrSub=[];
+    for (sub of subCatList)
+    {
+      if (item.danhmuccap1===sub.danhmuccap1)
+      {
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2=arrSub;
+    category.push(allCat)
+  }
+  //console.log(category.tenCap2);
+
+  res.render("vwShopInfo/shop_detail",{
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+  });
 });
 
 //Xem ds sản phẩm của shop
