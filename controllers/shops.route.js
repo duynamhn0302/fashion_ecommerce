@@ -4,6 +4,7 @@ const shopModel=require('../models/shop.model')
 const multer = require('multer');
 const router = express.Router();
 const moment = require('moment');
+const { paginate } = require('./../config/default.json');
 
 //Xem màn hình shop
 router.get('/', async function (req, res) {
@@ -102,25 +103,148 @@ router.get('/bills', async function (req, res) {
   }
   let shopId=await shopModel.getShopID(+user.maso);
 
+//Tất cả đơn hàng
+
   let getInfoBill=await shopModel.getInfoBill(shopId.maso);
-  getInfoBill=await shopModel.addStatusFinished(getInfoBill);
-  getInfoBill=await shopModel.addDateModified(getInfoBill);
-  
+
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  const total = getInfoBill.length;
+  let nPages = Math.floor(total / paginate.limit);
+  if (total % paginate.limit > 0) nPages++;
+
+  const page_numbers = [];
+  for (var i = 1; i <= nPages; i++) {
+    page_numbers.push({
+      value: i,
+      isCurrentPage: i === +page,
+    });
+  }
+
+  const offset = (page - 1) * paginate.limit;
+
+  let getInfoBillByOffset=await shopModel.getInfoBillByOffset(shopId.maso,offset);
+  getInfoBillByOffset=await shopModel.addStatusFinished(getInfoBillByOffset);
+  getInfoBillByOffset=await shopModel.addDateModified( getInfoBillByOffset);
+
+//Đơn hàng xác nhận
+
   let getConfirmBill=await shopModel.getInfoBillByStatus(shopId.maso,1);
-  getConfirmBill=await shopModel.addStatusFinished(getConfirmBill);
-  getConfirmBill=await shopModel.addDateModified(getConfirmBill);
+  if (getConfirmBill==null)
+  {
+    getConfirmBill=[];
+  }
 
+  var pageC = req.query.page || 1;
+  if (pageC < 1) pageC = 1;
+
+  const totalC = getConfirmBill.length;
+  let nPagesC = Math.floor(totalC / paginate.limit);
+  if (totalC % paginate.limit > 0) nPagesC++;
+  console.log("totalC: "+totalC);
+
+  const page_numbersC = [];
+  for (var i = 1; i <= nPagesC; i++) {
+    page_numbersC.push({
+      value: i,
+      isCurrentPage: i === +pageC,
+    });
+  }
+
+  const offsetC = (pageC - 1) * paginate.limit;
+
+  let getConfirmBillByOffset=await shopModel.getInfoBillByStatus(shopId.maso,1,offsetC);
+  getConfirmBillByOffset=await shopModel.addStatusFinished(getConfirmBillByOffset);
+  getConfirmBillByOffset=await shopModel.addDateModified(getConfirmBillByOffset);
+
+  //Đơn hàng đang vận chuyển
   let getTravellingBill=await shopModel.getInfoBillByStatus(shopId.maso,2);
-  getTravellingBill=await shopModel.addStatusFinished(getTravellingBill);
-  getTravellingBill=await shopModel.addDateModified(getTravellingBill);
 
+  if (getTravellingBill==null)
+  {
+    getTravellingBill=[];
+  }
+
+  var pageT = req.query.page || 1;
+  if (pageT < 1) pageT = 1;
+
+  const totalT = getTravellingBill.length;
+  let nPagesT = Math.floor(totalT / paginate.limit);
+  if (totalT % paginate.limit > 0) nPagesT++;
+
+  const page_numbersT = [];
+  for (var i = 1; i <= nPagesT; i++) {
+    page_numbersT.push({
+      value: i,
+      isCurrentPage: i === +pageT,
+    });
+  }
+
+  const offsetT = (pageT - 1) * paginate.limit;
+
+
+  let getTravellingBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,2,offsetT);
+  getTravellingBillByOffset=await shopModel.addStatusFinished(getTravellingBillByOffset);
+  getTravellingBillByOffset=await shopModel.addDateModified(getTravellingBillByOffset);
+  //Đờn hàng đã vận chuyển
   let getTravelledBill=await shopModel.getInfoBillByStatus(shopId.maso,3);
-  getTravelledBill=await shopModel.addStatusFinished(getTravelledBill);
-  getTravelledBill=await shopModel.addDateModified(getTravelledBill);
+
+  if (getTravelledBill==null)
+  {
+    getTravelledBill=[];
+  }
+
+  var pageTe = req.query.page || 1;
+  if (pageTe < 1) pageTe = 1;
+
+  const totalTe = getTravelledBill.length;
+  let nPagesTe = Math.floor(totalTe / paginate.limit);
+  if (totalTe % paginate.limit > 0) nPagesTe++;
+
+  const page_numbersTe = [];
+  for (var i = 1; i <= nPagesTe; i++) {
+    page_numbersTe.push({
+      value: i,
+      isCurrentPage: i === +pageTe,
+    });
+  }
+
+  const offsetTe = (pageTe - 1) * paginate.limit;
+
+
+  let getTravelledBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,3,offsetTe);
+  getTravelledBillByOffset=await shopModel.addStatusFinished(getTravelledBillByOffset);
+  getTravelledBillByOffset=await shopModel.addDateModified(getTravelledBillByOffset);
   //getDiscardBill
   let getDiscardBill=await shopModel.getInfoBillByStatus(shopId.maso,4);
-  getDiscardBill=await shopModel.addStatusFinished(getDiscardBill);
-  getDiscardBill=await shopModel.addDateModified(getDiscardBill);
+
+  if (getDiscardBill==null)
+  {
+    getDiscardBill=[];
+  }
+
+  var pageD = req.query.page || 1;
+  if (pageD < 1) pageD = 1;
+
+  const totalD = getDiscardBill.length;
+  let nPagesD = Math.floor(totalD / paginate.limit);
+  if (totalD % paginate.limit > 0) nPagesD++;
+
+  const page_numbersD = [];
+  for (var i = 1; i <= nPagesD; i++) {
+    page_numbersD.push({
+      value: i,
+      isCurrentPage: i === +pageD,
+    });
+  }
+
+  const offsetD = (pageD - 1) * paginate.limit;
+
+
+  let getDiscardBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,4,offsetD);
+  getDiscardBillByOffset=await shopModel.addStatusFinished(getDiscardBillByOffset);
+  getDiscardBillByOffset=await shopModel.addDateModified(getDiscardBillByOffset);
 
   res.render('vwShop/shop_bill',{
     getInfoBill,
@@ -128,9 +252,228 @@ router.get('/bills', async function (req, res) {
     getTravellingBill,
     getTravelledBill,
     getDiscardBill,
+
+    getInfoBillByOffset,
+    totalRowAll: getInfoBill.length,
+    totalPage: +nPages,
+    prevPage: +page - 1,
+    nextPage: +page + 1,
+
+    getConfirmBillByOffset,
+    totalRowC: getConfirmBill.length,
+    totalPageC: +nPagesC,
+    prevPageC: +pageC - 1,
+    nextPageC: +pageC + 1,
+
+    getTravellingBillByOffset,
+    totalRowT: getTravellingBill.length,
+    totalPageT: +nPagesT,
+    prevPageT: +pageT - 1,
+    nextPageT: +pageT + 1,
+
+    getTravelledBillByOffset,
+    totalRowTe: getTravelledBill.length,
+    totalPageTe: +nPagesTe,
+    prevPageTe: +pageTe - 1,
+    nextPageTe: +pageTe + 1,
+
+    getDiscardBillByOffset,
+    totalRowD: getDiscardBill.length,
+    totalPageD: +nPagesD,
+    prevPageD: +pageD - 1,
+    nextPageD: +pageD + 1,
+
+
+
+
       layout: 'shop_manage.hbs'
     });
 })
+
+router.get('/bills.json', async function(req, res) {
+  let user = req.session.authUser;
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  let shopId=await shopModel.getShopID(+user.maso);
+
+  let getInfoBill=await shopModel.getInfoBill(shopId.maso);
+      
+  const total = getInfoBill.length;
+  let nPages = Math.floor(total / paginate.limit);
+  if (total % paginate.limit > 0) nPages++;
+
+  const page_numbers = [];
+  for (var i = 1; i <= nPages; i++) {
+    page_numbers.push({
+      value: i,
+      isCurrentPage: i === +page,
+    });
+  }
+  const offset = (page - 1) * paginate.limit;
+
+  let getInfoBillByOffset=await shopModel.getInfoBillByOffset(shopId.maso,offset);
+  getInfoBillByOffset=await shopModel.addStatusFinished(getInfoBillByOffset);
+  getInfoBillByOffset=await shopModel.addDateModified( getInfoBillByOffset);
+  console.log(total);
+
+  res.json(getInfoBillByOffset);
+});
+
+router.get('/bills_confirm.json', async function(req, res) {
+  let user = req.session.authUser;
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  let shopId=await shopModel.getShopID(+user.maso);
+
+  let getConfirmBill=await shopModel.getInfoBillByStatus(shopId.maso,1);
+  if (getConfirmBill==null)
+  {
+    getConfirmBill=[];
+  }
+
+  var pageC = req.query.page || 1;
+  if (pageC < 1) pageC = 1;
+
+  const totalC = getConfirmBill.length;
+  let nPagesC = Math.floor(totalC / paginate.limit);
+  if (totalC % paginate.limit > 0) nPagesC++;
+
+  const page_numbersC = [];
+  for (var i = 1; i <= nPagesC; i++) {
+    page_numbersC.push({
+      value: i,
+      isCurrentPage: i === +pageC,
+    });
+  }
+
+  const offsetC = (pageC - 1) * paginate.limit;
+
+  let getConfirmBillByOffset=await shopModel.getInfoBillByStatus(shopId.maso,1,offsetC);
+  getConfirmBillByOffset=await shopModel.addStatusFinished(getConfirmBillByOffset);
+  getConfirmBillByOffset=await shopModel.addDateModified(getConfirmBillByOffset);
+
+  res.json(getConfirmBillByOffset);
+});
+
+router.get('/bills_travelling.json', async function(req, res) {
+  let user = req.session.authUser;
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  let shopId=await shopModel.getShopID(+user.maso);
+
+  let getTravellingBill=await shopModel.getInfoBillByStatus(shopId.maso,2);
+
+  if (getTravellingBill==null)
+  {
+    getTravellingBill=[];
+  }
+
+  var pageT = req.query.page || 1;
+  if (pageT < 1) pageT = 1;
+
+  const totalT = getTravellingBill.length;
+  let nPagesT = Math.floor(totalT / paginate.limit);
+  if (totalT % paginate.limit > 0) nPagesC++;
+
+  const page_numbersT = [];
+  for (var i = 1; i <= nPagesT; i++) {
+    page_numbersT.push({
+      value: i,
+      isCurrentPage: i === +pageT,
+    });
+  }
+
+  const offsetT = (pageT - 1) * paginate.limit;
+
+
+  let getTravellingBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,2,offsetT);
+  getTravellingBillByOffset=await shopModel.addStatusFinished(getTravellingBillByOffset);
+  getTravellingBillByOffset=await shopModel.addDateModified(getTravellingBillByOffset);
+
+  res.json(getTravellingBillByOffset);
+});
+
+router.get('/bills_travelled.json', async function(req, res) {
+  let user = req.session.authUser;
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  let shopId=await shopModel.getShopID(+user.maso);
+
+  let getTravelledBill=await shopModel.getInfoBillByStatus(shopId.maso,3);
+
+  if (getTravelledBill==null)
+  {
+    getTravelledBill=[];
+  }
+
+  var pageTe = req.query.page || 1;
+  if (pageTe < 1) pageTe = 1;
+
+  const totalTe = getTravelledBill.length;
+  let nPagesTe = Math.floor(totalTe / paginate.limit);
+  if (totalTe % paginate.limit > 0) nPagesTe++;
+
+  const page_numbersTe = [];
+  for (var i = 1; i <= nPagesTe; i++) {
+    page_numbersTe.push({
+      value: i,
+      isCurrentPage: i === +pageTe,
+    });
+  }
+
+  const offsetTe = (pageTe - 1) * paginate.limit;
+
+
+  let getTravelledBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,3,offsetTe);
+  getTravelledBillByOffset=await shopModel.addStatusFinished(getTravelledBillByOffset);
+  getTravelledBillByOffset=await shopModel.addDateModified(getTravelledBillByOffset);
+
+  console.log(getTravelledBillByOffset);
+  res.json(getTravelledBillByOffset);
+});
+
+router.get('/bills_discard.json', async function(req, res) {
+  let user = req.session.authUser;
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  let shopId=await shopModel.getShopID(+user.maso);
+
+  let getDiscardBill=await shopModel.getInfoBillByStatus(shopId.maso,4);
+
+  if (getDiscardBill==null)
+  {
+    getDiscardBill=[];
+  }
+
+  var pageD = req.query.page || 1;
+  if (pageD < 1) pageD = 1;
+
+  const totalD = getDiscardBill.length;
+  let nPagesD = Math.floor(totalD / paginate.limit);
+  if (totalD % paginate.limit > 0) nPagesD++;
+
+  const page_numbersD = [];
+  for (var i = 1; i <= nPagesD; i++) {
+    page_numbersD.push({
+      value: i,
+      isCurrentPage: i === +pageD,
+    });
+  }
+
+  const offsetD = (pageD - 1) * paginate.limit;
+
+
+  let getDiscardBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,4,offsetD);
+  getDiscardBillByOffset=await shopModel.addStatusFinished(getDiscardBillByOffset);
+  getDiscardBillByOffset=await shopModel.addDateModified(getDiscardBillByOffset);
+
+  res.json(getDiscardBillByOffset);
+});
 
 router.get('/new', async function (req, res) {
   res.render('vwShop/shop_create_product',{

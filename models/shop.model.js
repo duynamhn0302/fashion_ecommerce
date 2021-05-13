@@ -1,4 +1,5 @@
 const db = require('../utils/db');
+const { paginate } = require('./../config/default.json');
 
 module.exports = {
     async allShop(){
@@ -220,6 +221,25 @@ module.exports = {
         return rows;
     },
 
+    async getInfoBillByOffset(shopID,offset)
+    {
+        const sql = `SELECT temp3.*,t.ten
+        FROM(
+            SELECT k.*
+            FROM(
+                SELECT d.donhang
+                FROM(
+                    SELECT s.maso
+                    FROM sanpham s join cuahang c on s.cuahang=c.maso
+                    WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
+                    GROUP BY d.donhang
+            ) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join loaitinhtrangdon t on temp3.tinhtrangdon=t.maso
+            limit ${paginate.limit} offset ${offset}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows;
+    },
+
     async getInfoBillByStatus(shopID, status)
     {
         const sql = `SELECT temp3.*,t.ten
@@ -234,6 +254,26 @@ module.exports = {
                     GROUP BY d.donhang
             ) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join loaitinhtrangdon t on temp3.tinhtrangdon=t.maso
         WHERE temp3.tinhtrangdon=${status}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows;
+    },
+
+    async getInfoBillByStatusOffset(shopID, status,offset)
+    {
+        const sql = `SELECT temp3.*,t.ten
+        FROM(
+            SELECT k.*
+            FROM(
+                SELECT d.donhang
+                FROM(
+                    SELECT s.maso
+                    FROM sanpham s join cuahang c on s.cuahang=c.maso
+                    WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
+                    GROUP BY d.donhang
+            ) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join loaitinhtrangdon t on temp3.tinhtrangdon=t.maso
+        WHERE temp3.tinhtrangdon=${status}
+        limit ${paginate.limit} offset ${offset}`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
         return rows;
