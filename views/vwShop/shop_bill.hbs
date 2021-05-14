@@ -54,7 +54,6 @@
                 <span class="fas fa-greater-than" style="color: rgb(180, 180, 180); font-size: 13px;"></span>
                 <span class="root_link" style="font-weight: 500;">Danh sách đơn hàng - Division</span>
             </div>
-
             <div class="input_search">
                 <input type="text" placeholder="Nhập tối đa 20 mã ĐH cách nhau bằng dấu ','" class="input_search_menu" height="10">
 
@@ -169,7 +168,7 @@
                                         <th>Tình trạng</th>
                                     </tr>
                                     {{#each this.getInfoBillByOffset}}
-                                    <tr class="item_bill_all">
+                                    <tr class="item_bill_all clickable-row" data-href='bills-detail/{{maso}}'>
                                         <td>{{maso}}</td>
                                         <td>{{taikhoan}}</td>
                                         <td>{{tonggiatien}}</td>
@@ -180,6 +179,13 @@
                                     {{/each}}
                                 </table>
                             </div>
+                            <script>
+                                jQuery(document).ready(function($) {
+                                    $(".clickable-row").click(function() {
+                                        window.location = $(this).data("href");
+                                    });
+                                });
+                            </script>
                             <div class="btn_container_pagination">
                                 <div class="total_pagination">
                                     Tổng cộng {{totalRowAll}} bản ghi

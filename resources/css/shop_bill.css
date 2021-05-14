@@ -474,3 +474,61 @@ table{
     pointer-events: none;
     color: #212529;
 }
+
+
+/*Thông tin chi tiết đơn*/
+
+.customer-information{
+    padding-left: 20px;
+    padding-top: 10px;
+    color: black;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.input_detail{
+    width: 100%;
+}
+
+.input_detail_ct{
+    padding: 10px 0 10px 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.btn_update_input{
+    background-color: #6888e0;
+    bottom: 0;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 6px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #d1d1d1;
+    cursor: pointer;
+}
+
+.btn_back_input{
+    background-color: #e23e3e;
+    bottom: 0;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    padding: 6px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #d1d1d1;
+    cursor: pointer;
+}
+
+.ctn_update_cbx{
+    margin-left: 10px;
+    width: 130px;
+    position: relative;
+}
+
+.container-update-detail{
+    display: flex;
+    margin-top: 10px;
+    justify-content: flex-end;
+    padding-right: 10px;
+}

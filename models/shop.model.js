@@ -73,6 +73,18 @@ module.exports = {
         return rows[0];
     },
 
+    async getDetailBillInfo(BillID)
+    {
+        const sql = `SELECT temp.*,l.ten
+        FROM
+        (SELECT d.*,t.hoten,t.email,t.avatar,t.sdt
+        FROM donhang d join taikhoan t on d.taikhoan = t.maso) as temp join loaitinhtrangdon l on temp.tinhtrangdon=l.maso
+        WHERE temp.maso=${BillID}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
+    },
+
     async countStatusProduct(shopID, status)
     {
         const sql = `SELECT COUNT(*) as SoLuongDangDuyet
@@ -113,7 +125,7 @@ module.exports = {
                             FROM sanpham s join cuahang c on s.cuahang=c.maso
                             WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
                             GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso
-            WHERE k.tinhtrangdon=3) temp3 join chitiettinhtrangdon t on temp3.maso=t.donhang and t.tinhtrang=3
+            WHERE k.tinhtrangdon=3) temp3 join lichsutinhtrangdon t on temp3.maso=t.donhang and t.tinhtrang=3
         WHERE DATEDIFF(t.ngaythang,"${dateToday}")=0`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
@@ -135,7 +147,7 @@ module.exports = {
                                                                         SELECT s.maso
                                                                         FROM sanpham s join cuahang c on s.cuahang=c.maso
                                                                         WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
-                                                                        GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join chitiettinhtrangdon c on c.donhang=temp3.donhang
+                                                                        GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
                     WHERE DATEDIFF(c.ngaythang,${dateToday})=0
                     GROUP BY temp3.donhang
             ) as temp4
@@ -149,7 +161,7 @@ module.exports = {
                                                             SELECT s.maso
                                                             FROM sanpham s join cuahang c on s.cuahang=c.maso
                                                             WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
-                                                            GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join chitiettinhtrangdon c on c.donhang=temp3.donhang
+                                                            GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
         WHERE DATEDIFF(c.ngaythang,${dateToday})=0 AND c.tinhtrang=4
         GROUP BY temp3.donhang)) as temp5 join donhang d on temp5.donhang=d.maso`;
         const [rows,fields] = await db.load(sql);
@@ -172,7 +184,7 @@ module.exports = {
                                                                         SELECT s.maso
                                                                         FROM sanpham s join cuahang c on s.cuahang=c.maso
                                                                         WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
-                                                                        GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join chitiettinhtrangdon c on c.donhang=temp3.donhang
+                                                                        GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
                     WHERE DATEDIFF(c.ngaythang,${dateToday})=0
                     GROUP BY temp3.donhang
             ) as temp4
@@ -186,7 +198,7 @@ module.exports = {
                                                             SELECT s.maso
                                                             FROM sanpham s join cuahang c on s.cuahang=c.maso
                                                             WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
-                                                            GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join chitiettinhtrangdon c on c.donhang=temp3.donhang
+                                                            GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
         WHERE DATEDIFF(c.ngaythang,${dateToday})=0 AND c.tinhtrang=4
         GROUP BY temp3.donhang)) as temp5 join donhang d on temp5.donhang=d.maso`;
         const [rows,fields] = await db.load(sql);
@@ -209,7 +221,7 @@ module.exports = {
                                                                         SELECT s.maso
                                                                         FROM sanpham s join cuahang c on s.cuahang=c.maso
                                                                         WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
-                                                                        GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join chitiettinhtrangdon c on c.donhang=temp3.donhang
+                                                                        GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
                     WHERE DATEDIFF(c.ngaythang,${dateToday})<=30
                     GROUP BY temp3.donhang
             ) as temp4
@@ -223,7 +235,7 @@ module.exports = {
                                                             SELECT s.maso
                                                             FROM sanpham s join cuahang c on s.cuahang=c.maso
                                                             WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
-                                                            GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join chitiettinhtrangdon c on c.donhang=temp3.donhang
+                                                            GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
         WHERE DATEDIFF(c.ngaythang,${dateToday})<=30 AND c.tinhtrang=4
         GROUP BY temp3.donhang)) as temp5 join donhang d on temp5.donhang=d.maso`;
         const [rows,fields] = await db.load(sql);
@@ -329,7 +341,7 @@ module.exports = {
     async getDateModified(idDonHang)
     {
         const sql = `SELECT MAX(ngaythang) as ngayCapNhat
-        FROM chitiettinhtrangdon
+        FROM lichsutinhtrangdon
         WHERE donhang=${idDonHang}`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;

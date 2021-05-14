@@ -509,15 +509,21 @@ router.get('/new', async function (req, res) {
     });
 })
 
+//Chi tiết đơn hàng
+router.get('/bills-detail/:id', async function (req, res) {
+  let id=+req.params.id;
+  let listBillDetail=await shopModel.getDetailBillInfo(id);
+  console.log(listBillDetail);
+  res.render('vwShop/shop_bill_detail',{
+    listBillDetail,
+      layout: 'shop_manage.hbs'
+    });
+})
 
 //Xem thông tin shop
 router.get('/information', async function (req, res) {
     res.render('vwShop/shop_info',{
       layout: 'shop_manage.hbs'
-    //   acc: req.session.authUser,
-    //   nam: req.session.authUser.gender==='Nam' ,
-    //   nu: req.session.authUser.gender==="Nữ",
-    //   else: req.session.authUser.gender==="Nam" || req.session.authUser.gender==="Nữ",
     });
   })
 

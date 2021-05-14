@@ -1,0 +1,177 @@
+{{#with this.listBillDetail}}
+<div class="container_income">
+    <div class="container_income_navbar">
+        <div class="btn_show">
+            <span class="fas fa-bars"></span>
+        </div>
+        <script>
+            $('.btn_show').click(function(){
+                $('.container_income').toggleClass("show");
+                $('.sidebar').toggleClass("show");
+            });
+        </script>
+
+        <div class="title_bar">
+            Danh sách đơn hàng - Division giao hàng
+        </div>
+
+        <div class="account_bar">
+            <div class="account_bar_inner">
+                <div class="img_shop_account">
+                    <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img_account_inner">
+                </div>
+                <div class="name_account">
+                    Divisia Shop
+                </div>
+                <div class="down_arrow">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="func_account_bar" id="func_auth_bar">
+                <div class="func_acc" id="pass_shop">
+                    Thay đổi mật khẩu
+                </div>
+                <div class="func_acc" id="info_shop">Thông tin Shop</div>
+                <div><hr class="inline"></div>
+                <div class="func_acc" id="log_out_shop">Đăng xuất</div>
+            </div>
+            <script>
+                document.addEventListener("click", (evt) => {
+                    const deactive_authe_menu = document.getElementById("func_auth_bar");
+                    if (event.target.closest(".account_bar_inner")) {
+                        deactive_authe_menu.style.display="block";
+                        return;
+                        }
+                    deactive_authe_menu.style.display="none";
+                    });
+            </script>
+        </div>
+    </div>
+
+    <div class="container_bill">
+        <div class="container_bill_items" style="padding-bottom: 10px;">
+            <div class="link_path">
+                <span class="root_link">Trang trủ</span>
+                <span class="fas fa-greater-than" style="color: rgb(180, 180, 180); font-size: 13px;"></span>
+                <span class="root_link">Danh sách đơn hàng - Division</span>
+                <span class="fas fa-greater-than" style="color: rgb(180, 180, 180); font-size: 13px;"></span>
+                <span class="root_link" style="font-weight: 500;">Chi tiết đơn hàng</span>
+            </div>
+
+            <div class="customer-information">
+                1. Thông tin khách hàng
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Mã khách hàng
+                    </div>
+                    <input type="text" placeholder="{{taikhoan}}" class="input_detail" readonly="readonly">
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Tên khách hàng
+                    </div>
+                    <input type="text" placeholder="{{hoten}}" class="input_detail" readonly="readonly">
+                </div>
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Email
+                    </div>
+                    <input type="text" placeholder="{{email}}" class="input_detail" readonly="readonly">
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Số điện thoại
+                    </div>
+                    <input type="text" placeholder="{{sdt}}" style="width: 70%;" readonly="readonly">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container_bill">
+        <div class="container_bill_items" style="padding-bottom: 10px;">
+            <div class="customer-information">
+                2. Thông tin đơn hàng
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Mã đơn hàng
+                    </div>
+                    <input type="text" placeholder="{{maso}}" style="40%" readonly="readonly"> 
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Tổng giá trị đơn hàng
+                    </div>
+                    <input type="text" placeholder="{{tonggiatien}}" class="input_detail" readonly="readonly">
+                </div>
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Mã sản phẩm
+                    </div>
+                    <input type="text" placeholder="phucyugi@gmail.com" class="input_detail" readonly="readonly">
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Tên sản phẩm
+                    </div>
+                    <input type="text" placeholder="0365306251" style="width: 100%;" readonly="readonly">
+                </div>
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Số lượng
+                    </div>
+                    <input type="text" placeholder="1" style="width: 20%;" readonly="readonly">
+                </div>
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Tình trạng đơn hàng
+                    </div>
+                    <input type="text" placeholder="{{ten}}" style="width: 70%;" readonly="readonly">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-update-detail">
+        <div class="ctn_update_cbx clickable-row" data-href='/shops/bills'>
+            <div class="btn_back_input">
+                <i class="fas fa-ban" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Hủy đơn</span>
+             </div>
+        </div>
+
+        <div class="ctn_update_cbx">
+            <div class="btn_update_input">
+                <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Cập nhật</span>
+             </div>
+        </div>
+    </div>
+
+    <script>
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+</div>
+{{/with}}
