@@ -1,8 +1,11 @@
 const db = require('../utils/db');
 
 module.exports = {
+    async lockUser(id){
+        await db.patch({'status' : 0}, {'maso' : id}, 'taikhoan');
+    },
     async allUser(){
-        const sql = `select * from taikhoan` ;
+        const sql = `select * from taikhoan where status = 1` ;
         const [rows, fields] = await db.load(sql);
         return rows;
     },

@@ -40,7 +40,13 @@ router.get('/statistics', auth.authAdmin,  async function (req, res, next){
 //view products
 router.get('/products', auth.authAdmin, async function (req, res, next){
     const products = await productsModel.allProduct()
-    console.log(products)
+    for(var i = 0; i < products.length; i++){
+        const luot = await productsModel.getLuotMua(products[i].maso)
+        if (luot === 0)
+            products[i].luotmua = 0
+        else
+            products[i].luotmua = luot.soluong
+    }
     res.status(200).render("vwAdmin/admin-products", {
         layout: 'admin.hbs',
         products,
@@ -49,10 +55,10 @@ router.get('/products', auth.authAdmin, async function (req, res, next){
   
 
 router.post('/deleteAccount', async (req, res) =>{
-    const id = req.body.id;
-    console.log(id)
-    const url = req.session.retUrl;
-    res.redirect(url);
+    console.log(req.body.id)
+    if (typeof req.body.id !== 'undefined')
+        await usersModel.lockUser(+req.body.id);
+    res.redirect('/admin/')
 });
 router.post('/deleteShop',  async (req, res) =>{
     const id = req.body.id;
@@ -60,10 +66,10 @@ router.post('/deleteShop',  async (req, res) =>{
     const url = req.session.retUrl;
     res.redirect(url);
 });
-router.post('/admin/deleteProduct', async (req, res)=>{
-    const id = req.body.id;
-    console.log(id)
-    const url = req.session.retUrl;
-    res.redirect(url);
+router.post('/deleteProduct', async (req, res)=>{
+    console.log(req.body.id)
+    if (typeof req.body.id !== 'undefined')
+        await productsModel.deleteProduct(+req.body.id);
+    res.redirect('/admin/products/')
 });
 module.exports = router;

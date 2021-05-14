@@ -25,15 +25,13 @@
             <tr>
               <th>Tài khoản</th>
               <th>Email</th>
-              <th>Tình trạng</th>
             </tr>
           </thead>
           <tbody id="myTable">
             {{#each accounts}}
               <tr>
-                <td><a href="#confirm"class = "open-Confirm" data-toggle="modal" data-title="Xóa tài khoản: " data-id="{{_id}}" data-content = "{{this.username}}" data-type = "delAcc">{{this.username}}</a></td>
+                <td><a href="#confirm"class = "open-Confirm" data-toggle="modal" data-title="Xóa tài khoản: " data-id="{{maso}}" data-content = "{{this.maso}}" data-type = "delAcc">{{this.username}}</a></td>
                 <td>{{this.email}}</td>
-                <td>Khóa hoặc k</td>
               </tr>
             {{/each}}
           </tbody>
@@ -60,7 +58,6 @@
               <th>Số điện thoại</th>
               <th>Chủ sở hữu</th>
               <th>Tên tài khoản</th>
-              <th>Tình trạng</th>
             </tr>
           </thead>
           <tbody id="myTable1">
@@ -69,9 +66,8 @@
                 <td>{{this.ten}}</td>
                 <td>{{email}}</td>
                 <td>{{sdt}}</td>
-                <td>{{sellerID.name}}</td>
-                <td>{{sellerID.name}}</td>
-                <td>Khóa hoặc k</td>
+                <td>{{hoten}}</td>
+                <td>{{username}}</td>
               </tr>
             {{/each}}
           </tbody>

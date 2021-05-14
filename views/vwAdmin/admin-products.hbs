@@ -18,7 +18,7 @@
       <div id="product">
         <br />
         <h3 id="title3">Sản phẩm</h3>
-        <span>(Ấn vào tên cửa hàng bất kỳ để thực hiện xóa cửa hàng)</span>
+        <span>(Ấn vào tên sản phẩm bất kỳ để thực hiện xóa cửa hàng)</span>
         <div class="search">
           <i class="fa fa-search" aria-hidden="true"></i>
           <input
@@ -42,11 +42,11 @@
           <tbody id="myTable">
             {{#each products}}
               <tr>
-                <td><a href="#confirm"class = "open-Confirm" data-toggle="modal" data-title="Xóa sản phẩm: " data-id="{{_id}}" data-content = "{{this.name}}" data-type = "delProduct">{{this.ten}}</a></td>
+                <td><a href="#confirm"class = "open-Confirm" data-toggle="modal" data-title="Xóa sản phẩm: " data-id="{{maso}}" data-content = "{{this.ten}}" data-type = "delProduct">{{this.ten}}</a></td>
                 <td>{{this.giaban}}</td>
-                <td>{{this.shopID.name}}</td>
+                <td>{{this.tencuahang}}</td>
                 <td>{{this.danhmuccap2}}</td>
-                <td> N lượt</td>
+                <td> {{this.luotmua}} lượt</td>
                 <td>{{this.diemdanhgia}} sao</td>
                 <td>{{this.luotdanhgia}} lượt</td>
               </tr>

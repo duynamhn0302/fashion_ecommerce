@@ -16,11 +16,28 @@ router.get('/:id', async function (req, res, next) {
     }
     images[0].isActive = true;
     const avatar = images[0]
+    const relativeProduct = await productsModel.getRelativeProduct(id)
+    for(var i = 0; i < relativeProduct.length; i++){
+        const reImages = await productsModel.getImages(relativeProduct[i].maso)
+        relativeProduct[i].avatar = reImages[0]
+    }
+    const comment = await productsModel.getComment(id)
+    var luotmua = await productsModel.getLuotMua(id)
+    if (luotmua == 0)
+        luotmua = 0
+    else
+        luotmua = luotmua.soluong
+    const star = productsModel.convertRating(product.diemdanhgia)
+    console.log(star)
     res.render("vwProducts/detailProduct",
     {
         avatar,
         images,
         product,
+        relativeProduct,
+        comment,
+        luotmua,
+        star
         
     })
 });

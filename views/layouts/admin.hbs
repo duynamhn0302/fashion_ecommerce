@@ -21,8 +21,18 @@
       </div>
       <div class="title-text">Trang quản lý</div>
    
-      <a href="/login" id="logout" class="btn btn-primary" style="margin-right: 50px;">Đăng xuất</a>
-  
+  <form method="POST" id="frmLogout" action="/logout"></form>
+											{{!-- <a href="javascript: $('#frmLogout').submit();" class="option-select-auth">Đăng xuất</a> --}}
+      <script>
+        function logout(){
+          $.post('/logout',function(data,status){
+            window.location.replace(data.location);
+          })
+        }
+      </script>
+      <a class="btn btn-primary" href="javascript: $(#frmLogout).submit()" style="margin-right: 50px;">Đăng xuất</a>
+		</div>
+											
       
     </header>
 
