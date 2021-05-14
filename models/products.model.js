@@ -54,23 +54,21 @@ module.exports = {
         where sanpham.status = 1
         group by sanpham.maso
         ORDER BY sum(chitietdonhang.soluong)  DESC`;
-        const [rows, fields] = await db.load(sql);
-        if(n<rows.length)
-            return rows.slice(0, n);
-        return rows;
-    },
-    async topNNew(n){
-        const sql = `select *
+    const [rows, fields] = await db.load(sql);
+    if (n < rows.length) return rows.slice(0, n);
+    return rows;
+  },
+  async topNNew(n) {
+    const sql = `select *
         from sanpham
         where sanpham.status = 1
         ORDER BY sanpham.ngaymo desc`;
-        const [rows, fields] = await db.load(sql);
-        if(n<rows.length)
-            return rows.slice(0, n);
-        return rows;
-    },
-    async topNCategories(n){
-        const sql = `select danhmuccap2.*, sum(sp.sum) as sum
+    const [rows, fields] = await db.load(sql);
+    if (n < rows.length) return rows.slice(0, n);
+    return rows;
+  },
+  async topNCategories(n) {
+    const sql = `select danhmuccap2.*, sum(sp.sum) as sum
         from danhmuccap2 join
                         (select sanpham.*, sum(chitietdonhang.soluong) as sum
                 from (chitietdonhang join donhang on donhang.maso = chitietdonhang.donhang)

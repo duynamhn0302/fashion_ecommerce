@@ -159,7 +159,7 @@
                 <div class="tab_container_wrap">
                         <div class="tab_container_box active_tab" id="tab1" data-tab-content>
                             <div class="table_bill_container">
-                                <table>
+                                <table class="table_bill">
                                     <tr id="header">
                                         <th>Mã đơn hàng</th>
                                         <th>Khách hàng</th>
@@ -168,8 +168,8 @@
                                         <th>Thời gian</th>
                                         <th>Tình trạng</th>
                                     </tr>
-                                    {{#each this.getInfoBill}}
-                                    <tr>
+                                    {{#each this.getInfoBillByOffset}}
+                                    <tr class="item_bill_all">
                                         <td>{{maso}}</td>
                                         <td>{{taikhoan}}</td>
                                         <td>{{tonggiatien}}</td>
@@ -179,12 +179,122 @@
                                     </tr>
                                     {{/each}}
                                 </table>
+                            </div>
+                            <div class="btn_container_pagination">
+                                <div class="total_pagination">
+                                    Tổng cộng {{totalRowAll}} bản ghi
+                                </div>
+                                <div class="prev_bill">
+                                    <a>
+                                        <i class="fas fa-caret-left"></i>
+                                    </a>
+                                </div>
+                                <div class="after_bill">
+                                    <a>
+                                        <i class="fas fa-caret-right"></i>
+                                    </a>
+                                </div>
+                                <script>
+                                    var count={{{nextPage}}};
+                                    var prev={{{prevPage}}};
+                                    var total={{{totalPage}}};
+                                    if (prev==0)
+                                    {
+                                        prev=1;
+                                    }
+                                    var flag=false;
+                                    var flag1=false;
+                                    if (count-1>=total)
+                                    {
+                                        $('.after_bill').toggleClass('disabled');
+                                        $('.prev_bill').toggleClass('disabled');
+                                    }
+                                    else{
+                                    $('.after_bill').click(function(){
+                                        console.log(prev);
+                                        console.log(count);
+                                        console.log(total);
+                                        if (count==total)
+                                        {
+                                            flag=true;
+                                        }
+                                        else{
+                                            flag1=false;
+                                        }
+                                        $(".item_bill_all").remove();
+                                        $.getJSON({
+                                            url:`/shops/bills.json?page=${count}`,
+                                            success: function(data){
+                                                for (item of data)
+                                                {
+                                                    $('.table_bill').append(
+                                                        `
+                                                        <tr class="item_bill_all">
+                                                            <td>${item.maso}</td>
+                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tonggiatien}</td>
+                                                            <td>${item.TrangThai}</td>
+                                                            <td>${item.ngayCapNhat}</td>
+                                                            <td>${item.ten}</td>
+                                                        </tr>
+                                                        `
+                                                    );
+                                                }
+                                            }
+                                        })
+                                        if (flag==false)
+                                        {
+                                            prev++;
+                                            count++;
+                                        }
+                                    })
+
+                                    $('.prev_bill').click(function(){
+                                        if (prev<2)
+                                        {
+                                            flag1=true;
+                                        }
+                                        else{
+                                            flag=false;
+                                        }
+                                        console.log(prev);
+                                        console.log(count);
+                                        $(".item_bill_all").remove();
+                                        $.getJSON({
+                                            url:`/shops/bills.json?page=${prev}`,
+                                            success: function(data){
+                                                for (item of data)
+                                                {
+                                                    $('.table_bill').append(
+                                                        `
+                                                        <tr class="item_bill_all">
+                                                            <td>${item.maso}</td>
+                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tonggiatien}</td>
+                                                            <td>${item.TrangThai}</td>
+                                                            <td>${item.ngayCapNhat}</td>
+                                                            <td>${item.ten}</td>
+                                                        </tr>
+                                                        `
+                                                    );
+                                                }
+                                            }
+                                        })
+                                        if (flag1==false)
+                                        {
+                                            prev--;
+                                            count--;
+                                        }
+                                    })
+                                    }
+                                    //$.getJSON()
+                                </script>
                             </div>
                         </div>
 
                         <div class="tab_container_box" id="tab2" data-tab-content>
                             <div class="table_bill_container">
-                                <table>
+                                <table class="table_bill_confirm">
                                     <tr id="header">
                                         <th>Mã đơn hàng</th>
                                         <th>Tên đơn hàng</th>
@@ -193,8 +303,8 @@
                                         <th>Thời gian</th>
                                         <th>Xác nhận</th>
                                     </tr>
-                                    {{#each this.getConfirmBill}}
-                                    <tr>
+                                    {{#each this.getConfirmBillOffset}}
+                                    <tr class="item_bill_confirm">
                                         <td>{{maso}}</td>
                                         <td>{{taikhoan}}</td>
                                         <td>{{tonggiatien}}</td>
@@ -204,12 +314,116 @@
                                     </tr>
                                     {{/each}}
                                 </table>
+                            </div>
+                            <div class="btn_container_pagination">
+                                <div class="total_pagination">
+                                    Tổng cộng {{totalRowC}} bản ghi
+                                </div>
+                                <div class="prev_bill_confirm">
+                                    <a>
+                                        <i class="fas fa-caret-left"></i>
+                                    </a>
+                                </div>
+                                <div class="after_bill_confirm">
+                                    <a>
+                                        <i class="fas fa-caret-right"></i>
+                                    </a>
+                                </div>
+                                <script>
+                                    var countC={{{nextPageC}}};
+                                    var prevC={{{prevPageC}}};
+                                    if (prevC==0)
+                                    {
+                                        prevC=1;
+                                    }
+                                    var totalC={{{totalPageC}}};
+                                    if (countC-1>=totalC)
+                                    {
+                                        $('.after_bill_confirm').toggleClass('disabled');
+                                        $('.prev_bill_confirm').toggleClass('disabled');
+                                    }
+                                    else{
+                                    var flagC=false;
+                                    var flag1C=false;
+                                    $('.after_bill_confirm').click(function(){
+                                        if (countC==totalC)
+                                        {
+                                            flagC=true;
+                                        }
+                                        else{
+                                            flag1C=false;
+                                        }
+                                        $(".item_bill_confirm").remove();
+                                        $.getJSON({
+                                            url:`/shops/bills_confirm.json?page=${countC}`,
+                                            success: function(data){
+                                                for (item of data)
+                                                {
+                                                    $('.table_bill_confirm').append(
+                                                        `
+                                                        <tr class="item_bill_confirm">
+                                                            <td>${item.maso}</td>
+                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tonggiatien}</td>
+                                                            <td>${item.TrangThai}</td>
+                                                            <td>${item.ngayCapNhat}</td>
+                                                            <td>${item.ten}</td>
+                                                        </tr>
+                                                        `
+                                                    );
+                                                }
+                                            }
+                                        })
+                                        if (flagC==false)
+                                        {
+                                            prevC++;
+                                            countC++;
+                                        }
+                                    })
+
+                                    $('.prev_bill_confirm').click(function(){
+                                        if (prevC<2)
+                                        {
+                                            flag1C=true;
+                                        }
+                                        else{
+                                            flagC=false;
+                                        }
+                                        $(".item_bill_confirm").remove();
+                                        $.getJSON({
+                                            url:`/shops/bills_confirm.json?page=${prevC}`,
+                                            success: function(data){
+                                                for (item of data)
+                                                {
+                                                    $('.table_bill_confirm').append(
+                                                        `
+                                                        <tr class="item_bill_confirm">
+                                                            <td>${item.maso}</td>
+                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tonggiatien}</td>
+                                                            <td>${item.TrangThai}</td>
+                                                            <td>${item.ngayCapNhat}</td>
+                                                            <td>${item.ten}</td>
+                                                        </tr>
+                                                        `
+                                                    );
+                                                }
+                                            }
+                                        })
+                                        if (flag1C==false)
+                                        {
+                                            prevC--;
+                                            countC--;
+                                        }
+                                    })
+                                    }
+                                </script>
                             </div>
                         </div>
 
                         <div class="tab_container_box" id="tab3" data-tab-content>
                             <div class="table_bill_container">
-                                <table>
+                                <table class="table_bill_travelling">
                                     <tr id="header">
                                         <th>Mã đơn hàng</th>
                                         <th>Tên đơn hàng</th>
@@ -219,8 +433,8 @@
                                         <th>Xác nhận</th>
                                     </tr>
 
-                                    {{#each this.getTravellingBill}}
-                                    <tr>
+                                    {{#each this.getTravellingBillByOffset}}
+                                    <tr class="item_bill_travelling">
                                         <td>{{maso}}</td>
                                         <td>{{taikhoan}}</td>
                                         <td>{{tonggiatien}}</td>
@@ -231,11 +445,115 @@
                                     {{/each}}
                                 </table>
                             </div>
+                            <div class="btn_container_pagination">
+                                <div class="total_pagination">
+                                    Tổng cộng {{totalRowT}} bản ghi
+                                </div>
+                                <div class="prev_bill_travelling">
+                                    <a>
+                                        <i class="fas fa-caret-left"></i>
+                                    </a>
+                                </div>
+                                <div class="after_bill_travelling">
+                                    <a>
+                                        <i class="fas fa-caret-right"></i>
+                                    </a>
+                                </div>
+                                <script>
+                                    var countT={{{nextPageT}}};
+                                    var prevT={{{prevPageT}}};
+                                    if (prevT==0)
+                                    {
+                                        prevT=1;
+                                    }
+                                    var totalT={{{totalPageT}}};
+                                    if (countT-1>=totalT)
+                                    {
+                                        $('.after_bill_travelling').toggleClass('disabled');
+                                        $('.prev_bill_travelling').toggleClass('disabled');
+                                    }
+                                    else{
+                                    var flagT=false;
+                                    var flag1T=false;
+                                    $('.after_bill_travelling').click(function(){
+                                        if (countT==totalT)
+                                        {
+                                            flagT=true;
+                                        }
+                                        else{
+                                            flag1T=false;
+                                        }
+                                        $(".item_bill_travelling").remove();
+                                        $.getJSON({
+                                            url:`/shops/bills_travelling.json?page=${countT}`,
+                                            success: function(data){
+                                                for (item of data)
+                                                {
+                                                    $('.table_bill_travelling').append(
+                                                        `
+                                                        <tr class="item_bill_travelling">
+                                                            <td>${item.maso}</td>
+                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tonggiatien}</td>
+                                                            <td>${item.TrangThai}</td>
+                                                            <td>${item.ngayCapNhat}</td>
+                                                            <td>${item.ten}</td>
+                                                        </tr>
+                                                        `
+                                                    );
+                                                }
+                                            }
+                                        })
+                                        if (flagT==false)
+                                        {
+                                            prevT++;
+                                            countT++;
+                                        }
+                                    })
+
+                                    $('.prev_bill_travelling').click(function(){
+                                        if (prevT<2)
+                                        {
+                                            flag1T=true;
+                                        }
+                                        else{
+                                            flagT=false;
+                                        }
+                                        $(".item_bill_travelling").remove();
+                                        $.getJSON({
+                                            url:`/shops/bills_travelling.json?page=${prevT}`,
+                                            success: function(data){
+                                                for (item of data)
+                                                {
+                                                    $('.table_bill_travelling').append(
+                                                        `
+                                                        <tr class="item_bill_travelling">
+                                                            <td>${item.maso}</td>
+                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tonggiatien}</td>
+                                                            <td>${item.TrangThai}</td>
+                                                            <td>${item.ngayCapNhat}</td>
+                                                            <td>${item.ten}</td>
+                                                        </tr>
+                                                        `
+                                                    );
+                                                }
+                                            }
+                                        })
+                                        if (flag1T==false)
+                                        {
+                                            prevT--;
+                                            countT--;
+                                        }
+                                    })
+                                    }
+                                </script>
+                            </div>
                         </div>
 
                         <div class="tab_container_box" id="tab4" data-tab-content>
                             <div class="table_bill_container">
-                                <table>
+                                <table class="table_bill_travelled">
                                     <tr id="header">
                                         <th>Mã đơn hàng</th>
                                         <th>Tên đơn hàng</th>
@@ -245,8 +563,8 @@
                                         <th>Xác nhận</th>
                                     </tr>
                                     
-                                    {{#each this.getTravelledBill}}
-                                    <tr>
+                                    {{#each this.getTravelledBillByOffset}}
+                                    <tr class="item_bill_travelled">
                                         <td>{{maso}}</td>
                                         <td>{{taikhoan}}</td>
                                         <td>{{tonggiatien}}</td>
@@ -257,10 +575,118 @@
                                     {{/each}}
                                 </table>
                             </div>
+
+                            <div class="btn_container_pagination">
+                                <div class="total_pagination">
+                                    Tổng cộng {{totalRowTe}} bản ghi
+                                </div>
+                                <div class="prev_bill_travelled">
+                                    <a>
+                                        <i class="fas fa-caret-left"></i>
+                                    </a>
+                                </div>
+                                <div class="after_bill_travelled">
+                                    <a>
+                                        <i class="fas fa-caret-right"></i>
+                                    </a>
+                                </div>
+                                <script>
+                                    var countTe={{{nextPageTe}}};
+                                    var prevTe={{{prevPageTe}}};
+                                    if (prevTe==0)
+                                    {
+                                        prevTe=1;
+                                    }
+                                    var totalTe={{{totalPageTe}}};
+                                    if (countTe-1>=totalTe)
+                                    {
+                                        $('.after_bill_travelled').toggleClass('disabled');
+                                        $('.prev_bill_travelled').toggleClass('disabled');
+                                    }
+                                    else{
+                                    var flagTe=false;
+                                    var flag1Te=false;
+                                    $('.after_bill_travelled').click(function(){
+                                        if (countTe==totalTe)
+                                        {
+                                            flagTe=true;
+                                        }
+                                        else{
+                                            flag1Te=false;
+                                        }
+                                        $(".item_bill_travelled").remove();
+                                        $.getJSON({
+                                            url:`/shops/bills_travelled.json?page=${countTe}`,
+                                            success: function(data){
+                                                for (item of data)
+                                                {
+                                                    $('.table_bill_travelled').append(
+                                                        `
+                                                        <tr class="item_bill_travelled">
+                                                            <td>${item.maso}</td>
+                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tonggiatien}</td>
+                                                            <td>${item.TrangThai}</td>
+                                                            <td>${item.ngayCapNhat}</td>
+                                                            <td>${item.ten}</td>
+                                                        </tr>
+                                                        `
+                                                    );
+                                                }
+                                            }
+                                        })
+                                        if (flagTe==false)
+                                        {
+                                            prevTe++;
+                                            countTe++;
+                                        }
+                                    })
+
+                                    $('.prev_bill_travelled').click(function(){
+                                        if (prevTe<2)
+                                        {
+                                            flag1Te=true;
+                                        }
+                                        else{
+                                            flagTe=false;
+                                        }
+                                        $(".item_bill_travelled").remove();
+                                        $.getJSON({
+                                            url:`/shops/bills_travelled.json?page=${prevTe}`,
+                                            success: function(data){
+                                                for (item of data)
+                                                {
+                                                    $('.table_bill_travelled').append(
+                                                        `
+                                                        <tr class="item_bill_travelled">
+                                                            <td>${item.maso}</td>
+                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tonggiatien}</td>
+                                                            <td>${item.TrangThai}</td>
+                                                            <td>${item.ngayCapNhat}</td>
+                                                            <td>${item.ten}</td>
+                                                        </tr>
+                                                        `
+                                                    );
+                                                }
+                                            }
+                                        })
+                                        if (flag1Te==false)
+                                        {
+                                            prevTe--;
+                                            countTe--;
+                                        }
+                                    })
+                                    }
+                                </script>
+                            </div>
+
+
+
                         </div>
                         <div class="tab_container_box" id="tab5" data-tab-content>
                             <div class="table_bill_container">
-                                <table>
+                                <table class="table_bill_discard">
                                     <tr id="header">
                                         <th>Mã đơn hàng</th>
                                         <th>Tên đơn hàng</th>
@@ -269,8 +695,8 @@
                                         <th>Thời gian</th>
                                         <th>Xác nhận</th>
                                     </tr>
-                                    {{#each this.getDiscardBill}}
-                                    <tr>
+                                    {{#each this.getDiscardBillByOffset}}
+                                    <tr class="item_bill_discard">
                                         <td>{{maso}}</td>
                                         <td>{{taikhoan}}</td>
                                         <td>{{tonggiatien}}</td>
@@ -281,21 +707,112 @@
                                     {{/each}}
                                 </table>
                             </div>
-                        </div>
-                        <div class="btn_container_pagination">
-                            <div class="total_pagination">
-                                Tổng cộng 0 bản ghi
+
+                            <div class="btn_container_pagination">
+                                <div class="total_pagination">
+                                    Tổng cộng {{totalRowD}} bản ghi
+                                </div>
+                                <div class="prev_bill_discard">
+                                    <a>
+                                        <i class="fas fa-caret-left"></i>
+                                    </a>
+                                </div>
+                                <div class="after_bill_discard">
+                                    <a>
+                                        <i class="fas fa-caret-right"></i>
+                                    </a>
+                                </div>
+                                <script>
+                                    var countD={{{nextPageD}}};
+                                    var prevD={{{prevPageD}}};
+                                    if (prevD==0)
+                                    {
+                                        prevD=1;
+                                    }
+                                    var totalD={{{totalPageD}}};
+                                    if (countD-1>=totalD)
+                                    {
+                                        $('.after_bill_discard').toggleClass('disabled');
+                                        $('.prev_bill_discard').toggleClass('disabled');
+                                    }
+                                    else{
+                                    var flagD=false;
+                                    var flag1D=false;
+                                    $('.after_bill_discard').click(function(){
+                                        if (countD==totalD)
+                                        {
+                                            flagD=true;
+                                        }
+                                        else{
+                                            flag1D=false;
+                                        }
+                                        $(".item_bill_discard").remove();
+                                        $.getJSON({
+                                            url:`/shops/bills_discard.json?page=${countD}`,
+                                            success: function(data){
+                                                for (item of data)
+                                                {
+                                                    $('.table_bill_discard').append(
+                                                        `
+                                                        <tr class="item_bill_discard">
+                                                            <td>${item.maso}</td>
+                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tonggiatien}</td>
+                                                            <td>${item.TrangThai}</td>
+                                                            <td>${item.ngayCapNhat}</td>
+                                                            <td>${item.ten}</td>
+                                                        </tr>
+                                                        `
+                                                    );
+                                                }
+                                            }
+                                        })
+                                        if (flagD==false)
+                                        {
+                                            prevD++;
+                                            countD++;
+                                        }
+                                    })
+
+                                    $('.prev_bill_discard').click(function(){
+                                        if (prevD<2)
+                                        {
+                                            flag1D=true;
+                                        }
+                                        else{
+                                            flagD=false;
+                                        }
+                                        $(".item_bill_discard").remove();
+                                        $.getJSON({
+                                            url:`/shops/bills_discard.json?page=${prevD}`,
+                                            success: function(data){
+                                                for (item of data)
+                                                {
+                                                    $('.table_bill_discard').append(
+                                                        `
+                                                        <tr class="item_bill_discard">
+                                                            <td>${item.maso}</td>
+                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tonggiatien}</td>
+                                                            <td>${item.TrangThai}</td>
+                                                            <td>${item.ngayCapNhat}</td>
+                                                            <td>${item.ten}</td>
+                                                        </tr>
+                                                        `
+                                                    );
+                                                }
+                                            }
+                                        })
+                                        if (flag1D==false)
+                                        {
+                                            prevD--;
+                                            countD--;
+                                        }
+                                    })
+                                    }
+                                </script>
                             </div>
-                            <div class="prev_bill">
-                                <a href="#">
-                                    <i class="fas fa-caret-left"></i>
-                                </a>
-                            </div>
-                            <div class="after_bill">
-                                <a href="#">
-                                    <i class="fas fa-caret-right"></i>
-                                </a>
-                            </div>
+
                         </div>
                 </div>
 
@@ -314,7 +831,8 @@
                                 tabContents.forEach(tabContent =>{
                                     tabContent.classList.remove('active_tab');
                                 });
-                                
+
+
                                 target.classList.add('active_tab');
                                 tab.classList.add('active_tab_title');
                             })

@@ -355,6 +355,11 @@ table{
     color: #1d1d1d;
 }
 
+.disabled{
+    border: 1px solid #dbdbdb;
+    color: #dbdbdb;
+}
+
 .total_pagination{
     font-size: 13px;
     margin-right: 20px;
@@ -362,4 +367,110 @@ table{
 
 .btn_container_pagination{
     padding-bottom: 20px;
+}
+
+.prev_bill_confirm{
+    border: 1px solid #1d1d1d;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.prev_bill_confirm a{
+    padding: 10px;
+    text-decoration: none;
+    color: #1d1d1d;
+}
+
+.after_bill_confirm{
+    border: 1px solid #1d1d1d;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.after_bill_confirm a{
+    padding: 10px;
+    text-decoration: none;
+    color: #1d1d1d;
+}
+
+.prev_bill_travelling{
+    border: 1px solid #1d1d1d;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.prev_bill_travelling a{
+    padding: 10px;
+    text-decoration: none;
+    color: #1d1d1d;
+}
+
+.after_bill_travelling{
+    border: 1px solid #1d1d1d;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.after_bill_travelling a{
+    padding: 10px;
+    text-decoration: none;
+    color: #1d1d1d;
+}
+
+.prev_bill_travelled{
+    border: 1px solid #1d1d1d;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.prev_bill_travelled a{
+    padding: 10px;
+    text-decoration: none;
+    color: #1d1d1d;
+}
+
+.after_bill_travelled{
+    border: 1px solid #1d1d1d;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.after_bill_travelled a{
+    padding: 10px;
+    text-decoration: none;
+    color: #1d1d1d;
+}
+
+.prev_bill_discard{
+    border: 1px solid #1d1d1d;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.prev_bill_discard a{
+    padding: 10px;
+    text-decoration: none;
+    color: #1d1d1d;
+}
+
+.after_bill_discard{
+    border: 1px solid #1d1d1d;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.after_bill_discard a{
+    padding: 10px;
+    text-decoration: none;
+    color: #1d1d1d;
+}
+
+.cate-name-sidebar a{
+    pointer-events: none;
+    color: #212529;
+}
+
+.catesub-name-sidebar a{
+    pointer-events: none;
+    color: #212529;
 }

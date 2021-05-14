@@ -1,3 +1,24 @@
+<style>
+.kv-avatar .krajee-default.file-preview-frame,.kv-avatar .krajee-default.file-preview-frame:hover {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+}
+.kv-avatar {
+    display: inline-block;
+}
+.kv-avatar .file-input {
+    display: table-cell;
+    width: 213px;
+}
+.kv-reqd {
+    color: red;
+    font-family: monospace;
+    font-weight: normal;
+}
+</style>
 <body>
 	<div class="page_wrapper">
 		<div class="title_container">
@@ -12,7 +33,7 @@
 									tin cá nhân</a></li>
 							<li><a class="li_tab" href="">Danh sách yêu thích</a></li>
 							<li><a class="li_tab" href="/users/shopping-cart">Giỏ hàng</a></li>
-							<li><a class="li_tab" href="">Lịch sử đơn hàng</a></li>
+							<li><a class="li_tab" href="/users/orders">Lịch sử đơn hàng</a></li>
 						</ul>
 					</div>
 				</div>
@@ -159,7 +180,10 @@
 <!--====== Javascripts & Jquery ======-->
 <script src="/resources/js/jquery-3.2.1.min.js"></script>
 <script src="/resources/js/profile.js"></script>
-{{!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all"
+{{!-- Notification xinh dep --}}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all"
 	rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/piexif.min.js"
@@ -169,4 +193,30 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
 	crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fas/theme.min.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fas/theme.min.js"></script>
+<script>
+	$(document).ready(function (){
+		var btnCust =
+			'<button type="button" class="btn btn-secondary" title="Add picture tags" ' +
+			"onclick=\"alert('Call your custom code here.')\">" +
+			'<i class="glyphicon glyphicon-tag"></i>' +
+			"</button>";
+		$("#avatar").fileinput({
+			overwriteInitial: true,
+			maxFileSize: 1500,
+			showClose: false,
+			showCaption: false,
+			showBrowse: false,
+			browseOnZoneClick: true,
+			removeLabel: "",
+			removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+			removeTitle: "Cancel or reset changes",
+			elErrorContainer: "#kv-avatar-errors-2",
+			msgErrorClass: "alert alert-block alert-danger",
+			defaultPreviewContent:
+			'<img src="/resources/images/default_avatar.png" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>',
+			layoutTemplates: { main2: "{preview} " + btnCust + " {remove} {browse}" },
+			allowedFileExtensions: ["jpg", "png", "gif"],
+		});
+	})
+</script>

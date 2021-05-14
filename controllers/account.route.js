@@ -24,7 +24,14 @@ router.post('/check-account',async function(req,res,next){
           else req.session.shop === null;
         }
         req.session.auth = true;
-        
+        req.session.cart = await cartModel.checkCustomerHaveCart(req.session.authUser.maso);
+        if(req.session.cart === null){    //truong hop ko tim thay cart cua user
+          req.session.cart = {
+            taikhoan: req.session.authUser.maso,
+            tongsosanpham: 0,
+            tonggiatien: 0,
+          }
+        }
     }
     res.json({
         return_mode : return_mode,
@@ -103,6 +110,7 @@ router.get('/verification',function(req,res,next){
 
 const nodemailer = require('nodemailer');
 const speakeasy = require('speakeasy');
+const cartModel = require('../models/cart.model');
 let transporter = nodemailer.createTransport({
   host: "localhost:3000", // hostname
   secure: false, // use SSL
@@ -151,10 +159,25 @@ router.post('/check-otp',async function(req,res){
       step:20,
       window: 5
     });
+    console.log(tokenValidates);
+    console.log(req.body.verification);
+    console.log(req.session.token);
     if(tokenValidates || req.body.verification === req.session.token){
       const user = await userModel.add(req.session.data);
       req.session.auth = true;
       req.session.authUser = req.session.data;
+      req.session.authUser['maso'] = user.insertId;
+
+      if(req.session.authUser.vaitro === 0 || req.session.authUser.vaitro === 1){
+        const cart = await cartModel.addCart(req.session.authUser.maso);
+        req.session.cart = {
+          maso: cart.insertId,
+          taikhoan: req.session.authUser.maso,
+          tongsosanpham: 0,
+          tonggiatien: 0,
+        }
+      }
+
       if(req.session.authUser.vaitro === 1){
         const tempShop = await shopModel.shopOfId(req.session.authUser.maso);
         if(tempShop !== null) req.session.shop = tempShop;

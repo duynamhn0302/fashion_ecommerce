@@ -1,6 +1,16 @@
 const db = require('../utils/db');
 
 module.exports = {
+    async addCart(userId){
+        const data = {
+            taikhoan: userId,
+            tongsosanpham: 0,
+            tonggiatien: 0,
+        }
+        const [rows,fields] = await db.add(data,'giohang');
+        return rows;
+    },
+
     async checkCustomerHaveCart(customerId){
         const sql = `SELECT * FROM giohang WHERE taikhoan = ${customerId}`;
         const [rows, fields] = await db.load(sql);
@@ -17,26 +27,21 @@ module.exports = {
 
     async addCartForCustomer(data){
         const [rows, fields] = await db.add(data,'giohang');
-        console.log(rows[0]);
-        if(rows.length === 0) return null;
         return rows;
     },
 
     async modifyCartForCustomer(data,condition){
         const [rows, fields] = await db.patch(data, condition, 'giohang');
-        if(rows.length === 0) return null;
         return rows;
     },
 
     async addToCartDetail(data){
         const [rows, fields] = await db.add(data,'chitietgiohang');
-        if(rows.length === 0) return null;
         return rows;
     },
 
     async modifyCartDetail(data, condition){
         const [rows, fields] = await db.patch(data, condition, 'chitietgiohang');
-        if(rows.length === 0) return null;
         return rows;
     },
 
@@ -111,13 +116,13 @@ module.exports = {
         return rows;
     },
 
-    // async addToHistoryAfterPayment(entity) {
-    //     //const [rows1, fields1] = await db.load('SET IDENTITY_INSERT lichsutinhtrangdon ON');
+    async addToHistoryAfterPayment(entity) {
+        //const [rows1, fields1] = await db.load('SET IDENTITY_INSERT lichsutinhtrangdon ON');
 
-    //     const [rows, fields] = await db.add(entity, 'lichsutinhtrangdon');
+        const [rows, fields] = await db.add(entity, 'lichsutinhtrangdon');
 
-    //     return rows;
-    // },
+        return rows;
+    },
 
     async removeCartAfterPayment(conditionForCart, conditionForCartDetail) {
         const [rows1, fields1] = await db.del(conditionForCartDetail, 'chitietgiohang');

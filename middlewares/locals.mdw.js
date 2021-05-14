@@ -12,20 +12,22 @@ module.exports=function(app){
                 req.session.authUser = await userModel.singleByUsername(req.session.authUser.username);
                 const tempCart = await cartModel.checkCustomerHaveCart(req.session.authUser.maso);
                 if(tempCart===null){   //chua co cart
-                    req.session.cart = {
+                    //may cai req.session.tempcart nay chu yeu la dung cho trang chu may ngay dau,
+                    //co the se phai update lai
+                    req.session.tempcart = {
                         sl: 0,
                         sanpham: null,  //mang chua cac san pham trong gio hang, khoi tao
                     }
                 }
                 else{
-                    req.session.cart = {
+                    req.session.tempcart = {
                         sl: tempCart.tongsosanpham,
                         sanpham: null,  //chua lay tung san pham  ra
                     }
                 }
             }else{
                 req.session.authUser = null;
-                req.session.cart = {
+                req.session.tempcart = {
                     sl: 0,
                     sanpham: null,
                 }
@@ -33,7 +35,7 @@ module.exports=function(app){
             if(req.session.logout === 1){
                 req.session.auth = false;
                 req.session.authUser = null;
-                req.session.cart = {sl:0,sanpham:null}
+                req.session.tempcart = {sl:0,sanpham:null}
                 res.locals.auth = false;
                 res.locals.authUser = null;
                 res.locals.cart = {sl:0,sanpham:null}
@@ -41,7 +43,7 @@ module.exports=function(app){
             }
             res.locals.auth = req.session.auth;
             res.locals.authUser = req.session.authUser;
-            res.locals.cart = req.session.cart;
+            res.locals.cart = req.session.tempcart;
         }
 
 

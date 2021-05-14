@@ -1,0 +1,304 @@
+<body>
+    <div class="page_wrapper">
+        <div class="title_container">
+            <h2 class="title">Trang cá nhân</h2>
+        </div>
+        <section class="body_container">
+            <div class="tabs_container">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget">
+                        <ul>
+                            <li><a class="li_tab" href="/users/profile">Cập nhật thông
+                                    tin cá nhân</a></li>
+                            <li><a class="li_tab" href="">Danh sách yêu thích</a></li>
+                            <li><a class="li_tab" href="/users/shopping-cart">Giỏ hàng</a></li>
+                            <li><a class="li_tab" href="/users/orders" style="color: #f51167 !important">Lịch sử đơn hàng</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content_container">
+                <div class="update_profile_title">
+                    <h4>Lịch sử đơn hàng</h4>
+                </div>
+                <div class="container_bill">
+                    <div class="container_bill_items">
+                        <div class="input_search">
+                            <input type="text" placeholder="Nhập tối đa 20 mã ĐH cách nhau bằng dấu ','"
+                                class="input_search_menu" height="10" />
+
+                            <div class="container_combo_box">
+                                <div class="title_combobox">
+                                    Trong khoảng thời gian
+                                </div>
+                                <div class="combo_box">
+                                    <div class="combo_box_select">
+                                        <span class="selected">Toàn thời gian</span>
+                                        <i class="fas fa-caret-down drop-menu-down"></i>
+                                    </div>
+                                </div>
+                                <div class="drop-down-cbx">
+                                    <div class="item-select-cbx first-item active">
+                                        Toàn thời gian
+                                    </div>
+                                    <div class="item-select-cbx second-item">
+                                        30 ngày qua
+                                    </div>
+                                    <div class="item-select-cbx third-item">
+                                        7 ngày qua
+                                    </div>
+                                    <div class="item-select-cbx four-item">
+                                        Hôm nay
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ctn_seach_cbx">
+                                <div class="btn_search_input">
+                                    <i class="fas fa-search"></i><span class="text_find">Tìm kiếm</span>
+                                </div>
+                            </div>
+
+                            <div class="ctn_reset_cbx">
+                                <div class="btn_reset_input">
+                                    <i class="fas fa-undo-alt"></i>
+                                    <span class="text_find">Tải lại</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container_bill">
+                    <div class="container_bill_items">
+                        <div class="container_tabs_table">
+                            <div class="tab_triger">
+                                <ul>
+                                    <li>
+                                        <label data-tab-target="#tab1" class="active_tab_title">Tất cả</label>
+                                    </li>
+                                    <li>
+                                        <label data-tab-target="#tab2">Chờ xác nhận</label>
+                                    </li>
+                                    <li>
+                                        <label data-tab-target="#tab3">Đang vận chuyển</label>
+                                    </li>
+                                    <li>
+                                        <label data-tab-target="#tab4">Đã giao hàng</label>
+                                    </li>
+                                    <li>
+                                        <label data-tab-target="#tab5">Bị hủy</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab_container_wrap">
+                            <div class="tab_container_box active_tab" id="tab1" data-tab-content>
+                                <div class="table_bill_container">
+                                    <table>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Ngày mua</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+                                        {{#each allBills}}
+                                        <tr>
+                                            <td>{{maso}}</td>
+                                            <td>{{ngaymua}}</td>
+                                            <td>{{sanpham}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            {{#when tinhtrangdon 'eq' 1}} <td>Đang chờ xác nhận</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 2}} <td>Đang giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 3}} <td>Đã giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 4}} <td>Đã huỷ</td> {{/when}}
+                                        </tr>
+                                        {{/each}}
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab_container_box" id="tab2" data-tab-content>
+                                <div class="table_bill_container">
+                                    <table>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Ngày mua</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+                                        {{#each allYetConfirmed}}
+                                        <tr>
+                                            <td>{{maso}}</td>
+                                            <td>{{ngaymua}}</td>
+                                            <td>{{sanpham}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            {{#when tinhtrangdon 'eq' 1}} <td>Đang chờ xác nhận</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 2}} <td>Đang giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 3}} <td>Đã giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 4}} <td>Đã huỷ</td> {{/when}}
+                                        </tr>
+                                        {{/each}}
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab_container_box" id="tab3" data-tab-content>
+                                <div class="table_bill_container">
+                                    <table>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Ngày mua</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+
+                                        {{#each allTraveling}}
+                                        <tr>
+                                            <td>{{maso}}</td>
+                                            <td>{{ngaymua}}</td>
+                                            <td>{{sanpham}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            {{#when tinhtrangdon 'eq' 1}} <td>Đang chờ xác nhận</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 2}} <td>Đang giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 3}} <td>Đã giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 4}} <td>Đã huỷ</td> {{/when}}
+                                        </tr>
+                                        {{/each}}
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="tab_container_box" id="tab4" data-tab-content>
+                                <div class="table_bill_container">
+                                    <table>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Ngày mua</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+
+                                        {{#each allTraveled}}
+                                        <tr>
+                                            <td>{{maso}}</td>
+                                            <td>{{ngaymua}}</td>
+                                            <td>{{sanpham}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            {{#when tinhtrangdon 'eq' 1}} <td>Đang chờ xác nhận</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 2}} <td>Đang giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 3}} <td>Đã giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 4}} <td>Đã huỷ</td> {{/when}}
+                                        </tr>
+                                        {{/each}}
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab_container_box" id="tab5" data-tab-content>
+                                <div class="table_bill_container">
+                                    <table>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Ngày mua</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+                                        {{#each allCanceled}}
+                                        <tr>
+                                            <td>{{maso}}</td>
+                                            <td>{{ngaymua}}</td>
+                                            <td>{{sanpham}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            {{#when tinhtrangdon 'eq' 1}} <td>Đang chờ xác nhận</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 2}} <td>Đang giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 3}} <td>Đã giao</td> {{/when}}
+                                            {{#when tinhtrangdon 'eq' 4}} <td>Đã huỷ</td> {{/when}}
+                                        </tr>
+                                        {{/each}}
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="btn_container_pagination">
+                                <div class="total_pagination">
+                                    Tổng cộng 0 bản ghi
+                                </div>
+                                <div class="prev_bill">
+                                    <a href="#">
+                                        <i class="fas fa-caret-left"></i>
+                                    </a>
+                                </div>
+                                <div class="after_bill">
+                                    <a href="#">
+                                        <i class="fas fa-caret-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </section>
+
+    </div>
+</body>
+<!--====== Javascripts & Jquery ======-->
+<script src="/resources/js/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).on('click', function (e) {
+        if ($(e.target).closest('.combo_box_select').not(this).length) {
+            $('.drop-down-cbx').removeClass("disable");
+            $('.drop-down-cbx').toggleClass("show");
+            $('.drop-menu-down').toggleClass("rotate");
+        } else {
+            $('.drop-down-cbx').removeClass("show");
+            $('.drop-down-cbx').toggleClass("disable");
+        }
+    });
+    $('.first-item').click(function () {
+        $('.selected').text("Toàn thời gian");
+        $('.drop-menu-down').toggleClass("rotate");
+    });
+    $('.second-item').click(function () {
+        $('.selected').text("30 ngày qua");
+        $('.drop-menu-down').toggleClass("rotate");
+    });
+    $('.third-item').click(function () {
+        $('.selected').text("7 ngày qua");
+        $('.drop-menu-down').toggleClass("rotate");
+    });
+    $('.four-item').click(function () {
+        $('.selected').text("Hôm nay");
+        $('.drop-menu-down').toggleClass("rotate");
+    });
+    $('.item-select-cbx').click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+    });
+</script>
+<script>
+    const tabs = document.querySelectorAll('[data-tab-target]');
+    const tabContents = document.querySelectorAll('[data-tab-content]');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabsList = document.querySelectorAll('[data-tab-target]');
+            tabsList.forEach(tabMember => {
+                tabMember.classList.remove('active_tab_title');
+            });
+
+            const target = document.querySelector(tab.dataset.tabTarget)
+            tabContents.forEach(tabContent => {
+                tabContent.classList.remove('active_tab');
+            });
+
+            target.classList.add('active_tab');
+            tab.classList.add('active_tab_title');
+        })
+    }
+
+    )
+</script>
