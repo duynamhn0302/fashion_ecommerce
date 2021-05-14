@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/resources/css/profile.css">
+<link rel="stylesheet" href="/resources/css/shop_bill.css">
 <body>
     <div class="page_wrapper">
         <div class="title_container">
@@ -10,7 +12,6 @@
                         <ul>
                             <li><a class="li_tab" href="/users/profile">Cập nhật thông
                                     tin cá nhân</a></li>
-                            <li><a class="li_tab" href="">Danh sách yêu thích</a></li>
                             <li><a class="li_tab" href="/users/shopping-cart">Giỏ hàng</a></li>
                             <li><a class="li_tab" href="/users/orders" style="color: #f51167 !important">Lịch sử đơn hàng</a></li>
                         </ul>
@@ -73,19 +74,19 @@
                         <div class="container_tabs_table">
                             <div class="tab_triger">
                                 <ul>
-                                    <li>
+                                    <li onclick="javascript: $('.total_pagination').html('Tổng cộng {{#unless allBills}}0 {{else}} {{allBills.length}} {{/unless}}bản ghi')">
                                         <label data-tab-target="#tab1" class="active_tab_title">Tất cả</label>
                                     </li>
-                                    <li>
+                                    <li onclick="javascript: $('.total_pagination').html('Tổng cộng {{#unless allYetConfirmed}}0 {{else}} {{allYetConfirmed.length}} {{/unless}}bản ghi')">
                                         <label data-tab-target="#tab2">Chờ xác nhận</label>
                                     </li>
-                                    <li>
+                                    <li onclick="javascript: $('.total_pagination').html('Tổng cộng {{#unless allTraveling}}0 {{else}} {{allTraveling.length}} {{/unless}}bản ghi')">
                                         <label data-tab-target="#tab3">Đang vận chuyển</label>
                                     </li>
-                                    <li>
+                                    <li onclick="javascript: $('.total_pagination').html('Tổng cộng {{#unless allTraveled}}0 {{else}} {{allTraveled.length}} {{/unless}}bản ghi')">
                                         <label data-tab-target="#tab4">Đã giao hàng</label>
                                     </li>
-                                    <li>
+                                    <li onclick="javascript: $('.total_pagination').html('Tổng cộng {{#unless allCanceled}}0 {{else}} {{allCanceled.length}} {{/unless}}bản ghi')">
                                         <label data-tab-target="#tab5">Bị hủy</label>
                                     </li>
                                 </ul>
@@ -103,7 +104,7 @@
                                             <th>Tình trạng</th>
                                         </tr>
                                         {{#each allBills}}
-                                        <tr>
+                                        <tr data-billid='{{maso}}'>
                                             <td>{{maso}}</td>
                                             <td>{{ngaymua}}</td>
                                             <td>{{sanpham}}</td>
@@ -129,7 +130,7 @@
                                             <th>Tình trạng</th>
                                         </tr>
                                         {{#each allYetConfirmed}}
-                                        <tr>
+                                        <tr data-billid='{{maso}}'>
                                             <td>{{maso}}</td>
                                             <td>{{ngaymua}}</td>
                                             <td>{{sanpham}}</td>
@@ -156,7 +157,7 @@
                                         </tr>
 
                                         {{#each allTraveling}}
-                                        <tr>
+                                        <tr data-billid='{{maso}}'>
                                             <td>{{maso}}</td>
                                             <td>{{ngaymua}}</td>
                                             <td>{{sanpham}}</td>
@@ -183,7 +184,7 @@
                                         </tr>
 
                                         {{#each allTraveled}}
-                                        <tr>
+                                        <tr data-billid='{{maso}}'>
                                             <td>{{maso}}</td>
                                             <td>{{ngaymua}}</td>
                                             <td>{{sanpham}}</td>
@@ -208,7 +209,7 @@
                                             <th>Tình trạng</th>
                                         </tr>
                                         {{#each allCanceled}}
-                                        <tr>
+                                        <tr data-billid='{{maso}}'>
                                             <td>{{maso}}</td>
                                             <td>{{ngaymua}}</td>
                                             <td>{{sanpham}}</td>
@@ -224,7 +225,7 @@
                             </div>
                             <div class="btn_container_pagination">
                                 <div class="total_pagination">
-                                    Tổng cộng 0 bản ghi
+                                    Tổng cộng {{allBills.length}} bản
                                 </div>
                                 <div class="prev_bill">
                                     <a href="#">
@@ -237,6 +238,9 @@
                                     </a>
                                 </div>
                             </div>
+                            <form class="hidden_form_for_bill_detail" action="/users/bill-detail" method="post" hidden>
+                                <input class="hidden_input_for_bill_detail" type="hidden" name="billId" value="">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -301,4 +305,10 @@
     }
 
     )
+</script>
+<script>
+    $('td').click(function(event) {
+        $('.hidden_input_for_bill_detail').val(($(event.target).closest('tr').data('billid')));
+        $('.hidden_form_for_bill_detail').submit();
+    })
 </script>

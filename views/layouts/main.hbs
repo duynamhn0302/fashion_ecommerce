@@ -66,7 +66,7 @@
 						</a>
 					</div>
 					<div class="col-xl-6 col-lg-5">
-						<form class="header-search-form" method="POST" action="/products/search-result-most-relevant">
+						<form class="header-search-form" method="POST" action="/products/search/search-result-most-relevant">
 							<input type="text" name="search_term" placeholder="Tìm kiếm ...">
 							<button onclick="javascript: $('.header-search-form').submit();"><i class="flaticon-search"></i></button>
 						</form>
@@ -74,7 +74,7 @@
 					<div class="col-xl-4 col-lg-5">
 						<div class="user-panel">
 							<div class="up-item">
-								<a href="#">
+								<a href="/users/shopping-cart">
 									<div class="shopping-card">
 										<i class="flaticon-bag"></i>
 										<span>{{cart.sl}}</span>
@@ -93,7 +93,7 @@
 									</div>
 									<div class="option-authen-menu" id="option-show-auth">
 										<div class="option-item-auth">
-											<a href="/account/profile" class="option-select-auth">Thông tin tài khoản</a>
+											<a href="/users/profile" class="option-select-auth">Thông tin tài khoản</a>
 										</div>
 										<hr class="line-user">
 										<div class="option-item-auth">

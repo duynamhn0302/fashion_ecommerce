@@ -1,0 +1,156 @@
+<link rel="stylesheet" href="/resources/css/profile.css">
+<link rel="stylesheet" href="/resources/css/shop_bill.css">
+<body>
+    <div class="page_wrapper">
+        <div class="title_container">
+            <h2 class="title">Trang cá nhân</h2>
+        </div>
+        <section class="body_container">
+            <div class="tabs_container">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget">
+                        <ul>
+                            <li><a class="li_tab" href="/users/profile">Cập nhật thông
+                                    tin cá nhân</a></li>
+                            <li><a class="li_tab" href="/users/shopping-cart">Giỏ hàng</a></li>
+                            <li><a class="li_tab" href="/users/orders" style="color: #f51167 !important">Lịch sử đơn hàng</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content_container">
+                <div class="update_profile_title">
+                    <h4>Chi tiết đơn hàng</h4>
+                </div>
+                <div class="container_bill">
+        {{#with bill}}
+        <div class="container_bill_items" style="padding-bottom: 10px;">
+            <div class="link_path">
+                <a class="root_link" style="text-decoration: none; cursor: pointer; color: #f51167" href="/users/orders">Danh sách đơn hàng</a>
+                >
+                <span class="root_link" style="font-weight: 500;">Chi tiết đơn hàng</span>
+            </div>
+
+            <div class="customer-information">
+                1. Thông tin khách hàng
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Mã khách hàng
+                    </div>
+                    <input type="text" placeholder="{{maso}}" class="input_detail" readonly="readonly">
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Tên khách hàng
+                    </div>
+                    <input type="text" placeholder="{{hoten}}" class="input_detail" readonly="readonly">
+                </div>
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Email
+                    </div>
+                    <input type="text" placeholder="{{email}}" class="input_detail" readonly="readonly">
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Số điện thoại
+                    </div>
+                    <input type="text" placeholder="{{sdt}}" style="width: 70%;" readonly="readonly">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container_bill">
+        <div class="container_bill_items" style="padding-bottom: 10px;">
+            <div class="customer-information">
+                2. Thông tin đơn hàng
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Mã đơn hàng
+                    </div>
+                    <input type="text" placeholder="{{../billId}}" style="40%" readonly="readonly">
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Tổng giá trị đơn hàng
+                    </div>
+                    <input type="text" placeholder="{{tonggiatien}}" class="input_detail" readonly="readonly">
+                </div>
+            </div>
+
+             {{#each sanpham}}
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Mã sản phẩm
+                    </div>
+                    <input type="text" placeholder="{{masanpham}}" class="input_detail" readonly="readonly">
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Tên sản phẩm
+                    </div>
+                    <input type="text" placeholder="{{ten}}" style="width: 100%;" readonly="readonly">
+                </div>
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Số lượng
+                    </div>
+                    <input type="text" placeholder="{{soluong}}" style="width: 20%;" readonly="readonly">
+                </div>
+                {{!-- <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Giá bán
+                    </div>
+                    <input type="text" placeholder="1" style="width: 30%;" readonly="readonly">
+                </div> --}}
+            </div>
+            {{/each}}
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Tình trạng đơn hàng
+                    </div>
+                    <input type="text" placeholder="{{tinhtrangdon}}" style="width: 70%;" readonly="readonly">
+                </div>
+            </div>
+        {{/with}}
+        </div>
+    </div>
+    <div class="container-update-detail">
+        <div class="ctn_update_cbx clickable-row" data-href='/shops/bills'>
+            <div class="btn_back_input">
+                <i class="fas fa-ban" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Hủy đơn</span>
+             </div>
+        </div>
+
+        <div class="ctn_update_cbx">
+            <div class="btn_update_input">
+                <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Cập nhật</span>
+             </div>
+        </div>
+    </div>
+            </div>
+    </div>
+    </section>
+
+    </div>
+</body>
+<!--====== Javascripts & Jquery ======-->
+<script src="/resources/js/jquery-3.2.1.min.js"></script>

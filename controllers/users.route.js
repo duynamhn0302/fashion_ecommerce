@@ -138,7 +138,7 @@ router.post('/pay-cart', async function (req, res) {
     let newProductDetail = { donhang: +newBillId, sanpham: product.sanpham, dongia: productDetail.giaban, soluong: product.soluong };
     await cartModel.createNewBillDetail(newProductDetail);
     let newDate = new Date();
-    await cartModel.addToHistoryAfterPayment({ tinhtrang: 1, ngaythang: newDate.toISOString() })
+    await cartModel.addToHistoryAfterPayment({ ngaythang: newDate.toISOString() })
     await cartModel.removeCartAfterPayment({ maso: +req.body.magiohang }, { giohang: +req.body.magiohang });
     let productNumber = await productsModel.single(product.sanpham);
     let productNumberLeft = productNumber.soluong - product.soluong;
@@ -208,5 +208,44 @@ router.get("/orders", async function (req, res) {
     allCanceled
   });
 });
+
+router.post('/bill-detail', async (req, res) => {
+  let billId = req.body.billId;
+  let result = await usersModel.getBillDetail(req.session.authUser.maso, billId);
+  let tinhtrangdon = 0;
+  switch (result[0].tinhtrangdon) {
+    case 1: tinhtrangdon = 'Đang xác nhận'; break;
+    case 2: tinhtrangdon = 'Đang giao'; break;
+    case 3: tinhtrangdon = 'Đã giao'; break;
+    case 4: tinhtrangdon = 'Đã huỷ'; break;
+  }
+
+  console.log(billId)
+
+  let sanpham = [];
+  for (let i=0; i<result.length; i++)
+    sanpham[i] = {
+      masanpham: result[i].sanpham,
+      ten: result[i].ten,
+      soluong: result[i].soluong,
+      giaban: result[i].giaban
+    };
+
+  bill = {
+    email: result[0].email,
+    hoten: result[0].hoten,
+    maso: result[0].maso,
+    sdt: result[0].sdt,
+    cuahang: result[0].cuahang,
+    tongsosanpham: result[0].tongsosanpham,
+    tonggiatien: result[0].tonggiatien,
+    tinhtrangdon,
+    sanpham
+  }
+  res.render('../views/users_views/Bill-detail.hbs', {
+    bill,
+    billId
+  });
+})
 
 module.exports = router;

@@ -67,7 +67,7 @@ router.get("/byCat1/:id", async function (req, res) {
     offset
   );
   let cate1Name = await categoryModel.getCateName1ById(cate1Id);
-  let allCategories = await productsModel.allCategories();
+  let allCategories = await productsModel.allCategoriesWithQuantity();
 
   if (allProductsFromCate1 !== null)
     for (let i = 0; i < allProductsFromCate1.length; i++) {
@@ -118,7 +118,7 @@ router.get("/byCat2/:id", async function (req, res) {
   );
   let cate1Name = await categoryModel.getCateName1ById(cate1Id);
   let cate2Name = await categoryModel.getCateName2ById(cate2Id);
-  let allCategories = await productsModel.allCategories();
+  let allCategories = await productsModel.allCategoriesWithQuantity();
 
   if (allProductsFromCate2 !== null)
     for (let i = 0; i < allProductsFromCate2.length; i++) {
@@ -145,15 +145,15 @@ router.get("/byCat2/:id", async function (req, res) {
 });
 
 //Search sản phẩm
-router.post("/search-result-most-relevant", async function (req, res) {
+router.post("/search/search-result-most-relevant", async function (req, res) {
   let search_term = req.body.search_term;
   req.session.search_term = search_term;
   if (search_term === "" || search_term.length < 3)
-    return res.redirect("/products/search/");
-  res.redirect("/products/search-result-most-relevant");
+    return res.redirect("/products/search/common");
+  res.redirect("/products/search/search-result-most-relevant");
 });
 
-router.get("/search", async function (req, res) {
+router.get("/search/common", async function (req, res) {
   var page = req.query.page || 1;
   if (page < 1) page = 1;
 
@@ -171,7 +171,7 @@ router.get("/search", async function (req, res) {
     });
   }
 
-  let allCategories = await productsModel.allCategories();
+  let allCategories = await productsModel.allCategoriesWithQuantity();
 
   const offset = (page - 1) * paginate.limit;
   var list = await productsModel.allProductWithOffset(offset);
@@ -197,7 +197,7 @@ router.get("/search", async function (req, res) {
   });
 });
 
-router.get("/search-result-most-relevant", async function (req, res) {
+router.get("/search/search-result-most-relevant", async function (req, res) {
   var page = req.query.page || 1;
   if (page < 1) page = 1;
 
@@ -215,7 +215,7 @@ router.get("/search-result-most-relevant", async function (req, res) {
     });
   }
 
-  let allCategories = await productsModel.allCategories();
+  let allCategories = await productsModel.allCategoriesWithQuantity();
 
   const offset = (page - 1) * paginate.limit;
   var list = await productsModel.searchRelevant(offset, search_term);
