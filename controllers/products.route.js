@@ -6,20 +6,40 @@ const router = express.Router();
 //Xem ds tất cả sản phẩm
 router.get("/", async function (req, res) {});
 //Xem chi tiet sanpham
-router.get("/detail/:id", async function (req, res, next) {
-  const id = +req.params.id;
-  const product = await productsModel.single(id);
-  const images = await productsModel.getImages(id);
-  for (var i = 0; i < images.length; i++) {
-    images[i].isActive = false;
-  }
-  images[0].isActive = true;
-  const avatar = images[0];
-  res.render("vwProducts/detailProduct", {
-    avatar,
-    images,
-    product,
-  });
+router.get('/:id', async function (req, res, next) {
+    const id = +req.params.id;
+    const product = await productsModel.single(id)
+    const images = await productsModel.getImages(id)
+    console.log(product)
+    for(var i = 0; i < images.length; i++){
+        images[i].isActive = false;
+    }
+    images[0].isActive = true;
+    const avatar = images[0]
+    const relativeProduct = await productsModel.getRelativeProduct(id)
+    for(var i = 0; i < relativeProduct.length; i++){
+        const reImages = await productsModel.getImages(relativeProduct[i].maso)
+        relativeProduct[i].avatar = reImages[0]
+    }
+    const comment = await productsModel.getComment(id)
+    var luotmua = await productsModel.getLuotMua(id)
+    if (luotmua == 0)
+        luotmua = 0
+    else
+        luotmua = luotmua.soluong
+    const star = productsModel.convertRating(product.diemdanhgia)
+    console.log(star)
+    res.render("vwProducts/detailProduct",
+    {
+        avatar,
+        images,
+        product,
+        relativeProduct,
+        comment,
+        luotmua,
+        star
+        
+    })
 });
 //Xem ds sản phẩm theo danh mục 1
 router.get("/byCat1/:id", async function (req, res) {
@@ -50,13 +70,10 @@ router.get("/byCat1/:id", async function (req, res) {
   let allCategories = await productsModel.allCategories();
 
   if (allProductsFromCate1 !== null)
-    Promise.all(
-      await allProductsFromCate1.map(async (product) => {
-        let img = await productsModel.getImages(+product.maso);
-        product.hinhanh = img[0].link;
-        return product;
-      })
-    );
+    for (let i = 0; i < allProductsFromCate1.length; i++) {
+      let img = await productsModel.getImages(+allProductsFromCate1[i].maso);
+      allProductsFromCate1[i].hinhanh = img[0].link;
+    }
 
   res.render("../views/vwProducts/byCat1.hbs", {
     layout: "main.hbs",
@@ -104,13 +121,10 @@ router.get("/byCat2/:id", async function (req, res) {
   let allCategories = await productsModel.allCategories();
 
   if (allProductsFromCate2 !== null)
-    Promise.all(
-      await allProductsFromCate2.map(async (product) => {
-        let img = await productsModel.getImages(+product.maso);
-        product.hinhanh = img[0].link;
-        return product;
-      })
-    );
+    for (let i = 0; i < allProductsFromCate2.length; i++) {
+      let img = await productsModel.getImages(+allProductsFromCate2[i].maso);
+      allProductsFromCate2[i].hinhanh = img[0].link;
+    }
 
   res.render("../views/vwProducts/byCat2.hbs", {
     layout: "main.hbs",
@@ -134,9 +148,53 @@ router.get("/byCat2/:id", async function (req, res) {
 router.post("/search-result-most-relevant", async function (req, res) {
   let search_term = req.body.search_term;
   req.session.search_term = search_term;
-  if (search_term === '' || search_term.length < 3)
-    return res.redirect('/search/')
-  res.redirect('/products/search-result-most-relevant');
+  if (search_term === "" || search_term.length < 3)
+    return res.redirect("/products/search/");
+  res.redirect("/products/search-result-most-relevant");
+});
+
+router.get("/search", async function (req, res) {
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  let search_term = req.session.search_term;
+
+  const total = await productsModel.countAllProducts();
+  let nPages = Math.floor(total / paginate.limit);
+  if (total % paginate.limit > 0) nPages++;
+
+  const page_numbers = [];
+  for (var i = 1; i <= nPages; i++) {
+    page_numbers.push({
+      value: i,
+      isCurrentPage: i === +page,
+    });
+  }
+
+  let allCategories = await productsModel.allCategories();
+
+  const offset = (page - 1) * paginate.limit;
+  var list = await productsModel.allProductWithOffset(offset);
+
+  if (list !== null)
+    for (let i=0; i<list.length; i++) {
+        let img = await productsModel.getImages(+list[i].maso);
+        list[i].hinhanh = img[0].link;
+      }
+
+  res.render("../views/vwProducts/search_results.hbs", {
+    products: list,
+    page_numbers,
+    empty: !list.length,
+    n_result: total,
+    search_term,
+    prevPage: +page - 1,
+    nextPage: +page + 1,
+    firstPage: +page === 1,
+    lastPage: +page === nPages,
+    onlyOne: nPages <= 1,
+    allCategories,
+  });
 });
 
 router.get("/search-result-most-relevant", async function (req, res) {
@@ -163,26 +221,23 @@ router.get("/search-result-most-relevant", async function (req, res) {
   var list = await productsModel.searchRelevant(offset, search_term);
 
   if (list !== null)
-    Promise.all(
-      await list.map(async (product) => {
-        let img = await productsModel.getImages(+product.maso);
-        product.hinhanh = img[0].link;
-        return product;
-      })
-    );
+    for (let i=0; i<list.length; i++) {
+        let img = await productsModel.getImages(+list[i].maso);
+        list[i].hinhanh = img[0].link;
+      }
 
   res.render("../views/vwProducts/search_results.hbs", {
     products: list,
     page_numbers,
     empty: !list.length,
-    n_result: list.length,
+    n_result: total,
     search_term,
     prevPage: +page - 1,
     nextPage: +page + 1,
     firstPage: +page === 1,
     lastPage: +page === nPages,
     onlyOne: nPages <= 1,
-    allCategories
+    allCategories,
   });
 });
 

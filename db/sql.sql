@@ -126,6 +126,11 @@ CREATE TABLE `CauHinh` (
 	PRIMARY KEY (`tencauhinh`)
 );
 
+ALTER TABLE `SanPham` ADD FULLTEXT(ten);
+ALTER TABLE `DanhMucCap1` ADD FULLTEXT(ten);
+ALTER TABLE `DanhMucCap2` ADD FULLTEXT(ten);
+ALTER TABLE `CuaHang` ADD FULLTEXT(ten);
+
 ALTER TABLE `SanPham` ADD CONSTRAINT `SanPham_fk0` FOREIGN KEY (`danhmuccap2`) REFERENCES `DanhMucCap2`(`maso`);
 
 ALTER TABLE `SanPham` ADD CONSTRAINT `SanPham_fk1` FOREIGN KEY (`cuahang`) REFERENCES `Cuahang`(`maso`);

@@ -1,8 +1,11 @@
 const db = require('../utils/db');
 
 module.exports = {
+    async lockUser(id){
+        await db.patch({'status' : 0}, {'maso' : id}, 'taikhoan');
+    },
     async allUser(){
-        const sql = `select * from taikhoan` ;
+        const sql = `select * from taikhoan where status = 1` ;
         const [rows, fields] = await db.load(sql);
         return rows;
     },
@@ -31,6 +34,46 @@ module.exports = {
         var new_data = {vaitro: 1};
         const [rows,fields] = await db.patch(new_data,condition,'taikhoan');
         return rows;
+    },
+
+    async getAllBillsFromUserId(userId) {
+        const [rows, fields] = await db.load(`select donhang.maso, donhang.tinhtrangdon, chitietdonhang.sanpham, donhang.tonggiatien
+        from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso
+        where donhang.taikhoan = ${userId}`)
+
+        return rows.length ? rows : null;
+    },
+
+    async getAllYetConfirmedBillsFromUserId(userId) {
+        const [rows, fields] = await db.load(`select donhang.maso, donhang.tinhtrangdon, chitietdonhang.sanpham, donhang.tonggiatien
+        from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso
+        where donhang.taikhoan = ${userId} and donhang.tinhtrangdon = 1`)
+
+        return rows.length ? rows : null;
+    },
+
+    async getAllTravelingBillsFromUserId(userId) {
+        const [rows, fields] = await db.load(`select donhang.maso, donhang.tinhtrangdon, chitietdonhang.sanpham, donhang.tonggiatien
+        from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso
+        where donhang.taikhoan = ${userId} and donhang.tinhtrangdon = 2`)
+
+        return rows.length ? rows : null;
+    },
+
+    async getAllTraveledBillsFromUserId(userId) {
+        const [rows, fields] = await db.load(`select donhang.maso, donhang.tinhtrangdon, chitietdonhang.sanpham, donhang.tonggiatien
+        from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso
+        where donhang.taikhoan = ${userId} and donhang.tinhtrangdon = 3`)
+
+        return rows.length ? rows : null;
+    },
+
+    async getAllCanceledBillsFromUserId(userId) {
+        const [rows, fields] = await db.load(`select donhang.maso, donhang.tinhtrangdon, chitietdonhang.sanpham, donhang.tonggiatien
+        from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso
+        where donhang.taikhoan = ${userId} and donhang.tinhtrangdon = 4`)
+
+        return rows.length ? rows : null;
     },
 
     // async changeInfo(user) {

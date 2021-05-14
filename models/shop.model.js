@@ -3,7 +3,8 @@ const { paginate } = require('./../config/default.json');
 
 module.exports = {
     async allShop(){
-        const sql = `select * from cuahang`;
+        const sql = `select * 
+        from cuahang join taikhoan on cuahang.taikhoan = taikhoan.maso`;
         const [rows, fields] = await db.load(sql);
         return rows;
     },

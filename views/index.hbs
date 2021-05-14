@@ -3,42 +3,43 @@
 	<!-- Hero section -->
 	<section class="hero-section">
 		<div class="hero-slider owl-carousel">
-			<div class="hs-item set-bg" data-setbg="/resources/img/bg.jpg">
+			{{#each hotProduct}}
+				<div class="hs-item set-bg" data-setbg="/resources/img/bg-2.jpg">
 				<div class="container">
 					<div class="row">
 						<div class="col-xl-6 col-lg-7 text-white">
-							<span>New Arrivals</span>
-							<h2>denim jackets</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-							<a href="#" class="site-btn sb-line">DISCOVER</a>
-							<a href="#" class="site-btn sb-white">ADD TO CART</a>
+							<span>{{danhmuc}}</span>
+							<h2>{{ten}}</h2>
+							<p>
+								<div class="p-rating">
+									{{#each star}}
+										{{{this}}}
+									{{/each}}
+									({{product.diemdanhgia}}
+									sao)
+								</div>
+								
+								<div class="p-review">
+									<a href="">{{product.luotdanhgia}} lượt đánh giá</a></a>
+								</div>
+								
+								Chỉ từ 
+								<h2>{{giaban}} VND</h2>
+							</p>
+							<a href="/products/{{maso}}" class="site-btn sb-line">Xem chi tiết</a>
+							<a href="#" class="site-btn sb-white">Thêm vào giỏ</a>
 						</div>
 					</div>
 					<div class="offer-card text-white">
-						<span>from</span>
-						<h2>$29</h2>
-						<p>SHOP NOW</p>
-					</div>
-				</div>
-			</div>
-			<div class="hs-item set-bg" data-setbg="/resources/img/bg-2.jpg">
-				<div class="container">
-					<div class="row">
-						<div class="col-xl-6 col-lg-7 text-white">
-							<span>New Arrivals</span>
-							<h2>denim jackets</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-							<a href="#" class="site-btn sb-line">DISCOVER</a>
-							<a href="#" class="site-btn sb-white">ADD TO CART</a>
+						<div class="pi-pic">
+							<a href="/products/{{maso}}">
+								<img src="{{avatar}}" alt="" style="height: 350px;">
+							</a>
 						</div>
 					</div>
-					<div class="offer-card text-white">
-						<span>from</span>
-						<h2>$29</h2>
-						<p>SHOP NOW</p>
-					</div>
 				</div>
 			</div>
+			{{/each}}
 		</div>
 		<div class="container">
 			<div class="slide-num-holder" id="snh-1"></div>
@@ -57,7 +58,7 @@
 						<div class="feature-icon">
 							<img src="/resources/img/icons/1.png" alt="#">
 						</div>
-						<h2>Fast Secure Payments</h2>
+						<h2>Dễ dàng lựa chọn</h2>
 					</div>
 				</div>
 				<div class="col-md-4 p-0 feature">
@@ -65,7 +66,7 @@
 						<div class="feature-icon">
 							<img src="/resources/img/icons/2.png" alt="#">
 						</div>
-						<h2>Premium Products</h2>
+						<h2>Sản phẩm chất lượng</h2>
 					</div>
 				</div>
 				<div class="col-md-4 p-0 feature">
@@ -73,7 +74,7 @@
 						<div class="feature-icon">
 							<img src="/resources/img/icons/3.png" alt="#">
 						</div>
-						<h2>Free & fast Delivery</h2>
+						<h2>Giao hàng nhanh</h2>
 					</div>
 				</div>
 			</div>
@@ -97,15 +98,9 @@
 							</a>
 							<div class="pi-links">
 								<a href="#" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
-								<form method="POST" class ="frmAddToCart" id="frmAddToCart{{maso}}" action="/add_to_cart">
+								<form method="POST" class ="frmAddToCart" id="NewfrmAddToCart{{maso}}" action="/add_to_cart">
 									<input  type="hidden" name="id" value="{{maso}}">
-									<a href="javascript: addToCart('#frmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
-								</form>
-								<form method="POST" class ="frmLove" id = "frmLove{{maso}}" action="/love">
-									<input  type="hidden" name="id" value="{{maso}}">
-									
-								
-									<a  href="javascript: love('#frmLove{{maso}}');" class="add-card"><i class="flaticon-heart"></i><span>Yêu thích</span></a>
+									<a href="javascript: addToCart('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
 								</form>
 								
 							</div>
@@ -125,9 +120,7 @@
 	<!-- letest product section end -->
 
 
-
-	<!-- Product filter section -->
-	<section class="product-filter-section">
+	<section class="top-letest-product-section">
 		<div class="container">
 			<div class="section-title">
 				<h2>Được bán nhiều nhất</h2>
@@ -138,10 +131,8 @@
 				{{/each}}
 				
 			</ul>
-			<div class="row">
-				
+			<div class="product-slider owl-carousel">
 				{{#each top8Seller}}
-				<div class="col-lg-3 col-sm-6">
 					<div class="product-item">
 						<div class="pi-pic">
 							<div class="tag-sale">ON SALE</div>
@@ -150,15 +141,9 @@
 							</a>
 							<div class="pi-links">
 								<a href="#" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
-								<form method="POST" class ="frmAddToCart" id="frmAddToCart{{maso}}" action="/add_to_cart">
+								<form method="POST" class ="frmAddToCart" id="NewfrmAddToCart{{maso}}" action="/add_to_cart">
 									<input  type="hidden" name="id" value="{{maso}}">
-									<a href="javascript: addToCart('#frmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
-								</form>
-								<form method="POST" class ="frmLove" id = "frmLove{{maso}}" action="/love">
-									<input  type="hidden" name="id" value="{{maso}}">
-									
-								
-									<a  href="javascript: love('#frmLove{{maso}}');" class="add-card"><i class="flaticon-heart"></i><span>Yêu thích</span></a>
+									<a href="javascript: addToCart('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
 								</form>
 								
 							</div>
@@ -170,30 +155,15 @@
 							</div>
 						</a>
 					</div>
-				</div>
 				{{/each}}
 				
-				
-			</div>
-			<div class="text-center pt-5">
-				<button class="site-btn sb-line sb-dark">Xem thêm</button>
 			</div>
 		</div>
 	</section>
+
 	<!-- Product filter section end -->
 
 
-	<!-- Banner section -->
-	<section class="banner-section">
-		<div class="container">
-			<div class="banner set-bg" data-setbg="/resources/img/banner-bg.jpg">
-				<div class="tag-new">NEW</div>
-				<span>New Arrivals</span>
-				<h2>STRIPED SHIRTS</h2>
-				<a href="#" class="site-btn">SHOP NOW</a>
-			</div>
-		</div>
-	</section>
 	
 
 <script src="/resources/js/submitAjax.js"></script>

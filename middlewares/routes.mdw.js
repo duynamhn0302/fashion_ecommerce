@@ -28,13 +28,15 @@ module.exports = function (app) {
       top8Seller[i].avatar = images[0].link;
     }
     const top8Categories = await productModel.topNCategories(8);
+    const hotProduct = top8Seller.slice(0, 3);
     res.render("index",{
       categories,
       top10New,
       top4Seller: top8Seller.slice(0, 4),
       top4_8Seller: top8Seller.slice(4, 8),
       top8Seller,
-      top8Categories
+      top8Categories,
+      hotProduct
     })
   });
 
