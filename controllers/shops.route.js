@@ -598,9 +598,38 @@ router.get("/bills_discard.json", async function (req, res) {
 router.get('/bills-detail/:id', async function (req, res) {
   let id=+req.params.id;
   let listBillDetail=await shopModel.getDetailBillInfo(id);
+
+  let listSanPham=await shopModel.getListProductByBill(id);
+  listBillDetail.listSanPham=listSanPham;
   console.log(listBillDetail);
   res.render('vwShop/shop_bill_detail',{
     listBillDetail,
+      layout: 'shop_manage.hbs'
+    });
+})
+
+//Trang cập nhật đơn hàng
+router.get('/update-bills-detail/:id', async function (req, res) {
+  let id=+req.params.id;
+  let listBillDetail=await shopModel.getDetailBillInfo(id);
+
+  let listSanPham=await shopModel.getListProductByBill(id);
+  listBillDetail.listSanPham=listSanPham;
+  console.log(listBillDetail);
+  res.render('vwShop/update_shop_bill',{
+    listBillDetail,
+      layout: 'shop_manage.hbs'
+    });
+})
+
+//Trang cập nhật đơn hàng post
+router.post('/update-bills-detail/:id', async function (req, res) {
+  let id=+req.params.id;
+  let status=+req.body.status_bill;
+  await shopModel.updateStatusBill(id,status);
+
+  await shopModel.insertStatusBill(id,status);
+  res.render('vwShop/update_shop_bill',{
       layout: 'shop_manage.hbs'
     });
 })

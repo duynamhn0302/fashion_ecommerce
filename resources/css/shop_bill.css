@@ -69,6 +69,10 @@ input {
     width: 100%;
 }
 
+.combo_box_status{
+    width: 70%;
+}
+
 .combo_box_select{
     padding: 5px;
     border: 1px solid black;
@@ -111,6 +115,30 @@ input {
     background-color: white;
     transition: all 0.4s ease;
     overflow: scroll;
+}
+
+.drop-down-cbx-status{
+    position: static;
+    max-height: 0;
+    overflow: hidden;
+    margin-left: 20px;
+    width: 20%;
+    margin-top: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #d1d1d1;
+    z-index: 2;
+    position: absolute;
+    background-color: white;
+    transition: all 0.4s ease;
+    overflow: scroll;
+}
+
+.drop-down-cbx-status.show{
+    max-height: 200px;
+}
+
+.drop-down-cbx-status.disable{
+    max-height: 0px;
 }
 
 .drop-down-cbx.show{

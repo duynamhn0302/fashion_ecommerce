@@ -96,7 +96,7 @@
 
         </div>
     </div>
-
+    <form action="/shops/update-bills-detail/{{maso}}" method="POST">
     <div class="container_bill">
         <div class="container_bill_items" style="padding-bottom: 10px;">
             <div class="customer-information">
@@ -143,6 +143,7 @@
             </div>
             {{/each}}
 
+           
             <div class="input_detail_ct">
                 <div class="container_combo_box">
                     <div class="title_combobox">
@@ -150,15 +151,72 @@
                     </div>
                     <div class="combo_box_status">
                         <div class="combo_box_select">
-                            <span class="selected" style="color: rgb(129, 129, 129); padding-left: 10px">{{ten}}</span>
+                            <span class="selected" style="color: rgb(0, 0, 0); padding-left: 10px; font-weight:bold;">{{ten}}</span>
+                            <i class="fas fa-caret-down drop-menu-down"></i>
+                            <input type="hidden" name="status_bill" value="{{ten}}">
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="drop-down-cbx-status">
+                <div class="item-select-cbx first-item active">
+                    Đang xác nhận
+                </div>
+                <div class="item-select-cbx second-item">
+                    Đang giao
+                </div>
+                <div class="item-select-cbx third-item">
+                    Đã giao
+                </div>
+                <div class="item-select-cbx four-item">
+                    Đã hủy
+                </div>
+            </div>
+
+            <script>
+                    $(document).on('click', function(e) {
+                        if($(e.target).closest('.combo_box_select').not(this).length){
+                            $('.drop-down-cbx-status').removeClass("disable");
+                            $('.drop-down-cbx-status').toggleClass("show");
+
+                            $('.drop-menu-down').toggleClass("rotate");
+                        }else{      
+                            $('.drop-down-cbx-status').removeClass("show");
+                            $('.drop-down-cbx-status').toggleClass("disable");
+
+                        }
+                    });
+
+
+                    $('.first-item').click(function(){
+                        $('.selected').text("Đang xác nhận");
+                        $('.drop-menu-down').toggleClass("rotate");
+                        $('.combo_box_select input').val("1");
+                    });
+                    $('.second-item').click(function(){
+                        $('.selected').text("Đang giao");
+                        $('.drop-menu-down').toggleClass("rotate");
+                        $('.combo_box_select input').val("2");
+                    });
+                    $('.third-item').click(function(){
+                        $('.selected').text("Đã giao");
+                        $('.drop-menu-down').toggleClass("rotate");
+                        $('.combo_box_select input').val("3");
+                    });
+                    $('.four-item').click(function(){
+                        $('.selected').text("Đã hủy");
+                        $('.drop-menu-down').toggleClass("rotate");
+                        $('.combo_box_select input').val("4");
+                    });
+                    $('.item-select-cbx').click(function(){
+                        $(this).addClass("active").siblings().removeClass("active");
+                    });
+            </script>
 
         </div>
     </div>
+    
     <div class="container-update-detail">
         <div class="ctn_update_cbx clickable-row" data-href='/shops/bills'>
             <div class="btn_back_input">
@@ -166,12 +224,16 @@
              </div>
         </div>
 
-        <div class="ctn_update_cbx">
-            <div class="btn_update_input clickable-row" data-href='/shops/update-bills-detail/{{maso}}'>
+        <div class="ctn_update_cbx" id="btn-update">
+            <div class="btn_update_input">
                 <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Cập nhật</span>
              </div>
         </div>
     </div>
+    <script>
+        $('#btn-update').click(function() {document.forms[0].submit()});
+    </script>
+    </form>
 
     <script>
         jQuery(document).ready(function($) {
