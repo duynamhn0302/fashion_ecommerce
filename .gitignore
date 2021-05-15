@@ -3,6 +3,7 @@ Debug
 .Debug
 log
 .log
+config/
 node_modules/
 *.db
 .vscode/launch.json
