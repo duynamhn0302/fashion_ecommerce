@@ -4,6 +4,12 @@ module.exports = {
     async deleteProduct(id){
         await db.patch({'status' : 0}, {'maso' : id}, 'sanpham');
     },
+    async getCat1ofCat2(cat2){
+      const sql = `SELECT danhmuccap1 FROM danhmuccap2 WHERE maso = ${cat2}`;
+      const [rows,fields] = await db.load(sql);
+      if(rows.length===0) return null;
+      return rows[0];
+    },
     convertRating(n){
         var star = []
         for(var i = 0; i < n; i++){
@@ -132,6 +138,12 @@ module.exports = {
     async addPic(data){
         const [rows,fields] = await db.add(data,'hinhanhsanpham');
         return rows;
+    },
+    async getPic(productId){
+      const sql = `SELECT link FROM hinhanhsanpham WHERE sanpham=${productId}`;
+      const [rows,fields] = await db.load(sql);
+      if(rows.length===0) return null;
+      return rows;
     },
     async delPic(productId){
         const condition = {sanpham:productId}

@@ -1,5 +1,6 @@
 var category = null;
 var save = 0;
+
 $.post('/shops/cat-1',function(data,status){
     category = data;
     if(category !== null){
@@ -10,7 +11,10 @@ $.post('/shops/cat-1',function(data,status){
         </div>`)
         }
     }
-    $('#cat-1-select').append()
+    if(cat1Num !== null){
+        $('#cat-1-select .item-select-cbx:nth-of-type('+cat1Num+")").click();
+        $(`#cat-2-select .item-select-cbx[data-maso="${cat2Num}"]`).click();
+    }
 })
 
 $(document).ready(function(){
@@ -40,6 +44,7 @@ $(document).ready(function(){
         $(this).siblings('.active').removeClass('active');
         $(this).addClass('active');
         choose_cat_1 = $(this).index();
+        // alert(choose_cat_1);
         if(category[choose_cat_1].existsCate2===false)  return;
         $('.add-shop-category-2').css('display','block');
         $('#cat-2-select').empty();
@@ -70,7 +75,40 @@ $(document).ready(function(){
         $(this).addClass('active');
     })
 
+    function checkVal(){
+        if($('#tensanpham').val().length === 0){
+            alert('Xin hãy nhập tên sản phẩm');
+            return false;
+        }
+        if($('#span-2').text() === ' ' || $('#span-2').text() === ''){
+            alert('Bạn chưa chọn danh mục cấp 2');
+            return false;
+        }
+        if($('#editor').text().length === 0){
+            alert('Xin hãy nhập mô tả');
+            return false;
+        }
+        if($('#noisanxuat').val().length === 0){
+            alert('Xin hãy nhập nơi sản xuất');
+            return false;
+        }
+        if($('#kichthuoc').val().length === 0){
+            alert('Xin hãy nhập kích thước');
+            return false;
+        }
+        if($('#giaban').val().length === 0){
+            alert('Xin hãy nhập giá bán của sản phẩm');
+            return false;
+        }
+        if($('#soluong').val().length === 0){
+            alert('Xin hãy nhập số lượng sản phẩm muốn bán');
+            return false;
+        }
+        return true;
+    }
+
     $('#save').on('click',function(e){
+        if(!checkVal()) return;
         const data = {
             tensanpham: $('#tensanpham').val(),
             danhmuccap2: +$('#span-2').attr('data-maso'),
@@ -81,12 +119,38 @@ $(document).ready(function(){
             giaban: +$('#giaban').val(),
             soluong: +$('#soluong').val()
         }
-        save = 1;
-        $.post('/shops/add-product',data,function(data,status){
-            alert('Thành công');
-            window.location.replace('/');
-        })
-        alert('check data ');
+        
+        if(!edit){       //dang moi san pham
+            save = 1; 
+            $.post('/shops/add-product',data,function(data,status){
+                alert('Thành công');
+                window.location.replace('/');
+            })
+        }else{          //cap nhat san pham
+            $.post('/shops/edit-product',data,function(data,status){
+                alert('Thành công');
+                window.location.replace('/');
+            })
+        }
+    })
+
+    $('#delete').on('click',function(e){
+        e.preventDefault();
+        $('#tensanpham').val('')
+        $('#noisanxuat').val('')
+        $('#kichthuoc').val('')
+        $('#editor').text('')
+        $('#giaban').val('')
+        $('#soluong').val('')
+        //cbx alter
+        $('#span-2').text("&nbsp;");
+        $('#span-2').attr('data-maso','0');
+        setTimeout(function(){window.location.href = "#topOfPage"},0);
+        return false;
+    })
+
+    $('#back').on('click',function(){
+        setTimeout(function(){window.location.href = "/shops/incomes"},0);  //khong biet co nen de href hay khong
     })
 })
 

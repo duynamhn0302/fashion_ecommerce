@@ -23,9 +23,19 @@
         <div class="card shadow w-50 mx-auto">
           <div class="card-body text-center">
             <h1 class="card-title">Ooops!</h1>
-            <h2 class="text-danger">404 NOT FOUND</h2>
+            <h2 class="text-danger">
+              {{#if err_name}}
+                {{err_name}}
+              {{else}}
+                404 NOT FOUND
+              {{/if}}
+            </h2>
             <p class="card-text">
-              Sorry, requested page not found.
+              {{#if err_description}}
+                {{err_description}}
+              {{else}}
+                Sorry, requested page not found.
+              {{/if}}
             </p>
           </div>
           <div class="card-footer d-flex justify-content-center">
