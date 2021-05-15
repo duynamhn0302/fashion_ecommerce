@@ -320,6 +320,34 @@ module.exports = {
         return rows;
     },
 
+    async getListProductByBill(idBill)
+    {
+        const sql = `SELECT c.donhang,s.maso,s.ten,c.soluong
+        FROM chitietdonhang c join sanpham s on c.sanpham=s.maso
+        WHERE c.donhang=${idBill}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows;
+    },
+
+    async updateStatusBill(idBill,status)
+    {
+        var condition={maso: idBill};
+        var newdata={tinhtrangdon: status};
+        console.log(condition);
+        console.log(newdata);
+        const [result, fields] = await db.patch(newdata, condition,'donhang');
+        return result;
+    },
+
+    async insertStatusBill(idBill,status)
+    {
+        var today=new Date();
+        var new_data={donhang: idBill, tinhtrang: status, ngaythang: today};
+        const [rows,fields] = await db.add(new_data,'lichsutinhtrangdon');
+        return rows;
+    },
+
     addStatusFinished(rowDB)
     {
         if (rowDB==null)

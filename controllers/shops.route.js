@@ -478,12 +478,45 @@ router.get('/bills_discard.json', async function(req, res) {
   res.json(getDiscardBillByOffset);
 });
 
-router.get('/new', async function (req, res) {
-  res.render('vwShop/shop_create_product',{
+//Chi tiết đơn hàng
+router.get('/bills-detail/:id', async function (req, res) {
+  let id=+req.params.id;
+  let listBillDetail=await shopModel.getDetailBillInfo(id);
+
+  let listSanPham=await shopModel.getListProductByBill(id);
+  listBillDetail.listSanPham=listSanPham;
+  console.log(listBillDetail);
+  res.render('vwShop/shop_bill_detail',{
+    listBillDetail,
+    layout: 'shop_manage.hbs'
+    });
+})
+
+//Trang cập nhật đơn hàng
+router.get('/update-bills-detail/:id', async function (req, res) {
+  let id=+req.params.id;
+  let listBillDetail=await shopModel.getDetailBillInfo(id);
+
+  let listSanPham=await shopModel.getListProductByBill(id);
+  listBillDetail.listSanPham=listSanPham;
+  console.log(listBillDetail);
+  res.render('vwShop/update_shop_bill',{
+    listBillDetail,
       layout: 'shop_manage.hbs'
     });
 })
 
+//Trang cập nhật đơn hàng post
+router.post('/update-bills-detail/:id', async function (req, res) {
+  let id=+req.params.id;
+  let status=+req.body.status_bill;
+  await shopModel.updateStatusBill(id,status);
+
+  await shopModel.insertStatusBill(id,status);
+  res.render('vwShop/update_shop_bill',{
+      layout: 'shop_manage.hbs'
+    });
+})
 
 //Xem thông tin shop
 router.get('/information', async function (req, res) {
@@ -500,6 +533,12 @@ router.get('/information', async function (req, res) {
 router.post('/search', async function (req, res) {
   
 });
+
+router.get('/new', async function (req, res) {
+  res.render('vwShop/shop_create_product',{
+      layout: 'shop_manage.hbs'
+    });
+})
 
 router.post('/cat-1',async function(req,res){
   const names = await productModel.allCategories();
