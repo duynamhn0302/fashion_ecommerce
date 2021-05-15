@@ -162,11 +162,16 @@ $(document).ready(function () {
       input: 'textarea',
       confirmButtonText: 'Next &rarr;',
       showCancelButton: true,
-      progressSteps: ['1', '2']
+      progressSteps: ['1', '2', '3']
     }).queue([
       {
+        title: 'Số điện thoại người nhận',
+        text: 'Hãy nhập vào số điện thoại của người nhận hàng',
+        input: 'number',
+      },
+      {
         title: 'Địa chỉ nhận hàng',
-        text: 'Hãy nhập vào địa chỉ của bạn'
+        text: 'Hãy nhập vào địa chỉ của bạn',
       },
       {
         title: 'Lời nhắn',

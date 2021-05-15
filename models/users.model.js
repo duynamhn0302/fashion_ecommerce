@@ -76,6 +76,16 @@ module.exports = {
         return rows.length ? rows : null;
     },
 
+    async getBillDetail(userId, billId) {
+        const [rows, fields] = await db.load(`select donhang.tongsosanpham, donhang.tonggiatien, donhang.tinhtrangdon, chitietdonhang.sanpham, sanpham.ten, sanpham.kichthuoc, sanpham.giaban, cuahang.ten as cuahang, taikhoan.email, taikhoan.hoten, taikhoan.maso, taikhoan.sdt, chitietdonhang.soluong
+        from donhang join chitietdonhang on donhang.maso = chitietdonhang.donhang join lichsutinhtrangdon on lichsutinhtrangdon.donhang = donhang.maso
+        join sanpham on sanpham.maso = chitietdonhang.sanpham join cuahang on cuahang.maso = sanpham.cuahang join taikhoan on taikhoan.maso = donhang.taikhoan
+        where donhang.taikhoan = ${userId} and donhang.maso = ${billId}
+        group by chitietdonhang.sanpham`)
+
+        return rows.length ? rows : null;
+    },
+
     // async changeInfo(user) {
     //     let condition = {email: user.email};
     //     const [rows, fields] = await db.patch(user, condition, 'user');

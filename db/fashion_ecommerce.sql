@@ -22,10 +22,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `cauhinh`;
 CREATE TABLE `cauhinh`  (
-  `tencauhinh` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `tencauhinh` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `giatri` int(0) NOT NULL,
   PRIMARY KEY (`tencauhinh`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cauhinh
@@ -48,7 +48,7 @@ CREATE TABLE `chitietdonhang`  (
   INDEX `ChiTietDonHang_fk1`(`sanpham`) USING BTREE,
   CONSTRAINT `ChiTietDonHang_fk0` FOREIGN KEY (`donhang`) REFERENCES `donhang` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ChiTietDonHang_fk1` FOREIGN KEY (`sanpham`) REFERENCES `sanpham` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of chitietdonhang
@@ -70,7 +70,7 @@ CREATE TABLE `chitietgiohang`  (
   INDEX `ChiTietGioHang_fk1`(`giohang`) USING BTREE,
   CONSTRAINT `ChiTietGioHang_fk0` FOREIGN KEY (`sanpham`) REFERENCES `sanpham` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `ChiTietGioHang_fk1` FOREIGN KEY (`giohang`) REFERENCES `giohang` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of chitietgiohang
@@ -87,16 +87,16 @@ INSERT INTO `chitietgiohang` VALUES (9, 4, 1);
 DROP TABLE IF EXISTS `cuahang`;
 CREATE TABLE `cuahang`  (
   `maso` int(0) NOT NULL AUTO_INCREMENT,
-  `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `sdt` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sdt` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `taikhoan` int(0) NOT NULL,
   `status` binary(1) NOT NULL,
   `ngaymo` date NULL DEFAULT NULL,
   PRIMARY KEY (`maso`) USING BTREE,
   INDEX `Cuahang_fk0`(`taikhoan`) USING BTREE,
   CONSTRAINT `Cuahang_fk0` FOREIGN KEY (`taikhoan`) REFERENCES `taikhoan` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cuahang
@@ -111,13 +111,13 @@ CREATE TABLE `danhgia`  (
   `taikhoan` int(0) NOT NULL,
   `sanpham` int(0) NOT NULL,
   `ngaythang` date NOT NULL,
-  `noidung` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `noidung` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `sosao` float NOT NULL,
   PRIMARY KEY (`taikhoan`, `sanpham`) USING BTREE,
   INDEX `DanhGia_fk1`(`sanpham`) USING BTREE,
   CONSTRAINT `DanhGia_fk0` FOREIGN KEY (`taikhoan`) REFERENCES `taikhoan` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `DanhGia_fk1` FOREIGN KEY (`sanpham`) REFERENCES `sanpham` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of danhgia
@@ -130,9 +130,9 @@ INSERT INTO `danhgia` VALUES (1, 1, '2021-04-09', 'san phẩm rất tốt', 5);
 DROP TABLE IF EXISTS `danhmuccap1`;
 CREATE TABLE `danhmuccap1`  (
   `maso` int(0) NOT NULL AUTO_INCREMENT,
-  `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`maso`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of danhmuccap1
@@ -148,12 +148,12 @@ INSERT INTO `danhmuccap1` VALUES (4, 'Balo/Túi xách');
 DROP TABLE IF EXISTS `danhmuccap2`;
 CREATE TABLE `danhmuccap2`  (
   `maso` int(0) NOT NULL AUTO_INCREMENT,
-  `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `danhmuccap1` int(0) NOT NULL,
   PRIMARY KEY (`maso`) USING BTREE,
   INDEX `DanhMucCap2_fk0`(`danhmuccap1`) USING BTREE,
   CONSTRAINT `DanhMucCap2_fk0` FOREIGN KEY (`danhmuccap1`) REFERENCES `danhmuccap1` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of danhmuccap2
@@ -188,7 +188,7 @@ CREATE TABLE `donhang`  (
   INDEX `DonHang_fk1`(`tinhtrangdon`) USING BTREE,
   CONSTRAINT `DonHang_fk0` FOREIGN KEY (`taikhoan`) REFERENCES `taikhoan` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `DonHang_fk1` FOREIGN KEY (`tinhtrangdon`) REFERENCES `loaitinhtrangdon` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of donhang
@@ -209,7 +209,7 @@ CREATE TABLE `giohang`  (
   PRIMARY KEY (`maso`) USING BTREE,
   UNIQUE INDEX `taikhoan`(`taikhoan`) USING BTREE,
   CONSTRAINT `GioHang_fk0` FOREIGN KEY (`taikhoan`) REFERENCES `taikhoan` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of giohang
@@ -227,11 +227,11 @@ DROP TABLE IF EXISTS `hinhanhsanpham`;
 CREATE TABLE `hinhanhsanpham`  (
   `maso` int(0) NOT NULL AUTO_INCREMENT,
   `sanpham` int(0) NOT NULL,
-  `link` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `link` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`maso`) USING BTREE,
   INDEX `HinhAnhSanPham_fk0`(`sanpham`) USING BTREE,
   CONSTRAINT `HinhAnhSanPham_fk0` FOREIGN KEY (`sanpham`) REFERENCES `sanpham` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of hinhanhsanpham
@@ -262,7 +262,7 @@ CREATE TABLE `lichsutinhtrangdon`  (
   INDEX `LichSuTinhTrangDon_fk1`(`tinhtrang`) USING BTREE,
   CONSTRAINT `LichSuTinhTrangDon_fk0` FOREIGN KEY (`donhang`) REFERENCES `donhang` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `LichSuTinhTrangDon_fk1` FOREIGN KEY (`tinhtrang`) REFERENCES `loaitinhtrangdon` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lichsutinhtrangdon
@@ -281,9 +281,9 @@ INSERT INTO `lichsutinhtrangdon` VALUES (3, 4, '2021-04-09');
 DROP TABLE IF EXISTS `loaitinhtrangdon`;
 CREATE TABLE `loaitinhtrangdon`  (
   `maso` int(0) NOT NULL AUTO_INCREMENT,
-  `ten` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ten` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`maso`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of loaitinhtrangdon
@@ -299,10 +299,10 @@ INSERT INTO `loaitinhtrangdon` VALUES (4, 'Đã hủy');
 DROP TABLE IF EXISTS `sanpham`;
 CREATE TABLE `sanpham`  (
   `maso` int(0) NOT NULL AUTO_INCREMENT,
-  `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `noisx` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `mota` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `kichthuoc` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `noisx` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `mota` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `kichthuoc` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `gioitinhsudung` binary(1) NOT NULL,
   `giaban` int(0) NOT NULL,
   `soluong` int(0) NOT NULL,
@@ -317,7 +317,7 @@ CREATE TABLE `sanpham`  (
   INDEX `SanPham_fk1`(`cuahang`) USING BTREE,
   CONSTRAINT `SanPham_fk0` FOREIGN KEY (`danhmuccap2`) REFERENCES `danhmuccap2` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `SanPham_fk1` FOREIGN KEY (`cuahang`) REFERENCES `cuahang` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sanpham
@@ -339,18 +339,18 @@ INSERT INTO `sanpham` VALUES (10, 'Quần tây đen 9', 'Việt Nam', 'Chiếc q
 DROP TABLE IF EXISTS `taikhoan`;
 CREATE TABLE `taikhoan`  (
   `maso` int(0) NOT NULL AUTO_INCREMENT,
-  `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `hoten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `ngaysinh` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `sdt` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `avatar` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `hoten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ngaysinh` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `sdt` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `avatar` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `vaitro` int(0) NOT NULL,
   `status` binary(1) NOT NULL,
   `ngaymo` date NULL DEFAULT NULL,
   PRIMARY KEY (`maso`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of taikhoan
