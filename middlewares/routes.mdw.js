@@ -41,13 +41,17 @@ module.exports = function (app) {
     })
   });
 
-  app.get('/login',auth.auth_reverse,async function (req, res) {
+  app.get('/login',auth.auth_reverse,function (req, res) {
     res.render("login",{layout: false});
    });
    
-  app.get('/signup',auth.auth_reverse,async function (req, res) {
+  app.get('/signup',auth.auth_reverse,function (req, res) {
     res.render('signup',{layout: false});
    });
+
+   app.get('/test',async function(req,res){
+    res.render('test',{layout:null});
+   })
 
   app.post('/logout',auth.auth, async function (req, res) {
     req.session.auth = false;

@@ -813,11 +813,19 @@ router.post('/unloadFakeProduct',async function(req,res){
 router.post('/add-product',async function(req,res){
   var date = Date.now();
   var update = moment(date).format("YYYY-MM-DD");
+  
+  var sex = 0;
+  if(req.body.gioitinhsudung === "Nữ"){
+    sex=1;
+  }else if(req.body.gioitinhsudung === "Unisex"){
+    sex=2;
+  }
+  console.log(Buffer.from(sex))
 
   const new_data = {
     danhmuccap2: +req.body.danhmuccap2,
     giaban: +req.body.giaban,
-    gioitinhsudung: (req.body.gioitinhsudung==="Nam"),
+    gioitinhsudung: Buffer.from(`${sex}`),
     kichthuoc: req.body.kichthuoc,
     mota: req.body.mota,
     noisx: req.body.noisanxuat,
@@ -887,11 +895,20 @@ router.get('/edit-product/:id',async function(req,res){
   }
   if(product === null)  res.json(false);
   else{
+    var isFemale = false;
+    var isUnisex = false;
+    if(product.gioitinhsudung===1){
+      isFemale = true;
+    }else if(product.gioitinhsudung===2){
+      isUnisex = true;
+    }
     if(req.session.shop.maso === product.cuahang){
       res.render('vwShop/shop_create_product',{
         layout: 'shop_manage.hbs',
         product: product,
         cat1Num: cat1Num.danhmuccap1,
+        isFemale: isFemale,
+        isUnisex: isUnisex,
         link: link,
         pictures: null,
       });

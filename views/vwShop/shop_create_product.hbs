@@ -44,6 +44,7 @@
                 <div class="func_acc" id="log_out_shop">Đăng xuất</div>
             </div>
             <script>
+                var minimum_photo = false;
                 document.addEventListener("click", (evt) => {
                     const deactive_authe_menu = document.getElementById("func_auth_bar");
                     if (event.target.closest(".account_bar_inner")) {
@@ -172,30 +173,54 @@
                             <div class="combo_box">
                                 <div class="combo_box_select">
                                     <span class="selected" id="gioitinhsudung">
-                                        {{#if product.gioitinhsudung}}
+                                    {{#if product.gioitinhsudung}}
+                                    {{#when product.gioitinhsudung 'eq' 1}}
                                         Nữ
-                                        {{else}}
+                                    {{/when}}
+                                    {{#when product.gioitinhsudung 'eq' 2}}
+                                        Unisex
+                                    {{/when}}
+                                    {{#when product.gioitinhsudung 'eq' 0}}
                                         Nam
-                                        {{/if}}
+                                    {{/when}}
+                                    {{/if}}
                                     </span>
                                     <i class="fas fa-caret-down drop-menu-down" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="drop-down-cbx disable wcb-50" id="sex">
-                                {{#if product.gioitinhsudung}}
+                                {{#if isFemale}}
                                     <div class="item-select-cbx first-item">
                                         Nam
                                     </div>
                                     <div class="item-select-cbx second-item active">
                                         Nữ
                                     </div>
+                                    <div class="item-select-cbx third-item">
+                                        Unisex
+                                    </div>
                                 {{else}}
-                                    <div class="item-select-cbx first-item active">
-                                        Nam
-                                    </div>
-                                    <div class="item-select-cbx second-item">
-                                        Nữ
-                                    </div>
+                                    {{#if isUnisex}}
+                                        <div class="item-select-cbx first-item">
+                                            Nam
+                                        </div>
+                                        <div class="item-select-cbx second-item">
+                                            Nữ
+                                        </div>
+                                        <div class="item-select-cbx third-item active">
+                                            Unisex
+                                        </div>
+                                    {{else}}
+                                        <div class="item-select-cbx first-item active">
+                                            Nam
+                                        </div>
+                                        <div class="item-select-cbx second-item">
+                                            Nữ
+                                        </div>
+                                        <div class="item-select-cbx third-item">
+                                            Unisex
+                                        </div>
+                                    {{/if}}
                                 {{/if}}
                             </div>
                         </div>
@@ -231,6 +256,7 @@
                                 }
                             </script>
                             <script>
+                                minimum_photo = true;
                                 $("#input-image-3").fileinput({
                                     uploadUrl: "/shops/upload-product-images",
                                     allowedFileExtensions: ["jpg", "png", "gif"],
@@ -241,7 +267,8 @@
                                     initialPreviewDownloadUrl: 'https://picsum.photos/id/{key}/1920/1080', // includes the dynamic key tag to be replaced for each config
                                     resizePreference: 'height',
                                     showPreview: true,
-                                    maxFileCount: 8,
+                                    showUpload: false,
+                                    maxTotalFileCount: 8,
                                     theme: 'fas',
                                     resizeImage: true
                                 }).on('filepreupload', function() {
@@ -260,12 +287,14 @@
                             maxImageHeight: 150,
                             resizePreference: 'height',
                             showPreview: true,
-                            maxFileCount: 8,
+                            maxTotalFileCount: 8,
+                            showUpload: false,
                             theme: 'fas',
                             resizeImage: true
                         }).on('filepreupload', function() {
                             $('#kv-success-box').html('');
                         }).on('fileuploaded', function(event, data) {
+                            minimum_photo = true;
                             $('#kv-success-box').append(data.response.link);
                             $('#kv-success-modal').modal('show');
                         });
