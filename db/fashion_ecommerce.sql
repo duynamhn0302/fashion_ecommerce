@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 17/05/2021 01:20:05
+ Date: 17/05/2021 01:30:12
 */
 
 SET NAMES utf8mb4;
@@ -330,16 +330,16 @@ CREATE TABLE `sanpham`  (
 -- ----------------------------
 -- Records of sanpham
 -- ----------------------------
-INSERT INTO `sanpham` VALUES (1, 'Áo thun trắng', 'Việt Nam', 'Áo màu trắng rất xinh', 'L', 48, 100000, 5, 5, 1, 2, 1, 0x30, '2021-04-05');
-INSERT INTO `sanpham` VALUES (2, 'Quần tây đen', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 200000, 5, 0, 0, 6, 1, 0x30, '2021-04-05');
-INSERT INTO `sanpham` VALUES (3, 'Quần tây đen 2', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x30, '2021-04-05');
-INSERT INTO `sanpham` VALUES (4, 'Quần tây đen 3', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 1500000, 0, 0, 0, 6, 1, 0x30, '2021-04-05');
-INSERT INTO `sanpham` VALUES (5, 'Quần tây đen 4', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x30, '2021-04-05');
-INSERT INTO `sanpham` VALUES (6, 'Quần tây đen 5', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 1, 0, 0, 6, 1, 0x30, '2021-04-05');
-INSERT INTO `sanpham` VALUES (7, 'Quần tây đen 6', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x30, '2021-04-05');
-INSERT INTO `sanpham` VALUES (8, 'Quần tây đen 7', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 10, 0, 0, 6, 1, 0x30, '2021-04-05');
-INSERT INTO `sanpham` VALUES (9, 'Quần tây đen 8', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x30, '2021-04-05');
-INSERT INTO `sanpham` VALUES (10, 'Quần tây đen 9', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 0, 0, 0, 6, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (1, 'Áo thun trắng', 'Việt Nam', 'Áo màu trắng rất xinh', 'L', 0, 100000, 5, 5, 1, 2, 1, 0x31, '2021-04-05');
+INSERT INTO `sanpham` VALUES (2, 'Quần tây đen', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 0, 200000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
+INSERT INTO `sanpham` VALUES (3, 'Quần tây đen 2', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 0, 150000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
+INSERT INTO `sanpham` VALUES (4, 'Quần tây đen 3', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 0, 1500000, 0, 0, 0, 6, 1, 0x31, '2021-04-05');
+INSERT INTO `sanpham` VALUES (5, 'Quần tây đen 4', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 0, 150000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
+INSERT INTO `sanpham` VALUES (6, 'Quần tây đen 5', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 0, 150000, 1, 0, 0, 6, 1, 0x31, '2021-04-05');
+INSERT INTO `sanpham` VALUES (7, 'Quần tây đen 6', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 0, 150000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
+INSERT INTO `sanpham` VALUES (8, 'Quần tây đen 7', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 0, 150000, 10, 0, 0, 6, 1, 0x31, '2021-04-05');
+INSERT INTO `sanpham` VALUES (9, 'Quần tây đen 8', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 0, 150000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
+INSERT INTO `sanpham` VALUES (10, 'Quần tây đen 9', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 0, 150000, 0, 0, 0, 6, 1, 0x31, '2021-04-05');
 INSERT INTO `sanpham` VALUES (14, '123', '123', '<p>dsđvs</p>', '123', 48, 32, 23, 0, 0, 6, 1, 0x30, '2021-05-14');
 
 -- ----------------------------
@@ -375,9 +375,9 @@ CREATE TABLE `taikhoan`  (
   `vaitro` int(0) NOT NULL,
   `status` binary(1) NOT NULL,
   `ngaymo` date NULL DEFAULT NULL,
-  `diachi` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `diachi` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`maso`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of taikhoan

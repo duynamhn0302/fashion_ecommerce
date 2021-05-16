@@ -56,6 +56,7 @@ router.get('/:id', async function (req, res, next) {
     for(var i = 0; i < images.length; i++){
         images[i].isActive = false;
     }
+    console.log(images)
     images[0].isActive = true;
     const avatar = images[0]
     var relativeProduct = await productsModel.getRelativeProduct(id)
