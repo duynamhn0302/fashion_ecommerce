@@ -202,7 +202,7 @@ module.exports = {
         return rows;
     },
     async getAllProductsByCate1Id(cate1Id, offset) {
-        const [rows, fields] = await db.load(
+        var [rows, fields] = await db.load(
           `select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 where sanpham.status = 1 and danhmuccap1.maso = ${cate1Id} limit ${paginate.limit} offset ${offset}`
         );
         rows =  await this.informationForListProduct(rows)
@@ -233,7 +233,8 @@ module.exports = {
             or match(danhmuccap1.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
             or match(danhmuccap2.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
             or match(cuahang.ten) against ('${text}' IN NATURAL LANGUAGE MODE)  limit ${paginate.limit} offset ${offset}`;
-        const [rows, fields] = await db.load(sql);
+        var [rows, fields] = await db.load(sql);
+        rows =  await this.informationForListProduct(rows)
         return rows;
       },
       async countSearchRelevant(text) {
@@ -255,7 +256,8 @@ module.exports = {
       },
       async allProductWithOffset(offset) {
         const sql = `select * from sanpham where status = 1 limit ${paginate.limit} offset ${offset}`;
-        const [rows, fields] = await db.load(sql);
+        var [rows, fields] = await db.load(sql);
+        rows =  await this.informationForListProduct(rows)
         return rows;
       },
       async allCategoriesWithQuantity() {

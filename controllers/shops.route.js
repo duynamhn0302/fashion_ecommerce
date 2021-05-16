@@ -96,7 +96,6 @@ router.get("/shops-information/:id/:idCat/byCat2", async function (req, res) {
   let catList = await shopModel.getCatByShopID(shopID);
   let subCatList = await shopModel.getSubCatByShopID(shopID);
   console.log(catList);
-  // console.log(subCatList);
   let category = [];
   for (item of catList) {
     let allCat = {};
@@ -131,7 +130,11 @@ router.post("/shops-information/:id/search", async function (req, res) {
     return res.redirect(`/shops/shops-information/${shopID}`);
   res.redirect(`/shops/products/${shopID}`);
 });
-
+router.get("/products", async function (req, res) {
+  res.render('vwShop/shop_products',{
+    layout: 'shop_manage.hbs'
+  })
+});
 //Xem ds sản phẩm của shop
 router.get("/products/:id", async function (req, res) {
   let shopID = req.params.id;
@@ -173,10 +176,8 @@ router.get("/products/:id", async function (req, res) {
     shopID,
   });
 });
-//Xem đơn hàng
-router.get('/orders', async function (req, res) {
-  
-})
+
+
 
 router.get('/incomes', async function (req, res) {
   let user = req.session.authUser;
@@ -229,25 +230,77 @@ router.get('/incomes', async function (req, res) {
   {
     getMoneyMonth.tongTienThang=0;
   }
+  
+  
 
-    res.render('vwShop/shop_income',{
-      countProductSelling,
-      countReviewProduct,
-      countBlockProduct,
-      countDiscardProduct,
-      countTravellingBill,
-      countTravelledBill,
-      countWatingBill,
-      countConfirmingBill,
-      countRemoveBill,
-      moneyToday,
-      countBillToday,
-      countAmountProductSellingToday,
-      getMoneyMonth,
-        layout: 'shop_manage.hbs'
-      });
+  var prevMonth = function(dateObj) {
+    var tempDateObj = new Date(dateObj);
+  
+    if(tempDateObj.getMonth) {
+      tempDateObj.setMonth(tempDateObj.getMonth() - 1);
+    } else {
+      tempDateObj.setYear(tempDateObj.getYear() - 1);
+      tempDateObj.setMonth(12);
+    }
+  
+    return tempDateObj
+  };
+
+  var toString = (dateObj) => {
+      var mm = parseInt(dateObj.substring(5, 7) )
+      var yyyy = parseInt(dateObj.substring(0, 4))
+      mm = mm.toString();
+      yyyy = yyyy.toString(); 
+      return "Tháng " + mm + ", " + yyyy;
+  }
+
+  var today = new Date()
+  var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+  var tomonth = new Date(y, m + 1, 0);
+  var last7Months = []
+  var last7Days = []
+  var i = 0;
+  var n = 7;
+  last7Days.push(today)
+  last7Months.push(tomonth)
+  var last7daysIncome = []
+  var last7monthIncome  = []
+  i = 0;
+  var timeDate = last7Days[i].toISOString().substring(0, 10)
+  var timeMonth = last7Months[i].toISOString().substring(0, 10)
+  last7daysIncome.push({id: i, x: timeDate, y: await shopModel.incomePreDate(shopId.maso, timeDate)})
+  last7monthIncome.push({id: i, x: timeMonth, y: await shopModel.incomePreDate(shopId.maso,timeMonth)})
+  for( i = 1; i < n; i++){
+    last7Days.push(new Date(last7Days[i-1].getTime() - 24*60*60*1000))
+    last7Months.push(prevMonth(last7Months[i-1]))
+    timeDate = last7Days[i].toISOString().substring(0, 10)
+    timeMonth = last7Months[i].toISOString().substring(0, 10)
+    last7daysIncome.push({id: i, x: timeDate, y: await shopModel.incomePreDate(shopId.maso, timeDate)})
+    last7monthIncome.push({id: i, x: timeMonth, y: await shopModel.incomePreDate(shopId.maso,timeMonth)})
+  }
+  console.log(last7daysIncome)
+  console.log(last7monthIncome)
+
+  res.render('vwShop/shop_income',{
+    countProductSelling,
+    countReviewProduct,
+    countBlockProduct,
+    countDiscardProduct,
+    countTravellingBill,
+    countTravelledBill,
+    countWatingBill,
+    countConfirmingBill,
+    countRemoveBill,
+    moneyToday,
+    countBillToday,
+    countAmountProductSellingToday,
+    last7daysIncome,
+    last7monthIncome,
+    getMoneyMonth,
+      layout: 'shop_manage.hbs'
+    });
 })
-
+//Xem đơn hàng
 router.get('/bills', async function (req, res) {
   let user = req.session.authUser;
   if (user==null)
@@ -295,7 +348,6 @@ router.get('/bills', async function (req, res) {
   const totalC = getConfirmBill.length;
   let nPagesC = Math.floor(totalC / paginate.limit);
   if (totalC % paginate.limit > 0) nPagesC++;
-  console.log("totalC: "+totalC);
 
   const page_numbersC = [];
   for (var i = 1; i <= nPagesC; i++) {

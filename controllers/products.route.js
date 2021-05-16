@@ -219,7 +219,7 @@ router.get("/search/common", async function (req, res) {
   if (list !== null)
     for (let i=0; i<list.length; i++) {
         let img = await productsModel.getImages(+list[i].maso);
-        list[i].hinhanh = img[0].link;
+        list[i].avatar = img[0].link;
       }
 
   res.render("../views/vwProducts/search_results.hbs", {
@@ -263,7 +263,7 @@ router.get("/search/search-result-most-relevant", async function (req, res) {
   if (list !== null)
     for (let i=0; i<list.length; i++) {
         let img = await productsModel.getImages(+list[i].maso);
-        list[i].hinhanh = img[0].link;
+        list[i].avatar = img[0].link;
       }
 
   res.render("../views/vwProducts/search_results.hbs", {

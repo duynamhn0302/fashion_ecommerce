@@ -1,0 +1,60 @@
+<div class="container_income">
+    <div class="container_income_navbar">
+        <div class="btn_show">
+            <span class="fas fa-bars"></span>
+        </div>
+        <script>
+            $('.btn_show').click(function(){
+                $('.container_income').toggleClass("show");
+                $('.sidebar').toggleClass("show");
+            });
+        </script>
+
+        <div class="title_bar">
+            Danh sách sản phẩm
+        </div>
+
+        <div class="account_bar">
+            <div class="account_bar_inner">
+                <div class="img_shop_account">
+                    <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img_account_inner">
+                </div>
+                <div class="name_account">
+                    Divisia Shop
+                </div>
+                <div class="down_arrow">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="func_account_bar" id="func_auth_bar">
+                <div class="func_acc" id="pass_shop">
+                    Thay đổi mật khẩu
+                </div>
+                <div class="func_acc" id="info_shop">Thông tin Shop</div>
+                <div><hr class="inline"></div>
+                <div class="func_acc" id="log_out_shop">Đăng xuất</div>
+            </div>
+            <script>
+                document.addEventListener("click", (evt) => {
+                    const deactive_authe_menu = document.getElementById("func_auth_bar");
+                    if (event.target.closest(".account_bar_inner")) {
+                        deactive_authe_menu.style.display="block";
+                        return;
+                        }
+                    deactive_authe_menu.style.display="none";
+                    });
+            </script>
+        </div>
+    </div>
+
+
+    <div class="container_bill">
+        <div class="container_bill_items">
+       
+
+
+        </div>
+    </div>
+
+</div>
+<script src="/resources/js/filterTable.js"></script>
