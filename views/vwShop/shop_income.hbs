@@ -48,9 +48,16 @@
                 <div class="text_images_welcome">
                     Tạo sản phẩm để bắt đầu bán hàng ngay hôm nay!
                 </div>
-                <div class="buttons">
+                <div class="buttons" data-href='/shops/new'>
                     <button class="btn-hover color-8"><i class="fas fa-plus"> &nbsp Tạo sản phẩm</i></button>
                 </div>
+                <script>
+                    jQuery(document).ready(function($) {
+                        $(".buttons").click(function() {
+                            window.location = $(this).data("href");
+                        });
+                    });
+                </script>
             </div>
         </div>
     </div>
@@ -65,36 +72,6 @@
                         {{#with countProductSelling}}
                             {{SL}}
                         {{/with}}
-                    </div>
-                    <div class="product_selling_func">
-                        <div class="name_func">
-                            Đang chờ duyệt
-                        </div>
-                        <div class="number_func">
-                            {{#with countReviewProduct}}
-                                {{SoLuongDangDuyet}}
-                            {{/with}}
-                        </div>
-                    </div>
-                    <div class="product_selling_func">
-                        <div class="name_func">
-                            Bị từ chối
-                        </div>
-                        <div class="number_func">
-                            {{#with countDiscardProduct}}
-                                {{SoLuongDangDuyet}}
-                            {{/with}}
-                        </div>
-                    </div>
-                    <div class="product_selling_func">
-                        <div class="name_func">
-                            Bị khóa
-                        </div>
-                        <div class="number_func">
-                            {{#with countBlockProduct}}
-                                {{SoLuongDangDuyet}}
-                            {{/with}}
-                        </div>
                     </div>
                     <div class="container_btn">
                         <div class="product_selling_btn">
