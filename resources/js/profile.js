@@ -1,15 +1,17 @@
+function displaySuccessNotification() {
+  swal.fire({
+    position: "center",
+    icon: "success",
+    // iconColor: "#F51167",
+    title: "Thay đổi thành công",
+    showConfirmButton: false,
+    timer: 1500,
+  });
+}
+
 $(document).ready(function () {
   //display notification xinh dep
-  function displaySuccessNotification() {
-    swal.fire({
-      position: "center",
-      icon: "success",
-      // iconColor: "#F51167",
-      title: "Thay đổi thành công",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  }
+  
 
   function displayFailNotification(message) {
     swal.fire({
@@ -152,7 +154,5 @@ $(document).ready(function () {
     $("#password_changed_submitting").submit();
   });
 
-  $(".avatar_holder").click(function () {
-    $("#changeAvatarModal").modal("toggle");
-  });
+  
 });

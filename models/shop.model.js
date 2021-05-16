@@ -48,6 +48,25 @@ module.exports = {
         if(rows.length===0) return null;
         return rows;
     },
+    async getProductByShopIDcat(shopID,catID){
+        const sql = `SELECT temp1.*, d.danhmuccap1
+        FROM(SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
+        WHERE s.cuahang=${shopID}
+        GROUP BY maso) as temp1 join danhmuccap2 d on temp1.danhmuccap2=d.maso
+        WHERE danhmuccap1=${catID}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows;
+    },
+
+    async getProductByShopIDcatSub(shopID,catSubID){
+        const sql = `SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
+        WHERE s.cuahang=${shopID} and s.danhmuccap2=${catSubID}
+        GROUP BY maso`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows;
+    },
     async shopOfId(userId){
         const sql = `SELECT * FROM cuahang WHERE taikhoan = ${userId}`;
         const [rows,fields] = await db.load(sql);

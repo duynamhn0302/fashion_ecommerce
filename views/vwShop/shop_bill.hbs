@@ -184,13 +184,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <script>
-                                jQuery(document).ready(function($) {
-                                    $(".clickable-row").click(function() {
-                                        window.location = $(this).data("href");
-                                    });
-                                });
-                            </script>
                             <div class="btn_container_pagination">
                                 <div class="total_pagination">
                                     Tổng cộng {{totalRowAll}} bản ghi
@@ -867,6 +860,13 @@
                         }
 
                         )
+                </script>
+                <script>
+                    jQuery(document).ready(function($) {
+                        $(".clickable-row").click(function() {
+                            window.location = $(this).data("href");
+                        });
+                    });
                 </script>
 
 

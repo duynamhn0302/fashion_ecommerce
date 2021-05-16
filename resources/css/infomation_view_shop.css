@@ -91,6 +91,7 @@
 
 .container_menu_product{
     display: flex;
+    flex-direction: row;
     box-shadow: 0 0 2px #d1d1d1;
 }
 
@@ -181,4 +182,18 @@
     color: #212529;
     padding: 10px 100px 10px 100px;
     cursor: pointer;
+}
+
+[data-tab-content]{
+    display: none;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 200ms ease-in-out 0ms,
+    transform 500ms ease-in-out 0ms;
+}
+
+.active_tab[data-tab-content]{
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
 }

@@ -11,10 +11,10 @@
             <div class="tab_triger">
                 <ul>
                     <li>
-                        <label data-tab-target="#tab1" class="active_tab_title">Tất cả sản phẩm</label>
+                        <label data-tab-target="#tab1" class="tab_1 active_tab_title">Tất cả sản phẩm</label>
                     </li>
                     <li>
-                        <label data-tab-target="#tab2">Hồ sơ cửa hàng</label>
+                        <label data-tab-target="#tab2" class="tab_2">Hồ sơ cửa hàng</label>
                     </li>
                     <li>
                         <form class="search-form" action="/shops/shops-information/{{shopID}}/search" method="post">
@@ -26,33 +26,10 @@
                     </li>
                 </ul>
             </div>
-            <script>
-                        const tabs=document.querySelectorAll('[data-tab-target]');
-                        //const tabContents=document.querySelectorAll('[data-tab-content]');
-
-                        tabs.forEach(tab =>{
-                            tab.addEventListener('click',()=>{
-                                const tabsList=document.querySelectorAll('[data-tab-target]');
-                                tabsList.forEach(tabMember=>{
-                                    tabMember.classList.remove('active_tab_title');
-                                });
-
-                                /*const target=document.querySelector(tab.dataset.tabTarget)
-                                tabContents.forEach(tabContent =>{
-                                    tabContent.classList.remove('active_tab');
-                                });*/
-                                
-                                //target.classList.add('active_tab');
-                                tab.classList.add('active_tab_title');
-                            })
-                        }
-
-                        )
-            </script>
         </div>
     </div>
 
-    <div class="container_menu_product">
+    <div class="container_menu_product active_tab" id="tab1" data-tab-content>
         <div class="container_menu_sidebar">
             <div class="tittle-menu-cate">
                 Danh mục sản phẩm
@@ -60,11 +37,11 @@
             {{#each this.category}}
             <div class="cate-sidebar">
                 <div class="cate-name-sidebar">
-                    <a href="#">{{tenCap1}}</a>
+                    <a href="/shops/shops-information/{{shopID}}/{{maCap1}}/byCat1" style="color: black; font-weight: bold;">{{tenCap1}}</a>
                 </div>
                 {{#each this.tenCap2}}
                 <div class="catesub-name-sidebar">
-                    <a href="#">{{subCat}}</a>
+                    <a href="/shops/shops-information/{{shopID}}/{{danhmuccap2}}/byCat2" style="color: black;">{{subCat}}</a>
                 </div>
                 {{/each}}
             </div>
@@ -93,7 +70,7 @@
                         <div class="product-item">
                             <div class="pi-pic">
                                 <div class="tag-sale">ON SALE</div>
-                                <a href="/products/detail/{{maso}}">
+                                <a href="/products/{{maso}}">
                                     <img src="{{link}}" alt="" style="height: 300px;">
                                 </a>
                                 <div class="pi-links">
@@ -128,4 +105,31 @@
             </div>
         </div>
     </div>
+    <div class="container_if_shop" id="tab2" data-tab-content>
+        sdfsdfd
+    </div>
+
+        <script>
+                        const tabs=document.querySelectorAll('[data-tab-target]');
+                        const tabContents=document.querySelectorAll('[data-tab-content]');
+
+                        tabs.forEach(tab =>{
+                            tab.addEventListener('click',()=>{
+                                const tabsList=document.querySelectorAll('[data-tab-target]');
+                                tabsList.forEach(tabMember=>{
+                                    tabMember.classList.remove('active_tab_title');
+                                });
+
+                                const target=document.querySelector(tab.dataset.tabTarget)
+                                tabContents.forEach(tabContent =>{
+                                    tabContent.classList.remove('active_tab');
+                                });
+                                
+                                target.classList.add('active_tab');
+                                tab.classList.add('active_tab_title');
+                            })
+                        }
+
+                        )
+        </script>
 </div>

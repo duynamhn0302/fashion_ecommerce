@@ -110,9 +110,8 @@ $(document).ready(function(){
             }
         });   
     });
-
     
     input.keypress(function(){
-    topbar.removeClass('success error');
+        topbar.removeClass('success error');
     });
 });

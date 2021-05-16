@@ -1,5 +1,6 @@
 const express = require('express');
 const productModel = require('../models/products.model');
+const productsModel = require("../models/products.model");
 const shopModel=require('../models/shop.model')
 const multer = require('multer');
 const router = express.Router();
@@ -8,21 +9,170 @@ const fs = require('fs');
 const { paginate } = require('./../config/default.json');
 const { dirname } = require('path');
 const { dir } = require('console');
+const { allCategories } = require('../models/products.model');
 
 //Xem màn hình shop
 router.get('/', async function (req, res) {
     res.redirect('information');
 });
 
-router.get('/shops-information/1', async function (req, res) {
+router.get("/shops-information/:id", async function (req, res) {
+  let shopID = +req.params.id;
+  let listProductByShopID = await shopModel.getProductByShopID(shopID);
 
-  res.render("vwShopInfo/shop_detail");
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  console.log(catList);
+  // console.log(subCatList);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+  console.log(category);
+
+  res.render("vwShopInfo/shop_detail", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+  });
+});
+
+//Search thep danh muc cap 1
+router.get("/shops-information/:id/:idcat/byCat1", async function (req, res) {
+  console.log("ok");
+  let shopID = +req.params.id;
+  let CatID= +req.params.idcat;
+  let listProductByShopID = await shopModel.getProductByShopIDcat(shopID,CatID);
+
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  console.log(catList);
+  // console.log(subCatList);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+  console.log(category);
+
+  res.render("vwShopInfo/shop_detail", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+  });
+});
+
+//Search thep danh muc cap 2
+router.get("/shops-information/:id/:idCat/byCat2", async function (req, res) {
+  let shopID = +req.params.id;
+  let CatID= +req.params.idCat;
+  let listProductByShopID = await shopModel.getProductByShopIDcatSub(shopID,CatID);
+
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  console.log(catList);
+  // console.log(subCatList);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+  console.log(category);
+
+  res.render("vwShopInfo/shop_detail", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+  });
+});
+
+router.post("/shops-information/:id/search", async function (req, res) {
+  let search_term = req.body.search_term;
+  let shopID = req.params.id;
+  req.session.search_term = search_term;
+  if (search_term === "" || search_term.length < 3)
+    return res.redirect(`/shops/shops-information/${shopID}`);
+  res.redirect(`/shops/products/${shopID}`);
 });
 
 //Xem ds sản phẩm của shop
-router.get('/products', async function (req, res) {
-  
-})
+router.get("/products/:id", async function (req, res) {
+  let shopID = req.params.id;
+  let search_term = req.session.search_term;
+
+  let listProductByShopID = await productsModel.searchRelevantForShop(
+    search_term,
+    shopID
+  );
+
+  if (listProductByShopID !== null)
+    for (let i = 0; i < listProductByShopID.length; i++) {
+      let img = await productsModel.getImages(+listProductByShopID[i].maso);
+      listProductByShopID[i].link = img[0].link;
+    }
+
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  // console.log(catList);
+  // console.log(subCatList);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+
+  res.render("vwShopInfo/shop_detail_for_search", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+  });
+});
 //Xem đơn hàng
 router.get('/orders', async function (req, res) {
   
@@ -485,6 +635,7 @@ router.get('/bills-detail/:id', async function (req, res) {
 
   let listSanPham=await shopModel.getListProductByBill(id);
   listBillDetail.listSanPham=listSanPham;
+  listBillDetail.isNotAvailableUpdate=(listBillDetail.tinhtrangdon===3 || listBillDetail.tinhtrangdon===4);
   console.log(listBillDetail);
   res.render('vwShop/shop_bill_detail',{
     listBillDetail,
@@ -499,7 +650,8 @@ router.get('/update-bills-detail/:id', async function (req, res) {
 
   let listSanPham=await shopModel.getListProductByBill(id);
   listBillDetail.listSanPham=listSanPham;
-  console.log(listBillDetail);
+  // listBillDetail.isNotAvailableUpdate=(listBillDetail.tinhtrangdon===3 || listBillDetail.tinhtrangdon===4);
+  // console.log(listBillDetail);
   res.render('vwShop/update_shop_bill',{
     listBillDetail,
       layout: 'shop_manage.hbs'
@@ -510,12 +662,17 @@ router.get('/update-bills-detail/:id', async function (req, res) {
 router.post('/update-bills-detail/:id', async function (req, res) {
   let id=+req.params.id;
   let status=+req.body.status_bill;
-  await shopModel.updateStatusBill(id,status);
 
-  await shopModel.insertStatusBill(id,status);
-  res.render('vwShop/update_shop_bill',{
-      layout: 'shop_manage.hbs'
-    });
+  let listBillDetail=await shopModel.getDetailBillInfo(id);
+
+  if (listBillDetail.tinhtrangdon != status)
+  {
+    await shopModel.updateStatusBill(id,status);
+
+    await shopModel.insertStatusBill(id,status);
+  }
+  
+  res.redirect("/shops/bills");
 })
 
 //Xem thông tin shop
