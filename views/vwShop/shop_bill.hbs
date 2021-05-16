@@ -55,7 +55,7 @@
                 <span class="root_link" style="font-weight: 500;">Danh sách đơn hàng - Division</span>
             </div>
             <div class="input_search">
-                <input type="text" placeholder="Nhập tối đa 20 mã ĐH cách nhau bằng dấu ','" class="input_search_menu" height="10">
+                <input id = "myInput" type="text" placeholder="Nhập tối đa 20 mã ĐH cách nhau bằng dấu ','" class="input_search_menu" height="10">
 
                 <div class="container_combo_box">
                     <div class="title_combobox">
@@ -158,25 +158,30 @@
                 <div class="tab_container_wrap">
                         <div class="tab_container_box active_tab" id="tab1" data-tab-content>
                             <div class="table_bill_container">
-                                <table class="table_bill">
-                                    <tr id="header">
-                                        <th>Mã đơn hàng</th>
-                                        <th>Khách hàng</th>
-                                        <th>Doanh thu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thời gian</th>
-                                        <th>Tình trạng</th>
-                                    </tr>
-                                    {{#each this.getInfoBillByOffset}}
-                                    <tr class="item_bill_all clickable-row" data-href='bills-detail/{{maso}}'>
-                                        <td>{{maso}}</td>
-                                        <td>{{taikhoan}}</td>
-                                        <td>{{tonggiatien}}</td>
-                                        <td>{{TrangThai}}</td>
-                                        <td>{{ngayCapNhat}}</td>
-                                        <td>{{ten}}</td>
-                                    </tr>
-                                    {{/each}}
+                           
+                                <table  class="table_bill">
+                                    <thead>
+                                        <tr id="header" >
+                                            <th>Mã đơn hàng</th>
+                                            <th>Khách hàng</th>
+                                            <th>Doanh thu</th>
+                                            <th>Trạng thái</th>
+                                            <th>Thời gian</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.getInfoBillByOffset}}
+                                        <tr class="item_bill_all clickable-row" data-href='bills-detail/{{maso}}'>
+                                            <td>{{maso}}</td>
+                                            <td>{{taikhoan}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            <td>{{TrangThai}}</td>
+                                            <td>{{ngayCapNhat}}</td>
+                                            <td>{{ten}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
                                 </table>
                             </div>
                             <script>
@@ -301,24 +306,29 @@
                         <div class="tab_container_box" id="tab2" data-tab-content>
                             <div class="table_bill_container">
                                 <table class="table_bill_confirm">
-                                    <tr id="header">
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên đơn hàng</th>
-                                        <th>Doanh thu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thời gian</th>
-                                        <th>Xác nhận</th>
-                                    </tr>
-                                    {{#each this.getConfirmBillOffset}}
-                                    <tr class="item_bill_confirm">
-                                        <td>{{maso}}</td>
-                                        <td>{{taikhoan}}</td>
-                                        <td>{{tonggiatien}}</td>
-                                        <td>{{TrangThai}}</td>
-                                        <td>{{ngayCapNhat}}</td>
-                                        <td>{{ten}}</td>
-                                    </tr>
-                                    {{/each}}
+                                    <thead>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tên đơn hàng</th>
+                                            <th>Doanh thu</th>
+                                            <th>Trạng thái</th>
+                                            <th>Thời gian</th>
+                                            <th>Xác nhận</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.getConfirmBillOffset}}
+                                        <tr class="item_bill_confirm">
+                                            <td>{{maso}}</td>
+                                            <td>{{taikhoan}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            <td>{{TrangThai}}</td>
+                                            <td>{{ngayCapNhat}}</td>
+                                            <td>{{ten}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                    
                                 </table>
                             </div>
                             <div class="btn_container_pagination">
@@ -430,7 +440,8 @@
                         <div class="tab_container_box" id="tab3" data-tab-content>
                             <div class="table_bill_container">
                                 <table class="table_bill_travelling">
-                                    <tr id="header">
+                                    <thead>
+                                        <tr id="header">
                                         <th>Mã đơn hàng</th>
                                         <th>Tên đơn hàng</th>
                                         <th>Doanh thu</th>
@@ -438,17 +449,19 @@
                                         <th>Thời gian</th>
                                         <th>Xác nhận</th>
                                     </tr>
-
-                                    {{#each this.getTravellingBillByOffset}}
-                                    <tr class="item_bill_travelling">
-                                        <td>{{maso}}</td>
-                                        <td>{{taikhoan}}</td>
-                                        <td>{{tonggiatien}}</td>
-                                        <td>{{TrangThai}}</td>
-                                        <td>{{ngayCapNhat}}</td>
-                                        <td>{{ten}}</td>
-                                    </tr>
-                                    {{/each}}
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.getTravellingBillByOffset}}
+                                        <tr class="item_bill_travelling">
+                                            <td>{{maso}}</td>
+                                            <td>{{taikhoan}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            <td>{{TrangThai}}</td>
+                                            <td>{{ngayCapNhat}}</td>
+                                            <td>{{ten}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>   
                                 </table>
                             </div>
                             <div class="btn_container_pagination">
@@ -560,7 +573,8 @@
                         <div class="tab_container_box" id="tab4" data-tab-content>
                             <div class="table_bill_container">
                                 <table class="table_bill_travelled">
-                                    <tr id="header">
+                                    <thead>
+                                        <tr id="header">
                                         <th>Mã đơn hàng</th>
                                         <th>Tên đơn hàng</th>
                                         <th>Doanh thu</th>
@@ -568,17 +582,20 @@
                                         <th>Thời gian</th>
                                         <th>Xác nhận</th>
                                     </tr>
-                                    
-                                    {{#each this.getTravelledBillByOffset}}
-                                    <tr class="item_bill_travelled">
-                                        <td>{{maso}}</td>
-                                        <td>{{taikhoan}}</td>
-                                        <td>{{tonggiatien}}</td>
-                                        <td>{{TrangThai}}</td>
-                                        <td>{{ngayCapNhat}}</td>
-                                        <td>{{ten}}</td>
-                                    </tr>
-                                    {{/each}}
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.getTravelledBillByOffset}}
+                                        <tr class="item_bill_travelled">
+                                            <td>{{maso}}</td>
+                                            <td>{{taikhoan}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            <td>{{TrangThai}}</td>
+                                            <td>{{ngayCapNhat}}</td>
+                                            <td>{{ten}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                          
                                 </table>
                             </div>
 
@@ -693,24 +710,29 @@
                         <div class="tab_container_box" id="tab5" data-tab-content>
                             <div class="table_bill_container">
                                 <table class="table_bill_discard">
-                                    <tr id="header">
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên đơn hàng</th>
-                                        <th>Doanh thu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thời gian</th>
-                                        <th>Xác nhận</th>
-                                    </tr>
-                                    {{#each this.getDiscardBillByOffset}}
-                                    <tr class="item_bill_discard">
-                                        <td>{{maso}}</td>
-                                        <td>{{taikhoan}}</td>
-                                        <td>{{tonggiatien}}</td>
-                                        <td>{{TrangThai}}</td>
-                                        <td>{{ngayCapNhat}}</td>
-                                        <td>{{ten}}</td>
-                                    </tr>
-                                    {{/each}}
+                                    <thead>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tên đơn hàng</th>
+                                            <th>Doanh thu</th>
+                                            <th>Trạng thái</th>
+                                            <th>Thời gian</th>
+                                            <th>Xác nhận</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.getDiscardBillByOffset}}
+                                        <tr class="item_bill_discard">
+                                            <td>{{maso}}</td>
+                                            <td>{{taikhoan}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            <td>{{TrangThai}}</td>
+                                            <td>{{ngayCapNhat}}</td>
+                                            <td>{{ten}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                    
                                 </table>
                             </div>
 
@@ -852,3 +874,4 @@
     </div>
 
 </div>
+<script src="/resources/js/filterTable.js"></script>

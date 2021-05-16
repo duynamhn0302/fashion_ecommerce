@@ -1,7 +1,8 @@
 //script cua add-to-cart gia du bam vo form, hay la nut gi cungx dc, tu sua tuy truong hop
-$('#form').on('submit',function(e){
-    const productId = 1;
-    const productQuantity = 3;  //so luong sp them vao
+$('#frmAddToCart').on('submit',function(e){
+    alert("ádsa")
+    const productId = $(this).find("input[name='sl']");
+    const productQuantity = $(this).find("input[name='id']");  //so luong sp them vao
     $.post('/users/add-to-cart',{id:productId,sl:productQuantity},function(data,status){
         if(data === true){
             //add thanh cong, lam cai j do
@@ -15,7 +16,7 @@ $('#form').on('submit',function(e){
 })
 
 //script cua mua ngay gia du bam vo form, hay la nut gi cungx dc, tu sua tuy truong hop
-$('#form').on('submit',function(e){
+$('.frmMuaNgay').on('submit',function(e){
     const productId = 1;
     const productQuantity = 1;  //so luong sp them vao, co dinh la 1
     $.post('/users/add-to-cart',{id:productId,sl:productQuantity},function(data,status){

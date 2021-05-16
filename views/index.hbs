@@ -11,23 +11,31 @@
 							<span>{{danhmuc}}</span>
 							<h2>{{ten}}</h2>
 							<p>
+								<div class="p-review">
+									<p>{{luotmua}} lượt mua</p>
+								</div>
+								
 								<div class="p-rating">
 									{{#each star}}
 										{{{this}}}
 									{{/each}}
-									({{product.diemdanhgia}}
+									({{diemdanhgia}}
 									sao)
 								</div>
-								
 								<div class="p-review">
-									<a href="">{{product.luotdanhgia}} lượt đánh giá</a></a>
+									<p>{{luotdanhgia}} lượt đánh giá</p>
 								</div>
 								
 								Chỉ từ 
 								<h2>{{giaban}} VND</h2>
 							</p>
 							<a href="/products/{{maso}}" class="site-btn sb-line">Xem chi tiết</a>
-							<a href="#" class="site-btn sb-white">Thêm vào giỏ</a>
+							
+							<a href="javascript: addToCart(`#frmAddToCart{{product.maso}}`);" class="site-btn sb-white">Thêm vào giỏ</a>
+							<form style="padding-left: 10px;" method="POST" class ="frmAddToCart" id="frmAddToCart{{product.maso}}" action="/users/add-to-cart">
+								<input  type = "hidden" name="id" value="{{product.maso}}">
+								<input type="hidden" name="sl" value="1">
+							</form>
 						</div>
 					</div>
 					<div class="offer-card text-white">
@@ -93,13 +101,22 @@
 				{{#each top10New}}
 					<div class="product-item">
 						<div class="pi-pic">
+							<div style="display: flex;">
+								{{#if isNewest}}
+									<div class="tag-new">NEW</div>
+								{{/if}}
+								{{#if isBestSeller}}
+									<div class="tag-sale" style="margin-top: 20px;">ON SALE</div>
+								{{/if}}
+							</div>
 							<a href="/products/{{maso}}">
 								<img src="{{avatar}}" alt="" style="height: 350px;">
 							</a>
 							<div class="pi-links">
-								<a href="#" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
+								<a href="javascript: muaNgay('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
 								<form method="POST" class ="frmAddToCart" id="NewfrmAddToCart{{maso}}" action="/add_to_cart">
 									<input  type="hidden" name="id" value="{{maso}}">
+									<input  type="hidden" name="sl" value="1">
 									<a href="javascript: addToCart('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
 								</form>
 								
@@ -111,6 +128,15 @@
 								<p>{{ten}} </p>
 							</div>
 						</a>
+						<div class="p-review">
+							<p href=""><i class="flaticon-shopping-cart"></i> {{this.luotmua}}  lượt mua</p>
+						</div>
+						<div class="p-rating">
+							{{#each this.star}}
+								{{{this}}}
+							{{/each}}
+								({{this.luotdanhgia}} đánh giá)
+						</div>
 					</div>
 				{{/each}}
 				
@@ -135,15 +161,24 @@
 				{{#each top8Seller}}
 					<div class="product-item">
 						<div class="pi-pic">
-							<div class="tag-sale">ON SALE</div>
+							<div style="display: flex;">
+								{{#if isNewest}}
+									<div class="tag-new">NEW</div>
+								{{/if}}
+								{{#if isBestSeller}}
+									<div class="tag-sale" style="margin-top: 20px;">ON SALE</div>
+								{{/if}}
+							</div>
+						
 							<a href="/products/detail/{{maso}}">
 								<img src="{{avatar}}" alt="" style="height: 300px;">
 							</a>
 							<div class="pi-links">
-								<a href="#" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
-								<form method="POST" class ="frmAddToCart" id="NewfrmAddToCart{{maso}}" action="/add_to_cart">
+								<a href="javascript: muaNgay('#SellfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
+								<form method="POST" class ="frmAddToCart" id="SellfrmAddToCart{{maso}}" action="/add_to_cart">
 									<input  type="hidden" name="id" value="{{maso}}">
-									<a href="javascript: addToCart('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
+									<input  type="hidden" name="sl" value="1">
+									<a href="javascript: addToCart('#SellfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
 								</form>
 								
 							</div>
@@ -154,6 +189,15 @@
 								<p>{{ten}} </p>
 							</div>
 						</a>
+						<div class="p-review">
+							<p href=""><i class="flaticon-shopping-cart"></i> {{this.luotmua}}  lượt mua</p>
+						</div>
+						<div class="p-rating">
+							{{#each this.star}}
+								{{{this}}}
+							{{/each}}
+								({{this.luotdanhgia}} đánh giá)
+						</div>
 					</div>
 				{{/each}}
 				

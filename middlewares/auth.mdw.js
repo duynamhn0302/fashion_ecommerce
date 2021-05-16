@@ -7,7 +7,7 @@ module.exports = {
     auth(req,res,next){
         if(req.session.auth===false){
             req.session.retUrl = req.originalUrl;
-            return res.redirect('login');
+            return res.redirect('/login');
         }
         /*else{
             if (req.session.authUser.role===1)

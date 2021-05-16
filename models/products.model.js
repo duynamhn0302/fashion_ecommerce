@@ -1,6 +1,49 @@
 const db = require('../utils/db');
 const { paginate } = require("./../config/default.json");
 module.exports = {
+    async informationForListProduct(list){
+      if (typeof(list) != typeof([]))
+        return list;
+        for(var i = 0; i < list.length; i++){
+          const reImages = await this.getImages(list[i].maso)
+          list[i].avatar = reImages[0]
+          list[i].luotmua = await this.getLuotMua(list[i].maso)
+          list[i].star = this.convertRating(list[i].diemdanhgia)
+          list[i].giaban = this.formatPrice(list[i].giaban)
+          list[i].isNewest = await this.isNewest(list[i].maso)
+          list[i].isBestSeller = await this.isBestSeller(list[i].maso)
+      }
+      return list
+    },
+    async isNewest(id){
+      const sql = `select *
+          FROM sanpham
+          ORDER BY sanpham.ngaymo DESC`;
+      const [rows,fields] = await db.load(sql);
+      if(rows[0].maso === id)
+        return true;
+      return false;
+    },
+    async isBestSeller(id){ //sua lai
+      const sql = `select *
+          FROM sanpham
+          ORDER BY sanpham.ngaymo DESC`;
+      const [rows,fields] = await db.load(sql);
+      if(rows[0].maso === id)
+        return true;
+      return false;
+    },
+    async getShopFromIdProduct(id){
+      const sql = `select cuahang.*, taikhoan.avatar
+      from (cuahang join sanpham on cuahang.maso = sanpham.cuahang) join taikhoan on cuahang.maso = taikhoan.maso
+      where sanpham.maso = ${id}`;
+      const [rows,fields] = await db.load(sql);
+      if(rows.length===0) return null;
+      return rows[0];
+    },
+    formatPrice(price){
+      return new Intl.NumberFormat('vi-VI', { style: 'currency', currency: 'VND' }).format(price);
+    },
     async deleteProduct(id){
         await db.patch({'status' : 0}, {'maso' : id}, 'sanpham');
     },
@@ -13,7 +56,7 @@ module.exports = {
     convertRating(n){
         var star = []
         for(var i = 0; i < n; i++){
-            star.push(`<i class="fa fa-star-o"></i>`)
+            star.push(`<i class="fa fa-star"></i>`)
         }
         for(var i = n; i < 5; i++){
             star.push(`<i class="fa fa-star-o fa-fade"></i>`)
@@ -28,7 +71,7 @@ module.exports = {
         const [rows, fields] = await db.load(sql);
         if (rows.length == 0)
             return 0;
-        return rows[0];
+        return rows[0].soluong;
     },
     async getComment(id){
         const sql = `select taikhoan.*, danhgia.*
@@ -38,15 +81,16 @@ module.exports = {
         return rows;
     },
     async getRelativeProduct(id){
-        const sql = `SELECT *
+        const sql = `SELECT sanpham.*
         FROM (sanpham join danhmuccap2 on danhmuccap2.maso = sanpham.maso) join (select danhmuccap1.maso
                                             from (sanpham join danhmuccap2 on sanpham.danhmuccap2 = danhmuccap2.maso) join danhmuccap1 on danhmuccap1.maso = danhmuccap2.danhmuccap1
                                             where sanpham.maso = ${id}) dm on danhmuccap2.danhmuccap1 = dm.maso
         where sanpham.maso != ${id} and sanpham.status = 1`;
         const [rows, fields] = await db.load(sql);
-        if(5<rows.length)
-            return rows.slice(0, 5);
-        return rows;
+        var relativeProduct =  await this.informationForListProduct(rows)
+        if(5<relativeProduct.length)
+            return relativeProduct.slice(0, 5);
+        return relativeProduct;
     },
     async getSingleProductById(id){
         const sql = `SELECT * FROM sanpham WHERE maso = ${id} and status = 1`;
@@ -62,8 +106,10 @@ module.exports = {
         group by sanpham.maso
         ORDER BY sum(chitietdonhang.soluong)  DESC`;
     const [rows, fields] = await db.load(sql);
-    if (n < rows.length) return rows.slice(0, n);
-    return rows;
+    var topSeller =  await this.informationForListProduct(rows)
+   
+    if (n < rows.length) return topSeller.slice(0, n);
+    return topSeller;
   },
   async topNNew(n) {
     const sql = `select *
@@ -71,7 +117,8 @@ module.exports = {
         where sanpham.status = 1
         ORDER BY sanpham.ngaymo desc`;
     const [rows, fields] = await db.load(sql);
-    if (n < rows.length) return rows.slice(0, n);
+    var topNew =  await this.informationForListProduct(rows)
+    if (n < rows.length) return topNew.slice(0, n);
     return rows;
   },
   async topNCategories(n) {
@@ -116,10 +163,11 @@ module.exports = {
             return null;
         return rows[0];
     },
-    async allProduct(){
+    async allProduct(offset){
         const sql = `select sanpham.*, cuahang.ten as tencuahang from sanpham join 
-            cuahang on sanpham.cuahang = cuahang.maso where sanpham.status = 1`;
-        const [rows, fields] = await db.load(sql);
+            cuahang on sanpham.cuahang = cuahang.maso where sanpham.status = 1 limit ${paginate.limit} offset ${offset}`;
+        var [rows, fields] = await db.load(sql);
+        rows =  await this.informationForListProduct(rows)
         return rows;
     },
     async addProduct(data){
@@ -157,13 +205,15 @@ module.exports = {
         const [rows, fields] = await db.load(
           `select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 where sanpham.status = 1 and danhmuccap1.maso = ${cate1Id} limit ${paginate.limit} offset ${offset}`
         );
-        return rows.length ? rows : null;
+        rows =  await this.informationForListProduct(rows)
+        return rows;
       },
       async getAllProductsByCate2Id(cate2Id, offset) {
-        const [rows, fields] = await db.load(
+        var [rows, fields] = await db.load(
           `select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 where sanpham.status = 1 and danhmuccap2.maso = ${cate2Id} limit ${paginate.limit} offset ${offset}`
         );
-        return rows.length ? rows : null;
+        rows =  await this.informationForListProduct(rows)
+        return rows;
       },
       async countAllByCate1(cate1ID) {
         const sql = `select COUNT(*) as total from (danhmuccap1 join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 WHERE sanpham.status = 1 and danhmuccap1.maso = ${cate1ID}`;
@@ -178,7 +228,7 @@ module.exports = {
       async searchRelevant(offset, text) {
         const sql = `select sanpham.*
             from sanpham join danhmuccap2 on sanpham.danhmuccap2 = danhmuccap2.maso join danhmuccap1 on danhmuccap2.danhmuccap1 = danhmuccap1.maso join cuahang on sanpham.cuahang = cuahang.maso
-            where
+            where sanpham.status = 1 and
             match(sanpham.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
             or match(danhmuccap1.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
             or match(danhmuccap2.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
@@ -187,7 +237,7 @@ module.exports = {
         return rows;
       },
       async countSearchRelevant(text) {
-        const sql = `select count(*) as c from sanpham where match(ten) against ('${text}' IN NATURAL LANGUAGE MODE)`;
+        const sql = `select count(*) as c from sanpham where sanpham.status = 1 and match(ten) against ('${text}' IN NATURAL LANGUAGE MODE)`;
         const [rows, fields] = await db.load(sql);
         return rows[0].c;
       },
@@ -199,7 +249,7 @@ module.exports = {
         return rows.length ? rows[0].ngaythang : null;
       },
       async countAllProducts() {
-        const sql = `select COUNT(*) as total from sanpham`;
+        const sql = `select COUNT(*) as total from sanpham WHERE sanpham.status = 1`;
         const [rows, fields] = await db.load(sql);
         return rows[0].total;
       },

@@ -27,6 +27,7 @@ module.exports = function (app) {
       const images = await productModel.getImages(top8Seller[i].maso)
       top8Seller[i].avatar = images[0].link;
     }
+    console.log(top8Seller)
     const top8Categories = await productModel.topNCategories(8);
     const hotProduct = top8Seller.slice(0, 3);
     res.render("index",{
