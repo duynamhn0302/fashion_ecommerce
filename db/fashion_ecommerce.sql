@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 16/05/2021 18:01:34
+ Date: 17/05/2021 01:08:43
 */
 
 SET NAMES utf8mb4;
@@ -340,7 +340,6 @@ INSERT INTO `sanpham` VALUES (8, 'Quần tây đen 7', 'Việt Nam', 'Chiếc qu
 INSERT INTO `sanpham` VALUES (9, 'Quần tây đen 8', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
 INSERT INTO `sanpham` VALUES (10, 'Quần tây đen 9', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 0, 0, 0, 6, 1, 0x31, '2021-04-05');
 INSERT INTO `sanpham` VALUES (14, '123', '123', '<p>dsđvs</p>', '123', 48, 32, 23, 0, 0, 6, 1, 0x31, '2021-05-14');
-INSERT INTO `sanpham` VALUES (15, '', '', '', '', 49, 0, 0, 0, 0, 1, 1, 0x31, NULL);
 
 -- ----------------------------
 -- Table structure for sessions
@@ -351,7 +350,7 @@ CREATE TABLE `sessions`  (
   `expires` int(0) UNSIGNED NOT NULL,
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL,
   PRIMARY KEY (`session_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sessions

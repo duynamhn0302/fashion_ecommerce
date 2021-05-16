@@ -6,7 +6,7 @@ module.exports = {
         return list;
         for(var i = 0; i < list.length; i++){
           const reImages = await this.getImages(list[i].maso)
-          list[i].avatar = reImages[0]
+          list[i].avatar = reImages[0].link
           list[i].luotmua = await this.getLuotMua(list[i].maso)
           list[i].star = this.convertRating(list[i].diemdanhgia)
           list[i].giaban = this.formatPrice(list[i].giaban)

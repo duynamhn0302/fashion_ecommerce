@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/resources/css/infomation_view_shop.css">
 <div class="container_income">
     <div class="container_income_navbar">
         <div class="btn_show">
@@ -48,13 +49,46 @@
     </div>
 
 
-    <div class="container_bill">
-        <div class="container_bill_items">
-       
-
-
+    <div class="container-contains-product">
+        <div class="row">
+            {{#each listProductByShopID}}
+            <div class="col-lg-3 col-sm-6">
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <div style="display: flex;">
+                            {{#if isNewest}}
+                                <div class="tag-new">NEW</div>
+                            {{/if}}
+                            {{#if isBestSeller}}
+                                <div class="tag-sale" style="margin-top: 20px;">ON SALE</div>
+                            {{/if}}
+                        </div>
+                        <a href="/shops/edit-product/{{maso}}">
+                            <img src="{{avatar}}" alt="" style="height: 250px;">
+                        </a>
+                    
+                    </div>
+                    <a href="/shops/edit-product/{{maso}}">
+                        <div class="pi-text">
+                            <h6>{{giaban}}</h6>
+                            <p>{{ten}} </p>
+                        </div>
+                    </a>
+                    <div class="p-review">
+                        <p href=""><i class="flaticon-shopping-cart"></i> {{this.luotmua}}  lượt mua</p>
+                    </div>
+                    <div class="p-rating">
+                        {{#each this.star}}
+                            {{{this}}}
+                        {{/each}}
+                            ({{this.luotdanhgia}} đánh giá)
+                    </div>
+                </div>
+            </div>
+            {{/each}}
         </div>
-    </div>
+
+     </div>
 
 </div>
 <script src="/resources/js/filterTable.js"></script>

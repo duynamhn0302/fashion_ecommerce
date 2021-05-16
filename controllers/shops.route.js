@@ -17,13 +17,12 @@ router.get('/', async function (req, res) {
 });
 
 router.get("/shops-information/:id", async function (req, res) {
-  let shopID = +req.params.id;
+  const shopID = +req.params.id;
+  
   let listProductByShopID = await shopModel.getProductByShopID(shopID);
 
   let catList = await shopModel.getCatByShopID(shopID);
   let subCatList = await shopModel.getSubCatByShopID(shopID);
-  console.log(catList);
-  // console.log(subCatList);
   let category = [];
   for (item of catList) {
     let allCat = {};
@@ -40,7 +39,6 @@ router.get("/shops-information/:id", async function (req, res) {
     allCat.tenCap2 = arrSub;
     category.push(allCat);
   }
-  console.log(category);
 
   res.render("vwShopInfo/shop_detail", {
     listProductByShopID,
@@ -131,8 +129,16 @@ router.post("/shops-information/:id/search", async function (req, res) {
   res.redirect(`/shops/products/${shopID}`);
 });
 router.get("/products", async function (req, res) {
+  let user = req.session.authUser;
+  if (user==null)
+  {
+    res.redirect('/login');
+  }
+  let shopID=await shopModel.getShopID(+user.maso);
+  let listProductByShopID = await shopModel.getProductByShopID(shopID.maso);
   res.render('vwShop/shop_products',{
-    layout: 'shop_manage.hbs'
+    layout: 'shop_manage.hbs',
+    listProductByShopID
   })
 });
 //Xem ds sản phẩm của shop
