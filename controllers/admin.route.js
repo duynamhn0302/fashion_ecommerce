@@ -39,7 +39,7 @@ router.get('/statistics', auth.authAdmin,  async function (req, res, next){
 });
 //view products
 router.get('/products', auth.authAdmin, async function (req, res, next){
-    const products = await productsModel.allProduct()
+    const products = await productsModel.allProductAdmin()
     for(var i = 0; i < products.length; i++){
         const luot = await productsModel.getLuotMua(products[i].maso)
         if (luot === 0)

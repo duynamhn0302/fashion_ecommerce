@@ -162,6 +162,13 @@ module.exports = {
             return null;
         return rows[0];
     },
+    async allProductAdmin(){
+      const sql = `select sanpham.*, cuahang.ten as tencuahang from sanpham join 
+          cuahang on sanpham.cuahang = cuahang.maso where sanpham.status = 1`;
+      var [rows, fields] = await db.load(sql);
+      rows =  await this.informationForListProduct(rows)
+      return rows;
+  },
     async allProduct(offset){
         const sql = `select sanpham.*, cuahang.ten as tencuahang from sanpham join 
             cuahang on sanpham.cuahang = cuahang.maso where sanpham.status = 1 limit ${paginate.limit} offset ${offset}`;
