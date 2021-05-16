@@ -22,6 +22,17 @@ module.exports = {
         return result;
     },
 
+    async modifyAvatar(new_avatar,userId){
+        const new_data = {
+            avatar: new_avatar,
+        }
+        const condition = {
+            maso: userId,
+        }
+        const [rows, fields] = await db.patch(new_data,condition,'taikhoan');
+        return rows;
+    },
+
     async patch(user){
         var condition={email: user.email};
         //delete (user.user_id);

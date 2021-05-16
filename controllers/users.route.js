@@ -2,6 +2,8 @@ const express = require("express");
 const cartModel = require("../models/cart.model");
 const productsModel = require("../models/products.model");
 const moment = require('moment');
+const multer = require('multer');
+const auth = require('./../middlewares/auth.mdw');
 
 const usersModel = require("../models/users.model");
 
@@ -52,7 +54,7 @@ router.post('/buy-now',async function(req,res){
 })
 
 //Xem thông tin cá nhân
-router.get("/profile", async function (req, res) {
+router.get("/profile",auth.authUser, async function (req, res) {
   let user = req.session.authUser;
 
   res.render("../views/users_views/Profile.hbs", {
@@ -60,6 +62,32 @@ router.get("/profile", async function (req, res) {
     user,
   });
 });
+
+router.post('/upload-avatar',async function(req,res){
+  var filepath = "/resources/images/";
+  var filename = "user-" + req.session.authUser.maso +"-avatar.webp"
+  const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+      cb(null, '.'+filepath)
+    },
+    filename: function(req,file,cb){
+      cb(null, filename)
+    }
+  })
+  const upload = multer({storage: storage});
+  
+  upload.single('avatar')(req, res,async function(err){
+    if(err){
+      console.log(err);
+      res.json(false);
+    } else{
+      const success = await usersModel.modifyAvatar(filepath+filename,req.session.authUser.maso);
+      res.json({
+        link: filepath+filename,
+      })
+    }
+  })
+})
 
 router.post("/change-profile", async function(req, res) {
   let new_hoten = req.body.hoten;
