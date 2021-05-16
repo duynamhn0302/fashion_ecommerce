@@ -1,5 +1,6 @@
 const express = require('express');
 const productModel = require('../models/products.model');
+const productsModel = require("../models/products.model");
 const shopModel=require('../models/shop.model')
 const multer = require('multer');
 const router = express.Router();
@@ -14,15 +15,87 @@ router.get('/', async function (req, res) {
     res.redirect('information');
 });
 
-router.get('/shops-information/1', async function (req, res) {
+router.get("/shops-information/:id", async function (req, res) {
+  let shopID = +req.params.id;
+  let listProductByShopID = await shopModel.getProductByShopID(shopID);
 
-  res.render("vwShopInfo/shop_detail");
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  // console.log(catList);
+  // console.log(subCatList);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+  //console.log(category.tenCap2);
+
+  res.render("vwShopInfo/shop_detail", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+  });
+});
+
+router.post("/shops-information/:id/search", async function (req, res) {
+  let search_term = req.body.search_term;
+  let shopID = req.params.id;
+  req.session.search_term = search_term;
+  if (search_term === "" || search_term.length < 3)
+    return res.redirect(`/shops/shops-information/${shopID}`);
+  res.redirect(`/shops/products/${shopID}`);
 });
 
 //Xem ds sản phẩm của shop
-router.get('/products', async function (req, res) {
-  
-})
+router.get("/products/:id", async function (req, res) {
+  let shopID = req.params.id;
+  let search_term = req.session.search_term;
+
+  let listProductByShopID = await productsModel.searchRelevantForShop(
+    search_term,
+    shopID
+  );
+
+  if (listProductByShopID !== null)
+    for (let i = 0; i < listProductByShopID.length; i++) {
+      let img = await productsModel.getImages(+listProductByShopID[i].maso);
+      listProductByShopID[i].link = img[0].link;
+    }
+
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  // console.log(catList);
+  // console.log(subCatList);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+
+  res.render("vwShopInfo/shop_detail_for_search", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+  });
+});
 //Xem đơn hàng
 router.get('/orders', async function (req, res) {
   
