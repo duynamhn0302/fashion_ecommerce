@@ -634,9 +634,17 @@ router.get('/bills-detail/:id', async function (req, res) {
   let listBillDetail=await shopModel.getDetailBillInfo(id);
 
   let listSanPham=await shopModel.getListProductByBill(id);
+
+  for (item of listSanPham)
+  {
+    item.giaban=productModel.formatPrice(item.giaban);
+    item.dongia=productModel.formatPrice(item.dongia);
+  }
   listBillDetail.listSanPham=listSanPham;
   listBillDetail.isNotAvailableUpdate=(listBillDetail.tinhtrangdon===3 || listBillDetail.tinhtrangdon===4);
+  listBillDetail.tonggiatien=productModel.formatPrice(listBillDetail.tonggiatien);
   console.log(listBillDetail);
+
   res.render('vwShop/shop_bill_detail',{
     listBillDetail,
     layout: 'shop_manage.hbs'
@@ -649,9 +657,16 @@ router.get('/update-bills-detail/:id', async function (req, res) {
   let listBillDetail=await shopModel.getDetailBillInfo(id);
 
   let listSanPham=await shopModel.getListProductByBill(id);
+
+  for (item of listSanPham)
+  {
+    item.giaban=productModel.formatPrice(item.giaban);
+    item.dongia=productModel.formatPrice(item.dongia);
+  }
+
   listBillDetail.listSanPham=listSanPham;
-  // listBillDetail.isNotAvailableUpdate=(listBillDetail.tinhtrangdon===3 || listBillDetail.tinhtrangdon===4);
-  // console.log(listBillDetail);
+  listBillDetail.tonggiatien=productModel.formatPrice(listBillDetail.tonggiatien);
+
   res.render('vwShop/update_shop_bill',{
     listBillDetail,
       layout: 'shop_manage.hbs'
