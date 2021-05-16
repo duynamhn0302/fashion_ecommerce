@@ -1,5 +1,6 @@
 const db = require('../utils/db');
 const { paginate } = require('./../config/default.json');
+const productsModel = require('./products.model');
 
 module.exports = {
     async allShop(){
@@ -44,8 +45,8 @@ module.exports = {
         const sql = `SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
         WHERE s.cuahang=${shopID}
         GROUP BY maso`;
-        const [rows,fields] = await db.load(sql);
-        if(rows.length===0) return null;
+        var [rows,fields] = await db.load(sql);
+        rows =  await productsModel.informationForListProduct(rows)
         return rows;
     },
     async getProductByShopIDcat(shopID,catID){
@@ -54,17 +55,31 @@ module.exports = {
         WHERE s.cuahang=${shopID}
         GROUP BY maso) as temp1 join danhmuccap2 d on temp1.danhmuccap2=d.maso
         WHERE danhmuccap1=${catID}`;
-        const [rows,fields] = await db.load(sql);
+        var [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
         return rows;
     },
-
+    async incomePreDate(idShop, date){
+        const sql = `SELECT *, sum(tonggiatien) as tong
+                    FROM (
+                                SELECT donhang.*, sanpham.cuahang, lichsutinhtrangdon.*
+                                from ((donhang join chitietdonhang on donhang.maso = chitietdonhang.donhang) join sanpham on sanpham.maso = chitietdonhang.sanpham)
+                                join lichsutinhtrangdon on donhang.maso = lichsutinhtrangdon.donhang
+                                WHERE donhang.tinhtrangdon = 3  and lichsutinhtrangdon.ngaythang <= '${date}'
+                                GROUP BY donhang.maso) spDaBan 
+                    where spDaBan.cuahang = ${idShop}
+                    GROUP BY spDaBan.cuahang`;
+        const [rows,fields] = await db.load(sql);
+        if (rows.length === 0)
+            return 0
+        return rows[0].tong;
+    },
     async getProductByShopIDcatSub(shopID,catSubID){
         const sql = `SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
         WHERE s.cuahang=${shopID} and s.danhmuccap2=${catSubID}
         GROUP BY maso`;
         const [rows,fields] = await db.load(sql);
-        if(rows.length===0) return null;
+        rows =  await productsModel.informationForListProduct(rows)
         return rows;
     },
     async shopOfId(userId){

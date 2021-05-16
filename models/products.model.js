@@ -6,7 +6,7 @@ module.exports = {
         return list;
         for(var i = 0; i < list.length; i++){
           const reImages = await this.getImages(list[i].maso)
-          list[i].avatar = reImages[0]
+          list[i].avatar = reImages[0].link
           list[i].luotmua = await this.getLuotMua(list[i].maso)
           list[i].star = this.convertRating(list[i].diemdanhgia)
           list[i].giaban = this.formatPrice(list[i].giaban)
@@ -128,7 +128,7 @@ module.exports = {
                 from (chitietdonhang join donhang on donhang.maso = chitietdonhang.donhang)
                             join sanpham on sanpham.maso = chitietdonhang.sanpham
                 group by sanpham.maso
-                ORDER BY sum(chitietdonhang.soluong)  DESC) 
+                ORDER BY sum(chitietdonhang.soluong)  DESC)
                         sp	on danhmuccap2.maso = sp.danhmuccap2
         ORDER BY sum(sp.sum)  DESC`;
         const [rows, fields] = await db.load(sql);
@@ -202,7 +202,7 @@ module.exports = {
         return rows;
     },
     async getAllProductsByCate1Id(cate1Id, offset) {
-        const [rows, fields] = await db.load(
+        var [rows, fields] = await db.load(
           `select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 where sanpham.status = 1 and danhmuccap1.maso = ${cate1Id} limit ${paginate.limit} offset ${offset}`
         );
         rows =  await this.informationForListProduct(rows)
@@ -233,7 +233,8 @@ module.exports = {
             or match(danhmuccap1.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
             or match(danhmuccap2.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
             or match(cuahang.ten) against ('${text}' IN NATURAL LANGUAGE MODE)  limit ${paginate.limit} offset ${offset}`;
-        const [rows, fields] = await db.load(sql);
+        var [rows, fields] = await db.load(sql);
+        rows =  await this.informationForListProduct(rows)
         return rows;
       },
       async countSearchRelevant(text) {
@@ -255,7 +256,8 @@ module.exports = {
       },
       async allProductWithOffset(offset) {
         const sql = `select * from sanpham where status = 1 limit ${paginate.limit} offset ${offset}`;
-        const [rows, fields] = await db.load(sql);
+        var [rows, fields] = await db.load(sql);
+        rows =  await this.informationForListProduct(rows)
         return rows;
       },
       async allCategoriesWithQuantity() {
@@ -279,4 +281,11 @@ module.exports = {
         }
         return cate1;
       },
+      async getAllProductsByBillId(billID, userId) {
+        const sql = `select sanpham.ten
+        from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso join sanpham on sanpham.maso = chitietdonhang.sanpham
+        where donhang.taikhoan = ${userId} and donhang.maso = ${billID}`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+      }
 }

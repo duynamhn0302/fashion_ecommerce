@@ -91,34 +91,6 @@ $(document).ready(function () {
     });
   });
 
-  $(".hidden_pay_form").submit(function (event) {
-    event.preventDefault(); // prevent actual form submit
-    let form = $(this);
-    let url = form.attr("action");
-    let method = form.attr("method");
-    let data = form.serialize();
-    $.ajax({
-      type: method,
-      url,
-      dataType: "json",
-      data, // serializes form input
-      success: function (response) {
-        if (response.empty) {
-          $(".cart_container").html("");
-          $(".cart_container").append(`<div class="empty_cart_container">
-  <img src="/resources/img/cart/empty-cart.svg" alt="empty-cart-photo">
-  <h3>Không có sản phẩm nào trong giỏ hàng</h3>
-  <button class="site-btn sb-line sb-dark pay_btn continue_shopping_btn">Tiếp tục mua sắm</button>
-</div>`);
-          $(".temp_bill").remove();
-        }
-      },
-      error: function (err) {
-        console.log(err);
-      },
-    });
-  });
-
   $(".delete_button").each(function () {
     $(this).click(function () {
       swal
@@ -158,81 +130,15 @@ $(document).ready(function () {
   });
 
   $(".pay_btn").click(function () {
-    swal.mixin({
-      input: 'textarea',
-      confirmButtonText: 'Next &rarr;',
-      showCancelButton: true,
-      progressSteps: ['1', '2', '3']
-    }).queue([
-      {
-        title: 'Số điện thoại người nhận',
-        text: 'Hãy nhập vào số điện thoại của người nhận hàng',
-        input: 'number',
-      },
-      {
-        title: 'Địa chỉ nhận hàng',
-        text: 'Hãy nhập vào địa chỉ của bạn',
-      },
-      {
-        title: 'Lời nhắn',
-        text: "Hãy nhập vào lời nhắn của bạn đối với cửa hàng và tài xế"
-      }
-    ]).then((result) => {
-      if (!result.value.includes("")) {
-        swal.fire(
-          "Thanh toán thành công",
-          "Đơn hàng của bạn đã được tạo. Trong thời gian chờ đợi hãy mua sắm tiếp nhé!",
-          "success"
-        );
-        $(".hidden_pay_form")
-          .children("input")
-          .val(
-            $(".hidden_amount_changed_form")
-              .children('input[name="magiohang"]')
-              .val()
-          );
-        $(".hidden_pay_form").submit();
-        calculateAllProductTotalPrice();
-        getProductsNumber();
-      }
-      else {
-        swal.fire(
-          'Oops...',
-          'Có vẻ như bạn vẫn chưa điền đủ thông tin',
-          'error'
-        )
-      }
-    })
-    // swal
-    //   .fire({
-    //     title: "Bạn muốn thanh toán giỏ hàng giỏ hàng?",
-    //     icon: "question",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "green",
-    //     cancelButtonColor: "red",
-    //     confirmButtonText: "Vâng",
-    //     cancelButtonText: "Huỷ",
-    //   })
-    //   .then((result) => {
-    //     if (result.isConfirmed) {
-    //       swal.fire(
-    //         "Thanh toán thành công",
-    //         "Giỏ hàng của bạn vừa được thanh toán",
-    //         "success"
-    //       );
-    //       $(".hidden_pay_form")
-    //         .children("input")
-    //         .val(
-    //           $(".hidden_amount_changed_form")
-    //             .children('input[name="magiohang"]')
-    //             .val()
-    //         );
-    //       $(".hidden_pay_form").submit();
-    //       calculateAllProductTotalPrice();
-    //       getProductsNumber();
-    //     }
-    //   });
+    let cart = $(".hidden_amount_changed_form").children('input[name="magiohang"]').val();
+    window.location.href = `/users/payment-preview/${cart}`;
   });
+
+  $(".btn_update_input").click(() => {
+    $('#address_post').val($('#address_input').val());
+    $('#sdt_post').val($('#sdt_input').val());
+    $('.pay_form').submit();
+  })
 
   calculateSingleProductTotalPrice();
   calculateAllProductTotalPrice();

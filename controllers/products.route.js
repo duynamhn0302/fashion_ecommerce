@@ -56,6 +56,7 @@ router.get('/:id', async function (req, res, next) {
     for(var i = 0; i < images.length; i++){
         images[i].isActive = false;
     }
+    console.log(images)
     images[0].isActive = true;
     const avatar = images[0]
     var relativeProduct = await productsModel.getRelativeProduct(id)
@@ -189,7 +190,11 @@ router.post("/search/search-result-most-relevant", async function (req, res) {
   let search_term = req.body.search_term;
   req.session.search_term = search_term;
   if (search_term === "" || search_term.length < 3)
-    return res.redirect("/products/search/common");
+  res.render("../views/vwProducts/search_results.hbs", {
+    empty: true,
+    n_result: 0,
+    search_term,
+  });
   res.redirect("/products/search/search-result-most-relevant");
 });
 
@@ -219,7 +224,7 @@ router.get("/search/common", async function (req, res) {
   if (list !== null)
     for (let i=0; i<list.length; i++) {
         let img = await productsModel.getImages(+list[i].maso);
-        list[i].hinhanh = img[0].link;
+        list[i].avatar = img[0].link;
       }
 
   res.render("../views/vwProducts/search_results.hbs", {
@@ -263,7 +268,7 @@ router.get("/search/search-result-most-relevant", async function (req, res) {
   if (list !== null)
     for (let i=0; i<list.length; i++) {
         let img = await productsModel.getImages(+list[i].maso);
-        list[i].hinhanh = img[0].link;
+        list[i].avatar = img[0].link;
       }
 
   res.render("../views/vwProducts/search_results.hbs", {
