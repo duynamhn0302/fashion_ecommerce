@@ -315,6 +315,24 @@ module.exports = {
         return rows;
     },
 
+    async getNameCustomer(idUser)
+    {
+        const sql = `SELECT hoten FROM taikhoan WHERE maso=${idUser}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
+    },
+
+    async getNameProList(idBill)
+    {
+        const sql = `SELECT s.ten as tensanpham
+        FROM chitietdonhang c join sanpham s on c.sanpham=s.maso
+        WHERE c.donhang=${idBill}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows;
+    },
+
     async getInfoBillByStatus(shopID, status)
     {
         const sql = `SELECT temp3.*,t.ten
@@ -440,6 +458,43 @@ module.exports = {
             item.ngayCapNhat=maxdate;
         }
         return rowDB
+    },
+
+    async rowProperties(listType)
+    {
+        if (listType==null)
+        {
+            return;
+        }
+        for (item of listType)
+        {
+          let ten=await this.getNameCustomer(item.taikhoan);
+          item.tenNguoiNhan=ten.hoten;
+        }
+        for (item of listType)
+        {
+          let tensanpham="";
+          let listTenSP=await this.getNameProList(item.maso);
+          let lengthList=listTenSP.length;
+          let extention="";
+          if (lengthList>2)
+          {
+              extention=" và 1 số sản phẩm khác"
+          }
+          let count=1;
+          for (tensp of listTenSP)
+          {
+            if (count===lengthList)
+            {
+              tensanpham=tensanpham+tensp.tensanpham+extention;
+            }
+            else{
+              tensanpham=tensanpham+tensp.tensanpham+", "
+            }
+            count++;
+          }
+          item.listNameProduct=tensanpham;
+        }
     }
 
 }

@@ -63,9 +63,37 @@
                     <div class="title_combobox">
                         Số điện thoại
                     </div>
-                    <input type="text" placeholder="{{sdt}}" style="width: 70%;" readonly="readonly">
+                    <input type="text" placeholder="{{sdt}}" style="width: 100%;" readonly="readonly">
                 </div>
             </div>
+
+            {{#with this.listBillDetail}}
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Số điện thoại người nhận
+                    </div>
+                    <input type="text" placeholder="{{sdtnguoinhan}}" style="width: 100%;" readonly="readonly">
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Địa chỉ người nhận
+                    </div>
+                    <input type="text" placeholder="{{diachinguoinhan}}" class="input_detail" style="width: 100%;" readonly="readonly">
+                </div>
+            </div>
+
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Tình trạng đơn hàng
+                    </div>
+                    <input type="text" placeholder="{{ten}}" style="width: 100%;" readonly="readonly">
+                </div>
+            </div>
+            {{/with}}
 
         </div>
     </div>
@@ -76,60 +104,57 @@
                 2. Thông tin đơn hàng
             </div>
 
-            <div class="input_detail_ct">
-                <div class="container_combo_box">
-                    <div class="title_combobox">
-                        Mã đơn hàng
-                    </div>
-                    <input type="text" placeholder="{{../billId}}" style="40%" readonly="readonly">
-                </div>
+            <div class="table_bill_container" style="padding-bottom: 0px; padding-top:10px">
+                           
+                                <table class="table_bill">
+                                    <thead>
+                                        <tr id="header">
+                                            <th>Sản phẩm</th>
+                                            <th>Mã sản phẩm</th>
+                                            <th>Size</th>
+                                            <th>Số lượng</th>
+                                            <th>Giá</th>
+                                            <th>Đánh giá</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#with this.listBillDetail}}
+                                            {{#each this.listSanPham}}
+                                            <tr>
+                                                <td class="product_cart_bill">
+                                                    <img src="{{link}}" alt="">
+                                                    <div class="ctn-product-properties">
+                                                        <div class="name-prod">
+                                                            {{ten}}
+                                                        </div>
+                                                        <div class="single-price">
+                                                            {{giaban}}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>{{maso}}</td>
+                                                <td>{{kichthuoc}}</td>
+                                                <td>{{soluongmua}}</td>
+                                                <td>{{dongia}}</td>
+                                                <td><button>Đánh giá</button></td>
+                                            </tr>
+                                            {{/each}}
+                                        {{/with}}
+                                    </tbody>
+                                </table>
+            </div>
 
-                <div class="container_combo_box" style="margin-left: 20px;">
-                    <div class="title_combobox">
-                        Tổng giá trị đơn hàng
+            <div class="total_all_price">
+                <div class="ctn_total_price">
+                    <div class="text-total">
+                        Tổng cộng:
                     </div>
-                    <input type="text" placeholder="{{tonggiatien}}" class="input_detail" readonly="readonly">
+                    <div class="total-price-num">
+                        {{tonggiatien}}
+                    </div>
                 </div>
             </div>
 
-             {{#each sanpham}}
-            <div class="input_detail_ct">
-                <div class="container_combo_box">
-                    <div class="title_combobox">
-                        Mã sản phẩm
-                    </div>
-                    <input type="text" placeholder="{{masanpham}}" class="input_detail" readonly="readonly">
-                </div>
-
-                <div class="container_combo_box" style="margin-left: 20px;">
-                    <div class="title_combobox">
-                        Tên sản phẩm
-                    </div>
-                    <input type="text" placeholder="{{ten}}" style="width: 100%;" readonly="readonly">
-                </div>
-                <div class="container_combo_box" style="margin-left: 20px;">
-                    <div class="title_combobox">
-                        Số lượng
-                    </div>
-                    <input type="text" placeholder="{{soluong}}" style="width: 20%;" readonly="readonly">
-                </div>
-                {{!-- <div class="container_combo_box">
-                    <div class="title_combobox">
-                        Giá bán
-                    </div>
-                    <input type="text" placeholder="1" style="width: 30%;" readonly="readonly">
-                </div> --}}
-            </div>
-            {{/each}}
-
-            <div class="input_detail_ct">
-                <div class="container_combo_box">
-                    <div class="title_combobox">
-                        Tình trạng đơn hàng
-                    </div>
-                    <input type="text" placeholder="{{tinhtrangdon}}" style="width: 70%;" readonly="readonly">
-                </div>
-            </div>
         {{/with}}
         </div>
     </div>

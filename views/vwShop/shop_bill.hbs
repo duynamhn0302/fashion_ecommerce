@@ -163,9 +163,10 @@
                                     <thead>
                                         <tr id="header" >
                                             <th>Mã đơn hàng</th>
-                                            <th>Khách hàng</th>
-                                            <th>Doanh thu</th>
-                                            <th>Trạng thái</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá bán</th>
                                             <th>Thời gian</th>
                                             <th>Tình trạng</th>
                                         </tr>
@@ -174,9 +175,10 @@
                                         {{#each this.getInfoBillByOffset}}
                                         <tr class="item_bill_all clickable-row" data-href='bills-detail/{{maso}}'>
                                             <td>{{maso}}</td>
-                                            <td>{{taikhoan}}</td>
+                                            <td>{{tenNguoiNhan}}</td>
+                                            <td>{{sdtnguoinhan}}</td>
+                                            <td>{{listNameProduct}}</td>
                                             <td>{{tonggiatien}}</td>
-                                            <td>{{TrangThai}}</td>
                                             <td>{{ngayCapNhat}}</td>
                                             <td>{{ten}}</td>
                                         </tr>
@@ -235,9 +237,10 @@
                                                         `
                                                         <tr class="item_bill_all">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -273,9 +276,10 @@
                                                         `
                                                         <tr class="item_bill_all">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -302,20 +306,22 @@
                                     <thead>
                                         <tr id="header">
                                             <th>Mã đơn hàng</th>
-                                            <th>Tên đơn hàng</th>
-                                            <th>Doanh thu</th>
-                                            <th>Trạng thái</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá bán</th>
                                             <th>Thời gian</th>
-                                            <th>Xác nhận</th>
+                                            <th>Tình trạng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{#each this.getConfirmBillOffset}}
+                                        {{#each this.getConfirmBillByOffset}}
                                         <tr class="item_bill_confirm">
                                             <td>{{maso}}</td>
-                                            <td>{{taikhoan}}</td>
+                                            <td>{{tenNguoiNhan}}</td>
+                                            <td>{{sdtnguoinhan}}</td>
+                                            <td>{{listNameProduct}}</td>
                                             <td>{{tonggiatien}}</td>
-                                            <td>{{TrangThai}}</td>
                                             <td>{{ngayCapNhat}}</td>
                                             <td>{{ten}}</td>
                                         </tr>
@@ -372,9 +378,10 @@
                                                         `
                                                         <tr class="item_bill_confirm">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -408,9 +415,10 @@
                                                         `
                                                         <tr class="item_bill_confirm">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -435,21 +443,23 @@
                                 <table class="table_bill_travelling">
                                     <thead>
                                         <tr id="header">
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên đơn hàng</th>
-                                        <th>Doanh thu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thời gian</th>
-                                        <th>Xác nhận</th>
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá bán</th>
+                                            <th>Thời gian</th>
+                                            <th>Tình trạng</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                         {{#each this.getTravellingBillByOffset}}
                                         <tr class="item_bill_travelling">
                                             <td>{{maso}}</td>
-                                            <td>{{taikhoan}}</td>
+                                            <td>{{tenNguoiNhan}}</td>
+                                            <td>{{sdtnguoinhan}}</td>
+                                            <td>{{listNameProduct}}</td>
                                             <td>{{tonggiatien}}</td>
-                                            <td>{{TrangThai}}</td>
                                             <td>{{ngayCapNhat}}</td>
                                             <td>{{ten}}</td>
                                         </tr>
@@ -505,9 +515,10 @@
                                                         `
                                                         <tr class="item_bill_travelling">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -541,9 +552,10 @@
                                                         `
                                                         <tr class="item_bill_travelling">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -568,21 +580,23 @@
                                 <table class="table_bill_travelled">
                                     <thead>
                                         <tr id="header">
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên đơn hàng</th>
-                                        <th>Doanh thu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thời gian</th>
-                                        <th>Xác nhận</th>
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá bán</th>
+                                            <th>Thời gian</th>
+                                            <th>Tình trạng</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                         {{#each this.getTravelledBillByOffset}}
                                         <tr class="item_bill_travelled">
                                             <td>{{maso}}</td>
-                                            <td>{{taikhoan}}</td>
+                                            <td>{{tenNguoiNhan}}</td>
+                                            <td>{{sdtnguoinhan}}</td>
+                                            <td>{{listNameProduct}}</td>
                                             <td>{{tonggiatien}}</td>
-                                            <td>{{TrangThai}}</td>
                                             <td>{{ngayCapNhat}}</td>
                                             <td>{{ten}}</td>
                                         </tr>
@@ -640,9 +654,10 @@
                                                         `
                                                         <tr class="item_bill_travelled">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -676,9 +691,10 @@
                                                         `
                                                         <tr class="item_bill_travelled">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -706,20 +722,22 @@
                                     <thead>
                                         <tr id="header">
                                             <th>Mã đơn hàng</th>
-                                            <th>Tên đơn hàng</th>
-                                            <th>Doanh thu</th>
-                                            <th>Trạng thái</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá bán</th>
                                             <th>Thời gian</th>
-                                            <th>Xác nhận</th>
+                                            <th>Tình trạng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {{#each this.getDiscardBillByOffset}}
                                         <tr class="item_bill_discard">
                                             <td>{{maso}}</td>
-                                            <td>{{taikhoan}}</td>
+                                            <td>{{tenNguoiNhan}}</td>
+                                            <td>{{sdtnguoinhan}}</td>
+                                            <td>{{listNameProduct}}</td>
                                             <td>{{tonggiatien}}</td>
-                                            <td>{{TrangThai}}</td>
                                             <td>{{ngayCapNhat}}</td>
                                             <td>{{ten}}</td>
                                         </tr>
@@ -777,9 +795,10 @@
                                                         `
                                                         <tr class="item_bill_discard">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -813,9 +832,10 @@
                                                         `
                                                         <tr class="item_bill_discard">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>

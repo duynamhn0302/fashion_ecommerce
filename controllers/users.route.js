@@ -4,6 +4,7 @@ const productsModel = require("../models/products.model");
 const moment = require('moment');
 const multer = require('multer');
 const auth = require('./../middlewares/auth.mdw');
+const shopModel=require('../models/shop.model');
 
 const usersModel = require("../models/users.model");
 
@@ -242,6 +243,7 @@ router.get("/orders", async function (req, res) {
 router.post('/bill-detail', async (req, res) => {
   let billId = req.body.billId;
   let result = await usersModel.getBillDetail(req.session.authUser.maso, billId);
+  console.log(result);
   let tinhtrangdon = 0;
   switch (result[0].tinhtrangdon) {
     case 1: tinhtrangdon = 'Đang xác nhận'; break;
@@ -251,6 +253,22 @@ router.post('/bill-detail', async (req, res) => {
   }
 
   console.log(billId)
+
+//Code phúc
+  let listBillDetail=await shopModel.getDetailBillInfo(billId);
+
+  let listSanPham=await shopModel.getListProductByBill(billId);
+
+  for (item of listSanPham)
+  {
+    item.giaban=productsModel.formatPrice(item.giaban);
+    item.dongia=productsModel.formatPrice(item.dongia);
+  }
+  listBillDetail.listSanPham=listSanPham;
+  listBillDetail.tonggiatien=productsModel.formatPrice(listBillDetail.tonggiatien);
+  console.log(listBillDetail);
+  //Code phúc
+
 
   let sanpham = [];
   for (let i=0; i<result.length; i++)
@@ -270,7 +288,8 @@ router.post('/bill-detail', async (req, res) => {
     tongsosanpham: result[0].tongsosanpham,
     tonggiatien: result[0].tonggiatien,
     tinhtrangdon,
-    sanpham
+    sanpham,
+    listBillDetail
   }
   res.render('../views/users_views/Bill-detail.hbs', {
     bill,
