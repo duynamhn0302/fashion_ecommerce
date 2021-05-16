@@ -26,7 +26,7 @@ module.exports = {
         FROM(
             SELECT danhmuccap2,danhmuccap1,d.ten as subCat
             FROM sanpham s join danhmuccap2 d on s.danhmuccap2=d.maso
-            WHERE s.cuahang=${shopID}
+            WHERE s.cuahang=${shopID} and s.status = 1
             GROUP BY danhmuccap2,danhmuccap1) as temp1 join danhmuccap1 c on temp1.danhmuccap1=c.maso`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
@@ -35,24 +35,26 @@ module.exports = {
     async getSubCatByShopID(shopID){
         const sql = `SELECT danhmuccap2,danhmuccap1,d.ten as subCat
         FROM sanpham s join danhmuccap2 d on s.danhmuccap2=d.maso
-        WHERE s.cuahang=${shopID}
+        WHERE s.cuahang=${shopID} and s.status = 1
         GROUP BY danhmuccap2,danhmuccap1`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
         return rows;
     },
     async getProductByShopID(shopID){
-        const sql = `SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
-        WHERE s.cuahang=${shopID}
+        const sql = `SELECT s.*
+         FROM sanpham s 
+        WHERE s.cuahang=${shopID} and s.status = 1
         GROUP BY maso`;
         var [rows,fields] = await db.load(sql);
+        console.log(rows)
         rows =  await productsModel.informationForListProduct(rows)
         return rows;
     },
     async getProductByShopIDcat(shopID,catID){
         const sql = `SELECT temp1.*, d.danhmuccap1
         FROM(SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
-        WHERE s.cuahang=${shopID}
+        WHERE s.cuahang=${shopID}and s.status = 1
         GROUP BY maso) as temp1 join danhmuccap2 d on temp1.danhmuccap2=d.maso
         WHERE danhmuccap1=${catID}`;
         var [rows,fields] = await db.load(sql);

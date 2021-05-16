@@ -149,7 +149,6 @@ module.exports = {
         return cate1;
     },
     async getImages(id){
-        console.log(id)
         const sql = `select hinhanhsanpham.*
         from sanpham join hinhanhsanpham on sanpham.maso = hinhanhsanpham.sanpham
         where sanpham.status = 1 and sanpham.maso = ${id}`;

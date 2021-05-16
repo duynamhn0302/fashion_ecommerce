@@ -10,6 +10,7 @@ function addToCart(formId){
         if(status === "success"){
             //add thanh cong, lam cai j do
             //do nothin
+            form.find("input[name='sl']").val("1")
             $(document).find("#slGioHang").html(data.result)
             e.preventDefault();
         }else{

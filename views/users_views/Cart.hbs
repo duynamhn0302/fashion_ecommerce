@@ -42,11 +42,18 @@
 						</div>
 						{{#each products}}
 						<div class="row single_product">
+						
 							<div class="col-2 image_col">
-								<img id="product_image" src="{{hinhanh}}" alt="product-on-cart">
+								<a href="/products/{{maso}}">
+									<img id="product_image" src="{{hinhanh}}" alt="product-on-cart">
+								</a>
+								
 							</div>
 							<div class="col-4 product_details">
-								<h4 id="product_name">{{ten}}</h4>
+								<a href="/products/{{maso}}">
+									<h4 id="product_name">{{ten}}</h4>
+								</a>
+								
 								<span id="product_price">{{giaban}} đ</span>
 								<span id="product_id">#{{maso}}</span>
 								<span id="product_size">Size {{kichthuoc}}</span>

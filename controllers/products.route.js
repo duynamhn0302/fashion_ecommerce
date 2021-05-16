@@ -51,12 +51,19 @@ router.get("/", async function (req, res) {
 router.get('/:id', async function (req, res, next) {
     const id = +req.params.id;
     const product = await productsModel.single(id)
+    if (+product.giotinhsudung === 0)
+      product.giotinhsudung = "Nam"
+    else if (+product.giotinhsudung === 1)
+      product.giotinhsudung = "Nữ"
+    else
+      product.giotinhsudung = "Unisex"
+    
     const images = await productsModel.getImages(id)
     const shop = await productsModel.getShopFromIdProduct(id)
     for(var i = 0; i < images.length; i++){
         images[i].isActive = false;
     }
-    console.log(images)
+    console.log(product)
     images[0].isActive = true;
     const avatar = images[0]
     var relativeProduct = await productsModel.getRelativeProduct(id)

@@ -44,12 +44,17 @@
 					<div class="p-review">
 						<p ><i class="flaticon-shopping-cart"></i> {{luotmua}} lượt mua</p>
 					</div>
+					<div class="p-review">
+						<p> Giới tính sử dụng {{product.giotinhsudung}}</p>
+					</div>
+					<div class="p-review">
+						<p> Xuất xứ {{product.noisx}}</p></p>
+					</div>
 					<div class="fw-size-choose">
 						<p>Size</p>
 						<div class="sc-item">
 							<label for="l-size">{{product.kichthuoc}}</label>
 						</div>
-					
 					</div>
 					<div  class="quantity">
 						<p>Số lượng</p>
@@ -73,18 +78,17 @@
 
 				</div>
 				<div class="col-lg-12" style="margin-top: 50px;">
-					<div class="card" >
-						<div class="card-body" style="display: flex;">
+					<div class="card"style="cursor" >
+						<div class="card-body" >
 							<div class="container-name-user large" style="display: block; padding-bottom: 0px;!important;" >
 								<div style="display: flex;">
 									<p><img src="{{shop.avatar}}" alt="avatar" class="image-auth"></p>
-									<p class="name-user-auth" style="font-weight: bold;">{{shop.ten}} </p>
+									<a href="/shops/shops-information/{{shop.maso}}" class="name-user-auth" style="font-weight: bold;">{{shop.ten}} </a>
 								</div>
 								<div style="margin-left: 40px;">
-									<a>Xem của hàng</a>
-									<p>Main Str, no 23, New York</p>
-									<p>{{shop.sdt}}</p>
-									<p>{{shop.email}}</p>
+									<p>Địa chỉ {{shop.diachi}}</p>
+									<p>Số điện thoại {{shop.sdt}}</p>
+									<p>Email {{shop.email}}</p>
 								</div>
 							
 							</div>
