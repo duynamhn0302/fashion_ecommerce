@@ -9,6 +9,7 @@ const fs = require('fs');
 const { paginate } = require('./../config/default.json');
 const { dirname } = require('path');
 const { dir } = require('console');
+const { allCategories } = require('../models/products.model');
 
 //Xem màn hình shop
 router.get('/', async function (req, res) {
@@ -16,27 +17,100 @@ router.get('/', async function (req, res) {
 });
 
 router.get("/shops-information/:id", async function (req, res) {
-  let shopID = +req.params.id;
+  const shopID = +req.params.id;
+  
   let listProductByShopID = await shopModel.getProductByShopID(shopID);
 
   let catList = await shopModel.getCatByShopID(shopID);
   let subCatList = await shopModel.getSubCatByShopID(shopID);
-  // console.log(catList);
-  // console.log(subCatList);
   let category = [];
   for (item of catList) {
     let allCat = {};
     allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
     let arrSub = [];
     for (sub of subCatList) {
       if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
         arrSub.push(sub);
       }
     }
     allCat.tenCap2 = arrSub;
     category.push(allCat);
   }
-  //console.log(category.tenCap2);
+
+  res.render("vwShopInfo/shop_detail", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+  });
+});
+
+//Search thep danh muc cap 1
+router.get("/shops-information/:id/:idcat/byCat1", async function (req, res) {
+  console.log("ok");
+  let shopID = +req.params.id;
+  let CatID= +req.params.idcat;
+  let listProductByShopID = await shopModel.getProductByShopIDcat(shopID,CatID);
+
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  console.log(catList);
+  // console.log(subCatList);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+  console.log(category);
+
+  res.render("vwShopInfo/shop_detail", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+  });
+});
+
+//Search thep danh muc cap 2
+router.get("/shops-information/:id/:idCat/byCat2", async function (req, res) {
+  let shopID = +req.params.id;
+  let CatID= +req.params.idCat;
+  let listProductByShopID = await shopModel.getProductByShopIDcatSub(shopID,CatID);
+
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  console.log(catList);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+  console.log(category);
 
   res.render("vwShopInfo/shop_detail", {
     listProductByShopID,
@@ -54,7 +128,19 @@ router.post("/shops-information/:id/search", async function (req, res) {
     return res.redirect(`/shops/shops-information/${shopID}`);
   res.redirect(`/shops/products/${shopID}`);
 });
-
+router.get("/products", async function (req, res) {
+  let user = req.session.authUser;
+  if (user==null)
+  {
+    res.redirect('/login');
+  }
+  let shopID=await shopModel.getShopID(+user.maso);
+  let listProductByShopID = await shopModel.getProductByShopID(shopID.maso);
+  res.render('vwShop/shop_products',{
+    layout: 'shop_manage.hbs',
+    listProductByShopID
+  })
+});
 //Xem ds sản phẩm của shop
 router.get("/products/:id", async function (req, res) {
   let shopID = req.params.id;
@@ -96,10 +182,8 @@ router.get("/products/:id", async function (req, res) {
     shopID,
   });
 });
-//Xem đơn hàng
-router.get('/orders', async function (req, res) {
-  
-})
+
+
 
 router.get('/incomes', async function (req, res) {
   let user = req.session.authUser;
@@ -152,25 +236,77 @@ router.get('/incomes', async function (req, res) {
   {
     getMoneyMonth.tongTienThang=0;
   }
+  
+  
 
-    res.render('vwShop/shop_income',{
-      countProductSelling,
-      countReviewProduct,
-      countBlockProduct,
-      countDiscardProduct,
-      countTravellingBill,
-      countTravelledBill,
-      countWatingBill,
-      countConfirmingBill,
-      countRemoveBill,
-      moneyToday,
-      countBillToday,
-      countAmountProductSellingToday,
-      getMoneyMonth,
-        layout: 'shop_manage.hbs'
-      });
+  var prevMonth = function(dateObj) {
+    var tempDateObj = new Date(dateObj);
+  
+    if(tempDateObj.getMonth) {
+      tempDateObj.setMonth(tempDateObj.getMonth() - 1);
+    } else {
+      tempDateObj.setYear(tempDateObj.getYear() - 1);
+      tempDateObj.setMonth(12);
+    }
+  
+    return tempDateObj
+  };
+
+  var toString = (dateObj) => {
+      var mm = parseInt(dateObj.substring(5, 7) )
+      var yyyy = parseInt(dateObj.substring(0, 4))
+      mm = mm.toString();
+      yyyy = yyyy.toString(); 
+      return "Tháng " + mm + ", " + yyyy;
+  }
+
+  var today = new Date()
+  var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+  var tomonth = new Date(y, m + 1, 0);
+  var last7Months = []
+  var last7Days = []
+  var i = 0;
+  var n = 7;
+  last7Days.push(today)
+  last7Months.push(tomonth)
+  var last7daysIncome = []
+  var last7monthIncome  = []
+  i = 0;
+  var timeDate = last7Days[i].toISOString().substring(0, 10)
+  var timeMonth = last7Months[i].toISOString().substring(0, 10)
+  last7daysIncome.push({id: i, x: timeDate, y: await shopModel.incomePreDate(shopId.maso, timeDate)})
+  last7monthIncome.push({id: i, x: timeMonth, y: await shopModel.incomePreDate(shopId.maso,timeMonth)})
+  for( i = 1; i < n; i++){
+    last7Days.push(new Date(last7Days[i-1].getTime() - 24*60*60*1000))
+    last7Months.push(prevMonth(last7Months[i-1]))
+    timeDate = last7Days[i].toISOString().substring(0, 10)
+    timeMonth = last7Months[i].toISOString().substring(0, 10)
+    last7daysIncome.push({id: i, x: timeDate, y: await shopModel.incomePreDate(shopId.maso, timeDate)})
+    last7monthIncome.push({id: i, x: timeMonth, y: await shopModel.incomePreDate(shopId.maso,timeMonth)})
+  }
+  console.log(last7daysIncome)
+  console.log(last7monthIncome)
+
+  res.render('vwShop/shop_income',{
+    countProductSelling,
+    countReviewProduct,
+    countBlockProduct,
+    countDiscardProduct,
+    countTravellingBill,
+    countTravelledBill,
+    countWatingBill,
+    countConfirmingBill,
+    countRemoveBill,
+    moneyToday,
+    countBillToday,
+    countAmountProductSellingToday,
+    last7daysIncome,
+    last7monthIncome,
+    getMoneyMonth,
+      layout: 'shop_manage.hbs'
+    });
 })
-
+//Xem đơn hàng
 router.get('/bills', async function (req, res) {
   let user = req.session.authUser;
   if (user==null)
@@ -203,6 +339,8 @@ router.get('/bills', async function (req, res) {
   let getInfoBillByOffset=await shopModel.getInfoBillByOffset(shopId.maso,offset);
   getInfoBillByOffset=await shopModel.addStatusFinished(getInfoBillByOffset);
   getInfoBillByOffset=await shopModel.addDateModified( getInfoBillByOffset);
+  await shopModel.rowProperties(getInfoBillByOffset);
+  console.log(getInfoBillByOffset);
 
 //Đơn hàng xác nhận
 
@@ -218,7 +356,6 @@ router.get('/bills', async function (req, res) {
   const totalC = getConfirmBill.length;
   let nPagesC = Math.floor(totalC / paginate.limit);
   if (totalC % paginate.limit > 0) nPagesC++;
-  console.log("totalC: "+totalC);
 
   const page_numbersC = [];
   for (var i = 1; i <= nPagesC; i++) {
@@ -233,6 +370,7 @@ router.get('/bills', async function (req, res) {
   let getConfirmBillByOffset=await shopModel.getInfoBillByStatus(shopId.maso,1,offsetC);
   getConfirmBillByOffset=await shopModel.addStatusFinished(getConfirmBillByOffset);
   getConfirmBillByOffset=await shopModel.addDateModified(getConfirmBillByOffset);
+  await shopModel.rowProperties(getConfirmBillByOffset);
 
   //Đơn hàng đang vận chuyển
   let getTravellingBill=await shopModel.getInfoBillByStatus(shopId.maso,2);
@@ -263,6 +401,7 @@ router.get('/bills', async function (req, res) {
   let getTravellingBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,2,offsetT);
   getTravellingBillByOffset=await shopModel.addStatusFinished(getTravellingBillByOffset);
   getTravellingBillByOffset=await shopModel.addDateModified(getTravellingBillByOffset);
+  await shopModel.rowProperties(getTravellingBillByOffset);
   //Đờn hàng đã vận chuyển
   let getTravelledBill=await shopModel.getInfoBillByStatus(shopId.maso,3);
 
@@ -292,6 +431,7 @@ router.get('/bills', async function (req, res) {
   let getTravelledBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,3,offsetTe);
   getTravelledBillByOffset=await shopModel.addStatusFinished(getTravelledBillByOffset);
   getTravelledBillByOffset=await shopModel.addDateModified(getTravelledBillByOffset);
+  await shopModel.rowProperties(getTravelledBillByOffset);
   //getDiscardBill
   let getDiscardBill=await shopModel.getInfoBillByStatus(shopId.maso,4);
 
@@ -321,6 +461,7 @@ router.get('/bills', async function (req, res) {
   let getDiscardBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,4,offsetD);
   getDiscardBillByOffset=await shopModel.addStatusFinished(getDiscardBillByOffset);
   getDiscardBillByOffset=await shopModel.addDateModified(getDiscardBillByOffset);
+  await shopModel.rowProperties(getDiscardBillByOffset);
 
   res.render('vwShop/shop_bill',{
     getInfoBill,
@@ -391,7 +532,7 @@ router.get('/bills.json', async function(req, res) {
   let getInfoBillByOffset=await shopModel.getInfoBillByOffset(shopId.maso,offset);
   getInfoBillByOffset=await shopModel.addStatusFinished(getInfoBillByOffset);
   getInfoBillByOffset=await shopModel.addDateModified( getInfoBillByOffset);
-  console.log(total);
+  await shopModel.rowProperties(getInfoBillByOffset);
 
   res.json(getInfoBillByOffset);
 });
@@ -429,6 +570,7 @@ router.get('/bills_confirm.json', async function(req, res) {
   let getConfirmBillByOffset=await shopModel.getInfoBillByStatus(shopId.maso,1,offsetC);
   getConfirmBillByOffset=await shopModel.addStatusFinished(getConfirmBillByOffset);
   getConfirmBillByOffset=await shopModel.addDateModified(getConfirmBillByOffset);
+  await shopModel.rowProperties(getConfirmBillByOffset);
 
   res.json(getConfirmBillByOffset);
 });
@@ -468,6 +610,7 @@ router.get('/bills_travelling.json', async function(req, res) {
   let getTravellingBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,2,offsetT);
   getTravellingBillByOffset=await shopModel.addStatusFinished(getTravellingBillByOffset);
   getTravellingBillByOffset=await shopModel.addDateModified(getTravellingBillByOffset);
+  await shopModel.rowProperties(getTravellingBillByOffset);
 
   res.json(getTravellingBillByOffset);
 });
@@ -507,6 +650,7 @@ router.get('/bills_travelled.json', async function(req, res) {
   let getTravelledBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,3,offsetTe);
   getTravelledBillByOffset=await shopModel.addStatusFinished(getTravelledBillByOffset);
   getTravelledBillByOffset=await shopModel.addDateModified(getTravelledBillByOffset);
+  await shopModel.rowProperties(getTravelledBillByOffset);
 
   console.log(getTravelledBillByOffset);
   res.json(getTravelledBillByOffset);
@@ -547,6 +691,7 @@ router.get('/bills_discard.json', async function(req, res) {
   let getDiscardBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,4,offsetD);
   getDiscardBillByOffset=await shopModel.addStatusFinished(getDiscardBillByOffset);
   getDiscardBillByOffset=await shopModel.addDateModified(getDiscardBillByOffset);
+  await shopModel.rowProperties(getDiscardBillByOffset);
 
   res.json(getDiscardBillByOffset);
 });
@@ -557,9 +702,17 @@ router.get('/bills-detail/:id', async function (req, res) {
   let listBillDetail=await shopModel.getDetailBillInfo(id);
 
   let listSanPham=await shopModel.getListProductByBill(id);
+
+  for (item of listSanPham)
+  {
+    item.giaban=productModel.formatPrice(item.giaban);
+    item.dongia=productModel.formatPrice(item.dongia);
+  }
   listBillDetail.listSanPham=listSanPham;
   listBillDetail.isNotAvailableUpdate=(listBillDetail.tinhtrangdon===3 || listBillDetail.tinhtrangdon===4);
+  listBillDetail.tonggiatien=productModel.formatPrice(listBillDetail.tonggiatien);
   console.log(listBillDetail);
+
   res.render('vwShop/shop_bill_detail',{
     listBillDetail,
     layout: 'shop_manage.hbs'
@@ -572,9 +725,16 @@ router.get('/update-bills-detail/:id', async function (req, res) {
   let listBillDetail=await shopModel.getDetailBillInfo(id);
 
   let listSanPham=await shopModel.getListProductByBill(id);
+
+  for (item of listSanPham)
+  {
+    item.giaban=productModel.formatPrice(item.giaban);
+    item.dongia=productModel.formatPrice(item.dongia);
+  }
+
   listBillDetail.listSanPham=listSanPham;
-  // listBillDetail.isNotAvailableUpdate=(listBillDetail.tinhtrangdon===3 || listBillDetail.tinhtrangdon===4);
-  // console.log(listBillDetail);
+  listBillDetail.tonggiatien=productModel.formatPrice(listBillDetail.tonggiatien);
+
   res.render('vwShop/update_shop_bill',{
     listBillDetail,
       layout: 'shop_manage.hbs'
@@ -653,11 +813,19 @@ router.post('/unloadFakeProduct',async function(req,res){
 router.post('/add-product',async function(req,res){
   var date = Date.now();
   var update = moment(date).format("YYYY-MM-DD");
+  
+  var sex = 0;
+  if(req.body.gioitinhsudung === "Nữ"){
+    sex=1;
+  }else if(req.body.gioitinhsudung === "Unisex"){
+    sex=2;
+  }
+  console.log(Buffer.from(sex))
 
   const new_data = {
     danhmuccap2: +req.body.danhmuccap2,
     giaban: +req.body.giaban,
-    gioitinhsudung: (req.body.gioitinhsudung==="Nam"),
+    gioitinhsudung: Buffer.from(`${sex}`),
     kichthuoc: req.body.kichthuoc,
     mota: req.body.mota,
     noisx: req.body.noisanxuat,
@@ -727,11 +895,20 @@ router.get('/edit-product/:id',async function(req,res){
   }
   if(product === null)  res.json(false);
   else{
+    var isFemale = false;
+    var isUnisex = false;
+    if(product.gioitinhsudung===1){
+      isFemale = true;
+    }else if(product.gioitinhsudung===2){
+      isUnisex = true;
+    }
     if(req.session.shop.maso === product.cuahang){
       res.render('vwShop/shop_create_product',{
         layout: 'shop_manage.hbs',
         product: product,
         cat1Num: cat1Num.danhmuccap1,
+        isFemale: isFemale,
+        isUnisex: isUnisex,
         link: link,
         pictures: null,
       });

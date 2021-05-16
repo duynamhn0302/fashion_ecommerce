@@ -55,7 +55,7 @@
                 <span class="root_link" style="font-weight: 500;">Danh sách đơn hàng - Division</span>
             </div>
             <div class="input_search">
-                <input type="text" placeholder="Nhập tối đa 20 mã ĐH cách nhau bằng dấu ','" class="input_search_menu" height="10">
+                <input id = "myInput" type="text" placeholder="Nhập tối đa 20 mã ĐH cách nhau bằng dấu ','" class="input_search_menu" height="10">
 
                 <div class="container_combo_box">
                     <div class="title_combobox">
@@ -158,34 +158,34 @@
                 <div class="tab_container_wrap">
                         <div class="tab_container_box active_tab" id="tab1" data-tab-content>
                             <div class="table_bill_container">
-                                <table class="table_bill">
-                                    <tr id="header">
-                                        <th>Mã đơn hàng</th>
-                                        <th>Khách hàng</th>
-                                        <th>Doanh thu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thời gian</th>
-                                        <th>Tình trạng</th>
-                                    </tr>
-                                    {{#each this.getInfoBillByOffset}}
-                                    <tr class="item_bill_all clickable-row" data-href='bills-detail/{{maso}}'>
-                                        <td>{{maso}}</td>
-                                        <td>{{taikhoan}}</td>
-                                        <td>{{tonggiatien}}</td>
-                                        <td>{{TrangThai}}</td>
-                                        <td>{{ngayCapNhat}}</td>
-                                        <td>{{ten}}</td>
-                                    </tr>
-                                    {{/each}}
+                           
+                                <table  class="table_bill">
+                                    <thead>
+                                        <tr id="header" >
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá bán</th>
+                                            <th>Thời gian</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.getInfoBillByOffset}}
+                                        <tr class="item_bill_all clickable-row" data-href='bills-detail/{{maso}}'>
+                                            <td>{{maso}}</td>
+                                            <td>{{tenNguoiNhan}}</td>
+                                            <td>{{sdtnguoinhan}}</td>
+                                            <td>{{listNameProduct}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            <td>{{ngayCapNhat}}</td>
+                                            <td>{{ten}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
                                 </table>
                             </div>
-                            <script>
-                                jQuery(document).ready(function($) {
-                                    $(".clickable-row").click(function() {
-                                        window.location = $(this).data("href");
-                                    });
-                                });
-                            </script>
                             <div class="btn_container_pagination">
                                 <div class="total_pagination">
                                     Tổng cộng {{totalRowAll}} bản ghi
@@ -237,9 +237,10 @@
                                                         `
                                                         <tr class="item_bill_all">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -275,9 +276,10 @@
                                                         `
                                                         <tr class="item_bill_all">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -301,24 +303,31 @@
                         <div class="tab_container_box" id="tab2" data-tab-content>
                             <div class="table_bill_container">
                                 <table class="table_bill_confirm">
-                                    <tr id="header">
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên đơn hàng</th>
-                                        <th>Doanh thu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thời gian</th>
-                                        <th>Xác nhận</th>
-                                    </tr>
-                                    {{#each this.getConfirmBillOffset}}
-                                    <tr class="item_bill_confirm">
-                                        <td>{{maso}}</td>
-                                        <td>{{taikhoan}}</td>
-                                        <td>{{tonggiatien}}</td>
-                                        <td>{{TrangThai}}</td>
-                                        <td>{{ngayCapNhat}}</td>
-                                        <td>{{ten}}</td>
-                                    </tr>
-                                    {{/each}}
+                                    <thead>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá bán</th>
+                                            <th>Thời gian</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.getConfirmBillByOffset}}
+                                        <tr class="item_bill_confirm">
+                                            <td>{{maso}}</td>
+                                            <td>{{tenNguoiNhan}}</td>
+                                            <td>{{sdtnguoinhan}}</td>
+                                            <td>{{listNameProduct}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            <td>{{ngayCapNhat}}</td>
+                                            <td>{{ten}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                    
                                 </table>
                             </div>
                             <div class="btn_container_pagination">
@@ -369,9 +378,10 @@
                                                         `
                                                         <tr class="item_bill_confirm">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -405,9 +415,10 @@
                                                         `
                                                         <tr class="item_bill_confirm">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -430,25 +441,30 @@
                         <div class="tab_container_box" id="tab3" data-tab-content>
                             <div class="table_bill_container">
                                 <table class="table_bill_travelling">
-                                    <tr id="header">
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên đơn hàng</th>
-                                        <th>Doanh thu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thời gian</th>
-                                        <th>Xác nhận</th>
+                                    <thead>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá bán</th>
+                                            <th>Thời gian</th>
+                                            <th>Tình trạng</th>
                                     </tr>
-
-                                    {{#each this.getTravellingBillByOffset}}
-                                    <tr class="item_bill_travelling">
-                                        <td>{{maso}}</td>
-                                        <td>{{taikhoan}}</td>
-                                        <td>{{tonggiatien}}</td>
-                                        <td>{{TrangThai}}</td>
-                                        <td>{{ngayCapNhat}}</td>
-                                        <td>{{ten}}</td>
-                                    </tr>
-                                    {{/each}}
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.getTravellingBillByOffset}}
+                                        <tr class="item_bill_travelling">
+                                            <td>{{maso}}</td>
+                                            <td>{{tenNguoiNhan}}</td>
+                                            <td>{{sdtnguoinhan}}</td>
+                                            <td>{{listNameProduct}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            <td>{{ngayCapNhat}}</td>
+                                            <td>{{ten}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>   
                                 </table>
                             </div>
                             <div class="btn_container_pagination">
@@ -499,9 +515,10 @@
                                                         `
                                                         <tr class="item_bill_travelling">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -535,9 +552,10 @@
                                                         `
                                                         <tr class="item_bill_travelling">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -560,25 +578,31 @@
                         <div class="tab_container_box" id="tab4" data-tab-content>
                             <div class="table_bill_container">
                                 <table class="table_bill_travelled">
-                                    <tr id="header">
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên đơn hàng</th>
-                                        <th>Doanh thu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thời gian</th>
-                                        <th>Xác nhận</th>
+                                    <thead>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá bán</th>
+                                            <th>Thời gian</th>
+                                            <th>Tình trạng</th>
                                     </tr>
-                                    
-                                    {{#each this.getTravelledBillByOffset}}
-                                    <tr class="item_bill_travelled">
-                                        <td>{{maso}}</td>
-                                        <td>{{taikhoan}}</td>
-                                        <td>{{tonggiatien}}</td>
-                                        <td>{{TrangThai}}</td>
-                                        <td>{{ngayCapNhat}}</td>
-                                        <td>{{ten}}</td>
-                                    </tr>
-                                    {{/each}}
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.getTravelledBillByOffset}}
+                                        <tr class="item_bill_travelled">
+                                            <td>{{maso}}</td>
+                                            <td>{{tenNguoiNhan}}</td>
+                                            <td>{{sdtnguoinhan}}</td>
+                                            <td>{{listNameProduct}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            <td>{{ngayCapNhat}}</td>
+                                            <td>{{ten}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                          
                                 </table>
                             </div>
 
@@ -630,9 +654,10 @@
                                                         `
                                                         <tr class="item_bill_travelled">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -666,9 +691,10 @@
                                                         `
                                                         <tr class="item_bill_travelled">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -693,24 +719,31 @@
                         <div class="tab_container_box" id="tab5" data-tab-content>
                             <div class="table_bill_container">
                                 <table class="table_bill_discard">
-                                    <tr id="header">
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên đơn hàng</th>
-                                        <th>Doanh thu</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thời gian</th>
-                                        <th>Xác nhận</th>
-                                    </tr>
-                                    {{#each this.getDiscardBillByOffset}}
-                                    <tr class="item_bill_discard">
-                                        <td>{{maso}}</td>
-                                        <td>{{taikhoan}}</td>
-                                        <td>{{tonggiatien}}</td>
-                                        <td>{{TrangThai}}</td>
-                                        <td>{{ngayCapNhat}}</td>
-                                        <td>{{ten}}</td>
-                                    </tr>
-                                    {{/each}}
+                                    <thead>
+                                        <tr id="header">
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Giá bán</th>
+                                            <th>Thời gian</th>
+                                            <th>Tình trạng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.getDiscardBillByOffset}}
+                                        <tr class="item_bill_discard">
+                                            <td>{{maso}}</td>
+                                            <td>{{tenNguoiNhan}}</td>
+                                            <td>{{sdtnguoinhan}}</td>
+                                            <td>{{listNameProduct}}</td>
+                                            <td>{{tonggiatien}}</td>
+                                            <td>{{ngayCapNhat}}</td>
+                                            <td>{{ten}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                    
                                 </table>
                             </div>
 
@@ -762,9 +795,10 @@
                                                         `
                                                         <tr class="item_bill_discard">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -798,9 +832,10 @@
                                                         `
                                                         <tr class="item_bill_discard">
                                                             <td>${item.maso}</td>
-                                                            <td>${item.taikhoan}</td>
+                                                            <td>${item.tenNguoiNhan}</td>
+                                                            <td>${item.sdtnguoinhan}</td>
+                                                            <td>${item.listNameProduct}</td>
                                                             <td>${item.tonggiatien}</td>
-                                                            <td>${item.TrangThai}</td>
                                                             <td>${item.ngayCapNhat}</td>
                                                             <td>${item.ten}</td>
                                                         </tr>
@@ -846,9 +881,17 @@
 
                         )
                 </script>
+                <script>
+                    jQuery(document).ready(function($) {
+                        $(".clickable-row").click(function() {
+                            window.location = $(this).data("href");
+                        });
+                    });
+                </script>
 
 
         </div>
     </div>
 
 </div>
+<script src="/resources/js/filterTable.js"></script>

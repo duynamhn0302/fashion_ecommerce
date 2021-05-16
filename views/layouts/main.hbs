@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="/resources/css/animate.css" />
 	<link rel="stylesheet" href="/resources/css/style.css" />
 
-		<link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="/resources/css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="/resources/css/flaticon.css"/>
 	<link rel="stylesheet" href="/resources/css/slicknav.min.css"/>
@@ -77,7 +77,7 @@
 								<a href="/users/shopping-cart">
 									<div class="shopping-card">
 										<i class="flaticon-bag"></i>
-										<span>{{cart.sl}}</span>
+										<span id = "slGioHang">{{cart.sl}}</span>
 									</div>
 									&nbsp;
 									Giỏ hàng
@@ -95,6 +95,17 @@
 										<div class="option-item-auth">
 											<a href="/users/profile" class="option-select-auth">Thông tin tài khoản</a>
 										</div>
+										{{#if authUser.vaitro}}
+											<hr class="line-user">
+											<div class="option-item-auth">
+												<a href="/shops/incomes" class="option-select-auth">Thông tin shop</a>
+											</div>
+										{{else}}
+											<hr class="line-user">
+											<div class="option-item-auth">
+												<a href="/open_shop" class="option-select-auth">Đăng ký mở shop</a>
+											</div>
+										{{/if}}
 										<hr class="line-user">
 										<div class="option-item-auth">
 											<form method="POST" id="frmLogout" action="/logout"></form>
@@ -144,7 +155,7 @@
 				<!-- menu -->
 				<ul class="main-menu">
 					<li><a href="/">Trang chủ</a></li>
-                    <li><a href="#">Danh mục</a>
+                    <li><a href="/products/">Danh mục</a>
                         <ul class="sub-menu">
                             {{#each lcCategories}}
                                 <li>

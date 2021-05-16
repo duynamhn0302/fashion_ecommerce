@@ -39,12 +39,10 @@
 					</div>
 					
 					<div class="p-review">
-						<a href="">{{product.luotdanhgia}} lượt đánh giá</a></a>
+						<p>{{product.luotdanhgia}} lượt đánh giá<p>
 					</div>
-					
-					<i class="flaticon-shopping-cart"></i>
 					<div class="p-review">
-						<a href="">{{luotmua}} lượt mua</a></a>
+						<p ><i class="flaticon-shopping-cart"></i> {{luotmua}} lượt mua</p>
 					</div>
 					<div class="fw-size-choose">
 						<p>Size</p>
@@ -55,20 +53,45 @@
 					</div>
 					<div  class="quantity">
 						<p>Số lượng</p>
-						<form style="padding-left: 10px;" method="POST" class ="frmAddToCart" id="frmAddToCart" action="/add_to_cart">
-							<input  name="id" value="{{maso}}">
-                        	<div id="quan" class="pro-qty"><input type="text" name="quan" value="1"></div>
+						<form style="padding-left: 10px;" method="POST" class ="frmAddToCart" id="frmAddToCart{{product.maso}}" action="/users/add-to-cart">
+							<input  type = "hidden" name="id" value="{{product.maso}}">
+                        	<div id="quan" class="pro-qty"><input type="text" name="sl" value="1"></div>
 						</form>
                     </div>
 					<div style="display: flex;">
-						<a  href="#" class="site-btn"><span>Mua ngay</span></a>
+						<a  href="javascript: muaNgay(`#frmAddToCart{{product.maso}}`);" class="site-btn"><span>Mua ngay</span></a>
 						
-							<a   href="javascript: frmAddToCart.submit();"class="site-btn sb-line sb-dark"><span style="font-size: smaller;">Thêm vào giỏ</span></a>
+							<a   href="javascript: addToCart(`#frmAddToCart{{product.maso}}`);"class="site-btn sb-line sb-dark"><span style="font-size: smaller;">Thêm vào giỏ</span></a>
 						
 					</div>
 					
 					
 				</div>
+				
+			
+				<div style="display: flex;">
+
+				</div>
+				<div class="col-lg-12" style="margin-top: 50px;">
+					<div class="card" >
+						<div class="card-body" style="display: flex;">
+							<div class="container-name-user large" style="display: block; padding-bottom: 0px;!important;" >
+								<div style="display: flex;">
+									<p><img src="{{shop.avatar}}" alt="avatar" class="image-auth"></p>
+									<p class="name-user-auth" style="font-weight: bold;">{{shop.ten}} </p>
+								</div>
+								<div style="margin-left: 40px;">
+									<a>Xem của hàng</a>
+									<p>Main Str, no 23, New York</p>
+									<p>{{shop.sdt}}</p>
+									<p>{{shop.email}}</p>
+								</div>
+							
+							</div>
+						</div>
+					</div>		
+				</div>
+			
 				<div id="accordion" class="accordion-area">
 						<div class="panel">
 							<div class="panel-header" id="headingOne">
@@ -123,7 +146,7 @@
 					<div class="product-item">
 						<div class="pi-pic">
 							<a href="/products/{{maso}}">
-								<img src="{{this.avatar.link}}" alt="">
+								<img src="{{this.avatar}}" alt="">
 							</a>
 						</div>
 						<a href="/products/{{maso}}">
@@ -132,12 +155,21 @@
 								<p>{{ten}} </p>
 							</div>
 						</a>
+						<div class="p-review">
+							<p href=""><i class="flaticon-shopping-cart"></i> {{this.luotmua}}  lượt mua</p>
+						</div>
+						<div class="p-rating">
+							{{#each this.star}}
+								{{{this}}}
+							{{/each}}
+								({{this.luotdanhgia}} đánh giá)
+						</div>
+						
+						
 					</div>
 				{{/each}}
 			</div>
 		</div>
 	</section>
 	
-	<!-- RELATED PRODUCTS section end -->
 <script src="/resources/js/submitAjax.js"></script>
-

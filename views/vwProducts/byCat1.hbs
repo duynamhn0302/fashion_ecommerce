@@ -32,35 +32,7 @@
                             {{/each}}
                         </ul>
                     </div>
-                    <div class="filter-widget mb-0">
-                        <h2 class="fw-title">Size</h2>
-                        <div class="fw-size-choose">
-                            <div class="sc-item">
-                                <input type="radio" name="sc" id="xs-size">
-                                <label for="xs-size">XS</label>
-                            </div>
-                            <div class="sc-item">
-                                <input type="radio" name="sc" id="s-size">
-                                <label for="s-size">S</label>
-                            </div>
-                            <div class="sc-item">
-                                <input type="radio" name="sc" id="m-size" checked="">
-                                <label for="m-size">M</label>
-                            </div>
-                            <div class="sc-item">
-                                <input type="radio" name="sc" id="l-size">
-                                <label for="l-size">L</label>
-                            </div>
-                            <div class="sc-item">
-                                <input type="radio" name="sc" id="xl-size">
-                                <label for="xl-size">XL</label>
-                            </div>
-                            <div class="sc-item">
-                                <input type="radio" name="sc" id="xxl-size">
-                                <label for="xxl-size">XXL</label>
-                            </div>
-                        </div>
-                    </div>
+          
                 </div>
 
                 <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
@@ -70,23 +42,43 @@
                         {{else}}
                         {{#each products}}
                             <div class="col-lg-4 col-sm-6">
-                                <div class="product-item" style="cursor: pointer;">
+                                <div class="product-item">
                                     <div class="pi-pic">
-                                        {{!-- <div class="tag-sale">ON SALE</div> --}}
+                                        <div style="display: flex;">
+                                            {{#if isNewest}}
+                                                <div class="tag-new">NEW</div>
+                                            {{/if}}
+                                            {{#if isBestSeller}}
+                                                <div class="tag-sale" style="margin-top: 20px;">ON SALE</div>
+                                            {{/if}}
+                                        </div>
                                         <a href="/products/{{maso}}">
-                                            <img src="{{hinhanh}}" alt="product-image">
+                                            <img src="{{avatar}}" alt="" style="height: 250px;">
                                         </a>
                                         <div class="pi-links">
-                                            <form method="POST" class ="frmAddToCart" id="frmAddToCart{{maso}}" action="/add_to_cart">
+                                            <a href="javascript: muaNgay('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
+                                            <form method="POST" class ="frmAddToCart" id="NewfrmAddToCart{{maso}}" action="/add_to_cart">
                                                 <input  type="hidden" name="id" value="{{maso}}">
-                                                <a href="javascript: addToCart('#frmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>THÊM VÀO GIỎ</span></a>
+                                                <input  type="hidden" name="sl" value="1">
+                                                <a href="javascript: addToCart('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
                                             </form>
-                                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                                            
                                         </div>
                                     </div>
-                                    <div class="pi-text">
-                                        <h6>{{giaban}} đ</h6>
-                                        <p>{{ten}}</p>
+                                    <a href="/products/{{maso}}">
+                                        <div class="pi-text">
+                                            <h6>{{giaban}}</h6>
+                                            <p>{{ten}} </p>
+                                        </div>
+                                    </a>
+                                    <div class="p-review">
+                                        <p href=""><i class="flaticon-shopping-cart"></i> {{this.luotmua}}  lượt mua</p>
+                                    </div>
+                                    <div class="p-rating">
+                                        {{#each this.star}}
+                                            {{{this}}}
+                                        {{/each}}
+                                            ({{this.luotdanhgia}} đánh giá)
                                     </div>
                                 </div>
                             </div>

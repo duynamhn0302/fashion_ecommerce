@@ -84,7 +84,7 @@ $(document).ready(function(){
             alert('Bạn chưa chọn danh mục cấp 2');
             return false;
         }
-        if($('#editor').text().length === 0){
+        if(editor.getData().length === 0){
             alert('Xin hãy nhập mô tả');
             return false;
         }
@@ -107,8 +107,17 @@ $(document).ready(function(){
         return true;
     }
 
+    function checkMinimumPhoto(){
+        if(minimum_photo === false)  {
+            alert('Bạn chưa upload bất cứ hình sản phẩm nào');
+            return false;
+        }
+        return true
+    }
+
     $('#save').on('click',function(e){
         if(!checkVal()) return;
+        if(!checkMinimumPhoto()) return;
         const data = {
             tensanpham: $('#tensanpham').val(),
             danhmuccap2: +$('#span-2').attr('data-maso'),

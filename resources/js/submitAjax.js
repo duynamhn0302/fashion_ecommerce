@@ -1,54 +1,39 @@
-function love(formId){
-    $(formId).submit(function(event) {
-        var button = $(this).find("a")
-        const html = button.html()
-
-        button.html(
-            `<i class="fa fa-spinner fa-spin"></i>Loading`
-        );
-        setTimeout( 
-        function  (){  
-            button.html(html);
-            
-        }, 1000);
-        $.ajax({
-            method: $(this).attr('method'),
-            url: $(this).attr('action'),
-            data: {
-                id: $(this).find("input").attr("value"),
-            },		
-            
-        }).done(function(response) {		
-            
-        });
-        event.preventDefault(); // <- avoid reloading
-    });
-    $(formId).submit();
-}
 function addToCart(formId){
-   
-    $(formId).submit(function(event) {
-        var button = $(this).find("a")
-        const html = button.html()
-        button.html(
-            `<i class="fa fa-spinner fa-spin"></i>Loading`
-        );
-        setTimeout( 
-        function  (){  
-            button.html(html);
+    const form = $(document).find(formId)
+    
+    const productQuantity = form.find("input[name='sl']").val();
+    const  productId = form.find("input[name='id']").val();  //so luong sp them vao
+    
+    $.post('/users/add-to-cart',{id:productId,sl:productQuantity},function(data,status){
+        if(data.result === undefined)
+            window.location.assign('/login');
+        if(status === "success"){
+            //add thanh cong, lam cai j do
+            //do nothin
+            $(document).find("#slGioHang").html(data.result)
+            e.preventDefault();
+        }else{
+            //add khong thanh cong
             
-        }, 1000);
-        $.ajax({
-            method: $(this).attr('method'),
-            url: $(this).attr('action'),
-            data: {
-                id: $(this).find("input").attr("value"),
-            },		
-            
-        }).done(function(response) {		
-            
-        });
-        event.preventDefault(); // <- avoid reloading
+            window.location.assign('/login');
+        }
     });
-    $(formId).submit();
+  
+}
+function muaNgay(formId){
+    const form = $(document).find(formId)
+    
+    const productId = form.find("input[name='id']").val();
+    const productQuantity = 1;  //so luong sp them vao
+    
+    $.post('/users/add-to-cart',{id:productId,sl:productQuantity},function(data,status){
+        if(data.result === undefined)
+            window.location.assign('/login');
+        if (status === "success"){
+            location.assign("/users/shopping-cart");
+        }
+        else
+            location.assign("/login");
+    });
+  
 }

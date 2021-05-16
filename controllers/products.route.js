@@ -4,31 +4,68 @@ const productsModel = require("../models/products.model");
 const { paginate } = require("./../config/default.json");
 const router = express.Router();
 //Xem ds tất cả sản phẩm
-router.get("/", async function (req, res) {});
+router.get("/", async function (req, res) {
+  let cate1Id = +req.params.id;
+
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  const total = await productsModel.countAllProducts(cate1Id);
+  let nPages = Math.floor(total / paginate.limit);
+  if (total % paginate.limit > 0) nPages++;
+
+  const page_numbers = [];
+  for (var i = 1; i <= nPages; i++) {
+    page_numbers.push({
+      value: i,
+      isCurrentPage: i === +page,
+    });
+  }
+
+  const offset = (page - 1) * paginate.limit;
+
+  let allProducts = await productsModel.allProduct(offset);
+  let allCategories = await productsModel.allCategoriesWithQuantity();
+  console.log(allProducts)
+  if (allProducts !== null)
+    for (let i = 0; i < allProducts.length; i++) {
+      let img = await productsModel.getImages(allProducts[i].maso);
+      allProducts[i].avatar = img[0].link;
+    }
+    
+
+  res.render("../views/vwProducts/allProduct.hbs", {
+    layout: "main.hbs",
+    products: allProducts,
+    empty: !allProducts,
+    onlyOne: nPages < 1,
+    prevPage: +page - 1,
+    nextPage: +page + 1,
+    firstPage: +page === 1,
+    lastPage: +page === nPages,
+    page_numbers,
+    allCategories,
+  });
+});
 //Xem chi tiet sanpham
 router.get('/:id', async function (req, res, next) {
     const id = +req.params.id;
     const product = await productsModel.single(id)
     const images = await productsModel.getImages(id)
-    console.log(product)
+    const shop = await productsModel.getShopFromIdProduct(id)
     for(var i = 0; i < images.length; i++){
         images[i].isActive = false;
     }
+    console.log(images)
     images[0].isActive = true;
     const avatar = images[0]
-    const relativeProduct = await productsModel.getRelativeProduct(id)
-    for(var i = 0; i < relativeProduct.length; i++){
-        const reImages = await productsModel.getImages(relativeProduct[i].maso)
-        relativeProduct[i].avatar = reImages[0]
-    }
+    var relativeProduct = await productsModel.getRelativeProduct(id)
     const comment = await productsModel.getComment(id)
     var luotmua = await productsModel.getLuotMua(id)
-    if (luotmua == 0)
-        luotmua = 0
-    else
-        luotmua = luotmua.soluong
     const star = productsModel.convertRating(product.diemdanhgia)
-    console.log(star)
+    product.giaban = productsModel.formatPrice(product.giaban)
+    const isNewest = await productsModel.isNewest(id)
+    const isBestSeller = await productsModel.isBestSeller(id)
     res.render("vwProducts/detailProduct",
     {
         avatar,
@@ -37,7 +74,10 @@ router.get('/:id', async function (req, res, next) {
         relativeProduct,
         comment,
         luotmua,
-        star
+        star,
+        shop,
+        isNewest,
+        isBestSeller
         
     })
 });
@@ -71,9 +111,10 @@ router.get("/byCat1/:id", async function (req, res) {
 
   if (allProductsFromCate1 !== null)
     for (let i = 0; i < allProductsFromCate1.length; i++) {
-      let img = await productsModel.getImages(+allProductsFromCate1[i].maso);
-      allProductsFromCate1[i].hinhanh = img[0].link;
+      let img = await productsModel.getImages(allProductsFromCate1[i].maso);
+      allProductsFromCate1[i].avatar = img[0].link;
     }
+    
 
   res.render("../views/vwProducts/byCat1.hbs", {
     layout: "main.hbs",
@@ -123,7 +164,7 @@ router.get("/byCat2/:id", async function (req, res) {
   if (allProductsFromCate2 !== null)
     for (let i = 0; i < allProductsFromCate2.length; i++) {
       let img = await productsModel.getImages(+allProductsFromCate2[i].maso);
-      allProductsFromCate2[i].hinhanh = img[0].link;
+      allProductsFromCate2[i].avatar = img[0].link;
     }
 
   res.render("../views/vwProducts/byCat2.hbs", {
@@ -183,7 +224,7 @@ router.get("/search/common", async function (req, res) {
   if (list !== null)
     for (let i=0; i<list.length; i++) {
         let img = await productsModel.getImages(+list[i].maso);
-        list[i].hinhanh = img[0].link;
+        list[i].avatar = img[0].link;
       }
 
   res.render("../views/vwProducts/search_results.hbs", {
@@ -227,7 +268,7 @@ router.get("/search/search-result-most-relevant", async function (req, res) {
   if (list !== null)
     for (let i=0; i<list.length; i++) {
         let img = await productsModel.getImages(+list[i].maso);
-        list[i].hinhanh = img[0].link;
+        list[i].avatar = img[0].link;
       }
 
   res.render("../views/vwProducts/search_results.hbs", {

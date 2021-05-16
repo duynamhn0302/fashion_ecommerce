@@ -1,5 +1,6 @@
 const db = require('../utils/db');
 const { paginate } = require('./../config/default.json');
+const productsModel = require('./products.model');
 
 module.exports = {
     async allShop(){
@@ -44,8 +45,41 @@ module.exports = {
         const sql = `SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
         WHERE s.cuahang=${shopID}
         GROUP BY maso`;
-        const [rows,fields] = await db.load(sql);
+        var [rows,fields] = await db.load(sql);
+        rows =  await productsModel.informationForListProduct(rows)
+        return rows;
+    },
+    async getProductByShopIDcat(shopID,catID){
+        const sql = `SELECT temp1.*, d.danhmuccap1
+        FROM(SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
+        WHERE s.cuahang=${shopID}
+        GROUP BY maso) as temp1 join danhmuccap2 d on temp1.danhmuccap2=d.maso
+        WHERE danhmuccap1=${catID}`;
+        var [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
+        return rows;
+    },
+    async incomePreDate(idShop, date){
+        const sql = `SELECT *, sum(tonggiatien) as tong
+                    FROM (
+                                SELECT donhang.*, sanpham.cuahang, lichsutinhtrangdon.*
+                                from ((donhang join chitietdonhang on donhang.maso = chitietdonhang.donhang) join sanpham on sanpham.maso = chitietdonhang.sanpham)
+                                join lichsutinhtrangdon on donhang.maso = lichsutinhtrangdon.donhang
+                                WHERE donhang.tinhtrangdon = 3  and lichsutinhtrangdon.ngaythang <= '${date}'
+                                GROUP BY donhang.maso) spDaBan 
+                    where spDaBan.cuahang = ${idShop}
+                    GROUP BY spDaBan.cuahang`;
+        const [rows,fields] = await db.load(sql);
+        if (rows.length === 0)
+            return 0
+        return rows[0].tong;
+    },
+    async getProductByShopIDcatSub(shopID,catSubID){
+        const sql = `SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
+        WHERE s.cuahang=${shopID} and s.danhmuccap2=${catSubID}
+        GROUP BY maso`;
+        const [rows,fields] = await db.load(sql);
+        rows =  await productsModel.informationForListProduct(rows)
         return rows;
     },
     async shopOfId(userId){
@@ -281,6 +315,24 @@ module.exports = {
         return rows;
     },
 
+    async getNameCustomer(idUser)
+    {
+        const sql = `SELECT hoten FROM taikhoan WHERE maso=${idUser}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
+    },
+
+    async getNameProList(idBill)
+    {
+        const sql = `SELECT s.ten as tensanpham
+        FROM chitietdonhang c join sanpham s on c.sanpham=s.maso
+        WHERE c.donhang=${idBill}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows;
+    },
+
     async getInfoBillByStatus(shopID, status)
     {
         const sql = `SELECT temp3.*,t.ten
@@ -322,9 +374,12 @@ module.exports = {
 
     async getListProductByBill(idBill)
     {
-        const sql = `SELECT c.donhang,s.maso,s.ten,c.soluong
-        FROM chitietdonhang c join sanpham s on c.sanpham=s.maso
-        WHERE c.donhang=${idBill}`;
+        const sql = `SELECT temp.*,h.link
+        FROM(
+        SELECT s.*,c.donhang,c.soluong as soluongmua,c.dongia
+                FROM chitietdonhang c join sanpham s on c.sanpham=s.maso
+                WHERE c.donhang=${idBill}) temp join hinhanhsanpham h on temp.maso=h.sanpham
+        GROUP BY maso`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
         return rows;
@@ -403,6 +458,43 @@ module.exports = {
             item.ngayCapNhat=maxdate;
         }
         return rowDB
+    },
+
+    async rowProperties(listType)
+    {
+        if (listType==null)
+        {
+            return;
+        }
+        for (item of listType)
+        {
+          let ten=await this.getNameCustomer(item.taikhoan);
+          item.tenNguoiNhan=ten.hoten;
+        }
+        for (item of listType)
+        {
+          let tensanpham="";
+          let listTenSP=await this.getNameProList(item.maso);
+          let lengthList=listTenSP.length;
+          let extention="";
+          if (lengthList>2)
+          {
+              extention=" và 1 số sản phẩm khác"
+          }
+          let count=1;
+          for (tensp of listTenSP)
+          {
+            if (count===lengthList)
+            {
+              tensanpham=tensanpham+tensp.tensanpham+extention;
+            }
+            else{
+              tensanpham=tensanpham+tensp.tensanpham+", "
+            }
+            count++;
+          }
+          item.listNameProduct=tensanpham;
+        }
     }
 
 }

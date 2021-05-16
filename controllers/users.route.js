@@ -1,29 +1,24 @@
 const express = require("express");
 const cartModel = require("../models/cart.model");
 const productsModel = require("../models/products.model");
-const moment = require("moment");
-const multer = require("multer");
-const auth = require("./../middlewares/auth.mdw");
+const moment = require('moment');
+const multer = require('multer');
+const auth = require('./../middlewares/auth.mdw');
+const shopModel=require('../models/shop.model');
 
 const usersModel = require("../models/users.model");
 
 const router = express.Router();
 
-router.post("/add-to-cart", async function (req, res) {
-  const productId = req.body.id; // nhan vao hai bien la id,sl
-  const productQuantity = req.body.sl;
+router.post('/add-to-cart', auth.auth,async function(req,res){
+  const productId = +req.body.id;      // nhan vao hai bien la id,sl
+  const productQuantity = +req.body.sl;
 
-  const check = cartModel.checkIfProductInCart(
-    productId,
-    req.session.cart.maso
-  );
-  const product = productsModel.getSingleProductById(productId);
-  if (product === null) {
-    res.json(false);
-  } //id cua product la khong hop le, hay khong truy xuat duoc thi coi nhu vut
-  else {
-    if (check === null) {
-      //chua co sp trong gio hang
+  const check = await cartModel.checkIfProductInCart(productId,req.session.cart.maso);
+  const product = await productsModel.getSingleProductById(productId);
+  if(product===null){res.json(false);}    //id cua product la khong hop le, hay khong truy xuat duoc thi coi nhu vut
+  else{
+      if(check === null){   //chua co sp trong gio hang
       const new_data = {
         sanpham: productId,
         giohang: req.session.cart.maso,
@@ -38,8 +33,10 @@ router.post("/add-to-cart", async function (req, res) {
       const condition = {
         giohang: req.session.cart.maso,
         sanpham: productId,
-      };
-      await cartModel.modifyCartDetail2(new_data, condition);
+      }
+      console.log(new_data)
+      console.log(check)
+      await cartModel.modifyCartDetail2(new_data,condition);
     }
     req.session.cart["tongsosanpham"] =
       req.session.cart.tongsosanpham + productQuantity;
@@ -54,7 +51,7 @@ router.post("/add-to-cart", async function (req, res) {
     };
     await cartModel.modifyCartForCustomer(modifyCart, condition1);
 
-    res.json(true);
+    res.status(200).send({result: req.session.cart.tongsosanpham})
   }
 });
 
@@ -358,10 +355,8 @@ router.get("/orders", async function (req, res) {
 
 router.post("/bill-detail", async (req, res) => {
   let billId = req.body.billId;
-  let result = await usersModel.getBillDetail(
-    req.session.authUser.maso,
-    billId
-  );
+  let result = await usersModel.getBillDetail(req.session.authUser.maso, billId);
+  console.log(result);
   let tinhtrangdon = 0;
   switch (result[0].tinhtrangdon) {
     case 1:
@@ -377,6 +372,23 @@ router.post("/bill-detail", async (req, res) => {
       tinhtrangdon = "Đã huỷ";
       break;
   }
+
+  console.log(billId)
+
+//Code phúc
+  let listBillDetail=await shopModel.getDetailBillInfo(billId);
+
+  let listSanPham=await shopModel.getListProductByBill(billId);
+
+  for (item of listSanPham)
+  {
+    item.giaban=productsModel.formatPrice(item.giaban);
+    item.dongia=productsModel.formatPrice(item.dongia);
+  }
+  listBillDetail.listSanPham=listSanPham;
+  listBillDetail.tonggiatien=productsModel.formatPrice(listBillDetail.tonggiatien);
+  console.log(listBillDetail);
+  //Code phúc
 
   let sanpham = [];
   for (let i = 0; i < result.length; i++)
@@ -397,8 +409,10 @@ router.post("/bill-detail", async (req, res) => {
     tonggiatien: result[0].tonggiatien,
     tinhtrangdon,
     sanpham,
-  };
-  res.render("../views/users_views/Bill-detail.hbs", {
+
+    listBillDetail
+  }
+  res.render('../views/users_views/Bill-detail.hbs', {
     bill,
     billId,
   });
