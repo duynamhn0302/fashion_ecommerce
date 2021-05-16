@@ -153,7 +153,7 @@
                         <div class="combo_box_select">
                             <span class="selected" style="color: rgb(0, 0, 0); padding-left: 10px; font-weight:bold;">{{ten}}</span>
                             <i class="fas fa-caret-down drop-menu-down"></i>
-                            <input type="hidden" name="status_bill" value="{{ten}}">
+                            <input type="hidden" name="status_bill" value="{{tinhtrangdon}}">
                         </div>
                     </div>
                 </div>
@@ -168,9 +168,6 @@
                 </div>
                 <div class="item-select-cbx third-item">
                     Đã giao
-                </div>
-                <div class="item-select-cbx four-item">
-                    Đã hủy
                 </div>
             </div>
 
@@ -204,11 +201,6 @@
                         $('.drop-menu-down').toggleClass("rotate");
                         $('.combo_box_select input').val("3");
                     });
-                    $('.four-item').click(function(){
-                        $('.selected').text("Đã hủy");
-                        $('.drop-menu-down').toggleClass("rotate");
-                        $('.combo_box_select input').val("4");
-                    });
                     $('.item-select-cbx').click(function(){
                         $(this).addClass("active").siblings().removeClass("active");
                     });
@@ -218,20 +210,22 @@
     </div>
     
     <div class="container-update-detail">
-        <div class="ctn_update_cbx clickable-row" data-href='/shops/bills'>
-            <div class="btn_back_input">
-                <i class="fas fa-ban" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Hủy đơn</span>
+        <div class="ctn_update_cbx">
+            <div class="btn_back_input clickable-row" data-href='/shops/bills-detail/{{maso}}'>
+                <i class="fas fa-arrow-left" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Quay lại</span>
              </div>
         </div>
-
         <div class="ctn_update_cbx" id="btn-update">
             <div class="btn_update_input">
-                <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Cập nhật</span>
+                <i class="far fa-save" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Lưu đơn</span>
              </div>
         </div>
     </div>
     <script>
         $('#btn-update').click(function() {document.forms[0].submit()});
+        $('#btn-remove').click(function() {
+            $('.combo_box_select input').val("4");
+            document.forms[0].submit()});
     </script>
     </form>
 

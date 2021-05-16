@@ -485,6 +485,7 @@ router.get('/bills-detail/:id', async function (req, res) {
 
   let listSanPham=await shopModel.getListProductByBill(id);
   listBillDetail.listSanPham=listSanPham;
+  listBillDetail.isNotAvailableUpdate=(listBillDetail.tinhtrangdon===3 || listBillDetail.tinhtrangdon===4);
   console.log(listBillDetail);
   res.render('vwShop/shop_bill_detail',{
     listBillDetail,
@@ -499,7 +500,8 @@ router.get('/update-bills-detail/:id', async function (req, res) {
 
   let listSanPham=await shopModel.getListProductByBill(id);
   listBillDetail.listSanPham=listSanPham;
-  console.log(listBillDetail);
+  // listBillDetail.isNotAvailableUpdate=(listBillDetail.tinhtrangdon===3 || listBillDetail.tinhtrangdon===4);
+  // console.log(listBillDetail);
   res.render('vwShop/update_shop_bill',{
     listBillDetail,
       layout: 'shop_manage.hbs'
@@ -510,12 +512,17 @@ router.get('/update-bills-detail/:id', async function (req, res) {
 router.post('/update-bills-detail/:id', async function (req, res) {
   let id=+req.params.id;
   let status=+req.body.status_bill;
-  await shopModel.updateStatusBill(id,status);
 
-  await shopModel.insertStatusBill(id,status);
-  res.render('vwShop/update_shop_bill',{
-      layout: 'shop_manage.hbs'
-    });
+  let listBillDetail=await shopModel.getDetailBillInfo(id);
+
+  if (listBillDetail.tinhtrangdon != status)
+  {
+    await shopModel.updateStatusBill(id,status);
+
+    await shopModel.insertStatusBill(id,status);
+  }
+  
+  res.redirect("/shops/bills");
 })
 
 //Xem thông tin shop

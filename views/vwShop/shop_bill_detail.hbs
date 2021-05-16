@@ -96,7 +96,7 @@
 
         </div>
     </div>
-
+    <form action="/shops/update-bills-detail/{{maso}}" method="POST">
     <div class="container_bill">
         <div class="container_bill_items" style="padding-bottom: 10px;">
             <div class="customer-information">
@@ -151,6 +151,7 @@
                     <div class="combo_box_status">
                         <div class="combo_box_select">
                             <span class="selected" style="color: rgb(129, 129, 129); padding-left: 10px">{{ten}}</span>
+                            <input type="hidden" name="status_bill" value="{{ten}}">
                         </div>
                     </div>
                 </div>
@@ -160,7 +161,14 @@
         </div>
     </div>
     <div class="container-update-detail">
-        <div class="ctn_update_cbx clickable-row" data-href='/shops/bills'>
+        {{#if this.isNotAvailableUpdate}}
+        <div class="ctn_update_cbx">
+            <div class="btn_back_input clickable-row" data-href='/shops/bills'>
+                <i class="fas fa-arrow-left" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Quay lại</span>
+             </div>
+        </div>
+        {{else}}
+        <div class="ctn_update_cbx" id="btn-remove">
             <div class="btn_back_input">
                 <i class="fas fa-ban" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Hủy đơn</span>
              </div>
@@ -171,8 +179,14 @@
                 <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Cập nhật</span>
              </div>
         </div>
+        {{/if}}
     </div>
-
+    <script>
+        $('#btn-remove').click(function() {
+            $('.combo_box_select input').val("4");
+            document.forms[0].submit()});
+    </script>
+    </form>
     <script>
         jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
