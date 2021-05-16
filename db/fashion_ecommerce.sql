@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 16/05/2021 17:45:21
+ Date: 16/05/2021 18:01:34
 */
 
 SET NAMES utf8mb4;
@@ -76,7 +76,6 @@ CREATE TABLE `chitietgiohang`  (
 -- ----------------------------
 INSERT INTO `chitietgiohang` VALUES (1, 1, 2);
 INSERT INTO `chitietgiohang` VALUES (2, 5, 1);
-INSERT INTO `chitietgiohang` VALUES (3, 1, 2);
 INSERT INTO `chitietgiohang` VALUES (5, 1, 3);
 INSERT INTO `chitietgiohang` VALUES (5, 3, 2);
 INSERT INTO `chitietgiohang` VALUES (9, 4, 1);
@@ -96,6 +95,7 @@ CREATE TABLE `cuahang`  (
   `ngaymo` date NULL DEFAULT NULL,
   PRIMARY KEY (`maso`) USING BTREE,
   INDEX `Cuahang_fk0`(`taikhoan`) USING BTREE,
+  FULLTEXT INDEX `ten`(`ten`),
   CONSTRAINT `Cuahang_fk0` FOREIGN KEY (`taikhoan`) REFERENCES `taikhoan` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
@@ -132,7 +132,8 @@ DROP TABLE IF EXISTS `danhmuccap1`;
 CREATE TABLE `danhmuccap1`  (
   `maso` int(0) NOT NULL AUTO_INCREMENT,
   `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`maso`) USING BTREE
+  PRIMARY KEY (`maso`) USING BTREE,
+  FULLTEXT INDEX `ten`(`ten`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -153,6 +154,7 @@ CREATE TABLE `danhmuccap2`  (
   `danhmuccap1` int(0) NOT NULL,
   PRIMARY KEY (`maso`) USING BTREE,
   INDEX `DanhMucCap2_fk0`(`danhmuccap1`) USING BTREE,
+  FULLTEXT INDEX `ten`(`ten`),
   CONSTRAINT `DanhMucCap2_fk0` FOREIGN KEY (`danhmuccap1`) REFERENCES `danhmuccap1` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
@@ -185,7 +187,7 @@ CREATE TABLE `donhang`  (
   `tonggiatien` int(0) NOT NULL,
   `tinhtrangdon` int(0) NOT NULL,
   `diachinguoinhan` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `sdt` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `sdtnguoinhan` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`maso`) USING BTREE,
   INDEX `DonHang_fk0`(`taikhoan`) USING BTREE,
   INDEX `DonHang_fk1`(`tinhtrangdon`) USING BTREE,
@@ -217,7 +219,7 @@ CREATE TABLE `giohang`  (
 -- ----------------------------
 -- Records of giohang
 -- ----------------------------
-INSERT INTO `giohang` VALUES (1, 1, 7, 950000);
+INSERT INTO `giohang` VALUES (1, 1, 5, 650000);
 INSERT INTO `giohang` VALUES (2, 2, 0, 0);
 INSERT INTO `giohang` VALUES (3, 3, 2, 300000);
 INSERT INTO `giohang` VALUES (4, 4, 1, 150000);
@@ -252,6 +254,7 @@ INSERT INTO `hinhanhsanpham` VALUES (10, 7, '/resources/images/quan.png');
 INSERT INTO `hinhanhsanpham` VALUES (11, 8, '/resources/images/quan.png');
 INSERT INTO `hinhanhsanpham` VALUES (12, 9, '/resources/images/quan.png');
 INSERT INTO `hinhanhsanpham` VALUES (13, 10, '/resources/images/quan.png');
+INSERT INTO `hinhanhsanpham` VALUES (14, 14, '/resources/images/23-11-2020-khoi-tranh-giai-vo-dich-vovinam-toan-quoc-nam-2020-3862B6CC.jpg');
 
 -- ----------------------------
 -- Table structure for lichsutinhtrangdon
@@ -318,6 +321,7 @@ CREATE TABLE `sanpham`  (
   PRIMARY KEY (`maso`) USING BTREE,
   INDEX `SanPham_fk0`(`danhmuccap2`) USING BTREE,
   INDEX `SanPham_fk1`(`cuahang`) USING BTREE,
+  FULLTEXT INDEX `ten`(`ten`),
   CONSTRAINT `SanPham_fk0` FOREIGN KEY (`danhmuccap2`) REFERENCES `danhmuccap2` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `SanPham_fk1` FOREIGN KEY (`cuahang`) REFERENCES `cuahang` (`maso`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
@@ -335,6 +339,8 @@ INSERT INTO `sanpham` VALUES (7, 'Quần tây đen 6', 'Việt Nam', 'Chiếc qu
 INSERT INTO `sanpham` VALUES (8, 'Quần tây đen 7', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 10, 0, 0, 6, 1, 0x31, '2021-04-05');
 INSERT INTO `sanpham` VALUES (9, 'Quần tây đen 8', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
 INSERT INTO `sanpham` VALUES (10, 'Quần tây đen 9', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 0, 0, 0, 6, 1, 0x31, '2021-04-05');
+INSERT INTO `sanpham` VALUES (14, '123', '123', '<p>dsđvs</p>', '123', 48, 32, 23, 0, 0, 6, 1, 0x31, '2021-05-14');
+INSERT INTO `sanpham` VALUES (15, '', '', '', '', 49, 0, 0, 0, 0, 1, 1, 0x31, NULL);
 
 -- ----------------------------
 -- Table structure for sessions
@@ -351,7 +357,7 @@ CREATE TABLE `sessions`  (
 -- Records of sessions
 -- ----------------------------
 INSERT INTO `sessions` VALUES ('Vka7eSSRzEjPj31WX8p7IWA6Dbw5LPEv', 1621216275, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"auth\":true,\"authUser\":{\"maso\":1,\"username\":\"lyduynam\",\"password\":\"123456\",\"hoten\":\"Lý Duy Nam\",\"ngaysinh\":\"15/03/2000\",\"sdt\":\"0123456789\",\"email\":\"lyduynam@gmail.com\",\"avatar\":\"/resources/images/default_avatar.png\",\"vaitro\":0,\"status\":{\"type\":\"Buffer\",\"data\":[49]},\"ngaymo\":\"2021-04-04T17:00:00.000Z\"},\"tempcart\":{\"sl\":43,\"sanpham\":null},\"cart\":{\"maso\":1,\"taikhoan\":1,\"tongsosanpham\":48,\"tonggiatien\":5350000},\"retUrl\":\"/users/add-to-cart\",\"logout\":0,\"shop\":{\"maso\":1,\"ten\":\"Cửa hàng 1\",\"sdt\":\"123456789\",\"email\":\"shop1@gmail.com\",\"taikhoan\":2,\"status\":1,\"ngaymo\":\"2021-04-04T17:00:00.000Z\"}}');
-INSERT INTO `sessions` VALUES ('n7e3clxPVKZaTKuzPhsVHoATgfZoKda6', 1621248228, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"auth\":true,\"authUser\":{\"maso\":2,\"username\":\"lehoangphuc\",\"password\":\"123456\",\"hoten\":\"Lê Hoàng Phúc\",\"ngaysinh\":\"01/01/2000\",\"sdt\":\"0123456789\",\"email\":\"lehoangphuc@gmail.com\",\"avatar\":\"/resources/images/default_avatar.png\",\"vaitro\":1,\"status\":{\"type\":\"Buffer\",\"data\":[49]},\"ngaymo\":\"2021-04-04T17:00:00.000Z\"},\"tempcart\":{\"sl\":0,\"sanpham\":null},\"retUrl\":\"http://localhost:3000/users/shopping-cart\",\"search_term\":\"1e1\",\"cart\":{\"maso\":2,\"taikhoan\":2,\"tongsosanpham\":0,\"tonggiatien\":0},\"logout\":0,\"shop\":{\"maso\":1,\"ten\":\"Cửa hàng 1\",\"sdt\":\"123456789\",\"email\":\"shop1@gmail.com\",\"taikhoan\":2,\"status\":1,\"ngaymo\":\"2021-04-04T17:00:00.000Z\"}}');
+INSERT INTO `sessions` VALUES ('n7e3clxPVKZaTKuzPhsVHoATgfZoKda6', 1621249260, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"auth\":true,\"authUser\":{\"maso\":2,\"username\":\"lehoangphuc\",\"password\":\"123456\",\"hoten\":\"Lê Hoàng Phúc\",\"ngaysinh\":\"01/01/2000\",\"sdt\":\"0123456789\",\"email\":\"lehoangphuc@gmail.com\",\"avatar\":\"/resources/images/default_avatar.png\",\"vaitro\":1,\"status\":{\"type\":\"Buffer\",\"data\":[49]},\"ngaymo\":\"2021-04-04T17:00:00.000Z\"},\"tempcart\":{\"sl\":0,\"sanpham\":null},\"retUrl\":\"http://localhost:3000/users/shopping-cart\",\"search_term\":\"áo thun\",\"cart\":{\"maso\":2,\"taikhoan\":2,\"tongsosanpham\":0,\"tonggiatien\":0},\"logout\":0,\"shop\":{\"maso\":1,\"ten\":\"Cửa hàng 1\",\"sdt\":\"123456789\",\"email\":\"shop1@gmail.com\",\"taikhoan\":2,\"status\":1,\"ngaymo\":\"2021-04-04T17:00:00.000Z\"}}');
 
 -- ----------------------------
 -- Table structure for taikhoan
