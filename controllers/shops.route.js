@@ -820,12 +820,11 @@ router.post('/add-product',async function(req,res){
   }else if(req.body.gioitinhsudung === "Unisex"){
     sex=2;
   }
-  console.log(Buffer.from(sex))
 
   const new_data = {
     danhmuccap2: +req.body.danhmuccap2,
     giaban: +req.body.giaban,
-    gioitinhsudung: Buffer.from(`${sex}`),
+    gioitinhsudung: sex,
     kichthuoc: req.body.kichthuoc,
     mota: req.body.mota,
     noisx: req.body.noisanxuat,
@@ -922,10 +921,17 @@ router.get('/edit-product/:id',async function(req,res){
 })
 
 router.post('/edit-product',async function(req,res){
+  var sex = 0;
+  if(req.body.gioitinhsudung === "Nữ"){
+    sex=1;
+  }else if(req.body.gioitinhsudung === "Unisex"){
+    sex=2;
+  }
+
   const new_data = {
     danhmuccap2: +req.body.danhmuccap2,
     giaban: +req.body.giaban,
-    gioitinhsudung: (req.body.gioitinhsudung==="Nam"),
+    gioitinhsudung: sex,
     kichthuoc: req.body.kichthuoc,
     mota: req.body.mota,
     noisx: req.body.noisanxuat,

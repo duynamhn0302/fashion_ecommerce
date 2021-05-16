@@ -173,16 +173,14 @@
                             <div class="combo_box">
                                 <div class="combo_box_select">
                                     <span class="selected" id="gioitinhsudung">
-                                    {{#if product.gioitinhsudung}}
-                                    {{#when product.gioitinhsudung 'eq' 1}}
+                                    {{#if isFemale}}
                                         Nữ
-                                    {{/when}}
-                                    {{#when product.gioitinhsudung 'eq' 2}}
-                                        Unisex
-                                    {{/when}}
-                                    {{#when product.gioitinhsudung 'eq' 0}}
-                                        Nam
-                                    {{/when}}
+                                    {{else}}
+                                        {{#if isUnisex}}
+                                            Unisex
+                                        {{else}}
+                                            Nam
+                                        {{/if}}
                                     {{/if}}
                                     </span>
                                     <i class="fas fa-caret-down drop-menu-down" aria-hidden="true"></i>
@@ -269,6 +267,7 @@
                                     showPreview: true,
                                     showUpload: false,
                                     maxTotalFileCount: 8,
+                                    minToTalFileCount: 1,
                                     theme: 'fas',
                                     resizeImage: true
                                 }).on('filepreupload', function() {
@@ -288,6 +287,7 @@
                             resizePreference: 'height',
                             showPreview: true,
                             maxTotalFileCount: 8,
+                            minToTalFileCount: 1,
                             showUpload: false,
                             theme: 'fas',
                             resizeImage: true
@@ -307,7 +307,7 @@
                         <span class="add-shop-label">&nbsp;Mô tả chi tiết sản phẩm</span>
                     </div>
                     <div style="margin-top:10px;margin-left:4px;">
-                        <div id="editor" class="margin-top-20 height-40vh">{{product.mota}}</div>
+                        <div id="editor" class="margin-top-20 height-40vh"></div>
                     </div>
                 </div>
             </div>
@@ -370,6 +370,12 @@
                 console.error( error );
             } );
     </script>
+    {{#if product.mota}}
+    <p data-fake-mota="{{product.mota}}" id="fake-mota"></p>
+    <script>
+        editor.setData($('#fake-mota').attr("data-fake-mota"));
+    </script>
+    {{/if}}
     {{#if product.danhmuccap2}}
         <p id="checklist" data-cat1Num="{{cat1Num}}" data-cat2Num="{{product.danhmuccap2}}"></p>
         <script>

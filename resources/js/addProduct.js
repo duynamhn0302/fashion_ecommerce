@@ -123,22 +123,23 @@ $(document).ready(function(){
             danhmuccap2: +$('#span-2').attr('data-maso'),
             noisanxuat: $('#noisanxuat').val(),
             kichthuoc: $('#kichthuoc').val(),
-            gioitinhsudung: $('#gioitinhsudung').text(),
+            gioitinhsudung: $('#gioitinhsudung').text().replace(/\s/g, ""),
             mota: editor.getData(),
             giaban: +$('#giaban').val(),
             soluong: +$('#soluong').val()
         }
+        console.log(data);
         
         if(!edit){       //dang moi san pham
             save = 1; 
             $.post('/shops/add-product',data,function(data,status){
                 alert('Thành công');
-                window.location.replace('/');
+                window.location.replace('/shops/incomes');
             })
         }else{          //cap nhat san pham
             $.post('/shops/edit-product',data,function(data,status){
                 alert('Thành công');
-                window.location.replace('/');
+                window.location.replace('/shops/incomes');
             })
         }
     })
