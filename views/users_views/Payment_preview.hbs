@@ -1,0 +1,241 @@
+<link rel="stylesheet" href="/resources/css/profile.css">
+<link rel="stylesheet" href="/resources/css/shop_bill.css">
+<body>
+    <div class="page_wrapper">
+        <div class="title_container">
+            <h2 class="title">Trang cá nhân</h2>
+        </div>
+        <section class="body_container">
+            <div class="tabs_container">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="footer-widget">
+                        <ul>
+                            <li><a class="li_tab" href="/users/profile">Cập nhật thông
+                                    tin cá nhân</a></li>
+                            <li><a class="li_tab" href="/users/shopping-cart" style="color: #f51167 !important">Giỏ hàng</a></li>
+                            <li><a class="li_tab" href="/users/orders">Lịch sử đơn hàng</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content_container">
+                <div class="update_profile_title">
+                    <h4>Chi tiết thanh toán</h4>
+                </div>
+                <div class="container_bill">
+        <div class="container_bill_items" style="padding-bottom: 10px;">
+            <div class="link_path">
+                <a class="root_link" style="text-decoration: none; cursor: pointer; color: #f51167" href="/users/orders">Giỏ hàng</a>
+                >
+                <span class="root_link" style="font-weight: 500;">Chi tiết thanh toán</span>
+            </div>
+
+            <div class="customer-information">
+                1. Thông tin khách hàng
+            </div>
+
+            {{#with user}}
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Mã khách hàng
+                    </div>
+                    <input type="text" placeholder="{{maso}}" class="input_detail" readonly="readonly">
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Tên khách hàng
+                    </div>
+                    <input type="text" placeholder="{{hoten}}" class="input_detail" readonly="readonly">
+                </div>
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Email
+                    </div>
+                    <input type="text" placeholder="{{email}}" class="input_detail" readonly="readonly">
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Số điện thoại
+                    </div>
+                    <input type="number" id="sdt_input" value="{{sdt}}" style="width: 70%;">
+                </div>
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Địa chỉ nhận hàng
+                    </div>
+                    <input type="text" id="address_input" placeholder="" style="width: 100%;">
+                </div>
+            </div>
+
+            {{!-- <div class="input_detail_ct">
+                <select class="form-control" name="province" id="province" onchange="changeFunc();">
+                    <option value="" selected>------</option>
+                </select>
+                <select class="form-control" name="district" id="district" onchange="changeFuncDistrict();">
+                    <option value="" selected>------</option>
+                </select>
+                <select class="form-control" name="ward" id="ward" aria-placeholder="Quan huyen">
+                    <option value="" selected>------</option>
+                </select>
+            </div> --}}
+
+            {{/with}}
+        </div>
+    </div>
+
+    <div class="container_bill">
+        <div class="container_bill_items" style="padding-bottom: 10px;">
+            <div class="customer-information">
+                2. Thông tin đơn hàng
+            </div>
+
+            <div class="cart-table-warp" style="margin-bottom: 30px;">
+				<table>
+					<thead>
+						<tr>
+							<th class="product-th" style="text-align: center;">Sản phẩm</th>
+							<th class="quy-th" style="text-align: center;">Số lượng</th>
+							<th class="size-th" style="text-align: center;">Cửa hàng</th>
+							<th class="total-th" style="text-align: center;">Giá</th>
+						</tr>
+					</thead>
+					<tbody>
+                        {{#each products}}
+						<tr>
+							<td class="product-col" style="display: flex; justify-content:flex-start; align-items:center">
+								<img src="{{hinhanh}}" alt="hinh-anh" style="width: 78px; object-fit:cover; margin-right:20px;">
+								<div class="pc-title">
+								    <h5>{{tensanpham}}</h4>
+									<p>{{dongia}} đ</p>
+								</div>
+							</td>
+							<td class="quy-col">
+								<p style="text-align: center;">{{soluong}}</p>
+							</td>
+							<td class="size-col" style="text-align: center;"><p>{{cuahang}}</p></td>
+							<td class="total-col" style="text-align: center;"><p>{{gia}} đ</p></td>
+						</tr>
+                        {{/each}}
+					</tbody>
+				</table>
+            </div>
+            <div class="input_detail_ct" style="width: 100%; display:flex; justify-content:flex-end">
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Tổng giá trị đơn hàng
+                    </div>
+                    <input type="text" placeholder="{{cart.tonggiatien}} đ" class="input_detail" style="color:#f51167; width:50%" readonly="readonly">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-update-detail">
+        <div class="ctn_update_cbx clickable-row">
+            <div class="btn_back_input" onclick='javascript: window.location.href="/users/shopping-cart"'>
+                <i class="fas fa-backward" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Quay lại</span>
+             </div>
+        </div>
+
+        <div class="ctn_update_cbx">
+            <div class="btn_update_input clickable-row">
+                <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Thanh toán</span>
+                <form class="pay_form" action="/users/pay-cart" method="post" hidden>
+                    <input type="hidden" name="cartId" value="{{cart.maso}}">
+                    <input type="hidden" id="address_post" name="address" value="">
+                    <input type="hidden" id="sdt_post" name="sdt" value="">
+                </form>
+            </div>
+        </div>
+    </div>
+            </div>
+    </div>
+    </section>
+
+    </div>
+    <script src="/resources/js/jquery-3.2.1.min.js"></script>
+    <script src="/resources/js/cart.js"></script>
+{{!-- <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let province = document.getElementById("province");
+        window.onload = function() {
+            $.ajax({
+                url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
+                headers: {
+                    "token": "dbace437-b655-11eb-8080-c61f6a6501ca",
+                    "Content-Type": 'Application/json'
+                },
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    console.log('success: ');
+                    console.log(response.data);
+                    let str = '<option selected>Tinh thanh</option>';
+                    for(let i=0; i<response.data.length; i++) {
+                        str = str+'<option class="provinceId" data-province="'+response.data[i].ProvinceID+'" >'+'</option>'
+                    }
+                    province.innerHTML=str;
+                }
+            })
+        }
+    }, false);
+
+    function changeFunc() {
+        let selectBox = document.getElementById("province");
+        let selectedValue = selectBox.options[selectBox.selectedIndex].getAttribute('data-province');
+        let district = document.getElementById('district');
+
+        $.ajax({
+            url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/district",
+                headers: {
+                    "token": "dbace437-b655-11eb-8080-c61f6a6501ca",
+                    "Content-Type": 'Application/json'
+                },
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    let str = '<option selected>Quan huyen</option>';
+                    for(let i=0; i<response.data.length; i++) {
+                        if(response.data[i].ProvinceID === selectedValue)
+                            str = str+'<option class="districtId" data-district="'+response.data[i].DistrictID+'" >'+response.data[i].DistrictName+'</option>'
+                    }
+                    district.innerHTML=str;
+                }
+        })
+    }
+
+    function changeFuncDistrict() {
+        let selectBox = document.getElementById("district");
+        let selectedValue = selectBox.options[selectBox.selectedIndex].getAttribute('data-district');
+        let ward = document.getElementById('ward');
+
+        $.ajax({
+            url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id",
+                headers: {
+                    "token": "dbace437-b655-11eb-8080-c61f6a6501ca",
+                    "Content-Type": 'Application/json'
+                },
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    let str = '<option selected>Phuong xa</option>';
+                    for(let i=0; i<response.data.length; i++) {
+                        if(response.data[i].ProvinceID === selectedValue)
+                            str = str+'<option class="wardId" data-ward="'+response.data[i].WardCode+'" >'+response.data[i].WardName+'</option>'
+                    }
+                    ward.innerHTML=str;
+                }
+        })
+    }
+</script>
+</body> --}}
+<!--====== Javascripts & Jquery ======-->
+

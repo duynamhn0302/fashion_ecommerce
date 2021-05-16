@@ -197,7 +197,11 @@ router.post("/search/search-result-most-relevant", async function (req, res) {
   let search_term = req.body.search_term;
   req.session.search_term = search_term;
   if (search_term === "" || search_term.length < 3)
-    return res.redirect("/products/search/common");
+  res.render("../views/vwProducts/search_results.hbs", {
+    empty: true,
+    n_result: 0,
+    search_term,
+  });
   res.redirect("/products/search/search-result-most-relevant");
 });
 
