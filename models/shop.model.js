@@ -355,9 +355,12 @@ module.exports = {
 
     async getListProductByBill(idBill)
     {
-        const sql = `SELECT c.donhang,s.maso,s.ten,c.soluong
-        FROM chitietdonhang c join sanpham s on c.sanpham=s.maso
-        WHERE c.donhang=${idBill}`;
+        const sql = `SELECT temp.*,h.link
+        FROM(
+        SELECT s.*,c.donhang,c.soluong as soluongmua,c.dongia
+                FROM chitietdonhang c join sanpham s on c.sanpham=s.maso
+                WHERE c.donhang=${idBill}) temp join hinhanhsanpham h on temp.maso=h.sanpham
+        GROUP BY maso`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
         return rows;
