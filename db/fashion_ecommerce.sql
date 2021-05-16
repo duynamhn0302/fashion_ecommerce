@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 17/05/2021 01:08:43
+ Date: 17/05/2021 01:20:05
 */
 
 SET NAMES utf8mb4;
@@ -93,6 +93,7 @@ CREATE TABLE `cuahang`  (
   `taikhoan` int(0) NOT NULL,
   `status` int(0) NOT NULL,
   `ngaymo` date NULL DEFAULT NULL,
+  `diachi` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`maso`) USING BTREE,
   INDEX `Cuahang_fk0`(`taikhoan`) USING BTREE,
   FULLTEXT INDEX `ten`(`ten`),
@@ -102,7 +103,7 @@ CREATE TABLE `cuahang`  (
 -- ----------------------------
 -- Records of cuahang
 -- ----------------------------
-INSERT INTO `cuahang` VALUES (1, 'Cửa hàng 1', '123456789', 'shop1@gmail.com', 2, 1, '2021-04-05');
+INSERT INTO `cuahang` VALUES (1, 'Cửa hàng 1', '123456789', 'shop1@gmail.com', 2, 1, '2021-04-05', 'TPHCM');
 
 -- ----------------------------
 -- Table structure for danhgia
@@ -329,17 +330,17 @@ CREATE TABLE `sanpham`  (
 -- ----------------------------
 -- Records of sanpham
 -- ----------------------------
-INSERT INTO `sanpham` VALUES (1, 'Áo thun trắng', 'Việt Nam', 'Áo màu trắng rất xinh', 'L', 48, 100000, 5, 5, 1, 2, 1, 0x31, '2021-04-05');
-INSERT INTO `sanpham` VALUES (2, 'Quần tây đen', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 200000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
-INSERT INTO `sanpham` VALUES (3, 'Quần tây đen 2', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
-INSERT INTO `sanpham` VALUES (4, 'Quần tây đen 3', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 1500000, 0, 0, 0, 6, 1, 0x31, '2021-04-05');
-INSERT INTO `sanpham` VALUES (5, 'Quần tây đen 4', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
-INSERT INTO `sanpham` VALUES (6, 'Quần tây đen 5', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 1, 0, 0, 6, 1, 0x31, '2021-04-05');
-INSERT INTO `sanpham` VALUES (7, 'Quần tây đen 6', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
-INSERT INTO `sanpham` VALUES (8, 'Quần tây đen 7', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 10, 0, 0, 6, 1, 0x31, '2021-04-05');
-INSERT INTO `sanpham` VALUES (9, 'Quần tây đen 8', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x31, '2021-04-05');
-INSERT INTO `sanpham` VALUES (10, 'Quần tây đen 9', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 0, 0, 0, 6, 1, 0x31, '2021-04-05');
-INSERT INTO `sanpham` VALUES (14, '123', '123', '<p>dsđvs</p>', '123', 48, 32, 23, 0, 0, 6, 1, 0x31, '2021-05-14');
+INSERT INTO `sanpham` VALUES (1, 'Áo thun trắng', 'Việt Nam', 'Áo màu trắng rất xinh', 'L', 48, 100000, 5, 5, 1, 2, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (2, 'Quần tây đen', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 200000, 5, 0, 0, 6, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (3, 'Quần tây đen 2', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (4, 'Quần tây đen 3', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 1500000, 0, 0, 0, 6, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (5, 'Quần tây đen 4', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (6, 'Quần tây đen 5', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 1, 0, 0, 6, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (7, 'Quần tây đen 6', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (8, 'Quần tây đen 7', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 10, 0, 0, 6, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (9, 'Quần tây đen 8', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 5, 0, 0, 6, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (10, 'Quần tây đen 9', 'Việt Nam', 'Chiếc quần màu đen rất xinh', 'L', 48, 150000, 0, 0, 0, 6, 1, 0x30, '2021-04-05');
+INSERT INTO `sanpham` VALUES (14, '123', '123', '<p>dsđvs</p>', '123', 48, 32, 23, 0, 0, 6, 1, 0x30, '2021-05-14');
 
 -- ----------------------------
 -- Table structure for sessions
@@ -374,17 +375,18 @@ CREATE TABLE `taikhoan`  (
   `vaitro` int(0) NOT NULL,
   `status` binary(1) NOT NULL,
   `ngaymo` date NULL DEFAULT NULL,
+  `diachi` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`maso`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of taikhoan
 -- ----------------------------
-INSERT INTO `taikhoan` VALUES (1, 'lyduynam', '123456', 'Lý Duy Nam', '15/03/2000', '0123456789', 'lyduynam@gmail.com', '/resources/images/default_avatar.png', 0, 0x31, '2021-04-05');
-INSERT INTO `taikhoan` VALUES (2, 'lehoangphuc', '123456', 'Lê Hoàng Phúc', '01/01/2000', '0123456789', 'lehoangphuc@gmail.com', '/resources/images/default_avatar.png', 1, 0x31, '2021-04-05');
-INSERT INTO `taikhoan` VALUES (3, 'luuthiennhan', '123456', 'Lưu Thiện Nhân', '01/01/2000', '0123456789', 'luuthiennhan@gmail.com', '/resources/images/default_avatar.png', 0, 0x31, '2021-04-05');
-INSERT INTO `taikhoan` VALUES (4, 'nguyenanhduy', '123456', 'Nguyễn Anh Duy', '01/01/2000', '0123456789', 'nguyenanhduy@gmail.com', '/resources/images/default_avatar.png', 0, 0x31, '2021-03-05');
-INSERT INTO `taikhoan` VALUES (5, 'admin', '123456', 'Admin', '15/03/2000', '0123456789', 'adminFashionEcommerce@gmail.com', '/resources/images/default_avatar.png', 2, 0x31, '2021-04-05');
-INSERT INTO `taikhoan` VALUES (6, '18127159', '12345678', 'Duy-Nam Ly', NULL, NULL, 'duynamvt79@gmail.com', 'images/default_avatar.png', 0, 0x30, NULL);
+INSERT INTO `taikhoan` VALUES (1, 'lyduynam', '123456', 'Lý Duy Nam', '15/03/2000', '0123456789', 'lyduynam@gmail.com', '/resources/images/default_avatar.png', 0, 0x31, '2021-04-05', 'TPHCM');
+INSERT INTO `taikhoan` VALUES (2, 'lehoangphuc', '123456', 'Lê Hoàng Phúc', '01/01/2000', '0123456789', 'lehoangphuc@gmail.com', '/resources/images/default_avatar.png', 1, 0x31, '2021-04-05', 'TPHCM');
+INSERT INTO `taikhoan` VALUES (3, 'luuthiennhan', '123456', 'Lưu Thiện Nhân', '01/01/2000', '0123456789', 'luuthiennhan@gmail.com', '/resources/images/default_avatar.png', 0, 0x31, '2021-04-05', 'TPHCM');
+INSERT INTO `taikhoan` VALUES (4, 'nguyenanhduy', '123456', 'Nguyễn Anh Duy', '01/01/2000', '0123456789', 'nguyenanhduy@gmail.com', '/resources/images/default_avatar.png', 0, 0x31, '2021-03-05', 'TPHCM');
+INSERT INTO `taikhoan` VALUES (5, 'admin', '123456', 'Admin', '15/03/2000', '0123456789', 'adminFashionEcommerce@gmail.com', '/resources/images/default_avatar.png', 2, 0x31, '2021-04-05', 'TPHCM');
+INSERT INTO `taikhoan` VALUES (6, '18127159', '12345678', 'Duy-Nam Ly', NULL, NULL, 'duynamvt79@gmail.com', 'images/default_avatar.png', 0, 0x30, NULL, 'TPHCM');
 
 SET FOREIGN_KEY_CHECKS = 1;
