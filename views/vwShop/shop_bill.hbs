@@ -179,13 +179,6 @@
                                     {{/each}}
                                 </table>
                             </div>
-                            <script>
-                                jQuery(document).ready(function($) {
-                                    $(".clickable-row").click(function() {
-                                        window.location = $(this).data("href");
-                                    });
-                                });
-                            </script>
                             <div class="btn_container_pagination">
                                 <div class="total_pagination">
                                     Tổng cộng {{totalRowAll}} bản ghi
@@ -310,7 +303,7 @@
                                         <th>Xác nhận</th>
                                     </tr>
                                     {{#each this.getConfirmBillOffset}}
-                                    <tr class="item_bill_confirm">
+                                    <tr class="item_bill_confirm clickable-row" data-href='bills-detail/{{maso}}'>
                                         <td>{{maso}}</td>
                                         <td>{{taikhoan}}</td>
                                         <td>{{tonggiatien}}</td>
@@ -440,7 +433,7 @@
                                     </tr>
 
                                     {{#each this.getTravellingBillByOffset}}
-                                    <tr class="item_bill_travelling">
+                                    <tr class="item_bill_travelling clickable-row" data-href='bills-detail/{{maso}}'>
                                         <td>{{maso}}</td>
                                         <td>{{taikhoan}}</td>
                                         <td>{{tonggiatien}}</td>
@@ -570,7 +563,7 @@
                                     </tr>
                                     
                                     {{#each this.getTravelledBillByOffset}}
-                                    <tr class="item_bill_travelled">
+                                    <tr class="item_bill_travelled clickable-row" data-href='bills-detail/{{maso}}'>
                                         <td>{{maso}}</td>
                                         <td>{{taikhoan}}</td>
                                         <td>{{tonggiatien}}</td>
@@ -702,7 +695,7 @@
                                         <th>Xác nhận</th>
                                     </tr>
                                     {{#each this.getDiscardBillByOffset}}
-                                    <tr class="item_bill_discard">
+                                    <tr class="item_bill_discard clickable-row" data-href='bills-detail/{{maso}}'>
                                         <td>{{maso}}</td>
                                         <td>{{taikhoan}}</td>
                                         <td>{{tonggiatien}}</td>
@@ -845,6 +838,13 @@
                         }
 
                         )
+                </script>
+                <script>
+                    jQuery(document).ready(function($) {
+                        $(".clickable-row").click(function() {
+                            window.location = $(this).data("href");
+                        });
+                    });
                 </script>
 
 

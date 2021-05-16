@@ -9,6 +9,7 @@ const fs = require('fs');
 const { paginate } = require('./../config/default.json');
 const { dirname } = require('path');
 const { dir } = require('console');
+const { allCategories } = require('../models/products.model');
 
 //Xem màn hình shop
 router.get('/', async function (req, res) {
@@ -21,22 +22,98 @@ router.get("/shops-information/:id", async function (req, res) {
 
   let catList = await shopModel.getCatByShopID(shopID);
   let subCatList = await shopModel.getSubCatByShopID(shopID);
-  // console.log(catList);
+  console.log(catList);
   // console.log(subCatList);
   let category = [];
   for (item of catList) {
     let allCat = {};
     allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
     let arrSub = [];
     for (sub of subCatList) {
       if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
         arrSub.push(sub);
       }
     }
     allCat.tenCap2 = arrSub;
     category.push(allCat);
   }
-  //console.log(category.tenCap2);
+  console.log(category);
+
+  res.render("vwShopInfo/shop_detail", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+  });
+});
+
+//Search thep danh muc cap 1
+router.get("/shops-information/:id/:idcat/byCat1", async function (req, res) {
+  console.log("ok");
+  let shopID = +req.params.id;
+  let CatID= +req.params.idcat;
+  let listProductByShopID = await shopModel.getProductByShopIDcat(shopID,CatID);
+
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  console.log(catList);
+  // console.log(subCatList);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+  console.log(category);
+
+  res.render("vwShopInfo/shop_detail", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+  });
+});
+
+//Search thep danh muc cap 2
+router.get("/shops-information/:id/:idCat/byCat2", async function (req, res) {
+  let shopID = +req.params.id;
+  let CatID= +req.params.idCat;
+  let listProductByShopID = await shopModel.getProductByShopIDcatSub(shopID,CatID);
+
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  console.log(catList);
+  // console.log(subCatList);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+  console.log(category);
 
   res.render("vwShopInfo/shop_detail", {
     listProductByShopID,
