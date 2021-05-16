@@ -90,7 +90,37 @@
                     <div class="title_combobox">
                         Số điện thoại
                     </div>
-                    <input type="text" placeholder="{{sdt}}" style="width: 70%;" readonly="readonly">
+                    <input type="text" placeholder="{{sdt}}" style="width: 100%;" readonly="readonly">
+                </div>
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Số điện thoại người nhận
+                    </div>
+                    <input type="text" placeholder="{{sdtnguoinhan}}" class="input_detail" readonly="readonly" >
+                </div>
+
+                <div class="container_combo_box" style="margin-left: 20px;">
+                    <div class="title_combobox">
+                        Địa chỉ người nhận
+                    </div>
+                    <input type="text" placeholder="{{diachinguoinhan}}" style="width: 100%;" readonly="readonly">
+                </div>
+            </div>
+
+            <div class="input_detail_ct">
+                <div class="container_combo_box">
+                    <div class="title_combobox">
+                        Tình trạng đơn hàng
+                    </div>
+                    <div class="combo_box_status" style="width: 100%;">
+                        <div class="combo_box_select">
+                            <span class="selected" style="color: rgb(129, 129, 129); padding-left: 10px;">{{ten}}</span>
+                            <input type="hidden" name="status_bill" value="{{ten}}" >
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -149,37 +179,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="input_detail_ct">
-                <div class="container_combo_box">
-                    <div class="title_combobox">
-                        Số điện thoại người nhận
-                    </div>
-                    <input type="text" placeholder="{{sdtnguoinhan}}" class="input_detail" readonly="readonly">
-                </div>
-
-                <div class="container_combo_box" style="margin-left: 20px;">
-                    <div class="title_combobox">
-                        Địa chỉ người nhận
-                    </div>
-                    <input type="text" placeholder="{{diachinguoinhan}}" style="width: 100%;" readonly="readonly">
-                </div>
-            </div>
-
-            <div class="input_detail_ct">
-                <div class="container_combo_box">
-                    <div class="title_combobox">
-                        Tình trạng đơn hàng
-                    </div>
-                    <div class="combo_box_status">
-                        <div class="combo_box_select">
-                            <span class="selected" style="color: rgb(129, 129, 129); padding-left: 10px">{{ten}}</span>
-                            <input type="hidden" name="status_bill" value="{{ten}}">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 
         </div>
     </div>

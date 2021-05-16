@@ -280,6 +280,8 @@ router.get('/bills', async function (req, res) {
   let getInfoBillByOffset=await shopModel.getInfoBillByOffset(shopId.maso,offset);
   getInfoBillByOffset=await shopModel.addStatusFinished(getInfoBillByOffset);
   getInfoBillByOffset=await shopModel.addDateModified( getInfoBillByOffset);
+  await shopModel.rowProperties(getInfoBillByOffset);
+  console.log(getInfoBillByOffset);
 
 //Đơn hàng xác nhận
 
@@ -310,6 +312,7 @@ router.get('/bills', async function (req, res) {
   let getConfirmBillByOffset=await shopModel.getInfoBillByStatus(shopId.maso,1,offsetC);
   getConfirmBillByOffset=await shopModel.addStatusFinished(getConfirmBillByOffset);
   getConfirmBillByOffset=await shopModel.addDateModified(getConfirmBillByOffset);
+  await shopModel.rowProperties(getConfirmBillByOffset);
 
   //Đơn hàng đang vận chuyển
   let getTravellingBill=await shopModel.getInfoBillByStatus(shopId.maso,2);
@@ -340,6 +343,7 @@ router.get('/bills', async function (req, res) {
   let getTravellingBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,2,offsetT);
   getTravellingBillByOffset=await shopModel.addStatusFinished(getTravellingBillByOffset);
   getTravellingBillByOffset=await shopModel.addDateModified(getTravellingBillByOffset);
+  await shopModel.rowProperties(getTravellingBillByOffset);
   //Đờn hàng đã vận chuyển
   let getTravelledBill=await shopModel.getInfoBillByStatus(shopId.maso,3);
 
@@ -369,6 +373,7 @@ router.get('/bills', async function (req, res) {
   let getTravelledBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,3,offsetTe);
   getTravelledBillByOffset=await shopModel.addStatusFinished(getTravelledBillByOffset);
   getTravelledBillByOffset=await shopModel.addDateModified(getTravelledBillByOffset);
+  await shopModel.rowProperties(getTravelledBillByOffset);
   //getDiscardBill
   let getDiscardBill=await shopModel.getInfoBillByStatus(shopId.maso,4);
 
@@ -398,6 +403,7 @@ router.get('/bills', async function (req, res) {
   let getDiscardBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,4,offsetD);
   getDiscardBillByOffset=await shopModel.addStatusFinished(getDiscardBillByOffset);
   getDiscardBillByOffset=await shopModel.addDateModified(getDiscardBillByOffset);
+  await shopModel.rowProperties(getDiscardBillByOffset);
 
   res.render('vwShop/shop_bill',{
     getInfoBill,
@@ -468,7 +474,7 @@ router.get('/bills.json', async function(req, res) {
   let getInfoBillByOffset=await shopModel.getInfoBillByOffset(shopId.maso,offset);
   getInfoBillByOffset=await shopModel.addStatusFinished(getInfoBillByOffset);
   getInfoBillByOffset=await shopModel.addDateModified( getInfoBillByOffset);
-  console.log(total);
+  await shopModel.rowProperties(getInfoBillByOffset);
 
   res.json(getInfoBillByOffset);
 });
@@ -506,6 +512,7 @@ router.get('/bills_confirm.json', async function(req, res) {
   let getConfirmBillByOffset=await shopModel.getInfoBillByStatus(shopId.maso,1,offsetC);
   getConfirmBillByOffset=await shopModel.addStatusFinished(getConfirmBillByOffset);
   getConfirmBillByOffset=await shopModel.addDateModified(getConfirmBillByOffset);
+  await shopModel.rowProperties(getConfirmBillByOffset);
 
   res.json(getConfirmBillByOffset);
 });
@@ -545,6 +552,7 @@ router.get('/bills_travelling.json', async function(req, res) {
   let getTravellingBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,2,offsetT);
   getTravellingBillByOffset=await shopModel.addStatusFinished(getTravellingBillByOffset);
   getTravellingBillByOffset=await shopModel.addDateModified(getTravellingBillByOffset);
+  await shopModel.rowProperties(getTravellingBillByOffset);
 
   res.json(getTravellingBillByOffset);
 });
@@ -584,6 +592,7 @@ router.get('/bills_travelled.json', async function(req, res) {
   let getTravelledBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,3,offsetTe);
   getTravelledBillByOffset=await shopModel.addStatusFinished(getTravelledBillByOffset);
   getTravelledBillByOffset=await shopModel.addDateModified(getTravelledBillByOffset);
+  await shopModel.rowProperties(getTravelledBillByOffset);
 
   console.log(getTravelledBillByOffset);
   res.json(getTravelledBillByOffset);
@@ -624,6 +633,7 @@ router.get('/bills_discard.json', async function(req, res) {
   let getDiscardBillByOffset=await shopModel.getInfoBillByStatusOffset(shopId.maso,4,offsetD);
   getDiscardBillByOffset=await shopModel.addStatusFinished(getDiscardBillByOffset);
   getDiscardBillByOffset=await shopModel.addDateModified(getDiscardBillByOffset);
+  await shopModel.rowProperties(getDiscardBillByOffset);
 
   res.json(getDiscardBillByOffset);
 });
