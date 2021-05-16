@@ -48,7 +48,7 @@ module.exports = {
     },
 
     async getAllBillsFromUserId(userId) {
-        const [rows, fields] = await db.load(`select donhang.maso, donhang.tinhtrangdon, chitietdonhang.sanpham, donhang.tonggiatien
+        const [rows, fields] = await db.load(`select distinct donhang.maso, donhang.tinhtrangdon, donhang.tonggiatien
         from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso
         where donhang.taikhoan = ${userId}`)
 
@@ -56,7 +56,7 @@ module.exports = {
     },
 
     async getAllYetConfirmedBillsFromUserId(userId) {
-        const [rows, fields] = await db.load(`select donhang.maso, donhang.tinhtrangdon, chitietdonhang.sanpham, donhang.tonggiatien
+        const [rows, fields] = await db.load(`select distinct donhang.maso, donhang.tinhtrangdon, donhang.tonggiatien
         from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso
         where donhang.taikhoan = ${userId} and donhang.tinhtrangdon = 1`)
 
@@ -64,7 +64,7 @@ module.exports = {
     },
 
     async getAllTravelingBillsFromUserId(userId) {
-        const [rows, fields] = await db.load(`select donhang.maso, donhang.tinhtrangdon, chitietdonhang.sanpham, donhang.tonggiatien
+        const [rows, fields] = await db.load(`select distinct donhang.maso, donhang.tinhtrangdon, donhang.tonggiatien
         from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso
         where donhang.taikhoan = ${userId} and donhang.tinhtrangdon = 2`)
 
@@ -72,7 +72,7 @@ module.exports = {
     },
 
     async getAllTraveledBillsFromUserId(userId) {
-        const [rows, fields] = await db.load(`select donhang.maso, donhang.tinhtrangdon, chitietdonhang.sanpham, donhang.tonggiatien
+        const [rows, fields] = await db.load(`select distinct donhang.maso, donhang.tinhtrangdon, donhang.tonggiatien
         from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso
         where donhang.taikhoan = ${userId} and donhang.tinhtrangdon = 3`)
 
@@ -80,7 +80,7 @@ module.exports = {
     },
 
     async getAllCanceledBillsFromUserId(userId) {
-        const [rows, fields] = await db.load(`select donhang.maso, donhang.tinhtrangdon, chitietdonhang.sanpham, donhang.tonggiatien
+        const [rows, fields] = await db.load(`select distinct donhang.maso, donhang.tinhtrangdon, donhang.tonggiatien
         from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso
         where donhang.taikhoan = ${userId} and donhang.tinhtrangdon = 4`)
 

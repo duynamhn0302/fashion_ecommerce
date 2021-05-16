@@ -81,7 +81,7 @@ module.exports = {
                 from (chitietdonhang join donhang on donhang.maso = chitietdonhang.donhang)
                             join sanpham on sanpham.maso = chitietdonhang.sanpham
                 group by sanpham.maso
-                ORDER BY sum(chitietdonhang.soluong)  DESC) 
+                ORDER BY sum(chitietdonhang.soluong)  DESC)
                         sp	on danhmuccap2.maso = sp.danhmuccap2
         ORDER BY sum(sp.sum)  DESC`;
         const [rows, fields] = await db.load(sql);
@@ -229,4 +229,11 @@ module.exports = {
         }
         return cate1;
       },
+      async getAllProductsByBillId(billID, userId) {
+        const sql = `select sanpham.ten
+        from donhang join chitietdonhang on chitietdonhang.donhang = donhang.maso join sanpham on sanpham.maso = chitietdonhang.sanpham
+        where donhang.taikhoan = ${userId} and donhang.maso = ${billID}`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+      }
 }
