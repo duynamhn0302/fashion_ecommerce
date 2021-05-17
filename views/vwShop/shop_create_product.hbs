@@ -267,7 +267,7 @@
                                 minimum_photo = true;
                                 $("#input-image-3").fileinput({
                                     uploadUrl: "/shops/upload-product-images",
-                                    allowedFileExtensions: ["jpg", "png", "gif"],
+                                    allowedFileExtensions: ["jpg", "png", "gif", "webp"],
                                     maxImageWidth: 200,
                                     maxImageHeight: 150,
                                     initialPreview: initiallink,
@@ -275,7 +275,6 @@
                                     initialPreviewDownloadUrl: 'https://picsum.photos/id/{key}/1920/1080', // includes the dynamic key tag to be replaced for each config
                                     resizePreference: 'height',
                                     showPreview: true,
-                                    showUpload: false,
                                     maxTotalFileCount: 8,
                                     minToTalFileCount: 1,
                                     theme: 'fas',
@@ -291,14 +290,13 @@
                         <script>
                         $("#input-image-3").fileinput({
                             uploadUrl: "/shops/upload-product-images",
-                            allowedFileExtensions: ["jpg", "png", "gif"],
+                            allowedFileExtensions: ["jpg", "png", "gif", "webp"],
                             maxImageWidth: 200,
                             maxImageHeight: 150,
                             resizePreference: 'height',
                             showPreview: true,
                             maxTotalFileCount: 8,
                             minToTalFileCount: 1,
-                            showUpload: false,
                             theme: 'fas',
                             resizeImage: true
                         }).on('filepreupload', function() {

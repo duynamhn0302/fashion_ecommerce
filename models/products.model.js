@@ -1,5 +1,6 @@
 const db = require('../utils/db');
 const { paginate } = require("./../config/default.json");
+
 module.exports = {
     async informationForListProduct(list){
       if (typeof(list) != typeof([]))

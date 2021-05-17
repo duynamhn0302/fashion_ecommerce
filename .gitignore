@@ -3,7 +3,6 @@ Debug
 .Debug
 log
 .log
-db/
 config/
 node_modules/
 *.db
