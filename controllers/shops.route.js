@@ -5,6 +5,7 @@ const shopModel=require('../models/shop.model')
 const multer = require('multer');
 const router = express.Router();
 const moment = require('moment');
+const auth = require('./../middlewares/auth.mdw');
 const fs = require('fs');
 const { paginate } = require('./../config/default.json');
 const { dirname } = require('path');
@@ -133,6 +134,14 @@ router.post("/shops-information/:id/search", async function (req, res) {
     return res.redirect(`/shops/shops-information/${shopID}`);
   res.redirect(`/shops/products/${shopID}`);
 });
+
+router.post("/edit-shop/:id/", async function (req, res) {
+  let shopID = req.params.id;
+  console.log(req.body);
+  await shopModel.updateShopInfo(shopID,req.body.ten,req.body.sdt,req.body.email,req.body.diachi);
+  res.redirect(`/shops/products/`);
+});
+
 router.get("/products", async function (req, res) {
   let user = req.session.authUser;
   if (user==null)
@@ -141,11 +150,15 @@ router.get("/products", async function (req, res) {
   }
   let shopID=await shopModel.getShopID(+user.maso);
   let listProductByShopID = await shopModel.getProductByShopID(shopID.maso);
+  let getShopIf=await shopModel.getShopIfByID(shopID.maso);
+  console.log(getShopIf);
   res.render('vwShop/shop_products',{
     layout: 'shop_manage.hbs',
-    listProductByShopID
+    listProductByShopID,
+    getShopIf
   })
 });
+
 //Xem ds sản phẩm của shop
 router.get("/products/:id", async function (req, res) {
   let shopID = req.params.id;
@@ -197,6 +210,7 @@ router.get('/incomes', async function (req, res) {
     res.redirect('/login');
   }
   let shopId=await shopModel.getShopID(+user.maso);
+  let getShopIf=await shopModel.getShopIfByID(+shopId.maso);
   let countProductSelling=await shopModel.countProductOfShop(+shopId.maso);
   let countReviewProduct=await shopModel.countStatusProduct(+shopId.maso,0);
   let countBlockProduct=await shopModel.countStatusProduct(+shopId.maso,3);;
@@ -330,6 +344,8 @@ router.get('/incomes', async function (req, res) {
     getMoneyMonth,
     getStarShop,
     percentDiscard,
+    getShopIf
+    ,
       layout: 'shop_manage.hbs'
     });
 })
@@ -757,6 +773,7 @@ router.get('/bills-detail/:id', async function (req, res) {
     statusChangeName=nextStatus.ten;
   }
   listBillDetail.statusChangeName=statusChangeName;
+
   console.log(listBillDetail);
 
   res.render('vwShop/shop_bill_detail',{
@@ -966,7 +983,7 @@ router.get('/edit-product/:id',async function(req,res){
   }
 })
 
-router.post('/edit-product',async function(req,res){
+router.post('/edit-product',auth.authShop,async function(req,res){
   var sex = 0;
   if(req.body.gioitinhsudung === "Nữ"){
     sex=1;

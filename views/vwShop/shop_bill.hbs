@@ -17,7 +17,7 @@
         <div class="account_bar">
             <div class="account_bar_inner">
                 <div class="img_shop_account">
-                    <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img_account_inner">
+                    <img src="{{authUser.avatar}}" alt="" class="img_account_inner">
                 </div>
                 <div class="name_account">
                     Divisia Shop
@@ -27,10 +27,9 @@
                 </div>
             </div>
             <div class="func_account_bar" id="func_auth_bar">
-                <div class="func_acc" id="pass_shop">
-                    Thay đổi mật khẩu
+                <div class="func_acc" id="info_shop">
+                    <a href="/shops/products" class="option-select-auth noHover" >Thông tin Shop</a>
                 </div>
-                <div class="func_acc" id="info_shop">Thông tin Shop</div>
                 <div><hr class="inline"></div>
                 <div class="func_acc" id="log_out_shop">
                     <form method="POST" id="frmLogout" action="/logout"></form>
@@ -290,7 +289,7 @@
                                     </thead>
                                     <tbody>
                                         {{#each this.getConfirmBillByOffset}}
-                                        <tr class="item_bill_confirm">
+                                        <tr class="item_bill_confirm clickable-row" data-href='bills-detail/{{maso}}'>
                                             <td>{{maso}}</td>
                                             <td>{{tenNguoiNhan}}</td>
                                             <td>{{sdtnguoinhan}}</td>
@@ -428,7 +427,7 @@
                                     </thead>
                                     <tbody>
                                         {{#each this.getTravellingBillByOffset}}
-                                        <tr class="item_bill_travelling">
+                                        <tr class="item_bill_travelling clickable-row" data-href='bills-detail/{{maso}}'>
                                             <td>{{maso}}</td>
                                             <td>{{tenNguoiNhan}}</td>
                                             <td>{{sdtnguoinhan}}</td>
@@ -565,7 +564,7 @@
                                     </thead>
                                     <tbody>
                                         {{#each this.getTravelledBillByOffset}}
-                                        <tr class="item_bill_travelled">
+                                        <tr class="item_bill_travelled clickable-row" data-href='bills-detail/{{maso}}'>
                                             <td>{{maso}}</td>
                                             <td>{{tenNguoiNhan}}</td>
                                             <td>{{sdtnguoinhan}}</td>
@@ -706,7 +705,7 @@
                                     </thead>
                                     <tbody>
                                         {{#each this.getDiscardBillByOffset}}
-                                        <tr class="item_bill_discard">
+                                        <tr class="item_bill_discard clickable-row" data-href='bills-detail/{{maso}}'>
                                             <td>{{maso}}</td>
                                             <td>{{tenNguoiNhan}}</td>
                                             <td>{{sdtnguoinhan}}</td>

@@ -32,11 +32,11 @@ function addToCart(formId){
             setTimeout(function(e){
                 $('#add-success').removeClass('roll-in-right');
                 $('#add-success').addClass('scale-out-tr');
-            },100)
+            },1000)
             setTimeout(function(e){
                 $('#add-success').removeClass('scale-out-tr');
                 $('#add-success').removeClass('d-show1');
-            },3000)
+            },2600)
             //do nothin
             $(document).find("#slGioHang").html(data.result)
             e.preventDefault();

@@ -19,7 +19,7 @@
         <div class="account_bar">
             <div class="account_bar_inner">
                 <div class="img_shop_account">
-                    <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img_account_inner" />
+                    <img src="{{authUser.avatar}}" alt="" class="img_account_inner" />
                 </div>
                 <div class="name_account">
                     Divisia Shop
@@ -29,10 +29,9 @@
                 </div>
             </div>
             <div class="func_account_bar" id="func_auth_bar">
-                <div class="func_acc" id="pass_shop">
-                    Thay đổi mật khẩu
+                <div class="func_acc" id="info_shop">
+                    <a href="/shops/products" class="option-select-auth noHover" >Thông tin Shop</a>
                 </div>
-                <div class="func_acc" id="info_shop">Thông tin Shop</div>
                 <div><hr class="inline"></div>
                 <div class="func_acc" id="log_out_shop">
                     <form method="POST" id="frmLogout" action="/logout"></form>
@@ -173,15 +172,13 @@
             </div>
         </div>
 
-        <div class="container_menu_product active_tab" id="tab2" data-tab-content>
-            <form action="" method="post" class="shop_info_form">
+        <div class="container_menu_product" id="tab2" data-tab-content>
+            {{#with getShopIf}}
+            <form action="/shops/edit-shop/{{maso}}/" method="post" class="shop_info_form">
                 <div class="mb-3" style="margin-top: 15px">
                     <div class="avatar_holder" style="margin:auto" onclick="javascript: $('#changeAvatarModal').modal('show');">
                         <div class="avatar_image" id="avatar-parent">
-                            <img src="/resources/img/shop/logo.9376039b.png" alt="avatar" id="avatar-circle">
-                        </div>
-                        <div class="avatar_change_holder">
-                            <img src="/resources/img/icons/camera.png" alt="change-icon">
+                            <img src="{{avatar}}" alt="avatar" id="avatar-circle">
                         </div>
                     </div>
                 </div>
@@ -210,9 +207,10 @@
                     </div>
                 </div>
                 <div class="row_in_info_form">
-                    <button type="button" class="btn save_change_btn">Lưu thông tin</button>
+                    <button type="submit" class="btn save_change_btn">Lưu thông tin</button>
                 </div>
             </form>
+            {{/with}}
         </div>
 
         <!-- Modal -->
@@ -289,78 +287,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fas/theme.min.js"></script>
 <script>
-    function getValuesArray() {
-        let values = [];
-        $(".form-control-input").each(function () {
-            values.push(this.value);
-        });
-        return values;
-    }
 
-    let former_state = getValuesArray();
-
-    $(".form-control-input").each(function () {
-        $(".save_change_btn").hide();
-        let label_value = $(this).siblings(`label[for='${$(this).attr("id")}']`)[0]
-            .innerHTML;
-        $(this).on("input", function () {
-            if ($(this).val() === "") {
-                $(".save_change_btn").hide();
-                $(this).addClass("is-invalid");
-                $(this).siblings(`label[for='${$(this).attr("id")}']`)[0].innerHTML =
-                    "Không được để trống";
-            } else {
-                $(".save_change_btn").show();
-                $(this).removeClass("is-invalid");
-                $(this).siblings(`label[for='${$(this).attr("id")}']`)[0].innerHTML =
-                    label_value;
-            }
-            let new_state = getValuesArray();
-            if (
-                JSON.stringify(new_state) !== JSON.stringify(former_state) &&
-                $(this).val() !== ""
-            )
-                $(".save_change_btn").show();
-            else $(".save_change_btn").hide();
-        });
-    });
-
-    $("#input-image-3").fileinput({
-        uploadUrl: "/users/upload-avatar",
-        autoReplace: true,
-        resizePreference: 'height',
-        showPreview: true,
-        maxTotalFileCount: 1,
-        maxFileCount: 1,
-        showClose: false,
-        showUpload: false,
-        theme: 'fas',
-        resizeImage: true,
-        validateInitialCount: true,
-        dropZoneTitle: 'Nhấp và nhả hình ảnh vào đây',
-        allowedFileExtensions: ["jpg", "png", "gif", "webp"],
-    }).on('filepreupload', function () {
-        $('#kv-success-box').html('');
-    }).on('fileuploaded', function (event, data) {
-        $('#kv-success-box').append(data.response.link);
-        $('#kv-success-modal').modal('show');
-
-        $('.image-auth').attr("src", data.response.link + "?" + new Date().getTime());
-        $('#avatar-circle').attr("src", data.response.link + "?" + new Date().getTime());
-    })
-
-    $('#confirm-avatar').on('click', function (e) {
-        $('.fileinput-upload-button').get(0).click();
-        displaySuccessNotification();
-        $("#changeAvatarModal").modal("toggle");
-    })
-
-    $('#dismiss-avatar').on('click', function (e) {
-        $('.fileinput-remove').click();
-    })
-
-    $(".avatar_holder").click(function () {
-        $('.fileinput-remove').click();
-        $("#changeAvatarModal").modal("toggle");
-    });
 </script>

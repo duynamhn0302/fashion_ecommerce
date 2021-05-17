@@ -104,7 +104,15 @@ module.exports = {
     },
 
     async getProductsForPayment(cartId) {
-        const [rows, fields] = await db.load(`SELECT * FROM chitietgiohang WHERE giohang = ${cartId}`);
+        const [rows, fields] = await db.load(`SELECT chitietgiohang.*, cuahang.maso, sanpham.giaban FROM chitietgiohang join sanpham on chitietgiohang.sanpham = sanpham.maso join cuahang on cuahang.maso = sanpham.cuahang 
+        WHERE chitietgiohang.giohang = ${cartId}`);
+
+        return rows.length ? rows : null;
+    },
+
+    async getAllShopFromCart(cartId) {
+        const [rows, fields] = await db.load(`SELECT DISTINCT cuahang.maso FROM chitietgiohang join sanpham on chitietgiohang.sanpham = sanpham.maso join cuahang on cuahang.maso = sanpham.cuahang
+        where chitietgiohang.giohang = ${cartId}`);
 
         return rows.length ? rows : null;
     },

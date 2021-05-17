@@ -370,7 +370,26 @@
 }
 
 .noHover{
-    pointer-events: none;
     color: black;
     font-size: 15px;
+    font-weight: 500;
+}
+
+.noHover:hover{
+    text-decoration: none;
+    color: rgb(202, 9, 9);
+}
+
+.noHoverV2{
+    color: black;
+    padding-right: 50%;
+}
+
+.noHoverV2:hover{
+    text-decoration: none;
+    color: black;
+}
+
+.btn-sp{
+    width: 100%;
 }

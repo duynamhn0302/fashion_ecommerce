@@ -234,35 +234,66 @@ router.post("/pay-cart", async function (req, res) {
     +req.body.cartId
   );
   let cart = await cartModel.singleByCartId(+req.body.cartId);
-  let createBillResult = await cartModel.createNewBill({
-    tonggiatien: cart.tonggiatien,
-    taikhoan: cart.taikhoan,
-    tongsosanpham: cart.tongsosanpham,
-    tinhtrangdon: 1,
-    diachinguoinhan: req.body.address,
-    sdtnguoinhan: req.body.sdt
-  });
-  let newBillId = createBillResult.insertId;
+  let allShops = await cartModel.getAllShopFromCart(+req.body.cartId);
 
-  let newDate = new Date();
-  await cartModel.addToHistoryAfterPayment({
-    donhang: newBillId,
-    tinhtrang: 1,
-    ngaythang: moment(newDate).format("YYYY-MM-DD"),
-  });
+  for (let i=0; i<allShops.length; i++) {
+    let bill = {
+      tonggiatien: 0,
+      taikhoan: cart.taikhoan,
+      tongsosanpham: 0,
+      tinhtrangdon: 1,
+      diachinguoinhan: req.body.address,
+      sdtnguoinhan: req.body.sdt,
+    };
+    let productsInBill = [];
+    for (let j=0; j<productsInCart.length; j++) {
+      if (productsInCart[j].maso === allShops[i].maso) {
+        bill.tonggiatien += +productsInCart[j].giaban * +productsInCart[j].soluong;
+        bill.tongsosanpham += productsInCart[j].soluong;
+        productsInBill.push( {
+          sanpham: productsInCart[j].sanpham,
+          dongia: productsInCart[j].giaban,
+          soluong: productsInCart[j].soluong,
+        });
+      }
+    }
+
+    let createBillResult = await cartModel.createNewBill(bill);
+
+    let newBillId = createBillResult.insertId;
+
+    for (let k=0; k<productsInBill.length; k++) {
+      productsInBill[k].donhang = +newBillId;
+      await cartModel.createNewBillDetail(productsInBill[k]);
+    }
+
+    let newDate = new Date();
+    await cartModel.addToHistoryAfterPayment({
+      donhang: newBillId,
+      tinhtrang: 1,
+      ngaythang: moment(newDate).format("YYYY-MM-DD"),
+    });
+  }
+
+  // let createBillResult = await cartModel.createNewBill({
+  //   tonggiatien: cart.tonggiatien,
+  //   taikhoan: cart.taikhoan,
+  //   tongsosanpham: cart.tongsosanpham,
+  //   tinhtrangdon: 1,
+  //   diachinguoinhan: req.body.address,
+  //   sdtnguoinhan: req.body.sdt
+  // });
+  // let newBillId = createBillResult.insertId;
+
+  // let newDate = new Date();
+  // await cartModel.addToHistoryAfterPayment({
+  //   donhang: newBillId,
+  //   tinhtrang: 1,
+  //   ngaythang: moment(newDate).format("YYYY-MM-DD"),
+  // });
 
   await Promise.all(
     productsInCart.map(async (product) => {
-      let productDetail = await productsModel.getSingleProductById(
-        +product.sanpham
-      );
-      let newProductDetail = {
-        donhang: +newBillId,
-        sanpham: product.sanpham,
-        dongia: productDetail.giaban,
-        soluong: product.soluong,
-      };
-      await cartModel.createNewBillDetail(newProductDetail);
       await cartModel.removeCartAfterPayment(
         { maso: +req.body.cartId },
         { giohang: +req.body.cartId }

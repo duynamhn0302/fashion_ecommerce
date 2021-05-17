@@ -59,7 +59,7 @@
         <div class="account_bar">
             <div class="account_bar_inner">
                 <div class="img_shop_account">
-                    <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img_account_inner">
+                    <img src="{{authUser.avatar}}" alt="" class="img_account_inner">
                 </div>
                 <div class="name_account">
                     Divisia Shop
@@ -69,10 +69,9 @@
                 </div>
             </div>
             <div class="func_account_bar" id="func_auth_bar">
-                <div class="func_acc" id="pass_shop">
-                    Thay đổi mật khẩu
+                <div class="func_acc" id="info_shop">
+                    <a href="/shops/products" class="option-select-auth noHover" >Thông tin Shop</a>
                 </div>
-                <div class="func_acc" id="info_shop">Thông tin Shop</div>
                 <div><hr class="inline"></div>
                 <div class="func_acc" id="log_out_shop">
                     <form method="POST" id="frmLogout" action="/logout"></form>
@@ -261,12 +260,12 @@
         jQuery(document).ready(function($) {
             $(".clickable-dialog-update").click(function() {
                 $('.combo_box_select input').val("{{{idUpdate}}}");
-                document.forms[0].submit();
+                document.forms[1].submit();
                 $('.update-bill-dialog-change').fadeOut();
             });
             $(".clickable-dialog-remove").click(function() {
                 $('.combo_box_select input').val("4");
-                document.forms[0].submit();
+                document.forms[1].submit();
                 $('.update-bill-dialog').fadeOut();
             });
             $(".clickable-dialog-back").click(function() {
