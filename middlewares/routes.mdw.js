@@ -147,8 +147,6 @@ module.exports = function (app) {
   app.get('/open_shop',auth.authUser,function(req, res){
     res.render("dangkymoshop",{layout: false});
   })
-  
-
 
   app.all('/',require('../controllers/category.route'));
   app.use('/admin/', require('../controllers/admin.route'))
