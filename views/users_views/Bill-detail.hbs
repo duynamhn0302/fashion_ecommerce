@@ -162,6 +162,7 @@
             <div class="table_bill_container" style="padding-bottom: 0px; padding-top:10px">
                            
                                 <table class="table_bill">
+                                    {{#with this.listBillDetail}}
                                     <thead>
                                         <tr id="header">
                                             <th>Sản phẩm</th>
@@ -169,11 +170,12 @@
                                             <th>Size</th>
                                             <th>Số lượng</th>
                                             <th>Giá</th>
+                                            {{#if DuocDanhGia}}
                                             <th>Đánh giá</th>
+                                            {{/if}}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{#with this.listBillDetail}}
                                             {{#each this.listSanPham}}
                                             <tr>
                                                 <td class="product_cart_bill">
@@ -191,28 +193,32 @@
                                                 <td>{{kichthuoc}}</td>
                                                 <td>{{soluongmua}}</td>
                                                 <td>{{dongia}}</td>
-                                                {{#if checkReview}}
-                                                <td>Đã đánh giá</td>
-                                                {{else}}
-                                                <td><button id="click_review_{{maso}}">Đánh giá</button></td>
+                                                {{#if checkDuocReview}}
+                                                    {{#if checkReview}}
+                                                    <td>Đã đánh giá</td>
+                                                    {{else}}
+                                                    <td><button id="click_review_{{maso}}">Đánh giá</button></td>
+                                                    {{/if}}
                                                 {{/if}}
                                             </tr>
-                                            {{#if checkReview}}
-                                            {{else}}
-                                            <script>
-                                                var myEl_{{maso}} = document.getElementById('click_review_{{{maso}}}');
-                                                var idProduct_{{maso}}= document.getElementById('id_product');
-                                                var stringId_{{maso}}={{maso}};
-                                                myEl_{{maso}}.addEventListener('click', function() {
-                                                    idProduct_{{maso}}.value=stringId_{{maso}};
-                                                    $('.container-ratingstar').fadeIn();
-                                                    $('#rating-form').attr('action', "/users/rating-product/:{{{maso}}}");
-                                                }, false);
-                                            </script>
+                                            {{#if checkDuocReview}}
+                                                {{#if checkReview}}
+                                                {{else}}
+                                                <script>
+                                                    var myEl_{{maso}} = document.getElementById('click_review_{{{maso}}}');
+                                                    var idProduct_{{maso}}= document.getElementById('id_product');
+                                                    var stringId_{{maso}}={{maso}};
+                                                    myEl_{{maso}}.addEventListener('click', function() {
+                                                        idProduct_{{maso}}.value=stringId_{{maso}};
+                                                        $('.container-ratingstar').fadeIn();
+                                                        $('#rating-form').attr('action', "/users/rating-product/:{{{maso}}}");
+                                                    }, false);
+                                                </script>
+                                                {{/if}}
                                             {{/if}}
                                             {{/each}}
-                                        {{/with}}
                                     </tbody>
+                                    {{/with}}
                                 </table>
             </div>
 

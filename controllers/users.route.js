@@ -398,12 +398,13 @@ router.get("/bill-detail/:id", async (req, res) => {
   let listBillDetail=await shopModel.getDetailBillInfo(billId);
 
   let listSanPham=await shopModel.getListProductByBill(billId);
-
+  listBillDetail.DuocDanhGia=listBillDetail.tinhtrangdon==3
   for (item of listSanPham)
   {
     item.giaban=productsModel.formatPrice(item.giaban);
     item.dongia=productsModel.formatPrice(item.dongia);
     item.checkReview=await usersModel.checkedReviewProduct(idUser,item.maso)!=null;
+    item.checkDuocReview=listBillDetail.DuocDanhGia;
   }
   listBillDetail.listSanPham=listSanPham;
   listBillDetail.tonggiatien=productsModel.formatPrice(listBillDetail.tonggiatien);
