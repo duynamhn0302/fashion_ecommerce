@@ -387,6 +387,14 @@ module.exports = {
         return rows;
     },
 
+    async getNameStatusBill(statusID)
+    {
+        const sql = `SELECT * FROM loaitinhtrangdon WHERE maso=${statusID}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
+    },
+
     async updateStatusBill(idBill,status)
     {
         var condition={maso: idBill};

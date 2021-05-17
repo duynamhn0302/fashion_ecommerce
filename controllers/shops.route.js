@@ -711,6 +711,16 @@ router.get('/bills-detail/:id', async function (req, res) {
   listBillDetail.listSanPham=listSanPham;
   listBillDetail.isNotAvailableUpdate=(listBillDetail.tinhtrangdon===3 || listBillDetail.tinhtrangdon===4);
   listBillDetail.tonggiatien=productModel.formatPrice(listBillDetail.tonggiatien);
+
+  //Xác định tình trạng tiếp theo
+  listBillDetail.idUpdate=listBillDetail.tinhtrangdon+1;
+  let nextStatus=await shopModel.getNameStatusBill(listBillDetail.idUpdate);
+  let statusChangeName;
+  if (nextStatus!=null)
+  {
+    statusChangeName=nextStatus.ten;
+  }
+  listBillDetail.statusChangeName=statusChangeName;
   console.log(listBillDetail);
 
   res.render('vwShop/shop_bill_detail',{

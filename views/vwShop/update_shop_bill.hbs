@@ -1,5 +1,31 @@
 {{#with this.listBillDetail}}
 <div class="container_income">
+    <div class="update-bill-dialog">
+        <div class="dialog">
+            <div class="question-dialog">
+                Bạn có muốn hủy đơn hàng này ?
+            </div>
+            <div class="container-dialog-btn">
+                <div class="ctn_update_cbx">
+                    <div class="btn_back_input clickable-dialog">
+                        <i class="fas fa-arrow-left" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Quay lại</span>
+                    </div>
+                </div>
+                <div class="ctn_update_cbx">
+                    <div class="btn_update_input clickable-dialog">
+                        <i class="far fa-check-circle" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Xác nhận</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        jQuery(document).ready(function($) {
+            $(".clickable-dialog").click(function() {
+                $('.update-bill-dialog').fadeOut();
+            });
+        });
+    </script>
     <div class="container_income_navbar">
         <div class="btn_show">
             <span class="fas fa-bars"></span>
@@ -48,6 +74,7 @@
         </div>
     </div>
 
+    <form action="/shops/update-bills-detail/{{maso}}" method="POST">
     <div class="container_bill">
         <div class="container_bill_items" style="padding-bottom: 10px;">
             <div class="link_path">
@@ -140,7 +167,7 @@
 
         </div>
     </div>
-    <form action="/shops/update-bills-detail/{{maso}}" method="POST">
+
     <div class="container_bill">
         <div class="container_bill_items" style="padding-bottom: 10px;">
             <div class="customer-information">
