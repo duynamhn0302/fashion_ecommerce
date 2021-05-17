@@ -10,6 +10,9 @@ const productsModel = require('../models/products.model');
 router.get('/',  auth.authAdmin, async function (req, res, next){
     let user = res.locals.authUser;
     const accounts = await usersModel.allUser()
+    for (const acc of accounts) {
+        acc.ngaymo = acc.ngaymo.toISOString().substring(0, 10)
+    }
     const shops = await shopModel.allShop()
     const products = await productsModel.allProductAdmin()
     for(var i = 0; i < products.length; i++){

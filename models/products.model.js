@@ -177,8 +177,9 @@ module.exports = {
         return rows[0];
     },
     async allProductAdmin(){
-      const sql = `select sanpham.*, cuahang.ten as tencuahang from sanpham join 
-          cuahang on sanpham.cuahang = cuahang.maso where sanpham.status = 1`;
+      const sql = `select sanpham.*, cuahang.ten as tencuahang, danhmuccap2.ten as tendmc2 from (sanpham join 
+          cuahang on sanpham.cuahang = cuahang.maso ) join danhmuccap2 on sanpham.danhmuccap2 = danhmuccap2.maso
+          where sanpham.status = 1`;
       var [rows, fields] = await db.load(sql);
       rows =  await this.informationForListProduct(rows)
       return rows;
