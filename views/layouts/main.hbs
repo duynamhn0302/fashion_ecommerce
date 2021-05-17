@@ -22,11 +22,6 @@
 	{{!-- <link rel="stylesheet" href="/resources/css/font-awesome.min.css" /> --}}
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"/>
 	<link rel="stylesheet" href="/resources/css/flaticon.css" />
-	<link rel="stylesheet" href="/resources/css/slicknav.min.css" />
-	<link rel="stylesheet" href="/resources/css/jquery-ui.min.css" />
-	<link rel="stylesheet" href="/resources/css/owl.carousel.min.css" />
-	<link rel="stylesheet" href="/resources/css/animate.css" />
-	<link rel="stylesheet" href="/resources/css/style.css" />
 
 	<link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="/resources/css/font-awesome.min.css"/>
@@ -181,23 +176,19 @@
 				<!-- menu -->
 				<ul class="main-menu">
 					<li><a href="/">Trang chủ</a></li>
-                    <li><a href="/products/">Danh mục</a>
-                        <ul class="sub-menu">
-                            {{#each lcCategories}}
-                                <li>
-                                    <a href="/products/byCat1/{{maso}}">{{ten}}</a>
-                                    {{#if existsCate2}}
-                                        <ul class="sub-sub-menu">
-                                            {{#each cate2}}
-                                            <li><a href="/products/byCat2/{{maso}}">{{ten}}</a></li>
-                                            {{/each}}
-                                        </ul>
-                                    {{/if}}
-                                <li>
-                            {{/each}}
-						</ul>
-					</li>
-					
+                    <li ><a href="/products/">Tất cả</a></li>
+					{{#each lcCategories}}
+                        <li>
+                            <a href="/products/byCat1/{{maso}}">{{ten}}</a>
+                            {{#if existsCate2}}
+                                <ul class="sub-menu">
+                                    {{#each cate2}}
+                                    <li><a href="/products/byCat2/{{maso}}">{{ten}}</a></li>
+                                    {{/each}}
+                                </ul>
+                            {{/if}}
+                        <li>
+                    {{/each}}
 				</ul>
 			</div>
 		</nav>
