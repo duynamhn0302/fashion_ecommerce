@@ -9,16 +9,16 @@ function addToCart(formId){
             window.location.assign('/login');
         if(status === "success"){
             //add thanh cong, lam cai j do
-            $('#add-success').addClass('d-show');
+            $('#add-success').addClass('d-show1');
             $('#add-success').addClass('roll-in-right');
             setTimeout(function(e){
                 $('#add-success').removeClass('roll-in-right');
                 $('#add-success').addClass('scale-out-tr');
-            },1000)
+            },100)
             setTimeout(function(e){
                 $('#add-success').removeClass('scale-out-tr');
-                $('#add-success').removeClass('d-show');
-            },2600)
+                $('#add-success').removeClass('d-show1');
+            },3000)
             //do nothin
             form.find("input[name='sl']").val("1")
             $(document).find("#slGioHang").html(data.result)

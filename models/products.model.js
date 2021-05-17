@@ -1,20 +1,27 @@
 const db = require('../utils/db');
 const { paginate } = require("./../config/default.json");
 module.exports = {
-    async informationForListProduct(list){
-      if (typeof(list) != typeof([]))
-        return list;
-        for(var i = 0; i < list.length; i++){
-          const reImages = await this.getImages(list[i].maso)
-          list[i].avatar = reImages[0].link
-          list[i].luotmua = await this.getLuotMua(list[i].maso)
-          list[i].star = this.convertRating(list[i].diemdanhgia)
-          list[i].giaban = this.formatPrice(list[i].giaban)
-          list[i].isNewest = await this.isNewest(list[i].maso)
-          list[i].isBestSeller = await this.isBestSeller(list[i].maso)
-      }
-      return list
-    },
+  async getAllRating(id){
+    const sql = `select *
+    from sanpham join danhgia on sanpham.maso = danhgia.sanpham
+    where sanpham.maso = ${id}`
+    const [rows,fields] = await db.load(sql);
+    return rows;
+  },
+  async informationForListProduct(list){
+    if (typeof(list) != typeof([]))
+      return list;
+      for(var i = 0; i < list.length; i++){
+        const reImages = await this.getImages(list[i].maso)
+        list[i].avatar = reImages[0].link
+        list[i].luotmua = await this.getLuotMua(list[i].maso)
+        list[i].star = this.convertRating(list[i].diemdanhgia)
+        list[i].giaban = this.formatPrice(list[i].giaban)
+        list[i].isNewest = await this.isNewest(list[i].maso)
+        list[i].isBestSeller = await this.isBestSeller(list[i].maso)
+    }
+    return list
+  },
     async isNewest(id){
       const sql = `select *
           FROM sanpham
@@ -216,10 +223,13 @@ module.exports = {
         return rows;
       },
       async getAllProductsByCate2Id(cate2Id, offset, sort) {
-        var [rows, fields] = await db.load(
-          `select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 
-          where sanpham.status = 1 and danhmuccap2.maso = ${cate2Id} order by sanpham.giaban ${sort} limit ${paginate.limit} offset ${offset}`
-        );
+        const sql = `select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1)
+         join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 
+        where sanpham.status = 1 and danhmuccap2.maso = ${cate2Id} 
+        order by sanpham.giaban ${sort} limit ${paginate.limit} offset ${offset}`;
+        console.log(sql)
+        var [rows, fields] = await db.load(sql);
+
         rows =  await this.informationForListProduct(rows)
         return rows;
       },

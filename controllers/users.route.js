@@ -5,7 +5,7 @@ const moment = require('moment');
 const multer = require('multer');
 const auth = require('./../middlewares/auth.mdw');
 const shopModel=require('../models/shop.model');
-
+const db = require('../utils/db');
 const usersModel = require("../models/users.model");
 
 const router = express.Router();
@@ -14,10 +14,17 @@ router.post("/rating-product/:id", async function (req, res) {
   let num_star=+req.body.rate;
   let comment=req.body.cmReview;
   let id_product=+req.body.id_product;
-
+  var rating = await productsModel.getAllRating(id_product)
+  console.log(rating)
+  const len = rating.length
+  var sum = 0;
+  for (const r of rating) {
+    sum += r.sosao
+  }
+  console.log((num_star + sum) / (len + 1))
+  await db.patch({'diemdanhgia' : (num_star + sum) / (len + 1) , 'luotdanhgia': (len+1)}, {'maso' : id_product}, 'sanpham');
   await usersModel.insertReview(req.session.authUser.maso,id_product,comment,num_star);
-  //await usersModel.insertComment(req.session.authUser.maso,id_product,comment);
-
+  
   res.redirect("/users/orders");
 });
 

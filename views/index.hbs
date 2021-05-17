@@ -31,9 +31,9 @@
 							</p>
 							<a href="/products/{{maso}}" class="site-btn sb-line">Xem chi tiết</a>
 							
-							<a href="javascript: addToCart(`#frmAddToCart{{product.maso}}`);" class="site-btn sb-white">Thêm vào giỏ</a>
-							<form style="padding-left: 10px;" method="POST" class ="frmAddToCart" id="frmAddToCart{{product.maso}}" action="/users/add-to-cart">
-								<input  type = "hidden" name="id" value="{{product.maso}}">
+							<a href="javascript: addToCart('#frmAddToCart{{maso}}');" class="site-btn sb-white">Thêm vào giỏ</a>
+							<form style="padding-left: 10px;" method="POST" class ="frmAddToCart" id="frmAddToCart{{maso}}" action="/users/add-to-cart">
+								<input  type = "hidden" name="id" value="{{maso}}">
 								<input type="hidden" name="sl" value="1">
 							</form>
 						</div>
@@ -207,17 +207,7 @@
 
 	<!-- Product filter section end -->
 
-	{{!-- Phần add giỏ hàng thành công --}}
-	<link rel="stylesheet" href="/resources/css/css_nhung_phan_lat_vat.css"/>
-	<div id="add-success" class="">
-		<div id="add-success-img-container" class="d-flex">
-			<i class="far fa-check-circle"></i>
-		</div>
-		<div class="d-flex">
-			<span>Thêm vào giỏ hàng thành công</span>
-		</div>
-	</div>
-	{{!-- <button id="test">asdasd</button> --}}
+
 
 <script src="/resources/js/jquery-3.2.1.min.js"></script>
 <script src="/resources/js/submitAjax.js"></script>

@@ -2,6 +2,7 @@ const express = require("express");
 const categoryModel = require("../models/category.model");
 const productsModel = require("../models/products.model");
 const { paginate } = require("./../config/default.json");
+
 const router = express.Router();
 //Xem ds tất cả sản phẩm
 router.get("/", async function (req, res) {
@@ -170,7 +171,8 @@ router.get("/byCat2/:id", async function (req, res) {
 
   let allProductsFromCate2 = await productsModel.getAllProductsByCate2Id(
     cate2Id,
-    offset
+    offset,
+    sort
   );
   let cate1Name = await categoryModel.getCateName1ById(cate1Id);
   let cate2Name = await categoryModel.getCateName2ById(cate2Id);
