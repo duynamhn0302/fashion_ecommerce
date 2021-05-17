@@ -75,10 +75,13 @@ $(document).ready(function () {
       data, // serializes form input
       success: function (response) {
         if (response.empty) {
+          if ($('.single_product').length) {
+            return;
+          }
           $(".cart_container").append(`<div class="empty_cart_container">
           <img src="/resources/img/cart/empty-cart.svg" alt="empty-cart-photo">
           <h3>Không có sản phẩm nào trong giỏ hàng</h3>
-          <button class="site-btn sb-line sb-dark pay_btn continue_shopping_btn">Tiếp tục mua sắm</button>
+          <button class="site-btn sb-line sb-dark continue_shopping_btn" onclick="window.location.href = "/products/";">Tiếp tục mua sắm</button>
         </div>`);
           $(".temp_bill").remove();
         }
@@ -123,10 +126,6 @@ $(document).ready(function () {
           }
         });
     });
-  });
-
-  $(".continue_shopping_btn").click(function () {
-    location.href = "/";
   });
 
   $(".pay_btn").click(function () {
@@ -201,9 +200,16 @@ $(document).ready(function () {
 
   function getProductsNumber() {
     let total = 0;
+    let check = false;
     $(".quantity").each(function () {
       total += +$(this).children("input").val();
+      if (+$(this).children("input").val() === 0)
+        check = true;
     });
+    if (!check) {
+      $('.pay_btn').removeClass('disable_btn');
+      $('.pay_btn').prop('disabled', false);
+    }
     $(".flaticon-bag").siblings("span").html(total);
   }
 });
