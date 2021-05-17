@@ -260,7 +260,7 @@ router.get('/incomes', async function (req, res) {
 
   let getSLBill=await shopModel.getSLBill(+shopId.maso);
   let getSLBillByStatus=await shopModel.getSLBillByStatus(+shopId.maso,4);
-  let percentDiscard=parseFloat(getSLBillByStatus.tongDon)/getSLBill.tongDon*100;
+  let percentDiscard=Math.round(parseFloat(getSLBillByStatus.tongDon)/getSLBill.tongDon*100);
   console.log(percentDiscard);
 
   var prevMonth = function(dateObj) {
