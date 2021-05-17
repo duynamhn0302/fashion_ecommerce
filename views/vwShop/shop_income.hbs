@@ -266,48 +266,34 @@
 
             </div>
         </div>
-        <div class="warning_text">*Các chỉ số bạn đang xem ở trang chủ được cập nhật mỗi giờ một lần. Đối với doanh thu nhà bán có thể truy cập "Báo bán hàng tổng hợp" để xem báo cáo theo thời gian thực</div>
     </div>
 </div>
-<div class="container_income">
-  <div class="container_in" style="display: flex;">
-    <div class="col-lg-6">
-      <div class="">
-            <div id="chartContainer" style="height: 500px; width: 100%; "></div>
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        </div>
+<div class="container_income" style="margin-bottom: 50px;!important">
+  <div class="container_in" style="display: flex;" >
+      <div class="container_income_items" style="padding-top: 100px;padding-bottom: 100px;padding-left: 20px; padding-right: 150px;">
+            <div class="col-lg-6">
+                    <div class="">
+                            <div id="chartContainer" style="height: 500px; width: 100%; "></div>
+                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="">
+                            <div id="chartContainer2" style="height: 500px; width: 120%; "></div>
+                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                        </div>
+                    </div>
     </div>
-    <div class="col-lg-6">
-        <div class="">
-            <div id="chartContainer2" style="height: 500px; width: 100%; "></div>
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        </div>
-    </div>
+    
   </div>
 </div>
-<div class="container_income"style="display: flex;" >
 
-  <div class="container_in" style="display: flex;">
-        
-        
-  </div>
-  <div class="container_in" style="display: flex;">
-        <div class="">
-            <div id="chartContainer" style="height: 500px; width: 50%; "></div>
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        </div>
-        <div class="">
-            <div id="chartContainer2" style="height: 500px; width: 50%; "></div>
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        </div>
-  </div>
-</div>
 
 {{#each last7daysIncome}}
-      <input type="text" id="day{{id}}" data-x="{{x}}" data-y="{{y}}"> 
+      <input type="hidden" id="day{{id}}" data-x="{{x}}" data-y="{{y}}"> 
 {{/each}} 
 {{#each last7monthIncome}}
-      <input type="text" id="month{{id}}" data-x="{{x}}" data-y="{{y}}"> 
+      <input type="hidden" id="month{{id}}" data-x="{{x}}" data-y="{{y}}"> 
 {{/each}} 
 <script>
   window.onload = function () {
@@ -335,7 +321,7 @@
         animationEnabled: true,
         theme: "light2",
         title: {
-            text: "Doanh thu cửa hàng ngày"
+            text: "Doanh thu hàng ngày"
         },
         axisX: {
             valueFormatString: "DD MMM",
@@ -345,7 +331,7 @@
             }
         },
         axisY: {
-            title: "Số tiền",
+            title: "Số tiền (VND)",
             includeZero: true,
             crosshair: {
                 enabled: true
@@ -377,17 +363,17 @@
         animationEnabled: true,
         theme: "light2",
         title: {
-            text: "Doanh thu cửa hàng tháng"
+            text: "Doanh thu hàng tháng"
         },
         axisX: {
-            valueFormatString: "MMM, YYYY",
+            valueFormatString: "MM, YYYY",
             crosshair: {
                 enabled: true,
                 snapToDataPoint: true
             }
         },
         axisY: {
-            title: "Số tiền",
+            title: "Số tiền (VND)",
             includeZero: true,
             crosshair: {
                 enabled: true

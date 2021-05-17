@@ -47,48 +47,137 @@
             </script>
         </div>
     </div>
+<div class="container-shop-info" style="width: 100%; margin-right: 100px;">
+    <div class="container_header_shop">
+        <div class="container-feature-tab">
+            <div class="tab_triger">
+                <ul>
+                    <li>
+                        <label data-tab-target="#tab1" class="tab_1 active_tab_title">Tất cả sản phẩm</label>
+                    </li>
+                    <li>
+                        <label data-tab-target="#tab2" class="tab_2">Hồ sơ cửa hàng</label>
+                    </li>
+                    <li>
+                        <form class="search-form" action="/shops/shops-information/{{shopID}}/search" method="post">
+                            <input type="text" name="search_term" placeholder="Tìm sản phẩm tại cửa hàng" width="100" class="btn-search-prd-shop">
+                            <button class="btn-search-prd-shoping" onclick="javascript: $('.search-form').submit();">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-
-    <div class="container-contains-product">
-        <div class="row">
-            {{#each listProductByShopID}}
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <div style="display: flex;">
-                            {{#if isNewest}}
-                                <div class="tag-new">NEW</div>
-                            {{/if}}
-                            {{#if isBestSeller}}
-                                <div class="tag-sale" style="margin-top: 20px;">ON SALE</div>
-                            {{/if}}
-                        </div>
-                        <a href="/shops/edit-product/{{maso}}">
-                            <img src="{{avatar}}" alt="" style="height: 250px;">
-                        </a>
-                    
-                    </div>
-                    <a href="/shops/edit-product/{{maso}}">
-                        <div class="pi-text">
-                            <h6>{{giaban}}</h6>
-                            <p>{{ten}} </p>
-                        </div>
-                    </a>
-                    <div class="p-review">
-                        <p href=""><i class="flaticon-shopping-cart"></i> {{this.luotmua}}  lượt mua</p>
-                    </div>
-                    <div class="p-rating">
-                        {{#each this.star}}
-                            {{{this}}}
-                        {{/each}}
-                            ({{this.luotdanhgia}} đánh giá)
-                    </div>
+    <div class="container_menu_product active_tab" id="tab1" data-tab-content>
+        <div class="container_menu_sidebar">
+            <div class="tittle-menu-cate">
+                Danh mục sản phẩm
+            </div>
+            {{#each this.category}}
+            <div class="cate-sidebar">
+                <div class="cate-name-sidebar">
+                    <a href="/shops/shops-information/{{shopID}}/{{maCap1}}/byCat1" style="color: black; font-weight: bold;">{{tenCap1}}</a>
                 </div>
+                {{#each this.tenCap2}}
+                <div class="catesub-name-sidebar">
+                    <a href="/shops/shops-information/{{shopID}}/{{danhmuccap2}}/byCat2" style="color: black;">{{subCat}}</a>
+                </div>
+                {{/each}}
             </div>
             {{/each}}
         </div>
 
-     </div>
+        <div class="container_product_finding">
+            <div class="container-tab-name-select">
+                <div class="tab-name-select">Tất cả sản phẩm: </div>
+                <div class="number-result">{{totalProduct}} Kết quả</div>
+            </div>
+
+            <div class="container_product_sort">
+                <div class="sort-name-select">
+                    <div class="tittle-sort">Sắp xếp theo</div>
+                    <div class="sort-name selected-sort">Chọn lọc</div>
+                    <div class="sort-name">Giá thấp</div>
+                    <div class="sort-name">Giá cao</div>
+                </div>
+            </div>
+
+            <div class="container-contains-product">
+                <div class="row">
+                    {{#each listProductByShopID}}
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                                    <div class="pi-pic">
+                                        <div style="display: flex;">
+                                            {{#if isNewest}}
+                                                <div class="tag-new">NEW</div>
+                                            {{/if}}
+                                            {{#if isBestSeller}}
+                                                <div class="tag-sale" style="margin-top: 20px;">ON SALE</div>
+                                            {{/if}}
+                                        </div>
+                                        <a href="/products/{{maso}}">
+                                            <img src="{{avatar}}" alt="" style="height: 250px;">
+                                        </a>
+                                        
+                                    </div>
+                                    <a href="/shops/edit-product/{{maso}}">
+                                        <div class="pi-text">
+                                            <h6>{{giaban}}</h6>
+                                            <p>{{ten}} </p>
+                                        </div>
+                                    </a>
+                                    <div class="p-review">
+                                        <p href=""><i class="flaticon-shopping-cart"></i> {{this.luotmua}}  lượt mua</p>
+                                    </div>
+                                    <div class="p-rating">
+                                        {{#each this.star}}
+                                            {{{this}}}
+                                        {{/each}}
+                                            ({{this.luotdanhgia}} đánh giá)
+                                    </div>
+                                </div>
+                    </div>
+                    {{/each}}
+                </div>
+
+            </div>
+
+            <div class="container-pagination">
+                <div class="btn-pagination">
+                    Xem thêm
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabs=document.querySelectorAll('[data-tab-target]');
+        const tabContents=document.querySelectorAll('[data-tab-content]');
+
+        tabs.forEach(tab =>{
+            tab.addEventListener('click',()=>{
+                const tabsList=document.querySelectorAll('[data-tab-target]');
+                tabsList.forEach(tabMember=>{
+                    tabMember.classList.remove('active_tab_title');
+                });
+
+                const target=document.querySelector(tab.dataset.tabTarget)
+                tabContents.forEach(tabContent =>{
+                    tabContent.classList.remove('active_tab');
+                });
+                
+                target.classList.add('active_tab');
+                tab.classList.add('active_tab_title');
+            })
+        }
+
+        )
+    </script>    
+</div>
 
 </div>
 <script src="/resources/js/filterTable.js"></script>
