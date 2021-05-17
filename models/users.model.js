@@ -87,6 +87,11 @@ module.exports = {
         return rows.length ? rows : null;
     },
 
+    async checkedReviewProduct(userId, productID) {
+        const [rows, fields] = await db.load(`SELECT * FROM danhgia WHERE taikhoan=${userId} AND sanpham=${productID}`);
+        return rows.length ? rows : null;
+    },
+
     async getBillDetail(userId, billId) {
         const [rows, fields] = await db.load(`select donhang.tongsosanpham, donhang.tonggiatien, donhang.tinhtrangdon, chitietdonhang.sanpham, sanpham.ten, sanpham.kichthuoc, sanpham.giaban, cuahang.ten as cuahang, taikhoan.email, taikhoan.hoten, taikhoan.maso, taikhoan.sdt, chitietdonhang.soluong
         from donhang join chitietdonhang on donhang.maso = chitietdonhang.donhang join lichsutinhtrangdon on lichsutinhtrangdon.donhang = donhang.maso
@@ -191,8 +196,23 @@ module.exports = {
         if (rows.length===0) 
             return 0;
         return rows[0].numberShop;
-    }
-    ,
+    },
+    async insertReview(idUser,idProduct,content,numstar)
+    {
+        var today=new Date();
+        var new_data={taikhoan: idUser, sanpham: idProduct, ngaythang: today,noidung: content,sosao: numstar};
+        const [rows,fields] = await db.add(new_data,'danhgia');
+        return rows;
+    },
+
+    async insertComment(idUser,idProduct,content)
+    {
+        var today=new Date();
+        var new_data={taikhoan: idUser, sanpham: idProduct, ngaythang: today,noidung: content};
+        const [rows,fields] = await db.add(new_data,'binhluan');
+        return rows;
+    },
+
     async users_shop_bytime(n){
  
         var prevMonth = function (dateObj) {

@@ -103,16 +103,21 @@
 									</div>
 									<div class="option-authen-menu" id="option-show-auth">
 										{{#if authUser.vaitro}}
-										{{#when authUser.vaitro 'eq' 1}}
-											<div class="option-item-auth">
-												<a href="/users/profile" class="option-select-auth">Thông tin tài khoản</a>
-											</div>
-											<hr class="line-user">
-											<div class="option-item-auth">
-												<a href="/shops/incomes" class="option-select-auth">Thông tin shop</a>
-											</div>
-										{{/when}}
-										{{#when authUser.vaitro 'eq' 0}}
+											{{#when authUser.vaitro 'eq' 1}}
+												<div class="option-item-auth">
+													<a href="/users/profile" class="option-select-auth">Thông tin tài khoản</a>
+												</div>
+												<hr class="line-user">
+												<div class="option-item-auth">
+													<a href="/shops/incomes" class="option-select-auth">Thông tin shop</a>
+												</div>
+											{{/when}}
+											{{#when authUser.vaitro 'eq' 2}}
+												<div class="option-item-auth">
+													<a href="/admin" class="option-select-auth">Trang quản lý</a>
+												</div>
+											{{/when}}
+										{{else}}
 											<div class="option-item-auth">
 												<a href="/users/profile" class="option-select-auth">Thông tin tài khoản</a>
 											</div>
@@ -120,12 +125,6 @@
 											<div class="option-item-auth">
 												<a href="/open_shop" class="option-select-auth">Đăng ký mở shop</a>
 											</div>
-										{{/when}}
-										{{#when authUser.vaitro 'eq' 2}}
-											<div class="option-item-auth">
-												<a href="/admin" class="option-select-auth">Trang quản lý</a>
-											</div>
-										{{/when}}
 										{{/if}}
 										<hr class="line-user">
 										<div class="option-item-auth">

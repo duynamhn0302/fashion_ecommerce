@@ -3,8 +3,10 @@ Debug
 .Debug
 log
 .log
+db/
 config/
 node_modules/
 *.db
 .vscode/launch.json
+config/default.json
 config/default.json
