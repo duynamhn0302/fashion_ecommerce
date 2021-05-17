@@ -1,58 +1,70 @@
 $(document).ready(function () {
   getProductsNumber();
   $(
-    '<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>'
+    '<div class="quantity-nav"><button class="quantity-button quantity-up">+</button><button class="quantity-button quantity-down">-</button></div>'
   ).insertAfter(".quantity input");
   $(".quantity").each(function () {
     var spinner = $(this),
       input = spinner.find('input[type="number"]'),
-      btnUp = spinner.find(".quantity-up"),
-      btnDown = spinner.find(".quantity-down"),
+      btnUp = spinner.find(".quantity-up:enabled"),
+      btnDown = spinner.find(".quantity-down:enabled"),
       min = input.attr("min"),
       max = input.attr("max");
 
     btnUp.click(function () {
-      var oldValue = parseFloat(input.val());
-      if (oldValue >= max) {
-        var newVal = oldValue;
-        swal.fire({
-          position: "center",
-          icon: "error",
-          // iconColor: "#F51167",
-          title: "Số lượng còn lại không đủ",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-      } else {
-        var newVal = oldValue + 1;
-      }
-      spinner.find("input").val(newVal);
-      spinner.find("input").trigger("change");
-      calculateSingleProductTotalPriceOnButtonClicked($(this), newVal);
-      getProductsNumber();
-      $(this)
-        .parent()
-        .parent()
-        .siblings(".hidden_amount_changed_form")
-        .submit();
+      $(this).prop('disable', true);
+      $('.quantity').children('input').css({'color':'grey'});
+      setTimeout(() => {
+        var oldValue = +input.val();
+        if (oldValue >= max) {
+          var newVal = oldValue;
+          swal.fire({
+            position: "center",
+            icon: "error",
+            // iconColor: "#F51167",
+            title: "Số lượng còn lại không đủ",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        } else {
+          var newVal = oldValue + 1;
+        }
+        spinner.find("input").val(newVal);
+        spinner.find("input").trigger("change");
+        calculateSingleProductTotalPriceOnButtonClicked($(this), newVal);
+        getProductsNumber();
+        $(this)
+          .parent()
+          .parent()
+          .siblings(".hidden_amount_changed_form")
+          .submit();
+        $(this).prop('disable', false);
+        $('.quantity').children('input').css({'color':'black'});
+      }, 1000);
     });
 
     btnDown.click(function () {
-      var oldValue = parseFloat(input.val());
-      if (oldValue <= min) {
-        var newVal = oldValue;
-      } else {
-        var newVal = oldValue - 1;
-      }
-      spinner.find("input").val(newVal);
-      spinner.find("input").trigger("change");
-      calculateSingleProductTotalPriceOnButtonClicked($(this), newVal);
-      getProductsNumber();
-      $(this)
-        .parent()
-        .parent()
-        .siblings(".hidden_amount_changed_form")
-        .submit();
+      $(this).prop('disable', true);
+      $('.quantity').children('input').css({'color':'grey'});
+      setTimeout(() => {
+        var oldValue = +input.val();
+        if (oldValue <= min) {
+          var newVal = oldValue;
+        } else {
+          var newVal = oldValue - 1;
+        }
+        spinner.find("input").val(newVal);
+        spinner.find("input").trigger("change");
+        calculateSingleProductTotalPriceOnButtonClicked($(this), newVal);
+        getProductsNumber();
+        $(this)
+          .parent()
+          .parent()
+          .siblings(".hidden_amount_changed_form")
+          .submit();
+        $(this).prop('disable', false);
+        $('.quantity').children('input').css({'color':'black'});
+      }, 750);
     });
   });
 
@@ -81,12 +93,10 @@ $(document).ready(function () {
           $(".cart_container").append(`<div class="empty_cart_container">
           <img src="/resources/img/cart/empty-cart.svg" alt="empty-cart-photo">
           <h3>Không có sản phẩm nào trong giỏ hàng</h3>
-          <button class="site-btn sb-line sb-dark continue_shopping_btn" onclick="window.location.href = "/products/";">Tiếp tục mua sắm</button>
+          <button class="site-btn sb-line sb-dark continue_shopping_btn" onclick="window.location.href = '/products/';">Tiếp tục mua sắm</button>
         </div>`);
           $(".temp_bill").remove();
         }
-
-        console.log(response);
       },
       error: function (err) {
         console.log(err);

@@ -209,7 +209,7 @@ router.post("/remove-from-cart", async function (req, res) {
   console.log(+req.body.tongsanpham)
   console.log(+req.body.tongsanpham - +req.body.soluong)
 
-  if (!(+req.body.tongsanpham - +req.body.soluong)) res.send({ empty: true });
+  if (!(+req.body.tongsanpham - +req.body.soluong)) res.status(200).send({ empty: true });
 });
 
 router.post("/pay-cart", async function (req, res) {
