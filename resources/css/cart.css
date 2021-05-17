@@ -195,6 +195,11 @@ input[type="number"] {
   border: 1px solid #eee;
 }
 
+.disable_btn {
+  background-color: red !important;
+  color: white !important;
+}
+
 .quantity input:focus {
   outline: 0;
 }

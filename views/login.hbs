@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Favicon -->
 	<link href="/resources/img/favicon.ico" rel="shortcut icon"/>
+    <script src="https://kit.fontawesome.com/2a96a4f787.js" crossorigin="anonymous"></script>
 
 	<!-- Google Font -->
 	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
@@ -24,7 +25,7 @@
 <body>
     <div class="logo">
         <a href="/" class="site-logo">
-			<img src="/resources/img/logo.png" alt="">
+			<img src="/resources/img/logo.png" alt="Logo" width="200" height="60">
 		</a>
     </div>
     <div class="signin rotate-scale-down-diag-1">
@@ -40,8 +41,23 @@
         <div class="topbar">
             <div class="spanColor"></div>
             <input type="password" class="input" id="password" name="password" placeholder="Password"/>
+        </div>
+        <button class="submit" id="submit" >Login</button>
+        <div class="topbar">
+            <div class="spanColor"></div>
+            <span id="forget-pass">Quên mật khẩu ?</span>
+        </div>
+        
     </div>
-    <button class="submit" id="submit" >Login</button>
+    <div class="banner">
+        <div class="banner__content">
+        <div class="banner__text">
+            {{!-- something text --}}
+        </div>
+        <button class="banner__close" type="button">
+            <i class="far fa-times-circle"></i>
+        </button>
+        </div>
     </div>
 
     <!--====== Javascripts & Jquery ======-->

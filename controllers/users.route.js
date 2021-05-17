@@ -10,6 +10,13 @@ const usersModel = require("../models/users.model");
 
 const router = express.Router();
 
+router.post("/rating-product", async function (req, res) {
+  let num_star=+req.body.rate;
+  let comment=req.body.cmReview;
+  console.log(req.body);
+  res.redirect("/users/orders");
+});
+
 router.post('/add-to-cart', auth.auth,async function(req,res){
   const productId = +req.body.id;      // nhan vao hai bien la id,sl
   const productQuantity = +req.body.sl;
@@ -134,6 +141,7 @@ router.get("/shopping-cart", async function (req, res) {
   //get products details
   let products = await cartModel.getAllProductsWithUserId(user.maso);
   let empty = products === null ? true : false;
+  let outOfProduct = false;
   //get product
   if (!empty) {
     for (let i = 0; i < products.length; i++) {
@@ -141,6 +149,8 @@ router.get("/shopping-cart", async function (req, res) {
       let shop = await cartModel.getShopNameFromProductId(products[i].maso);
       products[i].hinhanh = images[0].link;
       products[i].cuahang = shop.ten;
+      if (products[i].conlai === 0)
+        outOfProduct = true;
     }
   }
 
@@ -148,6 +158,7 @@ router.get("/shopping-cart", async function (req, res) {
     layout: "main.hbs",
     products,
     empty,
+    outOfProduct
   });
 });
 
@@ -171,7 +182,10 @@ router.post("/remove-from-cart", async function (req, res) {
     req.body.magiohang
   );
 
-  if (!(req.body.tongsanpham - req.body.soluong)) res.send({ empty: true });
+  console.log(+req.body.tongsanpham)
+  console.log(+req.body.tongsanpham - +req.body.soluong)
+
+  if (!(+req.body.tongsanpham - +req.body.soluong)) res.send({ empty: true });
 });
 
 router.post("/pay-cart", async function (req, res) {
@@ -353,8 +367,8 @@ router.get("/orders", async function (req, res) {
   });
 });
 
-router.post("/bill-detail", async (req, res) => {
-  let billId = req.body.billId;
+router.get("/bill-detail/:id", async (req, res) => {
+  let billId = req.params.id;
   let result = await usersModel.getBillDetail(req.session.authUser.maso, billId);
   console.log(result);
   let tinhtrangdon = 0;

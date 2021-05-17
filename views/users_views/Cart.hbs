@@ -25,7 +25,7 @@
 					<div class="empty_cart_container">
 						<img src="/resources/img/cart/empty-cart.svg" alt="empty-cart-photo">
 						<h3>Không có sản phẩm nào trong giỏ hàng</h3>
-						<button class="site-btn sb-line sb-dark pay_btn continue_shopping_btn">Tiếp tục mua sắm</button>
+						<button class="site-btn sb-line sb-dark continue_shopping_btn" onclick="window.location.href = '/products/';">Tiếp tục mua sắm</button>
 					</div>
 					{{else}}
 					<div class="cart_list overflow-hidden">
@@ -61,16 +61,25 @@
 							</div>
 							<div class="col-2 product_quantity">
 								<div class="quantity">
-									<input type="number" min="1" max="{{conlai}}" step="1" value="{{soluong}}">
+									{{#unless conlai}} 
+										<span style="margin-left: -50px; color:#f51167">Sản phẩm tạm hết hàng</span>
+										<input type="number" min="0" max="0" step="1" value="0">
+									{{else}}
+										<input type="number" min="1" max="{{conlai}}" step="1" value="{{soluong}}">
+									{{/unless}}
 								</div>
 								<form class="hidden_amount_changed_form" action="/users/change-amount-cart" method="post" hidden>
-									<input type="hidden" name="soluong" value="{{soluong}}">
+									{{#unless conlai}}
+										<input type="hidden" name="soluong" value="0">
+									{{else}}
+										<input type="hidden" name="soluong" value="{{soluong}}">
+									{{/unless}}
 									<input type="hidden" name="masanpham" value="{{maso}}">
 									<input type="hidden" name="magiohang" value="{{giohang}}">
 								</form>
 							</div>
 							<div class="col-3 product_total_price">
-								<h4 class="product_price_total">{{giaban}} </h4><h4> đ</h4>
+								<h4 class="product_price_total">{{#unless conlai}} 0 {{else}} {{giaban}} {{/unless}}</h4><h4> đ</h4>
 							</div>
 							<div class="col-1 delete_button_container">
 								<button class="delete_button" type="button"><i class="fas fa-trash"></i></button>
@@ -87,7 +96,7 @@
 					</div>
 					<div class="col-2 total_price_container">
 						<h3 id="total_cart_price">0 đ</h3>
-						<button class="site-btn sb-line sb-dark pay_btn">Thanh toán</button>
+						<button class="site-btn sb-line sb-dark pay_btn {{#if outOfProduct}} disable_btn {{/if}}" {{#if outOfProduct}} disabled {{/if}} > Thanh toán</button>
 					</div>
 				</div>
 				{{/unless}}

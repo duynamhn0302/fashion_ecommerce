@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!--jquery-->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="/resources/js/jquery-3.2.1.min.js"></script>
     <script src="https://kit.fontawesome.com/cabc320003.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/resources/css/admin-page.css" />
   </head>
@@ -26,11 +26,11 @@
       <script>
         function logout(){
           $.post('/logout',function(data,status){
-            window.location.replace(data.location);
-          })
+						window.location.replace(data.location);
+					})
         }
       </script>
-      <a class="btn btn-primary" href="javascript: $(#frmLogout).submit()" style="margin-right: 50px;">Đăng xuất</a>
+      <a class="btn btn-primary" href="javascript: logout();" style="margin-right: 50px;">Đăng xuất</a>
 		</div>
 											
       
