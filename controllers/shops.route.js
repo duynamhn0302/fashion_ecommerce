@@ -246,8 +246,9 @@ router.get('/incomes', async function (req, res) {
   
   console.log(shopId);
   let getStarShop=await shopModel.getStarShop(+shopId.maso);
+  console.log(getStarShop);
   let isHaveStar=true;
-  if (getStarShop==null)
+  if (getStarShop.soSaoTB==null)
   {
     isHaveStar=false;
   }
@@ -344,6 +345,11 @@ router.get('/bills', async function (req, res) {
 //Tất cả đơn hàng
 
   let getInfoBill=await shopModel.getInfoBill(shopId.maso);
+  if (getInfoBill==null)
+  {
+    getInfoBill=[];
+  }
+  console.log(getInfoBill);
 
   var page = req.query.page || 1;
   if (page < 1) page = 1;
@@ -541,6 +547,10 @@ router.get('/bills.json', async function(req, res) {
   let shopId=await shopModel.getShopID(+user.maso);
 
   let getInfoBill=await shopModel.getInfoBill(shopId.maso);
+  if (getInfoBill==null)
+  {
+    getInfoBill=[];
+  }
       
   const total = getInfoBill.length;
   let nPages = Math.floor(total / paginate.limit);
