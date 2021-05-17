@@ -126,7 +126,7 @@ module.exports = {
 
     async removeCartAfterPayment(conditionForCart, conditionForCartDetail) {
         const [rows1, fields1] = await db.del(conditionForCartDetail, 'chitietgiohang');
-        const [rows, fields] = await db.del(conditionForCart, 'giohang');
+        const [rows, fields] = await db.patch({tongsosanpham: 0, tonggiatien: 0},conditionForCart, 'giohang');
 
         return [rows, rows1];
     }
