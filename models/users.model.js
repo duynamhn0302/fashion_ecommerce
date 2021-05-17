@@ -33,6 +33,11 @@ module.exports = {
         return rows;
     },
 
+    async modify(new_data,condition){
+        const [rows,fields] = await db.patch(new_data,condition,'taikhoan');
+        return rows;
+    },
+
     async patch(user){
         var condition={email: user.email};
         //delete (user.user_id);
