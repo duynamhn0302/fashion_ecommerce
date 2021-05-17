@@ -42,31 +42,33 @@
     <nav class="sidebar">
         
         <div class="container_img_defaul">
-            <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img_shop_default">
+            <img src="{{authUser.avatar}}" alt="avatar" class="img_shop_default" style="border-radius: 20%;">
             <div class="text_menu">Seller Center</div>
         </div>
-        <ul>    
+        <ul>   
             <li class="emply">
-                <a href="/shops/incomes">
+                <a href="/">
                     <i class="fas fa-home icon_func"></i>
                     <div class="text_func_menu">
                         Trang chủ
                     </div>
                 </a>
+            </li> 
+            <li class="emply">
+                <a href="/shops/incomes">
+                    <i class="fas fa-dollar icon_func"></i>
+                    <div class="text_func_menu">
+                        Doanh thu
+                    </div>
+                </a>
             </li>
             <li class="emply">
-                <a href="#" class="feat-btn">
+                <a href="/shops/bills" class="feat-btn">
                     <i class="fas fa-shopping-cart icon_func"></i>
                     <div class="text_func_menu">
                         Đơn hàng
                     </div>
-                    <span class="fas fa-caret-down first"></span>
                 </a>
-                <ul class="feat-show">
-                    <li>
-                        <a href="/shops/bills">Division giao hàng</a>
-                    </li>
-                </ul>
             </li>
             <li class="emply">
                 <a href="#" class="product-btn">

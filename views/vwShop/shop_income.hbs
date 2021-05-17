@@ -9,6 +9,9 @@
                 $('.sidebar').toggleClass("show");
             });
         </script>
+        <div class="title_bar">
+            Doanh thu
+        </div>
         <div class="account_bar">
             <div class="account_bar_inner">
                 <div class="img_shop_account">
@@ -41,26 +44,7 @@
             </script>
         </div>
     </div>
-    <div class="container_income_img">
-        <div class="img_header">
-            <img src="/resources/img/shop/fox-coat-fashion-model-website-header.jpg" alt="" class="image_shop">
-            <div class="container_text_header">
-                <div class="text_images_welcome">
-                    Tạo sản phẩm để bắt đầu bán hàng ngay hôm nay!
-                </div>
-                <div class="buttons" data-href='/shops/new'>
-                    <button class="btn-hover color-8"><i class="fas fa-plus"> &nbsp Tạo sản phẩm</i></button>
-                </div>
-                <script>
-                    jQuery(document).ready(function($) {
-                        $(".buttons").click(function() {
-                            window.location = $(this).data("href");
-                        });
-                    });
-                </script>
-            </div>
-        </div>
-    </div>
+
     <div class="container_in">
         <div class="container_income_items">
             <div class="container_item_include">
@@ -186,16 +170,6 @@
                             {{/with}}
                         </div>
                     </div>
-                    <div class="container_btn">
-                        <div class="product_selling_btn">
-                            <div class="func_btn">
-                                <div style="margin-left: 4px; margin-right: 10px">
-                                    <i class="fas fa-chart-line"></i>
-                                </div>
-                                <div>Báo cáo bán hàng tổng hợp</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="container_item_rate">
@@ -213,15 +187,6 @@
 
                 <div class="rating_title" style="margin-top: 30px;">
                     Các chỉ số được reset mỗi tháng
-                </div>
-
-                <div class="product_rating_func">
-                    <div class="name_func">
-                        Tỉ lệ từ chối đơn hàng
-                    </div>
-                    <div class="number_func">
-                        0% <i class="fas fa-info-circle"></i>
-                    </div>
                 </div>
 
                 <div class="product_rating_func">
@@ -251,63 +216,36 @@
                     </div>
                 </div>
 
-                <div class="rating_title" style="margin-top: 5px;">
-                    (Đối với trường hợp Divisima đi lấy hàng)
-                </div>
-
-                <div class="product_rating_btn">
-                    <div class="func_btn">
-                        <div style="margin-left: 4px; margin-right: 10px">
-                            <i class="fas fa-exclamation-circle" style="color: #f8a50b;"></i>
-                        </div>
-                        <div>Hiện tại đang được nâng cấp</div>
-                    </div>
-                </div>
-
             </div>
         </div>
-        <div class="warning_text">*Các chỉ số bạn đang xem ở trang chủ được cập nhật mỗi giờ một lần. Đối với doanh thu nhà bán có thể truy cập "Báo bán hàng tổng hợp" để xem báo cáo theo thời gian thực</div>
     </div>
 </div>
 <div class="container_income">
-  <div class="container_in" style="display: flex;">
-    <div class="col-lg-6">
-      <div class="">
-            <div id="chartContainer" style="height: 500px; width: 100%; "></div>
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        </div>
+  <div class="container_in" style="display: flex;" >
+      <div class="container_income_items" style="padding-top: 100px;padding-bottom: 100px;padding-left: 20px; padding-right: 150px;">
+            <div class="col-lg-6">
+                    <div class="">
+                            <div id="chartContainer" style="height: 300px; width: 100%; "></div>
+                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="">
+                            <div id="chartContainer2" style="height: 300px; width: 120%; "></div>
+                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                        </div>
+                    </div>
     </div>
-    <div class="col-lg-6">
-        <div class="">
-            <div id="chartContainer2" style="height: 500px; width: 100%; "></div>
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        </div>
-    </div>
+    
   </div>
 </div>
-<div class="container_income"style="display: flex;" >
 
-  <div class="container_in" style="display: flex;">
-        
-        
-  </div>
-  <div class="container_in" style="display: flex;">
-        <div class="">
-            <div id="chartContainer" style="height: 500px; width: 50%; "></div>
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        </div>
-        <div class="">
-            <div id="chartContainer2" style="height: 500px; width: 50%; "></div>
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        </div>
-  </div>
-</div>
 
 {{#each last7daysIncome}}
-      <input type="text" id="day{{id}}" data-x="{{x}}" data-y="{{y}}"> 
+      <input type="hidden" id="day{{id}}" data-x="{{x}}" data-y="{{y}}"> 
 {{/each}} 
 {{#each last7monthIncome}}
-      <input type="text" id="month{{id}}" data-x="{{x}}" data-y="{{y}}"> 
+      <input type="hidden" id="month{{id}}" data-x="{{x}}" data-y="{{y}}"> 
 {{/each}} 
 <script>
   window.onload = function () {
@@ -335,7 +273,7 @@
         animationEnabled: true,
         theme: "light2",
         title: {
-            text: "Doanh thu cửa hàng ngày"
+            text: "Doanh thu hàng ngày"
         },
         axisX: {
             valueFormatString: "DD MMM",
@@ -345,7 +283,7 @@
             }
         },
         axisY: {
-            title: "Số tiền",
+            title: "Số tiền (VND)",
             includeZero: true,
             crosshair: {
                 enabled: true
@@ -377,17 +315,17 @@
         animationEnabled: true,
         theme: "light2",
         title: {
-            text: "Doanh thu cửa hàng tháng"
+            text: "Doanh thu hàng tháng"
         },
         axisX: {
-            valueFormatString: "MMM, YYYY",
+            valueFormatString: "MM, YYYY",
             crosshair: {
                 enabled: true,
                 snapToDataPoint: true
             }
         },
         axisY: {
-            title: "Số tiền",
+            title: "Số tiền (VND)",
             includeZero: true,
             crosshair: {
                 enabled: true
