@@ -14,6 +14,7 @@ body {
 	background-repeat: no-repeat;
 	background-size: cover;
 	min-width: 400px;
+	overflow: scroll;
 }
 body {
 	font: 16px/1.2 "Roboto", sans-serif;
@@ -81,7 +82,7 @@ input[type="checkbox"] + span {
 .container {
 	display: flex;
 	width: 600px;
-	height: 450px;
+	height: 500px;
 	border-radius: 10px;
 	background-color: #fff;
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -97,6 +98,7 @@ input[type="checkbox"] + span {
 .signup_form {
 	width: 340px;
 	padding: 36px;
+	padding-left:20px;
 }
 .signup_form .header {
 	color: rgb(230, 150, 164);
@@ -325,5 +327,8 @@ h1 {
   }
   .popup{
     width: 70%;
+  }
+  .signup_form{
+	  width:390px;
   }
 }
