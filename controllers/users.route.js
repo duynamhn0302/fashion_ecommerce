@@ -10,10 +10,14 @@ const usersModel = require("../models/users.model");
 
 const router = express.Router();
 
-router.post("/rating-product", async function (req, res) {
+router.post("/rating-product/:id", async function (req, res) {
   let num_star=+req.body.rate;
   let comment=req.body.cmReview;
-  console.log(req.body);
+  let id_product=+req.body.id_product;
+
+  await usersModel.insertReview(req.session.authUser.maso,id_product,comment,num_star);
+  await usersModel.insertComment(req.session.authUser.maso,id_product,comment);
+
   res.redirect("/users/orders");
 });
 
@@ -369,6 +373,7 @@ router.get("/orders", async function (req, res) {
 
 router.get("/bill-detail/:id", async (req, res) => {
   let billId = req.params.id;
+  let idUser=req.session.authUser.maso;
   let result = await usersModel.getBillDetail(req.session.authUser.maso, billId);
   console.log(result);
   let tinhtrangdon = 0;
@@ -398,6 +403,7 @@ router.get("/bill-detail/:id", async (req, res) => {
   {
     item.giaban=productsModel.formatPrice(item.giaban);
     item.dongia=productsModel.formatPrice(item.dongia);
+    item.checkReview=await usersModel.checkedReviewProduct(idUser,item.maso)!=null;
   }
   listBillDetail.listSanPham=listSanPham;
   listBillDetail.tonggiatien=productsModel.formatPrice(listBillDetail.tonggiatien);

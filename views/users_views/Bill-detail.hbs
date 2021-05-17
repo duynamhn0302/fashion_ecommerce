@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/resources/css/profile.css">
 <link rel="stylesheet" href="/resources/css/shop_bill.css">
 <div class="container-ratingstar">
-    <form action="/users/rating-product" method="POST" id="rating-form">
+    <form action="#" method="POST" id="rating-form">
         <div class="container-star">
             <div class="hide_rating" id="hide-btn">
                 <i class="fas fa-minus-circle"></i>
@@ -191,8 +191,14 @@
                                                 <td>{{kichthuoc}}</td>
                                                 <td>{{soluongmua}}</td>
                                                 <td>{{dongia}}</td>
+                                                {{#if checkReview}}
+                                                <td>Đã đánh giá</td>
+                                                {{else}}
                                                 <td><button id="click_review_{{maso}}">Đánh giá</button></td>
+                                                {{/if}}
                                             </tr>
+                                            {{#if checkReview}}
+                                            {{else}}
                                             <script>
                                                 var myEl_{{maso}} = document.getElementById('click_review_{{{maso}}}');
                                                 var idProduct_{{maso}}= document.getElementById('id_product');
@@ -200,8 +206,10 @@
                                                 myEl_{{maso}}.addEventListener('click', function() {
                                                     idProduct_{{maso}}.value=stringId_{{maso}};
                                                     $('.container-ratingstar').fadeIn();
+                                                    $('#rating-form').attr('action', "/users/rating-product/:{{{maso}}}");
                                                 }, false);
                                             </script>
+                                            {{/if}}
                                             {{/each}}
                                         {{/with}}
                                     </tbody>
