@@ -33,10 +33,15 @@ module.exports = {
       return false;
     },
     async isBestSeller(id){ //sua lai
-      const sql = `select *
-          FROM sanpham
-          ORDER BY sanpham.ngaymo DESC`;
+      const sql = `
+      select sanpham.*, sum(chitietdonhang.soluong) as sum
+        from (chitietdonhang join donhang on donhang.maso = chitietdonhang.donhang)
+                    join sanpham on sanpham.maso = chitietdonhang.sanpham
+        where sanpham.status = 1
+        group by sanpham.maso
+        ORDER BY sum(chitietdonhang.soluong)  DESC`
       const [rows,fields] = await db.load(sql);
+      
       if(rows[0].maso === id)
         return true;
       return false;
@@ -113,6 +118,7 @@ module.exports = {
         where sanpham.status = 1
         group by sanpham.maso
         ORDER BY sum(chitietdonhang.soluong)  DESC`;
+        
     const [rows, fields] = await db.load(sql);
     var topSeller =  await this.informationForListProduct(rows)
    
