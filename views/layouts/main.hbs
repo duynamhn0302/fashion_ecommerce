@@ -66,10 +66,20 @@
 						</a>
 					</div>
 					<div class="col-xl-6 col-lg-5">
-						<form id = "searchForm" class="header-search-form" method="GET" action="/products/search/keyword">
+						<div id = "searchForm" class="header-search-form" method="GET" action="/products/search/keyword">
 							<input type="text" name="search" placeholder="Tìm kiếm ...">
-							<button type="submit"><i class="flaticon-search"></i></button>
-						</form>
+							<button id = "submitButton" onclick="javascript: submitSearch()"><i class="flaticon-search"></i></button>
+						</div>
+						<script>
+							function submitSearch(){
+								var keyword = $("#searchForm").find("input[name='search']").val();
+								if (keyword === "")
+									return;
+								window.location.assign("/products/search/keyword?search=" + keyword);
+							
+							}
+
+						</script>
 					</div>
 					<div class="col-xl-4 col-lg-5">
 						<div class="user-panel">
