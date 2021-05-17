@@ -260,12 +260,12 @@
         jQuery(document).ready(function($) {
             $(".clickable-dialog-update").click(function() {
                 $('.combo_box_select input').val("{{{idUpdate}}}");
-                document.forms[0].submit();
+                document.forms[1].submit();
                 $('.update-bill-dialog-change').fadeOut();
             });
             $(".clickable-dialog-remove").click(function() {
                 $('.combo_box_select input').val("4");
-                document.forms[0].submit();
+                document.forms[1].submit();
                 $('.update-bill-dialog').fadeOut();
             });
             $(".clickable-dialog-back").click(function() {
