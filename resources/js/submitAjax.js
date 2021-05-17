@@ -9,6 +9,16 @@ function addToCart(formId){
             window.location.assign('/login');
         if(status === "success"){
             //add thanh cong, lam cai j do
+            $('#add-success').addClass('d-show');
+            $('#add-success').addClass('roll-in-right');
+            setTimeout(function(e){
+                $('#add-success').removeClass('roll-in-right');
+                $('#add-success').addClass('scale-out-tr');
+            },1000)
+            setTimeout(function(e){
+                $('#add-success').removeClass('scale-out-tr');
+                $('#add-success').removeClass('d-show');
+            },2600)
             //do nothin
             form.find("input[name='sl']").val("1")
             $(document).find("#slGioHang").html(data.result)
@@ -21,6 +31,24 @@ function addToCart(formId){
     });
   
 }
+
+// $(document).ready(function(){
+//     console.log('ready');
+//     $('#test').on('click',function(e){
+//         console.log('press');
+//         $('#add-success').addClass('d-show');
+//         $('#add-success').addClass('roll-in-right');
+//         setTimeout(function(e){
+//             $('#add-success').removeClass('roll-in-right');
+//             $('#add-success').addClass('scale-out-tr');
+//         },1000)
+//         setTimeout(function(e){
+//             $('#add-success').removeClass('scale-out-tr');
+//             $('#add-success').removeClass('d-show');
+//         },2600)
+//     })
+// })
+
 function muaNgay(formId){
     const form = $(document).find(formId)
     

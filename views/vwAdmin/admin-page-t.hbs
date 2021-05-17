@@ -1,0 +1,376 @@
+<div class="container_income">
+    <div class="container_income_navbar">
+        <div class="btn_show">
+            <span class="fas fa-bars"></span>
+        </div>
+        <script>
+            $('.btn_show').click(function(){
+                $('.container_income').toggleClass("show");
+                $('.sidebar').toggleClass("show");
+            });
+        </script>
+        <div class="title_bar">
+            Trang quản lý của admin
+        </div>
+
+        <div class="account_bar">
+            <div class="account_bar_inner">
+                <div class="img_shop_account">
+                    <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img_account_inner">
+                </div>
+                <div class="name_account">
+                    Divisia Shop
+                </div>
+                <div class="down_arrow">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="func_account_bar" id="func_auth_bar">
+                <div class="func_acc" id="pass_shop">
+                    Thay đổi mật khẩu
+                </div>
+                <div class="func_acc" id="info_shop">Thông tin Shop</div>
+                <div><hr class="inline"></div>
+                <div class="func_acc" id="log_out_shop">Đăng xuất</div>
+            </div>
+            <script>
+                document.addEventListener("click", (evt) => {
+                    const deactive_authe_menu = document.getElementById("func_auth_bar");
+                    if (event.target.closest(".account_bar_inner")) {
+                        deactive_authe_menu.style.display="block";
+                        return;
+                        }
+                    deactive_authe_menu.style.display="none";
+                    });
+            </script>
+        </div>
+    </div>
+
+    <div class="container_bill">
+        <div class="container_bill_items">
+            <div class="link_path">
+                <span class="root_link">Trang chủ</span>
+                <span class="fas fa-greater-than" style="color: rgb(180, 180, 180); font-size: 13px;"></span>
+                <span class="root_link" style="font-weight: 500;">Quản lý</span>
+            </div>
+            <div class="input_search">
+                <input id = "myInput" type="text" placeholder="Tìm kiếm" class="input_search_menu" height="10">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container_bill">
+        <div class="container_bill_items">
+                <div class="container_tabs_table">
+                    <div class="tab_triger">
+                        <ul>
+                            <li>
+                                <label data-tab-target="#tab1" class="active_tab_title">Tài khoản</label>
+                            </li>
+                            <li>
+                                <label data-tab-target="#tab2">Sản phẩm</label>
+                            </li>
+                            <li>
+                                <label data-tab-target="#tab3">Cửa hàng</label>
+                            </li>
+                            <li>
+                                <label data-tab-target="#tab4">Thống kê</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab_container_wrap">
+                        <div class="tab_container_box active_tab" id="tab1" data-tab-content>
+                            <div class="table_bill_container">
+                           
+                                <table class="table_bill">
+                                    <thead id="header">
+                                        <tr>
+                                        <th>Tài khoản</th>
+                                        <th>Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="myTable">
+                                        {{#each accounts}}
+                                    
+                                           
+                                              <tr href="#confirm"class = "open-Confirm" data-toggle="modal" data-title="Xóa tài khoản: " data-id="{{maso}}" data-content = "{{this.maso}}" data-type = "delAcc">
+                                                    <td>{{this.username}}</td>
+                                                    <td>{{this.email}}</td>
+                                            </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab_container_box" id="tab2" data-tab-content>
+                            <div class="table_bill_container">
+                                <div style="overflow:auto;  height:500px;">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr id = "header">
+                                        <th>Tên</th>
+                                        <th>Giá</th>
+                                        <th>Cửa hàng</th>
+                                        <th>Danh mục</th>
+                                        <th>Luợt mua</th>
+                                        <th>Đánh giá</th>
+                                        <th>Lượt đánh giá</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="myTable">
+                                        {{#each products}}
+                                        <tr a href="#confirm"class = "open-Confirm" data-toggle="modal" data-title="Xóa sản phẩm: " data-id="{{maso}}" data-content = "{{this.ten}}" data-type = "delProduct">
+                                            <td>{{this.ten}}</td>
+                                            <td>{{this.giaban}}</td>
+                                            <td>{{this.tencuahang}}</td>
+                                            <td>{{this.danhmuccap2}}</td>
+                                            <td> {{this.luotmua}} lượt</td>
+                                            <td>{{this.diemdanhgia}} sao</td>
+                                            <td>{{this.luotdanhgia}} lượt</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                    </table></div>
+                            </div>
+                        </div>
+                        <div class="tab_container_box" id="tab3" data-tab-content>
+                            <div class="table_bill_container">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr id = "header">
+                                            <th>Tên cửa hàng</th>
+                                            <th>Email</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Chủ sở hữu</th>
+                                            <th>Tên tài khoản</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="myTable1">
+                                        {{#each shops}}
+                                        <tr>
+                                            <td>{{this.ten}}</td>
+                                            <td>{{email}}</td>
+                                            <td>{{sdt}}</td>
+                                            <td>{{hoten}}</td>
+                                            <td>{{username}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab_container_box" id="tab4" data-tab-content>
+                            <div class="table_bill_container" style="display: flex; justify-content: center;">
+                                 <div class="col-lg-6">
+                                    <div id="chartContainer" style="height: 300px; width: 100%; "></div>
+                                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                                </div>
+                                 <div class="col-lg-6">
+                                    <div id="chartContainer2" style="height: 300px; width: 100%; "></div>
+                                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <script>
+                        const tabs=document.querySelectorAll('[data-tab-target]');
+                        const tabContents=document.querySelectorAll('[data-tab-content]');
+
+                        tabs.forEach(tab =>{
+                            tab.addEventListener('click',()=>{
+                                const tabsList=document.querySelectorAll('[data-tab-target]');
+                                tabsList.forEach(tabMember=>{
+                                    tabMember.classList.remove('active_tab_title');
+                                });
+
+                                const target=document.querySelector(tab.dataset.tabTarget)
+                                tabContents.forEach(tabContent =>{
+                                    tabContent.classList.remove('active_tab');
+                                });
+
+
+                                target.classList.add('active_tab');
+                                tab.classList.add('active_tab_title');
+                            })
+                        }
+
+                        )
+                </script>
+                <script>
+                    jQuery(document).ready(function($) {
+                        $(".clickable-row").click(function() {
+                            window.location = $(this).data("href");
+                        });
+                    });
+                </script>
+
+
+        </div>
+    </div>
+
+</div>
+<script src="/resources/js/filterTable.js"></script>
+<div class="modal fade" id="confirm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Xác nhận</h3>
+      </div>
+      <div class="modal-body">
+        <p id="content"> ...</p>
+      </div>
+      <div class="modal-footer">
+          
+          <form action="/admin/deleteAccount" method="POST" id = "form">
+              <input type="hidden"  id = "del" name="id" value="">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+          <button class="btn btn-primary" type="submit">Xác nhận</a>
+          </form>
+        </div></div></div>
+</div>
+<script>
+    $(document).on("click", ".open-Confirm", function () {
+        var title = $(this).data('title');
+        var content = $(this).data('content');
+        var id = $(this).data('id');
+        var type = $(this).data('type');
+        $(".modal-body #content").text( title + content );
+        
+        if(type === "delAcc")
+            $(".modal-footer #form").attr('action', "/admin/deleteAccount");
+        else if(type === "delProduct")
+            $(".modal-footer #form").attr('action', "/admin/deleteProduct");
+        $(".modal-footer #del").attr('value', id);
+        
+    });
+</script>
+{{#each last7daysIncome}}
+      <input type="hidden" id="day{{id}}" data-x="{{x}}" data-y="{{y}}"> 
+{{/each}} 
+{{#each last7monthIncome}}
+      <input type="hidden" id="month{{id}}" data-x="{{x}}" data-y="{{y}}"> 
+{{/each}} 
+<script>
+  window.onload = function () {
+    CanvasJS.addCultureInfo("es", 
+    {                      
+      months: ['T1', 'T2', 'T3', 'T4', 'T5','T6', 'T7','T8', 'T9', 'T10', 'T11', 'T12']
+      
+    });
+    var dataPointDay = [];
+    for(var i = 0; i < 7; i++){
+      const x = $('#day'+i.toString()).data('x')
+    
+      const y = $('#day'+i.toString()).data('y')
+      dataPointDay.push({x: new Date(x), y: y})
+    }
+    var dataPointMonth = [];
+    for(var i = 0; i < 7; i++){
+      const x = $('#month'+i.toString()).data('x')
+      const y = $('#month'+i.toString()).data('y')
+      dataPointMonth.push({x: new Date(x), y: y})
+    }
+    
+    var chart = new CanvasJS.Chart("chartContainer", {
+        culture: "es",
+        animationEnabled: true,
+        theme: "light2",
+        title: {
+            text: "Doanh thu hàng ngày"
+        },
+        axisX: {
+            valueFormatString: "DD MMM",
+            crosshair: {
+                enabled: true,
+                snapToDataPoint: true
+            }
+        },
+        axisY: {
+            title: "Số tiền (VND)",
+            includeZero: true,
+            crosshair: {
+                enabled: true
+            }
+        },
+        toolTip: {
+            shared: true
+        },
+        legend: {
+            cursor: "pointer",
+            verticalAlign: "bottom",
+            horizontalAlign: "left",
+            dockInsidePlotArea: true,
+            itemclick: toogleDataSeries
+        },
+        data: [{
+            type: "line",
+            showInLegend: true,
+            name: "Tổng tiền",
+            markerType: "square",
+            xValueFormatString: "DD MMM, YYYY",
+            color: "#F08080",
+            dataPoints: dataPointDay,
+        },
+        ]
+    });
+    chart.render();
+    var chart2 = new CanvasJS.Chart("chartContainer2", {
+        animationEnabled: true,
+        theme: "light2",
+        title: {
+            text: "Doanh thu hàng tháng"
+        },
+        axisX: {
+            valueFormatString: "MM, YYYY",
+            crosshair: {
+                enabled: true,
+                snapToDataPoint: true
+            }
+        },
+        axisY: {
+            title: "Số tiền (VND)",
+            includeZero: true,
+            crosshair: {
+                enabled: true
+            }
+        },
+        toolTip: {
+            shared: true
+        },
+        legend: {
+            cursor: "pointer",
+            verticalAlign: "bottom",
+            horizontalAlign: "left",
+            dockInsidePlotArea: true,
+            itemclick: toogleDataSeries
+        },
+        data: [{
+            type: "line",
+            showInLegend: true,
+            name: "Tổng tiền",
+            markerType: "square",
+            xValueFormatString: "MMM, YYYY",
+            color: "#F08080",
+            dataPoints: dataPointMonth,
+        },
+        ]
+    });
+    chart2.render();
+    function toogleDataSeries(e) {
+        if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+            e.dataSeries.visible = false;
+        } else {
+            e.dataSeries.visible = true;
+        }
+        chart.render();
+        chart2.render();
+    }
+
+    
+
+
+}
+</script>

@@ -11,11 +11,19 @@ router.get('/',  auth.authAdmin, async function (req, res, next){
     let user = res.locals.authUser;
     const accounts = await usersModel.allUser()
     const shops = await shopModel.allShop()
-
-    res.status(200).render("vwAdmin/admin-page", {
-        layout: 'admin.hbs',
+    const products = await productsModel.allProductAdmin()
+    for(var i = 0; i < products.length; i++){
+        const luot = await productsModel.getLuotMua(products[i].maso)
+        if (luot === 0)
+            products[i].luotmua = 0
+        else
+            products[i].luotmua = luot.soluong
+    }
+    res.status(200).render("vwAdmin/admin-page-t", {
+        layout: 'admin2.hbs',
         accounts,
         shops,
+        products,
     })
 });
 //view statistics
@@ -24,13 +32,43 @@ router.get('/statistics', auth.authAdmin,  async function (req, res, next){
         const shops = await shopModel.topNShop(30) // Top shop
         const customers = await usersModel.topNUser(30) // Top customer
         const countUserShop = await usersModel.users_shop_bytime(5) // So luong Shop, User 4 thang gan nhat
-        console.log(customers)
-        res.status(200).render("vwAdmin/admin-statistics", {
-          csspath: "admin-page",
-          layout: 'admin.hbs',
+        var prevMonth = function(dateObj) {
+            var tempDateObj = new Date(dateObj);
+          
+            if(tempDateObj.getMonth) {
+              tempDateObj.setMonth(tempDateObj.getMonth() - 1);
+            } else {
+              tempDateObj.setYear(tempDateObj.getYear() - 1);
+              tempDateObj.setMonth(12);
+            }
+          
+            return tempDateObj
+          };
+        
+          var today = new Date()
+          var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+          var tomonth = new Date(y, m + 1, 0);
+          var last7Months = []
+          var i = 0;
+          last7Months.push(tomonth)
+          var last7monthUsers = []
+          var last7monthShops  = []
+          var timeMonth = last7Months[i].toISOString().substring(0, 10)
+          last7monthUsers.push({id: i, x: timeMonth, y: await usersModel.countUserOnMonth(timeMonth)})
+          last7monthShops.push({id: i, x: timeMonth, y: await usersModel.countShopOnMonth(timeMonth)})
+          for( i = 1; i < 7; i++){
+            last7Months.push(prevMonth(last7Months[i-1]))
+            timeMonth = last7Months[i].toISOString().substring(0, 10)
+            last7monthUsers.push({id: i, x: timeMonth, y: await usersModel.countUserOnMonth(timeMonth)})
+              last7monthShops.push({id: i, x: timeMonth, y: await usersModel.countShopOnMonth(timeMonth)})
+          }
+        res.status(200).render("vwAdmin/admin-statistics2", {
+      
+          layout: 'admin2.hbs',
           shops,
           customers,
-          countUserShop,
+          last7monthUsers,
+          last7monthShops
         })
       }
       catch (error) {
@@ -70,6 +108,6 @@ router.post('/deleteProduct', async (req, res)=>{
     console.log(req.body.id)
     if (typeof req.body.id !== 'undefined')
         await productsModel.deleteProduct(+req.body.id);
-    res.redirect('/admin/products/')
+    res.redirect('/admin/')
 });
 module.exports = router;

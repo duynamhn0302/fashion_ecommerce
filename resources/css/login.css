@@ -320,8 +320,9 @@ body {
 }
 
 .logo{
-  margin-top:125px;
-  margin-left: 44%;
+  /* margin-top:108px; */
+  margin-top:21vh;
+  margin-left: 42%;
   position: fixed;
 }
 
@@ -374,7 +375,8 @@ button{
 
 @media only screen and (max-width: 800px) {
   .logo{
-    margin-left: 38%;
+    margin-left: 37%;
+    margin-top:120px;
   }
 
   .logo-signup{
@@ -393,6 +395,7 @@ button{
 @media only screen and (max-width: 680px) {
   .logo{
     margin-left: 34%;
+    margin-top:125px;
   }
 
   .logo-signup{
@@ -403,8 +406,8 @@ button{
     top:15%;
   }
 
-  .logo{
-    margin-top:138px;
+  .form{
+    top:40%;
   }
 }
 

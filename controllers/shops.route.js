@@ -19,7 +19,10 @@ router.get('/', async function (req, res) {
 
 router.get("/shops-information/:id", async function (req, res) {
   const shopID = +req.params.id;
-  
+
+  let shopInfo = await shopModel.single(shopID);
+  shopInfo.ngaymo = moment(shopInfo.ngaymo).format('DD-MM-YYYY');
+
   let listProductByShopID = await shopModel.getProductByShopID(shopID);
 
   let catList = await shopModel.getCatByShopID(shopID);
@@ -46,6 +49,7 @@ router.get("/shops-information/:id", async function (req, res) {
     category,
     totalProduct: listProductByShopID.length,
     shopID,
+    shopInfo
   });
 });
 

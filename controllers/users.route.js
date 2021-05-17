@@ -34,7 +34,7 @@ router.post("/rating-product/:id", async function (req, res) {
   let id_product=+req.body.id_product;
 
   await usersModel.insertReview(req.session.authUser.maso,id_product,comment,num_star);
-  await usersModel.insertComment(req.session.authUser.maso,id_product,comment);
+  //await usersModel.insertComment(req.session.authUser.maso,id_product,comment);
 
   res.redirect("/users/orders");
 });
@@ -42,7 +42,7 @@ router.post("/rating-product/:id", async function (req, res) {
 router.post('/add-to-cart', auth.auth,async function(req,res){
   const productId = +req.body.id;      // nhan vao hai bien la id,sl
   const productQuantity = +req.body.sl;
-
+  console.log(req.session.cart.maso)
   const check = await cartModel.checkIfProductInCart(productId,req.session.cart.maso);
   const product = await productsModel.getSingleProductById(productId);
   if(product===null){res.json(false);}    //id cua product la khong hop le, hay khong truy xuat duoc thi coi nhu vut
@@ -129,11 +129,13 @@ router.post("/change-profile", async function (req, res) {
   let new_hoten = req.body.hoten;
   let new_sdt = req.body.sdt;
   let email = req.body.email;
+  let address = req.body.diachi;
 
   req.session.authUser.hoten = new_hoten;
   req.session.authUser.sdt = new_sdt;
+  req.session.authUser.diachi = address;
 
-  let updated_fields = { email, hoten: new_hoten, sdt: new_sdt };
+  let updated_fields = { email, hoten: new_hoten, sdt: new_sdt, diachi: address };
   await usersModel.patch(updated_fields);
   return res.redirect("/users/profile");
 });
@@ -220,6 +222,8 @@ router.post("/pay-cart", async function (req, res) {
     taikhoan: cart.taikhoan,
     tongsosanpham: cart.tongsosanpham,
     tinhtrangdon: 1,
+    diachinguoinhan: req.body.address,
+    sdtnguoinhan: req.body.sdt
   });
   let newBillId = createBillResult.insertId;
 

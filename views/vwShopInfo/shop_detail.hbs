@@ -1,23 +1,45 @@
+<style>
+    .group_of_shop_info {
+        margin-left: 40vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 50vw;
+    }
+
+    .group_row {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+</style>
 
 <div class="container-shop-info">
     <div class="container_header_shop">
         <div class="container_name_shop">
             <img src="/resources/img/shop/logo.9376039b.png" alt="" class="img-shop">
-            <div class="name_of_shop">
-                Divisia Trading
+            <div class="name_of_shop" style="font-size: x-large;">
+                {{shopInfo.ten}}
+            </div>
+            <div class="group_of_shop_info">
+                <div class="group_row">
+                    <span style="color: whitesmoke;"><i class="fas fa-mail-bulk"></i> Email:&nbsp;</span> <span style="color:#f51167;">{{shopInfo.email}}</span>
+                    <span style="color: whitesmoke;margin-left:10vw"><i class="fas fa-address-card"></i> Địa chỉ:&nbsp;</span> <span style="color:#f51167;">{{shopInfo.diachi}}</span>
+                </div>
+                <div class="group_row">
+                    <span style="color: whitesmoke;"><i class="fas fa-phone"></i> Số điện thoại:&nbsp;</span> <span style="color:#f51167;">{{shopInfo.sdt}}</span>
+                    <span style="color: whitesmoke;margin-left:10vw"><i class="fas fa-building"></i> Ngày hoạt động:&nbsp;</span> <span style="color:#f51167;">{{shopInfo.ngaymo}}</span>
+                </div>
             </div>
         </div>
-        <div class="container-feature-tab">
+        <div class="container-feature-tab" style="width: 100%;">
             <div class="tab_triger">
                 <ul>
-                    <li>
+                    <li style="width: 75%;">
                         <label data-tab-target="#tab1" class="tab_1 active_tab_title">Tất cả sản phẩm</label>
                     </li>
-                    <li>
-                        <label data-tab-target="#tab2" class="tab_2">Hồ sơ cửa hàng</label>
-                    </li>
-                    <li>
-                        <form class="search-form" action="/shops/shops-information/{{shopID}}/search" method="post">
+                    <li style="width: 30%;">
+                        <form class="search-form" action="/shops/shops-information/{{shopID}}/search" method="post" style="display: flex;flex-direction:row;justify-content:flex-end;">
                             <input type="text" name="search_term" placeholder="Tìm sản phẩm tại cửa hàng" width="100" class="btn-search-prd-shop">
                             <button class="btn-search-prd-shoping" onclick="javascript: $('.search-form').submit();">
                                 <i class="fas fa-search"></i>
@@ -87,7 +109,6 @@
                                                 <input  type="hidden" name="sl" value="1">
                                                 <a href="javascript: addToCart('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
                                             </form>
-                                            
                                         </div>
                                     </div>
                                     <a href="/products/{{maso}}">
@@ -119,31 +140,4 @@
             </div>
         </div>
     </div>
-    <div class="container_if_shop" id="tab2" data-tab-content>
-        sdfsdfd
-    </div>
-
-        <script>
-                        const tabs=document.querySelectorAll('[data-tab-target]');
-                        const tabContents=document.querySelectorAll('[data-tab-content]');
-
-                        tabs.forEach(tab =>{
-                            tab.addEventListener('click',()=>{
-                                const tabsList=document.querySelectorAll('[data-tab-target]');
-                                tabsList.forEach(tabMember=>{
-                                    tabMember.classList.remove('active_tab_title');
-                                });
-
-                                const target=document.querySelector(tab.dataset.tabTarget)
-                                tabContents.forEach(tabContent =>{
-                                    tabContent.classList.remove('active_tab');
-                                });
-                                
-                                target.classList.add('active_tab');
-                                tab.classList.add('active_tab_title');
-                            })
-                        }
-
-                        )
-        </script>
 </div>

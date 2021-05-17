@@ -1,0 +1,149 @@
+
+<div class="container_income">
+  <div class="container_in" style="display: flex;" >
+      <div class="container_income_items" style="padding-top: 100px;padding-bottom: 100px;padding-left: 20px; padding-right: 150px;">
+            <div class="col-lg-6">
+                    <div class="">
+                            <div id="chartContainer" style="height: 300px; width: 100%; "></div>
+                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="">
+                            <div id="chartContainer2" style="height: 300px; width: 120%; "></div>
+                            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                        </div>
+                    </div>
+    </div>
+    
+  </div>
+</div>
+
+
+{{#each last7monthUsers}}
+      <input type="hidden" id="userTime{{id}}" data-x="{{x}}" data-y="{{y}}"> 
+{{/each}} 
+{{#each last7monthShops}}
+      <input type="hidden" id="shopTime{{id}}" data-x="{{x}}" data-y="{{y}}"> 
+{{/each}} 
+<script>
+  window.onload = function () {
+    CanvasJS.addCultureInfo("es", 
+    {                      
+      months: ['T1', 'T2', 'T3', 'T4', 'T5','T6', 'T7','T8', 'T9', 'T10', 'T11', 'T12']
+      
+    });
+    var dataPointDay = [];
+    for(var i = 0; i < 7; i++){
+      const x = $('#userTime'+i.toString()).data('x')
+    
+      const y = $('#userTime'+i.toString()).data('y')
+      dataPointDay.push({x: new Date(x), y: y})
+    }
+    var dataPointMonth = [];
+    for(var i = 0; i < 7; i++){
+      const x = $('#shopTime'+i.toString()).data('x')
+      const y = $('#shopTime'+i.toString()).data('y')
+      dataPointMonth.push({x: new Date(x), y: y})
+    }
+    
+    var chart = new CanvasJS.Chart("chartContainer", {
+        culture: "es",
+        animationEnabled: true,
+        theme: "light2",
+        title: {
+            text: "Thống kê tài khoản"
+        },
+        axisX: {
+            valueFormatString: "DD MMM",
+            crosshair: {
+                enabled: true,
+                snapToDataPoint: true
+            }
+        },
+        axisY: {
+            title: "Số lượng tài khoản",
+            includeZero: true,
+            crosshair: {
+                enabled: true
+            }
+        },
+        toolTip: {
+            shared: true
+        },
+        legend: {
+            cursor: "pointer",
+            verticalAlign: "bottom",
+            horizontalAlign: "left",
+            dockInsidePlotArea: true,
+            itemclick: toogleDataSeries
+        },
+        data: [{
+            type: "line",
+            showInLegend: true,
+            name: "Số lượng tài khoản",
+            markerType: "square",
+            xValueFormatString: "DD MMM, YYYY",
+            color: "#F08080",
+            dataPoints: dataPointDay,
+        },
+        ]
+    });
+    chart.render();
+    var chart2 = new CanvasJS.Chart("chartContainer2", {
+        animationEnabled: true,
+        theme: "light2",
+        title: {
+            text: "Thống kê cửa hàng"
+        },
+        axisX: {
+            valueFormatString: "MM, YYYY",
+            crosshair: {
+                enabled: true,
+                snapToDataPoint: true
+            }
+        },
+        axisY: {
+            title: "Số lượng của hàng",
+            includeZero: true,
+            crosshair: {
+                enabled: true
+            }
+        },
+        toolTip: {
+            shared: true
+        },
+        legend: {
+            cursor: "pointer",
+            verticalAlign: "bottom",
+            horizontalAlign: "left",
+            dockInsidePlotArea: true,
+            itemclick: toogleDataSeries
+        },
+        data: [{
+            type: "line",
+            showInLegend: true,
+            name: "Số lượng cửa hàng",
+            markerType: "square",
+            xValueFormatString: "MMM, YYYY",
+            color: "#F08080",
+            dataPoints: dataPointMonth,
+        },
+        ]
+    });
+    chart2.render();
+    function toogleDataSeries(e) {
+        if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+            e.dataSeries.visible = false;
+        } else {
+            e.dataSeries.visible = true;
+        }
+        chart.render();
+        chart2.render();
+    }
+
+    
+
+
+}
+</script>

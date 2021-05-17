@@ -60,7 +60,8 @@ module.exports = function (app) {
     req.session.logout = 1;
     console.log("Logging out post");
   
-    req.session.retUrl = req.headers.referer || '/';
+    req.session.retUrl = req.headers.referer || '/';  //tam thoi khoa cai nay lại, vì có mấy th ko chịu xét đk vào web như bạn Duy nè
+    req.session.retUrl = '/';
     // console.log(url);
     res.json({location:req.session.retUrl});
   });
