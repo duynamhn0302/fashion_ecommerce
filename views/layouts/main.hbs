@@ -66,9 +66,9 @@
 						</a>
 					</div>
 					<div class="col-xl-6 col-lg-5">
-						<form class="header-search-form" method="POST" action="/products/search/search-result-most-relevant">
-							<input type="text" name="search_term" placeholder="Tìm kiếm ...">
-							<button onclick="javascript: $('.header-search-form').submit();"><i class="flaticon-search"></i></button>
+						<form id = "searchForm" class="header-search-form" method="GET" action="/products/search/keyword">
+							<input type="text" name="search" placeholder="Tìm kiếm ...">
+							<button type="submit"><i class="flaticon-search"></i></button>
 						</form>
 					</div>
 					<div class="col-xl-4 col-lg-5">
