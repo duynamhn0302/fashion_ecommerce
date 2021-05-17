@@ -237,10 +237,10 @@ module.exports = {
         const sql = `select sanpham.*
             from sanpham join danhmuccap2 on sanpham.danhmuccap2 = danhmuccap2.maso join danhmuccap1 on danhmuccap2.danhmuccap1 = danhmuccap1.maso join cuahang on sanpham.cuahang = cuahang.maso
             where sanpham.status = 1 and
-            match(sanpham.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
+            (match(sanpham.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
             or match(danhmuccap1.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
             or match(danhmuccap2.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
-            or match(cuahang.ten) against ('${text}' IN NATURAL LANGUAGE MODE) order by sanpham.giaban ${sort}  limit ${paginate.limit} offset ${offset}`;
+            or match(cuahang.ten) against ('${text}' IN NATURAL LANGUAGE MODE)) order by sanpham.giaban ${sort}  limit ${paginate.limit} offset ${offset}`;
         var [rows, fields] = await db.load(sql);
         rows =  await this.informationForListProduct(rows)
         return rows;
