@@ -10,7 +10,10 @@ module.exports=function(app){
         else{
             if(req.session.auth===true){
                 req.session.authUser = await userModel.singleByUsername(req.session.authUser.username);
+                
                 const tempCart = await cartModel.checkCustomerHaveCart(req.session.authUser.maso);
+                
+                
                 if(tempCart===null){   //chua co cart
                     //may cai req.session.tempcart nay chu yeu la dung cho trang chu may ngay dau,
                     //co the se phai update lai
@@ -20,6 +23,7 @@ module.exports=function(app){
                     }
                 }
                 else{
+                    req.session.cart = tempCart
                     req.session.tempcart = {
                         sl: tempCart.tongsosanpham,
                         sanpham: null,  //chua lay tung san pham  ra

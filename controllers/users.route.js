@@ -52,10 +52,16 @@ router.post('/add-to-cart', auth.auth,async function(req,res){
   console.log(req.session.cart.maso)
   const check = await cartModel.checkIfProductInCart(productId,req.session.cart.maso);
   const product = await productsModel.getSingleProductById(productId);
+  const proInCart = await cartModel.getInfoProduct(req.session.cart.maso, productId)
   if(product===null){res.json(false);}    //id cua product la khong hop le, hay khong truy xuat duoc thi coi nhu vut
   else{
       if(check === null){   //chua co sp trong gio hang
-      const new_data = {
+      if (productQuantity > product.soluong)
+        {
+          return res.status(200).send({success: false, result: req.session.cart.tongsosanpham})
+          
+        }
+        const new_data = {
         sanpham: productId,
         giohang: req.session.cart.maso,
         soluong: productQuantity,
@@ -63,6 +69,10 @@ router.post('/add-to-cart', auth.auth,async function(req,res){
       await cartModel.addToCartDetail(new_data);
     } else {
       //nguoi dung da co sp trong gio hang, nen cong them
+        if (productQuantity + check.soluong > product.soluong)
+        {
+          return res.status(200).send({success: false, result: req.session.cart.tongsosanpham})
+        }
       const new_data = {
         soluong: productQuantity + check.soluong,
       };
@@ -87,7 +97,7 @@ router.post('/add-to-cart', auth.auth,async function(req,res){
     };
     await cartModel.modifyCartForCustomer(modifyCart, condition1);
 
-    res.status(200).send({result: req.session.cart.tongsosanpham})
+    return res.status(200).send({success: true, result: req.session.cart.tongsosanpham})
   }
 });
 
@@ -199,7 +209,7 @@ router.post("/change-amount-cart", async function (req, res) {
     +req.body.soluong,
     +req.body.magiohang,
     +req.body.tongsanpham,
-    req.body.tongiatien
+    +req.body.tongiatien
   );
 });
 

@@ -8,9 +8,17 @@ module.exports = {
             tonggiatien: 0,
         }
         const [rows,fields] = await db.add(data,'giohang');
+        if (rows.length  === 0 )
+            return null;
+        return rows[0];
+    },
+    async getInfoProduct(cart, proId){
+        const sql = `select *
+                from giohang join chitietgiohang on giohang.maso = chitietgiohang.giohang 
+                where giohang.maso = ${cart} and chitietgiohang.sanpham = ${proId} `
+        const [rows, fields] = await db.load(sql);
         return rows;
     },
-
     async checkCustomerHaveCart(customerId){
         const sql = `SELECT * FROM giohang WHERE taikhoan = ${customerId}`;
         const [rows, fields] = await db.load(sql);
@@ -73,6 +81,7 @@ module.exports = {
     },
 
     async cartProductsAmountChanged(productId, amount, cartId, all, totalPrice) {
+        console.log(totalPrice)
         const [rows, fields] = await db.load(`UPDATE chitietgiohang SET soluong = ${amount} WHERE sanpham = ${productId} and giohang = ${cartId}`);
 
         const [rows1, fields1] = await db.load(`UPDATE giohang SET tongsosanpham = ${all}, tonggiatien = ${totalPrice} WHERE maso = ${cartId}`);
@@ -126,7 +135,7 @@ module.exports = {
 
     async removeCartAfterPayment(conditionForCart, conditionForCartDetail) {
         const [rows1, fields1] = await db.del(conditionForCartDetail, 'chitietgiohang');
-        const [rows, fields] = await db.del(conditionForCart, 'giohang');
+        const [rows, fields] = await db.patch({tongsosanpham: 0, tonggiatien: 0},conditionForCart, 'giohang');
 
         return [rows, rows1];
     }

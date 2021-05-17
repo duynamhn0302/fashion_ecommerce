@@ -9,12 +9,6 @@ module.exports = {
             req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
         }
-        /*else{
-            if (req.session.authUser.role===1)
-            {
-                return res.redirect('/lecturer');
-            }
-        }*/
         next();
     },
 
@@ -22,13 +16,7 @@ module.exports = {
         if(req.session.auth===true){
             // req.session.retUrl = req.originalUrl;    
             req.session.retUrl = '/';
-        }else
-        /*else{
-            if (req.session.authUser.role===1)
-            {
-                return res.redirect('/lecturer');
-            }
-        }*/
+        }
         next();
     },
 
@@ -67,28 +55,42 @@ module.exports = {
     // },
 
     authUser(req,res,next){
-        if(req.session.auth===false || req.session.authUser.vaitro!==0){
+        if(req.session.auth===false){
             req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
+        }else{      //req.session.auth === true
+            if(req.session.authUser.vaitro === 2){        //admin
+                req.session.retUrl = req.originalUrl;
+                return res.redirect('/');
+            }
         }
-        next();
+        next(); //user,shopper
     },
 
     authShop(req,res,next){
-        if(req.session.auth===false || req.session.authUser.vaitro!==1){
+        if(req.session.auth===false){
             req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
+        }else{      //req.session.auth === true
+            if(req.session.authUser.vaitro !== 1){        //user,admin
+                req.session.retUrl = req.originalUrl;
+                return res.redirect('/');
+            }
         }
-        next();
+        next(); //shopper
     },
 
     authAdmin(req,res,next){
-        
-        if(req.session.auth===false || req.session.authUser.vaitro!==2){
+        if(req.session.auth===false){
             req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
+        }else{      //req.session.auth === true
+            if(req.session.authUser.vaitro !== 2){        //user,shopper
+                req.session.retUrl = req.originalUrl;
+                return res.redirect('/');
+            }
         }
-        next();
+        next();     //admin
     }
 
     /*
