@@ -5,6 +5,7 @@ const shopModel=require('../models/shop.model')
 const multer = require('multer');
 const router = express.Router();
 const moment = require('moment');
+const auth = require('./../middlewares/auth.mdw');
 const fs = require('fs');
 const { paginate } = require('./../config/default.json');
 const { dirname } = require('path');
@@ -1003,7 +1004,7 @@ router.get('/edit-product/:id',async function(req,res){
   }
 })
 
-router.post('/edit-product',async function(req,res){
+router.post('/edit-product',auth.authShop,async function(req,res){
   var sex = 0;
   if(req.body.gioitinhsudung === "Nữ"){
     sex=1;
