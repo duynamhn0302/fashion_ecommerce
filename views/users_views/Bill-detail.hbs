@@ -1,29 +1,60 @@
 <link rel="stylesheet" href="/resources/css/profile.css">
 <link rel="stylesheet" href="/resources/css/shop_bill.css">
 <div class="container-ratingstar">
-    <div class="container-star">
-        <div class="star-widget">
-            <input type="radio" name="rate" id="rate-5">
-            <label for="rate-5" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-4">
-            <label for="rate-4" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-3">
-            <label for="rate-3" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-2">
-            <label for="rate-2" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-1">
-            <label for="rate-1" class="fas fa-star"></label>
-        </div>
-        <div class="fucking_star">
-            <div class="textarea">
-                <textarea cols="30" placeholder="Đánh giá sản phẩm của bạn..."></textarea>
+    <form action="/users/rating-product" method="POST" id="rating-form">
+        <div class="container-star">
+            <div class="hide_rating" id="hide-btn">
+                <i class="fas fa-minus-circle"></i>
             </div>
-            <div class="btn-submit-rating">
-                <button type="submit">Post</button>
+            <div class="star-widget">
+                <input type="hidden" name="id_product" id="id_product">
+                <input type="radio" name="rate" id="rate-5" value="5">
+                <label for="rate-5" class="fas fa-star"></label>
+                <input type="radio" name="rate" id="rate-4" value="4">
+                <label for="rate-4" class="fas fa-star"></label>
+                <input type="radio" name="rate" id="rate-3" value="3">
+                <label for="rate-3" class="fas fa-star"></label>
+                <input type="radio" name="rate" id="rate-2" value="2">
+                <label for="rate-2" class="fas fa-star"></label>
+                <input type="radio" name="rate" id="rate-1" value="1">
+                <label for="rate-1" class="fas fa-star"></label>
+            </div>
+            <div class="fucking_star">
+                <header>Bạn</header>
+                <div class="textarea">
+                    <textarea cols="30" placeholder="Đánh giá sản phẩm của bạn..." name="cmReview" id="comment"></textarea>
+                </div>
+                <div class="btn-submit-rating">
+                    <button type="button" onclick="removeItem();" >Đánh giá</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
+<script>
+    var div = document.getElementsByClassName('hide_rating')[0];
+     div.addEventListener('click', function (event) {
+         $('.container-ratingstar').fadeOut();
+    });
+    console.log(div);
+    function removeItem() {
+        var rows = $('#comment').val();
+        var row = $('input[name=rate]:checked').val();
+        if (rows.length===0)
+        {
+            $(".fucking_star header").html("Bạn chưa đánh giá");
+            console.log("Bạn chưa đánh giá");
+            return;
+        }
+        if (row===undefined)
+        {
+            $(".fucking_star header").html("Bạn chưa chọn số sao");
+            console.log("Bạn chưa chọn số sao");
+            return;
+        }
+        $('#rating-form').submit();
+    }
+</script>
 <body>
     <div class="page_wrapper">
         <div class="title_container">
@@ -160,8 +191,17 @@
                                                 <td>{{kichthuoc}}</td>
                                                 <td>{{soluongmua}}</td>
                                                 <td>{{dongia}}</td>
-                                                <td><button>Đánh giá</button></td>
+                                                <td><button id="click_review_{{maso}}">Đánh giá</button></td>
                                             </tr>
+                                            <script>
+                                                var myEl_{{maso}} = document.getElementById('click_review_{{{maso}}}');
+                                                var idProduct_{{maso}}= document.getElementById('id_product');
+                                                var stringId_{{maso}}={{maso}};
+                                                myEl_{{maso}}.addEventListener('click', function() {
+                                                    idProduct_{{maso}}.value=stringId_{{maso}};
+                                                    $('.container-ratingstar').fadeIn();
+                                                }, false);
+                                            </script>
                                             {{/each}}
                                         {{/with}}
                                     </tbody>

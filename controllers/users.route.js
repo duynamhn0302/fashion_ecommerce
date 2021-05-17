@@ -10,6 +10,13 @@ const usersModel = require("../models/users.model");
 
 const router = express.Router();
 
+router.post("/rating-product", async function (req, res) {
+  let num_star=+req.body.rate;
+  let comment=req.body.cmReview;
+  console.log(req.body);
+  res.redirect("/users/orders");
+});
+
 router.post('/add-to-cart', auth.auth,async function(req,res){
   const productId = +req.body.id;      // nhan vao hai bien la id,sl
   const productQuantity = +req.body.sl;
