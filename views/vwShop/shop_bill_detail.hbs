@@ -74,7 +74,17 @@
                 </div>
                 <div class="func_acc" id="info_shop">Thông tin Shop</div>
                 <div><hr class="inline"></div>
-                <div class="func_acc" id="log_out_shop">Đăng xuất</div>
+                <div class="func_acc" id="log_out_shop">
+                    <form method="POST" id="frmLogout" action="/logout"></form>
+                        <script>
+                            function logout(){
+                                $.post('/logout',function(data,status){
+                                    window.location.replace(data.location);
+                                })
+                            }
+                        </script>
+                    <a href="javascript: logout();" class="option-select-auth noHover" >Đăng xuất</a>
+                </div>
             </div>
             <script>
                 document.addEventListener("click", (evt) => {

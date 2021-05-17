@@ -3,6 +3,7 @@ $(document).ready(function(){
     var name = $('#name');
     var email = $('#email');
     var phone = $('#phone');
+    var address = $('#address');
     var cause = $('#cause');
     var source = $('#source');
     var btn = $('.btn-trans');
@@ -83,6 +84,21 @@ $(document).ready(function(){
         return true;
     }
 
+    function checkAddressNull(){
+        var addressVal = address.val().length;
+        if(addressVal === 0 ){
+            console.log("address empty");
+            cause.text("Please fill up your");
+            source.text('Shop address');
+            error.css('display','inherit');
+            normal.css('display','none');
+            btn.addClass("btn-trans-error");
+            address.focus();
+            return false;
+        }
+        return true;
+    }
+
     function checktermNull(){
         var checkbox = $('#check');
         if(!checkbox.is(':checked')){
@@ -101,6 +117,7 @@ $(document).ready(function(){
         if(checknameNull() === false){return;}
         if(checkemailNull() === false){return;}
         if(checkphoneNull() === false){return;}
+        if(!checkAddressNull()) return;
         if(!checktermNull())    return;
         btn.removeClass('btn-trans-error');
         cause.text('Success !!');
@@ -110,7 +127,12 @@ $(document).ready(function(){
         },1000);
         var return_mode = 0;
         var retUrl = '/';
-        $.post("/account/add-shop",{name: name.val(), phone: phone.val(), email: email.val()},function(data, _status){
+        $.post("/account/add-shop",{
+            name: name.val(), 
+            phone: phone.val(), 
+            email: email.val(),
+            address: address.val(),
+        },function(data, _status){
             return_mode = data.return_mode;
             // retUrl = data.retUrl;
             if(return_mode===0){

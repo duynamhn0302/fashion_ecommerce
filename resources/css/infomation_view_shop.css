@@ -197,3 +197,23 @@
     opacity: 1;
     transform: scale(1);
 }
+
+.shop_info_form {
+    width: 80%;
+    margin: auto;
+}
+
+.row_in_info_form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.form-control-input {
+    padding-left: 5px !important;
+}
+
+.form-floating-container {
+    width: 40%;
+}

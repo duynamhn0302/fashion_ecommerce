@@ -134,12 +134,12 @@ $(document).ready(function(){
             save = 1; 
             $.post('/shops/add-product',data,function(data,status){
                 alert('Thành công');
-                window.location.replace('/shops/incomes');
+                window.location.replace('/shops/products');
             })
         }else{          //cap nhat san pham
             $.post('/shops/edit-product',data,function(data,status){
                 alert('Thành công');
-                window.location.replace('/shops/incomes');
+                window.location.replace('/shops/products');
             })
         }
     })

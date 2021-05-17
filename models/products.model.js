@@ -1,5 +1,6 @@
 const db = require('../utils/db');
 const { paginate } = require("./../config/default.json");
+
 module.exports = {
   async getAllRating(id){
     const sql = `select *

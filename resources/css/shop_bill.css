@@ -753,6 +753,20 @@ input#rate-5:checked ~ label{
     margin-top: 15%;
 }
 
+.dialog-user{
+    width: 400px;
+    background: white;
+    padding: 20px 30px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 40%;
+    margin-top: 10%;
+}
+
 .container-dialog-btn{
     display: flex;
     padding-top: 20px;
@@ -765,4 +779,14 @@ input#rate-5:checked ~ label{
 
 .status-bill-dialog{
     font-weight: bold;
+}
+
+.update-bill-dialog-user{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 2;
+    place-items: center;
+    text-align: center;
+    display: none;
 }

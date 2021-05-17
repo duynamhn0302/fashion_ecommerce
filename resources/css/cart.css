@@ -211,9 +211,11 @@ input[type="number"] {
 }
 
 .quantity-button {
+  outline: none;
+  background-color: #eee;
   position: relative;
   cursor: pointer;
-  border-left: 1px solid #eee;
+  border: 1px solid #eee;
   width: 20px;
   text-align: center;
   color: #333;

@@ -30,7 +30,17 @@
                 </div>
                 <div class="func_acc" id="info_shop">Thông tin Shop</div>
                 <div><hr class="inline"></div>
-                <div class="func_acc" id="log_out_shop">Đăng xuất</div>
+                <div class="func_acc" id="log_out_shop">
+                    <form method="POST" id="frmLogout" action="/logout"></form>
+                        <script>
+                            function logout(){
+                                $.post('/logout',function(data,status){
+                                    window.location.replace(data.location);
+                                })
+                            }
+                        </script>
+                    <a href="javascript: logout();" class="option-select-auth noHover" >Đăng xuất</a>
+                </div>
             </div>
             <script>
                 document.addEventListener("click", (evt) => {
@@ -176,14 +186,43 @@
                 <div class="product_selling_rate">
                     Chỉ số năng lực
                 </div>
-                <div class="product_rate_star">
-                    Chưa có đánh giá
-                </div>
+                {{#with getStarShop}}
+                    {{#if isHaveStar}}
+                        <div class="product_rate_star">
+                            {{this.soSaoTB}}/5.0
+                        </div>
+                    {{else}}
+                        <div class="product_rate_star">
+                            Chưa có đánh giá
+                        </div>
+                    {{/if}}
+                {{/with}}
                 <div class="wrap-stars">
                     <div class="stars-outer">
                         <div class="stars-inner"></div>
                     </div>
                 </div>
+                {{#with getStarShop}}
+                    {{#if isHaveStar}}
+                    <script>
+                        const starsTotal=5;
+                        function getRatings(numberRating){
+                            var num=0
+                            if (num===null)
+                            {
+                                num=0;
+                            }
+                            else
+                            {
+                                num=parseFloat(numberRating)
+                            }
+                            const starPercentage=num/starsTotal *100;
+                            document.querySelector(`.stars-inner`).style.width=`${starPercentage}%`;
+                        }
+                        document.addEventListener('DOMContentLoaded',getRatings({{this.soSaoTB}}));
+                    </script>
+                    {{/if}}
+                {{/with}}
 
                 <div class="rating_title" style="margin-top: 30px;">
                     Các chỉ số được reset mỗi tháng
@@ -194,7 +233,7 @@
                         Tỉ lệ đơn hàng hủy
                     </div>
                     <div class="number_func">
-                        0% <i class="fas fa-info-circle"></i>
+                        {{percentDiscard}}% <i class="fas fa-info-circle"></i>
                     </div>
                 </div>
 

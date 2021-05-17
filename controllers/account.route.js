@@ -67,6 +67,7 @@ router.post('/add-shop',async function(req,res){
     const name= req.body.name;
     const email = req.body.email;
     const phone = req.body.phone;
+    const address = req.body.address;
 
     const check = await userModel.checkShop(req.session.authUser.maso);
     console.log(check);
@@ -76,19 +77,23 @@ router.post('/add-shop',async function(req,res){
       var date = Date.now();
       var update = moment(date).format("YYYY-MM-DD");
 
-        const data = {
-            email: email,
-            ngaymo: update,
-            sdt: phone,
-            status: true,
-            taikhoan: req.session.authUser.maso,
-            ten: name,
-          }
-          const shopduocadd = await userModel.addShop(data);
-          console.log(shopduocadd);
-          res.json({return_mode: 1,masoshop: shopduocadd.insertId || null});
-
-        
+      const data = {
+        email: email,
+        ngaymo: update,
+        sdt: phone,
+        status: true,
+        taikhoan: req.session.authUser.maso,
+        diachi: address,
+        ten: name,
+      }
+      const shopduocadd = await userModel.addShop(data);
+      console.log(shopduocadd);
+      if(shopduocadd.insertId) {  //shop add thanh cong
+        const check = await userModel.upgradeToShop(req.session.authUser.maso);
+        res.json({return_mode: 1,masoshop: shopduocadd.insertId || null});
+      }else{    //shop add ko thanh cong
+        res.json({return_mode: 0});
+      }
     } 
   });
 

@@ -62,6 +62,57 @@ module.exports = {
         if(rows.length===0) return null;
         return rows;
     },
+    async getShopIf(billID){
+        const sql = `SELECT temp1.*,c.maso as macuahang,c.ten
+        FROM
+        (
+            SELECT temp.*,s.cuahang FROM
+            (
+            SELECT d.maso,c.sanpham
+            FROM donhang d join chitietdonhang c on d.maso=c.donhang
+            WHERE d.maso=${billID}) as temp join sanpham s on temp.sanpham=s.maso
+        ) AS temp1 join cuahang c on temp1.cuahang=c.maso
+        GROUP BY temp1.maso`;
+        var [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
+    },
+    async getStarShop(shopID){
+        const sql = `SELECT AVG(temp.sosao) as soSaoTB
+        FROM
+        (
+        SELECT d.sosao,s.maso
+        FROM danhgia d join sanpham s on d.sanpham=s.maso
+        WHERE s.cuahang=${shopID}) as temp`;
+        var [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
+    },
+    async getSLBill(shopID){
+        const sql = `SELECT COUNT(*) as tongDon 
+        FROM
+        (
+            SELECT c.donhang
+            FROM chitietdonhang c join sanpham s on c.sanpham=s.maso
+            WHERE s.cuahang=${shopID}
+            GROUP BY c.donhang) as temp join donhang d on temp.donhang=d.maso`;
+        var [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
+    },
+    async getSLBillByStatus(shopID,status){
+        const sql = `SELECT COUNT(*) as tongDon 
+        FROM
+        (
+            SELECT c.donhang
+            FROM chitietdonhang c join sanpham s on c.sanpham=s.maso
+            WHERE s.cuahang=${shopID}
+            GROUP BY c.donhang) as temp join donhang d on temp.donhang=d.maso
+            WHERE d.tinhtrangdon=${status}`;
+        var [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
+    },
     async incomePreDate(idShop, date){
         const sql = `SELECT *, sum(tonggiatien) as tong
                     FROM (
@@ -186,7 +237,7 @@ module.exports = {
                                                                         FROM sanpham s join cuahang c on s.cuahang=c.maso
                                                                         WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
                                                                         GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
-                    WHERE DATEDIFF(c.ngaythang,${dateToday})=0
+                    WHERE DATEDIFF(c.ngaythang,"${dateToday}")=0
                     GROUP BY temp3.donhang
             ) as temp4
             WHERE temp4.donhang NOT IN(
@@ -200,7 +251,7 @@ module.exports = {
                                                             FROM sanpham s join cuahang c on s.cuahang=c.maso
                                                             WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
                                                             GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
-        WHERE DATEDIFF(c.ngaythang,${dateToday})=0 AND c.tinhtrang=4
+        WHERE DATEDIFF(c.ngaythang,"${dateToday}")=0 AND c.tinhtrang=4
         GROUP BY temp3.donhang)) as temp5 join donhang d on temp5.donhang=d.maso`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
@@ -223,7 +274,7 @@ module.exports = {
                                                                         FROM sanpham s join cuahang c on s.cuahang=c.maso
                                                                         WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
                                                                         GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
-                    WHERE DATEDIFF(c.ngaythang,${dateToday})=0
+                    WHERE DATEDIFF(c.ngaythang,"${dateToday}")=0
                     GROUP BY temp3.donhang
             ) as temp4
             WHERE temp4.donhang NOT IN(
@@ -237,7 +288,7 @@ module.exports = {
                                                             FROM sanpham s join cuahang c on s.cuahang=c.maso
                                                             WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
                                                             GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
-        WHERE DATEDIFF(c.ngaythang,${dateToday})=0 AND c.tinhtrang=4
+        WHERE DATEDIFF(c.ngaythang,"${dateToday}")=0 AND c.tinhtrang=4
         GROUP BY temp3.donhang)) as temp5 join donhang d on temp5.donhang=d.maso`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
@@ -246,36 +297,17 @@ module.exports = {
 
     async getMoneyMonth(shopID,dateToday)
     {
-        const sql = `SELECT SUM(tonggiatien) as tongTienThang
+        const sql = `SELECT SUM(temp2.tonggiatien) as tongTienThang
         FROM(
-            SELECT temp4.*
+            SELECT temp1.*,s.cuahang
             FROM(
-                    SELECT temp3.donhang
-                    FROM(
-                        SELECT temp2.donhang,k.tongsosanpham,k.tonggiatien,k.tinhtrangdon
-                        FROM(
-                                                        SELECT d.donhang
-                                                        FROM(
-                                                                        SELECT s.maso
-                                                                        FROM sanpham s join cuahang c on s.cuahang=c.maso
-                                                                        WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
-                                                                        GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
-                    WHERE DATEDIFF(c.ngaythang,${dateToday})<=30
-                    GROUP BY temp3.donhang
-            ) as temp4
-            WHERE temp4.donhang NOT IN(
-        SELECT temp3.donhang
-        FROM(
-            SELECT temp2.donhang,k.tongsosanpham,k.tonggiatien,k.tinhtrangdon
-            FROM(
-                                            SELECT d.donhang
-                                            FROM(
-                                                            SELECT s.maso
-                                                            FROM sanpham s join cuahang c on s.cuahang=c.maso
-                                                            WHERE s.cuahang=${shopID} and s.status=1) as temp1 join chitietdonhang d on temp1.maso=d.sanpham
-                                                            GROUP BY d.donhang) as temp2 join donhang k on temp2.donhang=k.maso) as temp3 join lichsutinhtrangdon c on c.donhang=temp3.donhang
-        WHERE DATEDIFF(c.ngaythang,${dateToday})<=30 AND c.tinhtrang=4
-        GROUP BY temp3.donhang)) as temp5 join donhang d on temp5.donhang=d.maso`;
+                SELECT temp.*,c.sanpham
+                FROM(
+                    SELECT d.maso,d.tonggiatien,l.ngaythang
+                    FROM donhang d join lichsutinhtrangdon l on d.maso=l.donhang
+                    WHERE l.tinhtrang=1) as temp join chitietdonhang c on temp.maso=c.donhang) as temp1 join sanpham s on temp1.sanpham=s.maso
+            WHERE s.cuahang=${shopID} AND DATEDIFF(temp1.ngaythang,"${dateToday}")<=30
+            GROUP BY temp1.maso) as temp2`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
         return rows[0];
