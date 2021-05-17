@@ -11,7 +11,7 @@
         </script>
 
         <div class="title_bar">
-            Danh sách đơn hàng - Division giao hàng
+            Danh sách đơn hàng
         </div>
 
         <div class="account_bar">
@@ -55,33 +55,8 @@
                 <span class="root_link" style="font-weight: 500;">Danh sách đơn hàng - Division</span>
             </div>
             <div class="input_search">
-                <input id = "myInput" type="text" placeholder="Nhập tối đa 20 mã ĐH cách nhau bằng dấu ','" class="input_search_menu" height="10">
+                <input id = "myInput" type="text" placeholder="Tìm kiếm đơn hàng" class="input_search_menu" height="10">
 
-                <div class="container_combo_box">
-                    <div class="title_combobox">
-                        Trong khoảng thời gian
-                    </div>
-                    <div class="combo_box">
-                        <div class="combo_box_select">
-                            <span class="selected">Toàn thời gian</span>
-                            <i class="fas fa-caret-down drop-menu-down"></i>
-                        </div>
-                    </div>
-                    <div class="drop-down-cbx">
-                        <div class="item-select-cbx first-item active">
-                            Toàn thời gian
-                        </div>
-                        <div class="item-select-cbx second-item">
-                            30 ngày qua
-                        </div>
-                        <div class="item-select-cbx third-item">
-                            7 ngày qua
-                        </div>
-                        <div class="item-select-cbx four-item">
-                            Hôm nay
-                        </div>
-                    </div>
-                </div>
 
                 <script>
                     $(document).on('click', function(e) {
@@ -116,18 +91,7 @@
                         $(this).addClass("active").siblings().removeClass("active");
                     });
                 </script>
-                <div class="ctn_seach_cbx">
-                    <div class="btn_search_input">
-                        <i class="fas fa-search"></i><span class="text_find">Tìm kiếm</span>
-                    </div>
-                </div>
-
-                <div class="ctn_reset_cbx">
-                    <div class="btn_reset_input">
-                        <i class="fas fa-undo-alt"></i>
-                        <span class="text_find">Tải lại</span>
-                    </div>
-                </div>
+               
             </div>
         </div>
     </div>
