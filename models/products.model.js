@@ -169,9 +169,9 @@ module.exports = {
       rows =  await this.informationForListProduct(rows)
       return rows;
   },
-    async allProduct(offset){
+    async allProduct(offset, sort){
         const sql = `select sanpham.*, cuahang.ten as tencuahang from sanpham join 
-            cuahang on sanpham.cuahang = cuahang.maso where sanpham.status = 1 limit ${paginate.limit} offset ${offset}`;
+            cuahang on sanpham.cuahang = cuahang.maso where sanpham.status = 1 order by giaban ${sort} limit ${paginate.limit} offset ${offset}`;
         var [rows, fields] = await db.load(sql);
         rows =  await this.informationForListProduct(rows)
         return rows;
@@ -207,16 +207,18 @@ module.exports = {
         const [rows, fields] = await db.patch(data, condition, 'sanpham');
         return rows;
     },
-    async getAllProductsByCate1Id(cate1Id, offset) {
+    async getAllProductsByCate1Id(cate1Id, offset, sort) {
         var [rows, fields] = await db.load(
-          `select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 where sanpham.status = 1 and danhmuccap1.maso = ${cate1Id} limit ${paginate.limit} offset ${offset}`
+          `select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2
+           where sanpham.status = 1 and danhmuccap1.maso = ${cate1Id} order by sanpham.giaban ${sort} limit ${paginate.limit} offset ${offset}`
         );
         rows =  await this.informationForListProduct(rows)
         return rows;
       },
-      async getAllProductsByCate2Id(cate2Id, offset) {
+      async getAllProductsByCate2Id(cate2Id, offset, sort) {
         var [rows, fields] = await db.load(
-          `select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 where sanpham.status = 1 and danhmuccap2.maso = ${cate2Id} limit ${paginate.limit} offset ${offset}`
+          `select sanpham.* from (danhmuccap1 left join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 
+          where sanpham.status = 1 and danhmuccap2.maso = ${cate2Id} order by sanpham.giaban ${sort} limit ${paginate.limit} offset ${offset}`
         );
         rows =  await this.informationForListProduct(rows)
         return rows;
@@ -231,14 +233,14 @@ module.exports = {
         const [rows, fields] = await db.load(sql);
         return rows[0].total;
       },
-      async searchRelevant(offset, text) {
+      async searchRelevant(offset, text, sort) {
         const sql = `select sanpham.*
             from sanpham join danhmuccap2 on sanpham.danhmuccap2 = danhmuccap2.maso join danhmuccap1 on danhmuccap2.danhmuccap1 = danhmuccap1.maso join cuahang on sanpham.cuahang = cuahang.maso
             where sanpham.status = 1 and
             match(sanpham.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
             or match(danhmuccap1.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
             or match(danhmuccap2.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
-            or match(cuahang.ten) against ('${text}' IN NATURAL LANGUAGE MODE)  limit ${paginate.limit} offset ${offset}`;
+            or match(cuahang.ten) against ('${text}' IN NATURAL LANGUAGE MODE) order by sanpham.giaban ${sort}  limit ${paginate.limit} offset ${offset}`;
         var [rows, fields] = await db.load(sql);
         rows =  await this.informationForListProduct(rows)
         return rows;

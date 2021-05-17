@@ -32,7 +32,29 @@
                             {{/each}}
                         </ul>
                     </div>
-          
+                    <div class="filter-widget mb-0">
+						<h2 class="fw-title">Sắp xếp theo giá</h2>
+                         <nav class="blog-pagination justify-content-between d-flex">
+                                <ul class="pagination">
+                                    <li class="page-item {{#if increase}}disabled{{/if}}">
+                                        <a href="?page={{currentPage}}&sort=asc" class="page-link" aria-label="Previous">
+                                            <i class="fas fa-angle-double-up"></i>
+                                            Tăng
+                                        </a>
+                                    </li>
+                                   
+                                    <li class="page-item {{#if descrease}}disabled{{/if}}">
+                                        <a href="?page={{currentPage}}&sort=desc" class="page-link" aria-label="Next">
+                                            <i class="fas fa-angle-double-down"></i>
+                                            Giảm
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+						<div class="text-center w-100 pt-3">
+                           
+                        </div>
+					</div>
                 </div>
 
                 <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">

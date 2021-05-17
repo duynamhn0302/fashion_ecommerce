@@ -6,7 +6,7 @@ const router = express.Router();
 //Xem ds tất cả sản phẩm
 router.get("/", async function (req, res) {
   let cate1Id = +req.params.id;
-
+  var sort = req.query.sort || "asc"
   var page = req.query.page || 1;
   if (page < 1) page = 1;
 
@@ -24,7 +24,7 @@ router.get("/", async function (req, res) {
 
   const offset = (page - 1) * paginate.limit;
 
-  let allProducts = await productsModel.allProduct(offset);
+  let allProducts = await productsModel.allProduct(offset, sort);
   let allCategories = await productsModel.allCategoriesWithQuantity();
   console.log(allProducts)
   if (allProducts !== null)
@@ -32,7 +32,8 @@ router.get("/", async function (req, res) {
       let img = await productsModel.getImages(allProducts[i].maso);
       allProducts[i].avatar = img[0].link;
     }
-    
+  var increase ;
+  var descrease;
 
   res.render("../views/vwProducts/allProduct.hbs", {
     layout: "main.hbs",
@@ -45,10 +46,14 @@ router.get("/", async function (req, res) {
     lastPage: +page === nPages,
     page_numbers,
     allCategories,
+    currentPage: page,
+    increase: sort === "asc" ,
+    descrease: sort === "desc" ,
   });
 });
 //Xem chi tiet sanpham
 router.get('/:id', async function (req, res, next) {
+  console.log(req.params)
     const id = +req.params.id;
     const product = await productsModel.single(id)
     if (+product.giotinhsudung === 0)
@@ -63,7 +68,6 @@ router.get('/:id', async function (req, res, next) {
     for(var i = 0; i < images.length; i++){
         images[i].isActive = false;
     }
-    console.log(product)
     images[0].isActive = true;
     const avatar = images[0]
     var relativeProduct = await productsModel.getRelativeProduct(id)
@@ -91,7 +95,7 @@ router.get('/:id', async function (req, res, next) {
 //Xem ds sản phẩm theo danh mục 1
 router.get("/byCat1/:id", async function (req, res) {
   let cate1Id = +req.params.id;
-
+  var sort = req.query.sort || "asc"
   var page = req.query.page || 1;
   if (page < 1) page = 1;
 
@@ -111,7 +115,8 @@ router.get("/byCat1/:id", async function (req, res) {
 
   let allProductsFromCate1 = await productsModel.getAllProductsByCate1Id(
     cate1Id,
-    offset
+    offset,
+    sort
   );
   let cate1Name = await categoryModel.getCateName1ById(cate1Id);
   let allCategories = await productsModel.allCategoriesWithQuantity();
@@ -136,13 +141,16 @@ router.get("/byCat1/:id", async function (req, res) {
     cate1Name,
     cate1Id,
     allCategories,
+    currentPage: page,
+    increase: sort === "asc" ,
+    descrease: sort === "desc" ,
   });
 });
 //Xem ds sản phẩm theo danh mục 2
 router.get("/byCat2/:id", async function (req, res) {
   let cate2Id = +req.params.id;
   let cate1Id = await categoryModel.getCate1IdFromCate2Id(cate2Id);
-
+  var sort = req.query.sort || "asc"
   var page = req.query.page || 1;
   if (page < 1) page = 1;
 
@@ -189,20 +197,58 @@ router.get("/byCat2/:id", async function (req, res) {
     cate1Id,
     cate2Id,
     allCategories,
+    currentPage: page,
+    increase: sort === "asc" ,
+    descrease: sort === "desc" ,
   });
 });
 
 //Search sản phẩm
-router.post("/search/search-result-most-relevant", async function (req, res) {
-  let search_term = req.body.search_term;
-  req.session.search_term = search_term;
-  if (search_term === "" || search_term.length < 3)
+router.get("/search/keyword", async function (req, res) {
+  console.log(req.query)
+  var keyword = req.query.search || "";
+  var sort = req.query.sort || "asc"
+  var page = req.query.page || 1;
+  
+  const total = await productsModel.countSearchRelevant(keyword);
+  let nPages = Math.floor(total / paginate.limit);
+  if (total % paginate.limit > 0) nPages++;
+
+  const page_numbers = [];
+  for (var i = 1; i <= nPages; i++) {
+    page_numbers.push({
+      value: i,
+      isCurrentPage: i === +page,
+    });
+  }
+
+  let allCategories = await productsModel.allCategoriesWithQuantity();
+
+  const offset = (page - 1) * paginate.limit;
+  var list = await productsModel.searchRelevant(offset, keyword, sort);
+
+  if (list !== null)
+    for (let i=0; i<list.length; i++) {
+        let img = await productsModel.getImages(+list[i].maso);
+        list[i].avatar = img[0].link;
+      }
+
   res.render("../views/vwProducts/search_results.hbs", {
-    empty: true,
-    n_result: 0,
-    search_term,
+    products: list,
+    page_numbers,
+    empty: !list.length,
+    n_result: total,
+    search_term: keyword,
+    prevPage: +page - 1,
+    nextPage: +page + 1,
+    firstPage: +page === 1,
+    lastPage: +page === nPages,
+    onlyOne: nPages <= 1,
+    allCategories,
+    currentPage: page,
+    increase: sort === "asc" ,
+    descrease: sort === "desc" ,
   });
-  res.redirect("/products/search/search-result-most-relevant");
 });
 
 router.get("/search/common", async function (req, res) {
