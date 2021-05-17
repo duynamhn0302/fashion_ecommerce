@@ -10,6 +10,7 @@ const { paginate } = require('./../config/default.json');
 const { dirname } = require('path');
 const { dir } = require('console');
 const { allCategories } = require('../models/products.model');
+const { getSLBill } = require('../models/shop.model');
 
 //Xem màn hình shop
 router.get('/', async function (req, res) {
@@ -222,10 +223,12 @@ router.get('/incomes', async function (req, res) {
   {
     moneyToday.tongtien=0;
   }
+  moneyToday.tongtien=productModel.formatPrice(+moneyToday.tongtien);
 
   let countBillToday=await shopModel.countBillToday(+shopId.maso,today);
   let countAmountProductSellingToday=await shopModel.countAmountProductSellingToday(+shopId.maso,today);
   let getMoneyMonth=await shopModel.getMoneyMonth(+shopId.maso,today);
+  getMoneyMonth.tongTienThang=productModel.formatPrice(+getMoneyMonth.tongTienThang);
 
   if (countAmountProductSellingToday.tongSanPhamHomNay===null)
   {
@@ -237,7 +240,24 @@ router.get('/incomes', async function (req, res) {
     getMoneyMonth.tongTienThang=0;
   }
   
-  
+  console.log(shopId);
+  let getStarShop=await shopModel.getStarShop(+shopId.maso);
+  let isHaveStar=true;
+  if (getStarShop==null)
+  {
+    isHaveStar=false;
+  }
+  else{
+    let num=getStarShop.soSaoTB;
+    num=num.toFixed(1);
+    getStarShop.soSaoTB=num;
+  }
+  getStarShop.isHaveStar=isHaveStar;
+
+  let getSLBill=await shopModel.getSLBill(+shopId.maso);
+  let getSLBillByStatus=await shopModel.getSLBillByStatus(+shopId.maso,4);
+  let percentDiscard=parseFloat(getSLBillByStatus.tongDon)/getSLBill.tongDon*100;
+  console.log(percentDiscard);
 
   var prevMonth = function(dateObj) {
     var tempDateObj = new Date(dateObj);
@@ -303,6 +323,8 @@ router.get('/incomes', async function (req, res) {
     last7daysIncome,
     last7monthIncome,
     getMoneyMonth,
+    getStarShop,
+    percentDiscard,
       layout: 'shop_manage.hbs'
     });
 })

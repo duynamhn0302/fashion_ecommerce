@@ -10,6 +10,24 @@ const usersModel = require("../models/users.model");
 
 const router = express.Router();
 
+router.post('/update-bills-detail/:id', async function (req, res) {
+  let id=+req.params.id;
+  let status=+req.body.status_bill;
+
+  let listBillDetail=await shopModel.getDetailBillInfo(id);
+
+  if (listBillDetail.tinhtrangdon != status)
+  {
+    await shopModel.updateStatusBill(id,status);
+
+    await shopModel.insertStatusBill(id,status);
+  }
+  
+  let link="/users/bill-detail/"+id;
+
+  res.redirect(link);
+})
+
 router.post("/rating-product/:id", async function (req, res) {
   let num_star=+req.body.rate;
   let comment=req.body.cmReview;
@@ -408,6 +426,14 @@ router.get("/bill-detail/:id", async (req, res) => {
   }
   listBillDetail.listSanPham=listSanPham;
   listBillDetail.tonggiatien=productsModel.formatPrice(listBillDetail.tonggiatien);
+  if (listBillDetail.tinhtrangdon===1)
+  {
+    listBillDetail.isAvailableDiscard=true;
+  }
+  else{
+    listBillDetail.isAvailableDiscard=false;
+  }
+  listBillDetail.ShopIf=await shopModel.getShopIf(listBillDetail.maso);
   console.log(listBillDetail);
   //Code phúc
 
@@ -436,6 +462,7 @@ router.get("/bill-detail/:id", async (req, res) => {
   res.render('../views/users_views/Bill-detail.hbs', {
     bill,
     billId,
+    listBillDetail,
   });
 });
 

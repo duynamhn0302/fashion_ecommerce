@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/resources/css/profile.css">
 <link rel="stylesheet" href="/resources/css/shop_bill.css">
+<body>
 <div class="container-ratingstar">
     <form action="#" method="POST" id="rating-form">
         <div class="container-star">
@@ -31,6 +32,27 @@
         </div>
     </form>
 </div>
+
+<div class="update-bill-dialog-user">
+    <div class="dialog-user">
+        <div class="question-dialog">
+                Bạn có muốn hủy đơn hàng này ?
+        </div>
+        <div class="container-dialog-btn">
+            <div class="ctn_update_cbx">
+                <div class="btn_back_input clickable-dialog-back">
+                    <i class="fas fa-arrow-left" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Quay lại</span>
+                </div>
+            </div>
+            <div class="ctn_update_cbx">
+                <div class="btn_update_input clickable-dialog-remove">
+                    <i class="far fa-check-circle" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Xác nhận</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     var div = document.getElementsByClassName('hide_rating')[0];
      div.addEventListener('click', function (event) {
@@ -55,7 +77,6 @@
         $('#rating-form').submit();
     }
 </script>
-<body>
     <div class="page_wrapper">
         <div class="title_container">
             <h2 class="title">Trang cá nhân</h2>
@@ -85,27 +106,29 @@
                 >
                 <span class="root_link" style="font-weight: 500;">Chi tiết đơn hàng</span>
             </div>
-
             <div class="customer-information">
-                1. Thông tin khách hàng
+                1. Thông tin
             </div>
 
+            {{#with this.listBillDetail}}
+            {{#with this.ShopIf}}
             <div class="input_detail_ct">
                 <div class="container_combo_box">
                     <div class="title_combobox">
-                        Mã khách hàng
+                        Mã cửa hàng
                     </div>
-                    <input type="text" placeholder="{{maso}}" class="input_detail" readonly="readonly">
+                    <input type="text" placeholder="{{cuahang}}" class="input_detail" readonly="readonly">
                 </div>
 
                 <div class="container_combo_box" style="margin-left: 20px;">
                     <div class="title_combobox">
-                        Tên khách hàng
+                        Tên cửa hàng
                     </div>
-                    <input type="text" placeholder="{{hoten}}" class="input_detail" readonly="readonly">
+                    <input type="text" placeholder="{{ten}}" class="input_detail" readonly="readonly">
                 </div>
             </div>
-
+            {{/with}}
+            {{/with}}
             <div class="input_detail_ct">
                 <div class="container_combo_box">
                     <div class="title_combobox">
@@ -123,31 +146,33 @@
             </div>
 
             {{#with this.listBillDetail}}
-            <div class="input_detail_ct">
-                <div class="container_combo_box">
-                    <div class="title_combobox">
-                        Số điện thoại người nhận
+            <form action="/users/update-bills-detail/{{maso}}" method="POST" id="#formDiscard">
+                <div class="input_detail_ct">
+                    <div class="container_combo_box">
+                        <div class="title_combobox">
+                            Số điện thoại người nhận
+                        </div>
+                        <input type="text" placeholder="{{sdtnguoinhan}}" style="width: 100%;" readonly="readonly">
                     </div>
-                    <input type="text" placeholder="{{sdtnguoinhan}}" style="width: 100%;" readonly="readonly">
+
+                    <div class="container_combo_box" style="margin-left: 20px;">
+                        <div class="title_combobox">
+                            Địa chỉ người nhận
+                        </div>
+                        <input type="text" placeholder="{{diachinguoinhan}}" class="input_detail" style="width: 100%;" readonly="readonly">
+                    </div>
                 </div>
 
-                <div class="container_combo_box" style="margin-left: 20px;">
-                    <div class="title_combobox">
-                        Địa chỉ người nhận
+                <div class="input_detail_ct">
+                    <div class="container_combo_box">
+                        <div class="title_combobox">
+                            Tình trạng đơn hàng
+                        </div>
+                        <input type="text" placeholder="{{ten}}" style="width: 100%;" readonly="readonly">
+                        <input type="hidden" name="status_bill" value="4" >
                     </div>
-                    <input type="text" placeholder="{{diachinguoinhan}}" class="input_detail" style="width: 100%;" readonly="readonly">
                 </div>
-            </div>
-
-
-            <div class="input_detail_ct">
-                <div class="container_combo_box">
-                    <div class="title_combobox">
-                        Tình trạng đơn hàng
-                    </div>
-                    <input type="text" placeholder="{{ten}}" style="width: 100%;" readonly="readonly">
-                </div>
-            </div>
+            </form>
             {{/with}}
 
         </div>
@@ -236,24 +261,57 @@
         {{/with}}
         </div>
     </div>
-    <div class="container-update-detail">
-        <div class="ctn_update_cbx clickable-row" data-href='/shops/bills'>
-            <div class="btn_back_input">
-                <i class="fas fa-ban" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Hủy đơn</span>
-             </div>
-        </div>
-
-        <div class="ctn_update_cbx">
-            <div class="btn_update_input">
-                <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Cập nhật</span>
-             </div>
-        </div>
-    </div>
+    {{#with this.listBillDetail}}
+        <div class="container-update-detail">
+            {{#if isAvailableDiscard}}
+            <div class="ctn_update_cbx" id="btn-remove">
+                <div class="btn_back_input">
+                    <i class="fas fa-ban" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Hủy đơn</span>
+                </div>
             </div>
+            {{else}}
+            <div class="ctn_update_cbx">
+                <div class="btn_back_input clickable-row" data-href='/users/orders'>
+                    <i class="fas fa-arrow-left" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Quay lại</span>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    {{/with}}
+
+</div>
     </div>
     </section>
 
     </div>
-</body>
 <!--====== Javascripts & Jquery ======-->
 <script src="/resources/js/jquery-3.2.1.min.js"></script>
+<script>
+    jQuery(document).ready(function($) {
+        $(".clickable-dialog-remove").click(function() {
+            document.forms[2].submit();
+            $('.update-bill-dialog-user').fadeOut();
+        });
+        $(".clickable-dialog-back").click(function() {
+            $('.update-bill-dialog-user').fadeOut();
+        });
+    });
+    jQuery(document).ready(function($) {
+        $(".update-bill-dialog-user").click(function() {
+            $('.update-bill-dialog-user').fadeOut();
+        });
+    });
+</script>
+<script>
+    $('#btn-remove').click(function() {
+        $('.update-bill-dialog-user').fadeIn();
+    }); 
+</script>
+    <script>
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+</body>
