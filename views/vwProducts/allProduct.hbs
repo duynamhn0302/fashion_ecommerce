@@ -1,3 +1,24 @@
+<style>
+    @media only screen and (max-width: 375px) {
+        .pi-pic > .margin-image > a > img {
+            height: 350px !important;
+            object-fit: cover;
+        }
+
+        .margin-image {
+            height: 350px !important;
+            text-align: center;
+        }
+
+        .pi-pic > .margin-image > a {
+            display: inline-block;
+        }
+
+        .order-2, .order-lg-1 {
+            display: none;
+        }
+    }
+</style>
 <body>
     <!-- Page info -->
     <div class="page-top-info">
@@ -72,17 +93,19 @@
                                                 <div class="tag-sale" style="margin-top: 20px;">ON SALE</div>
                                             {{/if}}
                                         </div>
-                                        <a href="/products/{{maso}}">
-                                            <img src="{{avatar}}" alt="" style="height: 250px;">
-                                        </a>
-                                        <div class="pi-links">
-                                            <a href="javascript: muaNgay('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
-                                            <form method="POST" class ="frmAddToCart" id="NewfrmAddToCart{{maso}}" action="/add_to_cart">
-                                                <input  type="hidden" name="id" value="{{maso}}">
-                                                <input  type="hidden" name="sl" value="1">
-                                                <a href="javascript: addToCart('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
-                                            </form>
-                                            
+                                        <div class="margin-image">
+                                            <a href="/products/{{maso}}">
+                                                <img src="{{avatar}}" alt="" style="height: 250px;">
+                                            </a>
+                                            <div class="pi-links">
+                                                <a href="javascript: muaNgay('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
+                                                <form method="POST" class ="frmAddToCart" id="NewfrmAddToCart{{maso}}" action="/add_to_cart">
+                                                    <input  type="hidden" name="id" value="{{maso}}">
+                                                    <input  type="hidden" name="sl" value="1">
+                                                    <a href="javascript: addToCart('#NewfrmAddToCart{{maso}}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
+                                                </form>
+                                                
+                                            </div>
                                         </div>
                                     </div>
                                     <a href="/products/{{maso}}">
