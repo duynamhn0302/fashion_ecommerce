@@ -111,11 +111,13 @@ router.post("/change-profile", async function (req, res) {
   let new_hoten = req.body.hoten;
   let new_sdt = req.body.sdt;
   let email = req.body.email;
+  let address = req.body.diachi;
 
   req.session.authUser.hoten = new_hoten;
   req.session.authUser.sdt = new_sdt;
+  req.session.authUser.diachi = address;
 
-  let updated_fields = { email, hoten: new_hoten, sdt: new_sdt };
+  let updated_fields = { email, hoten: new_hoten, sdt: new_sdt, diachi: address };
   await usersModel.patch(updated_fields);
   return res.redirect("/users/profile");
 });
@@ -202,6 +204,8 @@ router.post("/pay-cart", async function (req, res) {
     taikhoan: cart.taikhoan,
     tongsosanpham: cart.tongsosanpham,
     tinhtrangdon: 1,
+    diachinguoinhan: req.body.address,
+    sdtnguoinhan: req.body.sdt
   });
   let newBillId = createBillResult.insertId;
 

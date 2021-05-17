@@ -1,5 +1,6 @@
 const db = require('../utils/db');
 const { paginate } = require('./../config/default.json');
+const { single } = require('./products.model');
 const productsModel = require('./products.model');
 
 module.exports = {
@@ -387,6 +388,14 @@ module.exports = {
         return rows;
     },
 
+    async getNameStatusBill(statusID)
+    {
+        const sql = `SELECT * FROM loaitinhtrangdon WHERE maso=${statusID}`;
+        const [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
+    },
+
     async updateStatusBill(idBill,status)
     {
         var condition={maso: idBill};
@@ -497,6 +506,11 @@ module.exports = {
           }
           item.listNameProduct=tensanpham;
         }
+    },
+
+    async single(shopId) {
+        const [rows, fields] = await db.load(`select * from cuahang where maso = ${shopId}`);
+        return rows[0];
     }
 
 }

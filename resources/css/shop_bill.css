@@ -714,3 +714,55 @@ input#rate-5:checked ~ label{
     margin-left: 330px;
     cursor: pointer;
 }
+
+/*update dialog*/
+
+.update-bill-dialog{
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.507);
+    position: fixed;
+    z-index: 2;
+    place-items: center;
+    text-align: center;
+    display: none;
+}
+
+.update-bill-dialog-change{
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.507);
+    position: fixed;
+    z-index: 2;
+    place-items: center;
+    text-align: center;
+    display: none;
+}
+
+.dialog{
+    width: 400px;
+    background: white;
+    padding: 20px 30px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 25%;
+    margin-top: 15%;
+}
+
+.container-dialog-btn{
+    display: flex;
+    padding-top: 20px;
+}
+
+.question-dialog{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.status-bill-dialog{
+    font-weight: bold;
+}

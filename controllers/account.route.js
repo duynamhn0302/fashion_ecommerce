@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userModel = require('../models/users.model');
 const shopModel = require('../models/shop.model');
+const bcrypt = require('bcryptjs');
 const moment = require('moment');
 
 router.post('/check-account',async function(req,res,next){
@@ -13,7 +14,7 @@ router.post('/check-account',async function(req,res,next){
     // console.log(user);
     if(user === null){
         return_mode = 0   //->  tài khoản không hợp lệ, username không tồn tại trong csdl
-    }else if(user.password !== password){
+    }else if(!bcrypt.compareSync(password, user.password)){
         return_mode = 1;    //->    username có tồn tại nhưng sai mật khẩu
     }else{
         return_mode = 2;    //->    username có tồn tại, nhập đúng mật khẩu, đăng nhập thành công
@@ -42,12 +43,13 @@ router.post('/check-account',async function(req,res,next){
 router.post('/create-account',async function(req,res,next){
   var date = Date.now();
   var update = moment(date).format("YYYY-MM-DD");
+  var password = bcrypt.hashSync(req.body.password, 10);
 
     const data = {
         hoten: req.body.fullname,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password,
+        password: password,
         ngaysinh: null,
         sdt: null,
         vaitro: 0,
@@ -55,15 +57,8 @@ router.post('/create-account',async function(req,res,next){
         status: true,
         ngaymo: update,
     }
-    // const user = await userModel.add(data);
-    // if(user === null){
-    //     res.status(406);
-    // }else{
-    //     req.session.authUser = data;
-    //     req.session.auth = false;
-    //     console.log(req.session.authUser);
-    // }
     req.session.data = data
+    console.log(req.session.data);
     req.session.auth = false;
     res.json({});
 }); 
@@ -131,11 +126,19 @@ router.post('/send-password',async function(req,res){
   if(user === null){
     res.json({username: false,email:null});
   }else{
+    let new_password = Math.random().toString(36).substring(2);
+    const new_data = {
+      password: bcrypt.hashSync(new_password, 10),
+    }
+    const condition ={
+      maso: user.maso,
+    }
+    await userModel.modify(new_data,condition);
     let mailOptions = {
       from: 'tt5335084@gmail.com',
       to: user.email,
       subject: 'Retrieve new password', 
-      html: `<span>Your password is </span><h3>${user.password}</h3>`
+      html: `<span>Your password is </span><h3>${new_password}</h3>`
     };
     transporter.sendMail(mailOptions, function(error, info){
       if(error){

@@ -18,7 +18,10 @@ router.get('/', async function (req, res) {
 
 router.get("/shops-information/:id", async function (req, res) {
   const shopID = +req.params.id;
-  
+
+  let shopInfo = await shopModel.single(shopID);
+  shopInfo.ngaymo = moment(shopInfo.ngaymo).format('DD-MM-YYYY');
+
   let listProductByShopID = await shopModel.getProductByShopID(shopID);
 
   let catList = await shopModel.getCatByShopID(shopID);
@@ -45,6 +48,7 @@ router.get("/shops-information/:id", async function (req, res) {
     category,
     totalProduct: listProductByShopID.length,
     shopID,
+    shopInfo
   });
 });
 
@@ -711,6 +715,16 @@ router.get('/bills-detail/:id', async function (req, res) {
   listBillDetail.listSanPham=listSanPham;
   listBillDetail.isNotAvailableUpdate=(listBillDetail.tinhtrangdon===3 || listBillDetail.tinhtrangdon===4);
   listBillDetail.tonggiatien=productModel.formatPrice(listBillDetail.tonggiatien);
+
+  //Xác định tình trạng tiếp theo
+  listBillDetail.idUpdate=listBillDetail.tinhtrangdon+1;
+  let nextStatus=await shopModel.getNameStatusBill(listBillDetail.idUpdate);
+  let statusChangeName;
+  if (nextStatus!=null)
+  {
+    statusChangeName=nextStatus.ten;
+  }
+  listBillDetail.statusChangeName=statusChangeName;
   console.log(listBillDetail);
 
   res.render('vwShop/shop_bill_detail',{

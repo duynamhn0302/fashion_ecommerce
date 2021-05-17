@@ -1,5 +1,46 @@
 {{#with this.listBillDetail}}
 <div class="container_income">
+    <div class="update-bill-dialog">
+        <div class="dialog">
+            <div class="question-dialog">
+                Bạn có muốn hủy đơn hàng này ?
+            </div>
+            <div class="container-dialog-btn">
+                <div class="ctn_update_cbx">
+                    <div class="btn_back_input clickable-dialog-back">
+                        <i class="fas fa-arrow-left" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Quay lại</span>
+                    </div>
+                </div>
+                <div class="ctn_update_cbx">
+                    <div class="btn_update_input clickable-dialog-remove">
+                        <i class="far fa-check-circle" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Xác nhận</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="update-bill-dialog-change">
+        <div class="dialog">
+            <div class="question-dialog">
+                <div>Cập nhật đơn hàng trạng thái</div>
+                <div class="status-bill-dialog">"{{statusChangeName}}"</div>
+            </div>
+            <div class="container-dialog-btn">
+                <div class="ctn_update_cbx">
+                    <div class="btn_back_input clickable-dialog-backUp">
+                        <i class="fas fa-arrow-left" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Quay lại</span>
+                    </div>
+                </div>
+                <div class="ctn_update_cbx">
+                    <div class="btn_update_input clickable-dialog-update">
+                        <i class="far fa-check-circle" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Xác nhận</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container_income_navbar">
         <div class="btn_show">
             <span class="fas fa-bars"></span>
@@ -94,6 +135,7 @@
                 </div>
             </div>
 
+            <form action="/shops/update-bills-detail/{{maso}}" method="POST">
             <div class="input_detail_ct">
                 <div class="container_combo_box">
                     <div class="title_combobox">
@@ -126,7 +168,7 @@
 
         </div>
     </div>
-    <form action="/shops/update-bills-detail/{{maso}}" method="POST">
+
     <div class="container_bill">
         <div class="container_bill_items" style="padding-bottom: 10px;">
             <div class="customer-information">
@@ -197,18 +239,52 @@
         </div>
 
         <div class="ctn_update_cbx">
-            <div class="btn_update_input clickable-row" data-href='/shops/update-bills-detail/{{maso}}'>
+            <div class="btn_update_input" id="btn-update">
                 <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Cập nhật</span>
              </div>
         </div>
         {{/if}}
     </div>
+
+
+    <script>
+        jQuery(document).ready(function($) {
+            $(".clickable-dialog-update").click(function() {
+                $('.combo_box_select input').val("{{{idUpdate}}}");
+                document.forms[0].submit();
+                $('.update-bill-dialog-change').fadeOut();
+            });
+            $(".clickable-dialog-remove").click(function() {
+                $('.combo_box_select input').val("4");
+                document.forms[0].submit();
+                $('.update-bill-dialog').fadeOut();
+            });
+            $(".clickable-dialog-back").click(function() {
+                $('.update-bill-dialog').fadeOut();
+            });
+            $(".clickable-dialog-backUp").click(function() {
+                $('.update-bill-dialog-change').fadeOut();
+            });
+        });
+        jQuery(document).ready(function($) {
+            $(".update-bill-dialog").click(function() {
+                $('.update-bill-dialog').fadeOut();
+            });
+            $(".update-bill-dialog-change").click(function() {
+                $('.update-bill-dialog-change').fadeOut();
+            });
+        });
+    </script>
     <script>
         $('#btn-remove').click(function() {
-            $('.combo_box_select input').val("4");
-            document.forms[0].submit()});
+            $('.update-bill-dialog').fadeIn();
+        });
+        $('#btn-update').click(function() {
+            $('.update-bill-dialog-change').fadeIn();
+        });    
     </script>
     </form>
+
     <script>
         jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {

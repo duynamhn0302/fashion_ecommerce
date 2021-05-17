@@ -63,7 +63,7 @@
                     <div class="title_combobox">
                         Địa chỉ nhận hàng
                     </div>
-                    <input type="text" id="address_input" placeholder="" style="width: 100%;">
+                    <input type="text" id="address_input" value="{{diachi}}" style="width: 100%;">
                 </div>
             </div>
 
@@ -89,7 +89,7 @@
                 2. Thông tin đơn hàng
             </div>
 
-            <div class="cart-table-warp" style="margin-bottom: 30px;">
+            <div class="cart-table-warp" style="margin-bottom: 10px;">
 				<table>
 					<thead>
 						<tr>
@@ -119,12 +119,14 @@
 					</tbody>
 				</table>
             </div>
-            <div class="input_detail_ct" style="width: 100%; display:flex; justify-content:flex-end">
-                <div class="container_combo_box" style="margin-left: 20px;">
-                    <div class="title_combobox">
-                        Tổng giá trị đơn hàng
+            <div class="total_all_price">
+                <div class="ctn_total_price">
+                    <div class="text-total">
+                        Tổng cộng:
                     </div>
-                    <input type="text" placeholder="{{cart.tonggiatien}} đ" class="input_detail" style="color:#f51167; width:50%" readonly="readonly">
+                    <div class="total-price-num">
+                        {{cart.tonggiatien}} đ
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,7 +140,7 @@
 
         <div class="ctn_update_cbx">
             <div class="btn_update_input clickable-row">
-                <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Thanh toán</span>
+                <i class="fas fa-shopping-cart" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Thanh toán</span>
                 <form class="pay_form" action="/users/pay-cart" method="post" hidden>
                     <input type="hidden" name="cartId" value="{{cart.maso}}">
                     <input type="hidden" id="address_post" name="address" value="">
@@ -154,79 +156,7 @@
     </div>
     <script src="/resources/js/jquery-3.2.1.min.js"></script>
     <script src="/resources/js/cart.js"></script>
-{{!-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let province = document.getElementById("province");
-        window.onload = function() {
-            $.ajax({
-                url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
-                headers: {
-                    "token": "dbace437-b655-11eb-8080-c61f6a6501ca",
-                    "Content-Type": 'Application/json'
-                },
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    console.log('success: ');
-                    console.log(response.data);
-                    let str = '<option selected>Tinh thanh</option>';
-                    for(let i=0; i<response.data.length; i++) {
-                        str = str+'<option class="provinceId" data-province="'+response.data[i].ProvinceID+'" >'+'</option>'
-                    }
-                    province.innerHTML=str;
-                }
-            })
-        }
-    }, false);
 
-    function changeFunc() {
-        let selectBox = document.getElementById("province");
-        let selectedValue = selectBox.options[selectBox.selectedIndex].getAttribute('data-province');
-        let district = document.getElementById('district');
-
-        $.ajax({
-            url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/district",
-                headers: {
-                    "token": "dbace437-b655-11eb-8080-c61f6a6501ca",
-                    "Content-Type": 'Application/json'
-                },
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    let str = '<option selected>Quan huyen</option>';
-                    for(let i=0; i<response.data.length; i++) {
-                        if(response.data[i].ProvinceID === selectedValue)
-                            str = str+'<option class="districtId" data-district="'+response.data[i].DistrictID+'" >'+response.data[i].DistrictName+'</option>'
-                    }
-                    district.innerHTML=str;
-                }
-        })
-    }
-
-    function changeFuncDistrict() {
-        let selectBox = document.getElementById("district");
-        let selectedValue = selectBox.options[selectBox.selectedIndex].getAttribute('data-district');
-        let ward = document.getElementById('ward');
-
-        $.ajax({
-            url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id",
-                headers: {
-                    "token": "dbace437-b655-11eb-8080-c61f6a6501ca",
-                    "Content-Type": 'Application/json'
-                },
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    let str = '<option selected>Phuong xa</option>';
-                    for(let i=0; i<response.data.length; i++) {
-                        if(response.data[i].ProvinceID === selectedValue)
-                            str = str+'<option class="wardId" data-ward="'+response.data[i].WardCode+'" >'+response.data[i].WardName+'</option>'
-                    }
-                    ward.innerHTML=str;
-                }
-        })
-    }
-</script>
-</body> --}}
+</body>
 <!--====== Javascripts & Jquery ======-->
 
