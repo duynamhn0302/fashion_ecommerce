@@ -7,7 +7,7 @@ function addToCart(formId){
     $.post('/users/add-to-cart',{id:productId,sl:productQuantity},function(data,status){
         if(data.result === undefined)
             window.location.assign('/login');
-        if(status === "success"){
+        if (data.success){
             //add thanh cong, lam cai j do
             $('#add-success').addClass('d-show1');
             $('#add-success').addClass('roll-in-right');
@@ -23,11 +23,25 @@ function addToCart(formId){
             form.find("input[name='sl']").val("1")
             $(document).find("#slGioHang").html(data.result)
             e.preventDefault();
-        }else{
-            //add khong thanh cong
-            
-            window.location.assign('/login');
         }
+        else{
+            $('#add-success-img-container').html('<i id = class="far fa-exclamation"></i>')
+            $('#msg').text('Sản phẩm trong kho không đủ')
+            $('#add-success').addClass('d-show1');
+            $('#add-success').addClass('roll-in-right');
+            setTimeout(function(e){
+                $('#add-success').removeClass('roll-in-right');
+                $('#add-success').addClass('scale-out-tr');
+            },100)
+            setTimeout(function(e){
+                $('#add-success').removeClass('scale-out-tr');
+                $('#add-success').removeClass('d-show1');
+            },3000)
+            //do nothin
+            $(document).find("#slGioHang").html(data.result)
+            e.preventDefault();
+        }
+
     });
   
 }
