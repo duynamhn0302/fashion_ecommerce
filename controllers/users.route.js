@@ -16,7 +16,7 @@ router.post("/rating-product/:id", async function (req, res) {
   let id_product=+req.body.id_product;
 
   await usersModel.insertReview(req.session.authUser.maso,id_product,comment,num_star);
-  await usersModel.insertComment(req.session.authUser.maso,id_product,comment);
+  //await usersModel.insertComment(req.session.authUser.maso,id_product,comment);
 
   res.redirect("/users/orders");
 });
@@ -24,7 +24,7 @@ router.post("/rating-product/:id", async function (req, res) {
 router.post('/add-to-cart', auth.auth,async function(req,res){
   const productId = +req.body.id;      // nhan vao hai bien la id,sl
   const productQuantity = +req.body.sl;
-
+  console.log(req.session.cart.maso)
   const check = await cartModel.checkIfProductInCart(productId,req.session.cart.maso);
   const product = await productsModel.getSingleProductById(productId);
   if(product===null){res.json(false);}    //id cua product la khong hop le, hay khong truy xuat duoc thi coi nhu vut

@@ -212,7 +212,11 @@ module.exports = {
         const [rows,fields] = await db.add(new_data,'binhluan');
         return rows;
     },
-
+    async users_shop_bytime_chart(n){
+      
+        
+        
+    },
     async users_shop_bytime(n){
  
         var prevMonth = function (dateObj) {
