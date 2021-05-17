@@ -28,32 +28,6 @@
                             <input id = "myInput" type="text" placeholder="Nhập tối đa 20 mã ĐH cách nhau bằng dấu ','"
                                 class="input_search_menu" height="10" />
 
-                            <div class="container_combo_box">
-                                <div class="title_combobox">
-                                    Trong khoảng thời gian
-                                </div>
-                                <div class="combo_box">
-                                    <div class="combo_box_select">
-                                        <span class="selected">Toàn thời gian</span>
-                                        <i class="fas fa-caret-down drop-menu-down"></i>
-                                    </div>
-                                </div>
-                                <div class="drop-down-cbx">
-                                    <div class="item-select-cbx first-item active">
-                                        Toàn thời gian
-                                    </div>
-                                    <div class="item-select-cbx second-item">
-                                        30 ngày qua
-                                    </div>
-                                    <div class="item-select-cbx third-item">
-                                        7 ngày qua
-                                    </div>
-                                    <div class="item-select-cbx four-item">
-                                        Hôm nay
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="ctn_seach_cbx">
                                 <div class="btn_search_input">
                                     <i class="fas fa-search"></i><span class="text_find">Tìm kiếm</span>
@@ -95,6 +69,7 @@
                         <div class="tab_container_wrap">
                             <div class="tab_container_box active_tab" id="tab1" data-tab-content>
                                 <div class="table_bill_container">
+                                    <div style="overflow:auto;  height:500px;">
                                     <table>
                                         <thead>
                                             <tr id="header">
@@ -121,11 +96,13 @@
                                         </tbody>
                                         
                                     </table>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="tab_container_box" id="tab2" data-tab-content>
                                 <div class="table_bill_container">
+                                    <div style="overflow:auto;  height:500px;">
                                     <table>
                                         <thead>
                                             <tr id="header">
@@ -152,11 +129,13 @@
                                         </tbody>
                                         
                                     </table>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="tab_container_box" id="tab3" data-tab-content>
                                 <div class="table_bill_container">
+                                    <div style="overflow:auto;  height:500px;">
                                     <table>
                                         <thead>
                                             <tr id="header">
@@ -184,11 +163,13 @@
 
                             
                                     </table>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="tab_container_box" id="tab4" data-tab-content>
                                 <div class="table_bill_container">
+                                    <div style="overflow:auto;  height:500px;">
                                     <table>
                                         <thead>
                                             <tr id="header">
@@ -216,10 +197,12 @@
 
                                         
                                     </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab_container_box" id="tab5" data-tab-content>
                                 <div class="table_bill_container">
+                                    <div style="overflow:auto;  height:500px;">
                                     <table>
                                         <thead>
                                             <tr id="header">
@@ -246,21 +229,7 @@
                                         </tbody>
                                         
                                     </table>
-                                </div>
-                            </div>
-                            <div class="btn_container_pagination">
-                                <div class="total_pagination">
-                                    Tổng cộng {{allBills.length}} bản
-                                </div>
-                                <div class="prev_bill">
-                                    <a href="#">
-                                        <i class="fas fa-caret-left"></i>
-                                    </a>
-                                </div>
-                                <div class="after_bill">
-                                    <a href="#">
-                                        <i class="fas fa-caret-right"></i>
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

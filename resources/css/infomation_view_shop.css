@@ -217,3 +217,21 @@
 .form-floating-container {
     width: 40%;
 }
+
+@media only screen and (max-width: 375px) {
+    .input_search {
+      padding: 0;
+    }
+  
+    th, td {
+      font-size: 0.7rem;
+    }
+  
+    .tab_triger  ul {
+      padding-left: 0px !important;
+    }
+
+    .container_bill {
+        padding: 0;
+    }
+}

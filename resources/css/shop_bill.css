@@ -824,3 +824,57 @@ input#rate-5:checked ~ label{
         margin:0.2em auto;
     }
 }
+
+@media only screen and (max-width: 375px) {
+    .input_search {
+      padding: 0;
+      flex-direction: column;
+    }
+  
+    th, td {
+      font-size: 0.7rem;
+      padding: 6px;
+    }
+  
+    .tab_triger  ul {
+      padding-left: 0px !important;
+    }
+
+    .container_bill {
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    .container_bill_items {
+        height: 100%;
+    }
+
+    #myInput, .container_combo_box {
+        width: 80%;
+        margin: auto;
+    }
+
+    .drop-down-cbx {
+        width: 80%;
+    }
+
+    .ctn_seach_cbx, .ctn_reset_cbx {
+        display: none;
+    }
+
+    .input_detail_ct {
+        padding-left: 5px;
+    }
+
+    .product_cart_bill {
+        flex-direction: column;
+    }
+
+    .single-price {
+        display: none;
+    }
+
+    .name-prod {
+        font-size: 0.8rem;
+    }
+}
