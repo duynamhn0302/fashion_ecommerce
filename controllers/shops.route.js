@@ -767,11 +767,18 @@ router.get('/bills-detail/:id', async function (req, res) {
   listBillDetail.idUpdate=listBillDetail.tinhtrangdon+1;
   let nextStatus=await shopModel.getNameStatusBill(listBillDetail.idUpdate);
   let statusChangeName;
+  listBillDetail.ConSanPham=true;
   if (nextStatus!=null)
   {
     statusChangeName=nextStatus.ten;
+    if (listBillDetail.idUpdate===2)
+    {
+      listBillDetail.ConSanPham=shopModel.checkTonKho(listSanPham);
+      console.log(listBillDetail.ConSanPham);
+    }
   }
   listBillDetail.statusChangeName=statusChangeName;
+
 
   console.log(listBillDetail);
 
@@ -809,12 +816,26 @@ router.post('/update-bills-detail/:id', async function (req, res) {
   let status=+req.body.status_bill;
 
   let listBillDetail=await shopModel.getDetailBillInfo(id);
+  let listSanPham=await shopModel.getListProductByBill(id);
+  console.log(listSanPham);
 
   if (listBillDetail.tinhtrangdon != status)
   {
     await shopModel.updateStatusBill(id,status);
-
     await shopModel.insertStatusBill(id,status);
+    if (status===2)
+    {
+      shopModel.giamTonKho(listSanPham);
+      await shopModel.capNhatSL(listSanPham);
+    }
+    if (status===4)
+    {
+      shopModel.tangTonKho(listSanPham);
+      if (listBillDetail.tinhtrangdon!=1)
+      {
+        await shopModel.capNhatSL(listSanPham);
+      }
+    }
   }
   
   res.redirect("/shops/bills");

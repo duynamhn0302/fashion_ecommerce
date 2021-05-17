@@ -453,6 +453,14 @@ module.exports = {
         return result;
     },
 
+    async updateTonKho(idsp,sl)
+    {
+        var condition={maso: idsp};
+        var newdata={soluong: sl};
+        const [result, fields] = await db.patch(newdata, condition,'sanpham');
+        return result;
+    },
+
     async insertStatusBill(idBill,status)
     {
         var today=new Date();
@@ -478,6 +486,44 @@ module.exports = {
             }
         }
         return rowDB;
+    },
+
+    checkTonKho(listsp)
+    {
+        let flag=true;
+        for (item of listsp)
+        {
+            if (item.soluong===0)
+            {
+                flag=false;
+                break;
+            }
+        }
+        return flag;
+    },
+
+    tangTonKho(listsp)
+    {
+        for (item of listsp)
+        {
+            item.soluong=item.soluong+item.soluongmua;
+        }
+    },
+
+    giamTonKho(listsp)
+    {
+        for (item of listsp)
+        {
+            item.soluong=item.soluong-item.soluongmua;
+        }
+    },
+
+    async capNhatSL(listsp)
+    {
+        for (item of listsp)
+        {
+            await this.updateTonKho(item.maso,item.soluong);
+        }
     },
 
     async getDateModified(idDonHang)

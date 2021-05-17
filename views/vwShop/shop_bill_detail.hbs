@@ -230,6 +230,19 @@
                     </div>
                 </div>
             </div>
+            {{#if ConSanPham}}
+            {{else}}
+            <div class="total_all_price" style="background-color: rgb(185, 0, 0);">
+                <div class="ctn_total_price">
+                    <div class="text-total">
+                        Tình trạng
+                    </div>
+                    <div class="total-price-num">
+                        Hết Hàng
+                    </div>
+                </div>
+            </div>
+            {{/if}}
 
         </div>
     </div>
@@ -246,12 +259,19 @@
                 <i class="fas fa-ban" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Hủy đơn</span>
              </div>
         </div>
-
-        <div class="ctn_update_cbx">
-            <div class="btn_update_input" id="btn-update">
-                <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Cập nhật</span>
-             </div>
-        </div>
+            {{#if ConSanPham}}
+            <div class="ctn_update_cbx">
+                <div class="btn_update_input" id="btn-update">
+                    <i class="fas fa-wrench" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Cập nhật</span>
+                </div>
+            </div>
+            {{else}}
+            <div class="ctn_update_cbx">
+                <div class="btn_back_input clickable-row" data-href='/shops/bills'>
+                    <i class="fas fa-arrow-left" style="margin-top: 5px; margin-left:5px"></i><span style="margin-left: 10px;">Quay Lại</span>
+                </div>
+            </div>
+            {{/if}}
         {{/if}}
     </div>
 
@@ -260,12 +280,12 @@
         jQuery(document).ready(function($) {
             $(".clickable-dialog-update").click(function() {
                 $('.combo_box_select input').val("{{{idUpdate}}}");
-                document.forms[0].submit();
+                document.forms[1].submit();
                 $('.update-bill-dialog-change').fadeOut();
             });
             $(".clickable-dialog-remove").click(function() {
                 $('.combo_box_select input').val("4");
-                document.forms[0].submit();
+                document.forms[1].submit();
                 $('.update-bill-dialog').fadeOut();
             });
             $(".clickable-dialog-back").click(function() {
