@@ -77,6 +77,14 @@ module.exports = {
         if(rows.length===0) return null;
         return rows[0];
     },
+    async getShopIfByID(shopID){
+        const sql = `SELECT c.*,t.avatar
+        FROM cuahang c join taikhoan t on t.maso=c.taikhoan
+        WHERE c.maso=${shopID}`;
+        var [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        return rows[0];
+    },
     async getStarShop(shopID){
         const sql = `SELECT AVG(temp.sosao) as soSaoTB
         FROM
@@ -432,9 +440,16 @@ module.exports = {
     {
         var condition={maso: idBill};
         var newdata={tinhtrangdon: status};
-        console.log(condition);
-        console.log(newdata);
         const [result, fields] = await db.patch(newdata, condition,'donhang');
+        return result;
+    },
+
+    async updateShopInfo(idShop, tenShop, sodt,Email,Diachi)
+    {
+        var condition={maso: idShop};
+        console.log(condition);
+        var newdata={ten: tenShop, sdt: sodt, email: Email, diachi: Diachi};
+        const [result, fields] = await db.patch(newdata, condition,'cuahang');
         return result;
     },
 
