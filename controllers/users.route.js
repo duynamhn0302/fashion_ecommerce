@@ -367,8 +367,8 @@ router.get("/orders", async function (req, res) {
   });
 });
 
-router.post("/bill-detail", async (req, res) => {
-  let billId = req.body.billId;
+router.get("/bill-detail/:id", async (req, res) => {
+  let billId = req.params.id;
   let result = await usersModel.getBillDetail(req.session.authUser.maso, billId);
   console.log(result);
   let tinhtrangdon = 0;

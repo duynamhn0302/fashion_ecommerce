@@ -263,9 +263,6 @@
                                     </a>
                                 </div>
                             </div>
-                            <form class="hidden_form_for_bill_detail" action="/users/bill-detail" method="post" hidden>
-                                <input class="hidden_input_for_bill_detail" type="hidden" name="billId" value="">
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -333,8 +330,8 @@
 </script>
 <script>
     $('td').click(function(event) {
-        $('.hidden_input_for_bill_detail').val(($(event.target).closest('tr').data('billid')));
-        $('.hidden_form_for_bill_detail').submit();
+        let billId = ($(event.target).closest('tr').data('billid'));
+        window.location.href = `/users/bill-detail/${billId}`;
     })
 </script>
 <script src="/resources/js/filterTable.js"></script>
