@@ -126,7 +126,29 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-router.post('/send-otp',function(req,res,next){
+router.post('/send-password',async function(req,res){
+  const user = await userModel.singleByUsername(req.body.username);
+  if(user === null){
+    res.json({username: false,email:null});
+  }else{
+    let mailOptions = {
+      from: 'tt5335084@gmail.com',
+      to: user.email,
+      subject: 'Retrieve new password', 
+      html: `<span>Your password is </span><h3>${user.password}</h3>`
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+        console.log(error);
+      }else{
+        console.log('Email sent: '+ info.response);
+      }
+    });
+    res.json({username: true,email:user.email});
+  }
+})
+
+router.post('/send-otp',async function(req,res,next){
     //generate token
     var secret = speakeasy.generateSecret({length:20});
   req.session.tempsecret = secret.base32;

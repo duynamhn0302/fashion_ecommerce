@@ -114,4 +114,35 @@ $(document).ready(function(){
     input.keypress(function(){
         topbar.removeClass('success error');
     });
+
+    function forget_pass(){
+        const username = $('#username').val();
+        console.log(username);
+        if(!checktkNull()){
+            $('.banner').css('display','block');
+            $('.banner__text').empty();
+            $('.banner__text').append('<strong>Lỗi: </strong> Tài khoản của bạn để trống<br>Không thể lấy lại mật khẩu');
+            return;
+        }else{
+            $.post('/account/send-password',{username: username},function(data,status){
+                if(data.username === false){
+                    $('.banner').css('display',"block");
+                    $('.banner__text').empty();
+                    $('.banner__text').append(`<strong>Thông báo: </strong> Tài khoản không tồn tại</br>Không thể lấy lại mật khẩu`)
+                }else{
+                    $('.banner').css('display',"block");
+                    $('.banner__text').empty();
+                    $('.banner__text').append(`<strong>Thông báo: </strong> Mật khẩu đã được gửi tới email ${data.email}`)
+                }
+            })
+        }
+    }
+    
+    $('#forget-pass').on('click',function(e){
+        forget_pass();
+    })
 });
+
+document.querySelector(".banner__close").addEventListener("click", function () {
+    this.closest(".banner").style.display = "none";
+  });

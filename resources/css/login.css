@@ -290,7 +290,7 @@ body {
   }
 
   .signin{
-    top: 5%;
+    top: 3%;
     /* left: 85%; */
     right:5%;
     padding: 10px 20px;
@@ -320,14 +320,14 @@ body {
 }
 
 .logo{
-  margin-top:150px;
+  margin-top:125px;
   margin-left: 44%;
   position: fixed;
 }
 
 .logo-signup{
-  top:16%;
-  left:44%;
+  top:14%;
+  left:43%;
   position: fixed;
 }
 
@@ -336,25 +336,76 @@ a.site-logo:hover img:hover{
   transform: scale(1.15);
 }
 
-@media only screen and (max-width: 1000px) {
+#forget-pass{
+  float: right;
+  position: relative;
+  font-size: 1rem;
+  color: rgb(255, 255, 255);
+  text-align: right;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#forget-pass:hover{
+  color:black;
+  transform: scale(1.1);
+}
+
+button{
+  margin-bottom:5px;
+}
+
+@media only screen and (max-width: 1100px) {
+  .logo{
+    margin-left: 40%;
+  }
+
+  .logo-signup{
+    left:40%;
+  }
+
   body #findpass{
     top: 88%;
     max-width: 80%;
     margin:0 auto;
     background: rgba(255, 255, 255, 0.76);
   }
+}
 
+@media only screen and (max-width: 800px) {
   .logo{
-    margin-left: 39%;
+    margin-left: 38%;
   }
 
   .logo-signup{
-    left:39%;
+    left:38%;
+  }
+
+  .banner__close{
+    display: none;
   }
 
   /* .form_signup{
     top: 10%;
   } */
+}
+
+@media only screen and (max-width: 680px) {
+  .logo{
+    margin-left: 34%;
+  }
+
+  .logo-signup{
+    left:34%;
+  }
+
+  .signin{
+    top:15%;
+  }
+
+  .logo{
+    margin-top:138px;
+  }
 }
 
 @media only screen and (max-width: 500px) {
@@ -372,3 +423,36 @@ a.site-logo:hover img:hover{
 
 @keyframes flicker-in-2{0%{opacity:0}10%{opacity:0;box-shadow:none}10.1%{opacity:1;box-shadow:none}10.2%{opacity:0;box-shadow:none}20%{opacity:0;box-shadow:none}20.1%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.25)}20.6%{opacity:0;box-shadow:none}30%{opacity:0;box-shadow:none}30.1%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.45),0 0 60px rgba(255,255,255,.25)}30.5%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.45),0 0 60px rgba(255,255,255,.25)}30.6%{opacity:0;box-shadow:none}45%{opacity:0;box-shadow:none}45.1%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.45),0 0 60px rgba(255,255,255,.25)}50%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.45),0 0 60px rgba(255,255,255,.25)}55%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.45),0 0 60px rgba(255,255,255,.25)}55.1%{opacity:0;box-shadow:none}57%{opacity:0;box-shadow:none}57.1%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.55),0 0 60px rgba(255,255,255,.3)}60%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.55),0 0 60px rgba(255,255,255,.3)}60.1%{opacity:0;box-shadow:none}65%{opacity:0;box-shadow:none}65.1%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.55),0 0 60px rgba(255,255,255,.3),0 0 100px rgba(255,255,255,.1)}75%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.55),0 0 60px rgba(255,255,255,.3),0 0 100px rgba(255,255,255,.1)}75.1%{opacity:0;box-shadow:none}77%{opacity:0;box-shadow:none}77.1%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.6),0 0 60px rgba(255,255,255,.4),0 0 110px rgba(255,255,255,.2),0 0 100px rgba(255,255,255,.1)}85%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.6),0 0 60px rgba(255,255,255,.4),0 0 110px rgba(255,255,255,.2),0 0 100px rgba(255,255,255,.1)}85.1%{opacity:0;box-shadow:none}86%{opacity:0;box-shadow:none}86.1%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.6),0 0 60px rgba(255,255,255,.45),0 0 110px rgba(255,255,255,.25),0 0 100px rgba(255,255,255,.1)}100%{opacity:1;box-shadow:0 0 30px rgba(255,255,255,.6),0 0 60px rgba(255,255,255,.45),0 0 110px rgba(255,255,255,.25),0 0 100px rgba(255,255,255,.1)}}
 .flicker-in-2{animation:flicker-in-2 1s linear .2s both}
+
+.banner {
+  background: #f51167;
+  display:none;
+}
+
+.banner__content {
+  padding: 16px;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.banner__text {
+  flex-grow: 1;
+  font-size:1rem;
+  line-height: 1.4;
+  font-family: "Quicksand", sans-serif;
+}
+
+.banner__close {
+  background: none;
+  font-size:1rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.banner__text,
+.banner__close > span {
+  color: #ffffff;
+}

@@ -85,7 +85,6 @@ module.exports = {
     authAdmin(req,res,next){
         
         if(req.session.auth===false || req.session.authUser.vaitro!==2){
-            console.log(req.session.authUser.role)
             req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
         }
