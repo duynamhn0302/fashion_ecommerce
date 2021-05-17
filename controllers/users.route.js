@@ -134,6 +134,7 @@ router.get("/shopping-cart", async function (req, res) {
   //get products details
   let products = await cartModel.getAllProductsWithUserId(user.maso);
   let empty = products === null ? true : false;
+  let outOfProduct = false;
   //get product
   if (!empty) {
     for (let i = 0; i < products.length; i++) {
@@ -141,6 +142,8 @@ router.get("/shopping-cart", async function (req, res) {
       let shop = await cartModel.getShopNameFromProductId(products[i].maso);
       products[i].hinhanh = images[0].link;
       products[i].cuahang = shop.ten;
+      if (products[i].conlai === 0)
+        outOfProduct = true;
     }
   }
 
@@ -148,6 +151,7 @@ router.get("/shopping-cart", async function (req, res) {
     layout: "main.hbs",
     products,
     empty,
+    outOfProduct
   });
 });
 
@@ -171,7 +175,10 @@ router.post("/remove-from-cart", async function (req, res) {
     req.body.magiohang
   );
 
-  if (!(req.body.tongsanpham - req.body.soluong)) res.send({ empty: true });
+  console.log(+req.body.tongsanpham)
+  console.log(+req.body.tongsanpham - +req.body.soluong)
+
+  if (!(+req.body.tongsanpham - +req.body.soluong)) res.send({ empty: true });
 });
 
 router.post("/pay-cart", async function (req, res) {
