@@ -199,7 +199,7 @@ router.post("/change-amount-cart", async function (req, res) {
     +req.body.soluong,
     +req.body.magiohang,
     +req.body.tongsanpham,
-    req.body.tongiatien
+    +req.body.tongiatien
   );
 });
 

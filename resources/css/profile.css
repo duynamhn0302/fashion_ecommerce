@@ -125,3 +125,25 @@ input[type=number] {
   background-color: #f51167;
   color: whitesmoke;
 }
+
+@media only screen and (max-width: 375px) {
+  .body_container {
+    flex-direction: column;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .col-3, .col-5 {
+    max-width: 100%;
+  }
+
+  .avatar_holder {
+    margin: auto;
+  }
+
+  .input_search {
+    padding: 0;
+  }
+}
