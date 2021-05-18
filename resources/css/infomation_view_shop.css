@@ -220,7 +220,7 @@
     width: 40%;
 }
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 576px) {
     .input_search {
       padding: 0;
     }
@@ -235,5 +235,34 @@
 
     .container_bill {
         padding: 0;
+    }
+
+    .container_name_shop {
+        flex-direction: column;
+    }
+
+    .group_of_shop_info {
+        margin-left: 0 !important;
+        margin-top: 10vh;
+        width: 100% !important;
+    }
+
+    .name_of_shop {
+        position: relative;
+        transform: none;
+        left: 0;
+        margin-top: 5vh;
+    }
+
+    .group_row {
+        flex-direction: column !important;
+    }
+
+    .group_col, .container_menu_sidebar, .container_product_finding {
+        width: 100% !important;
+    }
+    
+    .container_menu_product {
+        flex-direction: column;
     }
 }

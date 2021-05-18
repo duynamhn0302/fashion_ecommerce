@@ -244,7 +244,7 @@ input[type="number"] {
   height: 50%;
 }
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 576px) {
   .body_container {
     flex-direction: column;
   }

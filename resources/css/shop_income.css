@@ -394,20 +394,33 @@
     width: 100%;
 }
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 576px) {
 	.container_income_items {
         flex-direction: column;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
     }
 
     .container_item_include {
         flex-direction: column;
+        width: 100%;
     }
 
     .container_item_ic {
-        width: 100%;
+        width: 90%;
+        margin: auto;
     }
 
     .container_item_rate {
-        width: 100%;
+        width: 90%;
+        margin: auto;
+    } 
+
+    .container_income_items > div {
+        margin-top: 20px;
+    }
+
+    .canvasjs-chart-canvas {
+        width: 80% !important;
     }
 }
