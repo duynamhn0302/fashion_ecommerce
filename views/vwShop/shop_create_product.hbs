@@ -44,8 +44,13 @@
                     <form method="POST" id="frmLogout" action="/logout"></form>
                         <script>
                             function logout(){
-                                $.post('/logout',function(data,status){
-                                    window.location.replace(data.location);
+                                $.post('/shops/unloadFakeProduct',{},function(data,status){
+                                    //finished unload fakeProduct
+                                    if(data === true){
+                                        $.post('/logout',function(data,status){
+                                            window.location.replace(data.location);
+                                        })
+                                    }
                                 })
                             }
                         </script>
@@ -159,21 +164,17 @@
                             <input type="text" class="input_search_menu w-90" name="noisanxuat" id="noisanxuat" value="{{product.noisx}}">
                         </div>
                     </div>
-                    <div class="add-shop-ttc-name w-50">
+                    <div class="add-shop-ttc-name w-50" style="margin-top:5px;">
                         <div>
                             <i class="fas fa-star-of-life important"></i>
                             <span class="add-shop-label">&nbsp;Kích thước</span>
                         </div>
-                        {{!-- <div class="w-100" style="margin-top:-10px;margin-left:4px;">
-                            <input type="text" class="input_search_menu w-90" name="kichthuoc" id="kichthuoc" value="{{product.kichthuoc}}">
-                        </div> --}}
                         <div class="container_combo_box w-90">
                             <div class="title_combobox">
-                                XS - S - M - L - XL
                             </div>
                             <div class="combo_box">
                                 <div class="combo_box_select">
-                                    <span class="selected" id="gioitinhsudung">
+                                    <span class="selected" id="kichthuoc">
                                     {{#if product}}
                                         {{#when product.kichthuoc 'eq' 'XL'}}
                                             XL
@@ -197,7 +198,7 @@
                                     <i class="fas fa-caret-down drop-menu-down" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="drop-down-cbx disable wcb-50" id="sex">
+                            <div class="drop-down-cbx disable wcb-50" id="size">
                                 {{#if product}}
                                     <div class="item-select-cbx first-item {{#when product.kichthuoc 'eq' 'XL'}}active{{/when}}" >
                                         XL
@@ -442,6 +443,7 @@
             .catch( error => {
                 console.error( error );
             } );
+        var cat1Num = 0;
     </script>
     {{#if product.mota}}
     <p data-fake-mota="{{product.mota}}" id="fake-mota"></p>
@@ -453,7 +455,7 @@
         <p id="checklist" data-cat1Num="{{cat1Num}}" data-cat2Num="{{product.danhmuccap2}}"></p>
         <script>
             edit = true;
-            const cat1Num = +($('#checklist').attr("data-cat1Num"));
+            cat1Num = +($('#checklist').attr("data-cat1Num"));
             const cat2Num = +($('#checklist').attr("data-cat2Num"));
         </script>
     {{/if}}
