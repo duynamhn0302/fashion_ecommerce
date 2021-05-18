@@ -28,7 +28,8 @@ module.exports = {
             SELECT danhmuccap2,danhmuccap1,d.ten as subCat
             FROM sanpham s join danhmuccap2 d on s.danhmuccap2=d.maso
             WHERE s.cuahang=${shopID} and s.status = 1
-            GROUP BY danhmuccap2,danhmuccap1) as temp1 join danhmuccap1 c on temp1.danhmuccap1=c.maso`;
+            GROUP BY danhmuccap2,danhmuccap1) as temp1 join danhmuccap1 c on temp1.danhmuccap1=c.maso
+            GROUP BY (danhmuccap1)`;
         const [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
         return rows;
@@ -140,7 +141,7 @@ module.exports = {
         const sql = `SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
         WHERE s.cuahang=${shopID} and s.danhmuccap2=${catSubID}
         GROUP BY maso`;
-        const [rows,fields] = await db.load(sql);
+        var [rows,fields] = await db.load(sql);
         rows =  await productsModel.informationForListProduct(rows)
         return rows;
     },
