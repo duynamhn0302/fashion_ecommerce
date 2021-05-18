@@ -13,19 +13,26 @@ const router = express.Router();
 router.post('/update-bills-detail/:id', async function (req, res) {
   let id=+req.params.id;
   let status=+req.body.status_bill;
+  let status_cur=+req.body.status_cur;
 
   let listBillDetail=await shopModel.getDetailBillInfo(id);
 
-  if (listBillDetail.tinhtrangdon != status)
+  if (listBillDetail.tinhtrangdon!=status_cur)
   {
-    await shopModel.updateStatusBill(id,status);
-
-    await shopModel.insertStatusBill(id,status);
+    let link="/users/bill-detail/"+id;
+    res.redirect(link);
   }
+  else{
+    if (listBillDetail.tinhtrangdon != status)
+    {
+      await shopModel.updateStatusBill(id,status);
   
-  let link="/users/bill-detail/"+id;
-
-  res.redirect(link);
+      await shopModel.insertStatusBill(id,status);
+    }
+    
+    let link="/users/bill-detail/"+id;
+    res.redirect(link);
+  }
 })
 
 router.post("/rating-product/:id", async function (req, res) {

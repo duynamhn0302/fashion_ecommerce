@@ -815,31 +815,40 @@ router.get('/update-bills-detail/:id', async function (req, res) {
 router.post('/update-bills-detail/:id', async function (req, res) {
   let id=+req.params.id;
   let status=+req.body.status_bill;
+  let status_cur=+req.body.status_cur;
+  console.log(req.body);
 
   let listBillDetail=await shopModel.getDetailBillInfo(id);
   let listSanPham=await shopModel.getListProductByBill(id);
-  console.log(listSanPham);
 
-  if (listBillDetail.tinhtrangdon != status)
+  console.log("Status cur:" +status_cur);
+  console.log("Status don: "+listBillDetail.tinhtrangdon);
+
+  if (listBillDetail.tinhtrangdon!=status_cur)
   {
-    await shopModel.updateStatusBill(id,status);
-    await shopModel.insertStatusBill(id,status);
-    if (status===2)
+    res.redirect("/shops/bills-detail/"+listBillDetail.maso);
+  }
+  else{
+    if (listBillDetail.tinhtrangdon != status)
     {
-      shopModel.giamTonKho(listSanPham);
-      await shopModel.capNhatSL(listSanPham);
-    }
-    if (status===4)
-    {
-      shopModel.tangTonKho(listSanPham);
-      if (listBillDetail.tinhtrangdon!=1)
+      await shopModel.updateStatusBill(id,status);
+      await shopModel.insertStatusBill(id,status);
+      if (status===2)
       {
+        shopModel.giamTonKho(listSanPham);
         await shopModel.capNhatSL(listSanPham);
       }
+      if (status===4)
+      {
+        shopModel.tangTonKho(listSanPham);
+        if (listBillDetail.tinhtrangdon!=1)
+        {
+          await shopModel.capNhatSL(listSanPham);
+        }
+      }
     }
+    res.redirect("/shops/bills");
   }
-  
-  res.redirect("/shops/bills");
 })
 
 //Xem thông tin shop
