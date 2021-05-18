@@ -393,3 +393,21 @@
 .btn-sp{
     width: 100%;
 }
+
+@media only screen and (max-width: 375px) {
+	.container_income_items {
+        flex-direction: column;
+    }
+
+    .container_item_include {
+        flex-direction: column;
+    }
+
+    .container_item_ic {
+        width: 100%;
+    }
+
+    .container_item_rate {
+        width: 100%;
+    }
+}
