@@ -14,53 +14,265 @@
 	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
 
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="/resources/css/login.css"/>
+	{{!-- <link rel="stylesheet" href="/resources/css/login.css"/> --}}
 
-	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
+	{{!-- <link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/resources/css/font-awesome.min.css"/> --}}
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+*{
+    padding: 0;
+    margin: 0; 
+    font-family: 'Quicksand', sans-serif;
+   }
+body{
+    background: #fff;
+}
+.container{
+    position: relative;
+    width: 100%;  height: 100vh;
+    background: linear-gradient(180deg , #fff 0% 50%, #ff1167 50% 100%);
+}
+.container .login{
+    position: absolute;
+    top: 50%;   left: 50%;
+    transform: translate(-50%,-50%);
+    width: 500px;
+    padding: 40px 20px 0;
+    box-shadow: 0 0 20px rgba(0,0,0,.5);
+    box-sizing: border-box;
+    background: #fff;
+}
+.container .login .form{
+    position: relative;
+}
+.container .login .form .row{
+    position: relative;
+    margin: 40px 0;
+    width: 100%;
+}
+.container .login .form .row input{
+    position: relative;
+    border: none;   outline: none;
+    width: 100%;
+    padding: 6px 0;
+    border-bottom: 1px solid #726b6b;
+    font-size: 20px;
+    color: #726b6b;
+    background: transparent;
+}
+.container .login .form .row span{
+    color: #726b6b;  background: transparent;
+    display: inline-block;
+    padding: 3px 10px;
+    position: absolute;
+    top: 8px;  left: 0;
+    font-size: 15px;
+    text-transform: uppercase;
+    transition: .5s;
+    z-index: -1;
+}
+.container .login .form .row input:focus + span ,
+.container .login .form .row input:valid + span {
+    color: #fff;  background: #e91e63;
+    top: -20px;
+}
+.container .login .form .row-3{
+    display:flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    margin-bottom:0px;
+}
+.container .login .form .row:last-child{
+    display:flex;
+    justify-content: flex-end;
+    margin-top:0;
+    margin-bottom:15px;
+}
+.container .login .form .row input[type = 'submit']{
+    width: auto;
+    border: none;
+    color: #fff;  background: #e91e63;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+.logo-container{
+    text-align: center;
+}
+.signup{
+    margin:auto 0;
+}
+.quenmk{
+    font-size: smaller;
+    text-decoration: none !important;
+}
+.quenmk:hover{
+    color:black;
+}
+input[type="submit"]:hover{
+    background: #e91e62bd !important;
+}
+
+@keyframes rotate-out-right {
+  0% {
+    transform: rotate(0);
+    transform-origin: right;
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(-360deg);
+    transform-origin: right;
+    opacity: 0;
+  }
+}
+.rotate-out-right {
+	animation: rotate-out-right 0.7s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+    </style>
 </head>
-<body>
-    <div class="logo">
-        <a href="/" class="site-logo">
-			<img src="/resources/img/logo.png" alt="Logo" width="200" height="60">
-		</a>
-    </div>
-    <div class="signin rotate-scale-down-diag-1">
-        <a href="/signup" >Đăng ký</a>
-    </div>
-    <button id="findpass">Nhập thông tin</button>
-    <div class="form flicker-in-2">
-        <div class="forceColor"></div>
-        <div class="topbar">
-            <div class="spanColor"></div>
-            <input type="text" class="input" id="username" name="username" placeholder="Username"/>
+<body>    
+    <div class="container">
+        <div class="login">
+            <div class="logo-container">
+                <a href="/" class="logo">
+				<img src="/resources/img/logo.png" alt="">
+			</a>
+            </div>
+            <div class="form">
+                <div class="row">
+                    <input type="text" required name="username" id="username">
+                    <span>Tài khoản</span>
+                </div>
+                <div class="row">
+                    <input type="password" required name="password" id="password">
+                    <span>Mật khẩu</span>
+                </div>
+                <div class="row row-3">
+                    <a href="/signup" class="signup">Chưa có tài khoản</a>
+                    <input type="submit" value="Đăng nhập" id="submit">
+                </div>
+                <div class="row" style="height:10px;">
+                    <div>
+                        <a href="javascript: forget_pass();" class="quenmk">Quên mật khẩu ?</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="topbar">
-            <div class="spanColor"></div>
-            <input type="password" class="input" id="password" name="password" placeholder="Password"/>
-        </div>
-        <button class="submit" id="submit" >Login</button>
-        <div>
-            <span id="forget-pass">Quên mật khẩu ?</span>
-        </div>
-    </div>
-    <div class="banner">
-        <div class="banner__content">
-        <div class="banner__text">
-            {{!-- something text --}}
-        </div>
-        <button class="banner__close" type="button">
-            <i class="far fa-times-circle"></i>
-        </button>
-        </div>
-    </div>
+    </div>    
 
     <!--====== Javascripts & Jquery ======-->
 	<script src="/resources/js/jquery-3.2.1.min.js"></script>
-    <script src="/resources/js/login.js"></script>
-    
+    {{!-- <script src="/resources/js/login.js"></script> --}}
+    <script>
+        // Extend existing 'alert' dialog
+        if(!alertify.errorAlert){
+        //define a new errorAlert base on alert
+            alertify.dialog('errorAlert',function factory(){
+                return{
+                        build:function(){
+                            var errorHeader = '<span class="fa fa-times-circle fa-2x" '
+                            +    'style="vertical-align:middle;color:#e10000;">'
+                            + '</span> Lỗi';
+                            this.setHeader(errorHeader);
+                        }
+                    };
+                },true,'alert'
+            );
+        }
+
+        var username = $('#username');
+        var password = $('#password');
+        var quenmk = $('.quenmk');
+        var submit = $('#submit');
+        var signup = $('.signup');
+        username.focus();
+
+        $('body').keypress(function(e){
+            if(e.keyCode==13)
+            submit.click();
+        });
+
+        function checktkNull(){
+            var tk = username.val().length;
+            if(tk === 0 ){
+                alertify.errorAlert("<h3>Tài khoản không được để trống!</h3>");
+                return false;
+            }
+            return true;
+        }
+        
+        function checkpassNull(){
+            var pass = password.val().length;
+            if(pass === 0 ){
+                alertify.errorAlert("Xin hãy điền mật khẩu !!");
+                return false;
+            }
+            return true;
+        }
+
+        submit.on('click',function(e){
+            e.preventDefault();
+            if(checktkNull() === false){return;}
+            if(checkpassNull() === false){return;}
+            var return_mode = 0;
+            var retUrl = '/';
+            var user = $('#username').val();
+            var pass = $('#password').val();
+            $.post("/account/check-account",{username: user, password: pass},function(data, status){
+                return_mode = data.return_mode;
+                retUrl = data.retUrl;
+                if(return_mode === 2){
+                    submit.text('Thành công!');
+                    setTimeout(function(){
+                        $('.login').addClass("rotate-out-right");
+                    },50);
+                    setTimeout(function(){
+                        const url = retUrl || '/';
+                        window.location.replace(url);
+                    },750);
+                }else{
+                    if(return_mode === 1){
+                        alertify.errorAlert("Sai mật khẩu !!");
+                        password.empty();
+                        password.focus();
+                    }else{
+                        alertify.errorAlert("Tài khoản không tồn tại! <br/>Không thể đăng nhập !!");
+                        username.val('');
+                        username.focus();
+                        password.val('');
+                    }
+                }
+            });   
+            return false;
+        })
+
+        function forget_pass(){
+            const userVal = username.val();
+            if(!checktkNull()){
+                alertify.errorAlert("Tài khoản của bạn để trống<br>Không thể lấy lại mật khẩu");
+                return;
+            }else{
+                $.post('/account/send-password',{username: userVal},function(data,status){
+                    if(data.username === false){
+                        alertify.errorAlert("Tài khoản không tồn tại</br>Không thể lấy lại mật khẩu!");
+                    }else{
+                        alertify.errorAlert(`Mật khẩu đã được gửi tới email ${data.email}`);
+                    }
+                })
+            }
+        }
+    </script>
 </body>
 </html>
