@@ -78,7 +78,7 @@
             </div>
 
             <div class="container-contains-product">
-                <div class="row">
+                <div class="row" id="ctn-if-row">
                     {{#each listProductByShopID}}
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
@@ -197,7 +197,7 @@
                 success: function(data){
                     for (item of data)
                     {
-                        $('.row').append(
+                        $('#ctn-if-row').append(
                             `
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
@@ -267,7 +267,7 @@
                 success: function(data){
                     for (item of data)
                     {
-                        $('.row').append(
+                        $('#ctn-if-row').append(
                             `
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
@@ -337,7 +337,7 @@
                 success: function(data){
                     for (item of data)
                     {
-                        $('.row').append(
+                        $('#ctn-if-row').append(
                             `
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
@@ -409,7 +409,7 @@
                 success: function(data){
                     for (item of data)
                     {
-                        $('.row').append(
+                        $('#ctn-if-row').append(
                             `
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
@@ -480,7 +480,7 @@
                 success: function(data){
                     for (item of data)
                     {
-                        $('.row').append(
+                        $('#ctn-if-row').append(
                             `
                     <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
