@@ -116,7 +116,7 @@ $(document).ready(function(){
     }
 
     function checkMinimumPhoto(){
-        if(minimum_photo === false)  {
+        if(minimum_photo === false && edit === false)  {
             alert('Bạn chưa upload bất cứ hình sản phẩm nào');
             return false;
         }

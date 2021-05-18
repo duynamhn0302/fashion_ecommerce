@@ -858,7 +858,7 @@ router.post('/search', async function (req, res) {
   
 });
 
-router.get('/new', async function (req, res) {
+router.get('/new',auth.authShop,async function (req, res) {
   res.render('vwShop/shop_create_product',{
       layout: 'shop_manage.hbs'
     });
@@ -975,7 +975,7 @@ router.post('/upload-product-images',async function(req,res){
   })
 })
 
-router.get('/edit-product/:id',async function(req,res){
+router.get('/edit-product/:id',auth.authShop, async function(req,res){
   const product = await productModel.getSingleProductById(req.params.id);
   const cat1Num = await productModel.getCat1ofCat2(product.danhmuccap2);
   const pics = await productModel.getPic(req.params.id);
