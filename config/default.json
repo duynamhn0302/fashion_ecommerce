@@ -11,5 +11,8 @@
   },
   "paginate": {
     "limit": 9
+  },
+  "paginate_if": {
+    "limit": 4
   }
 }

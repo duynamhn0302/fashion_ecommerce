@@ -35,16 +35,8 @@
         <div class="container-feature-tab" style="width: 100%;">
             <div class="tab_triger">
                 <ul>
-                    <li style="width: 75%;">
+                    <li style="width: 100%;">
                         <label data-tab-target="#tab1" class="tab_1 active_tab_title">Tất cả sản phẩm</label>
-                    </li>
-                    <li style="width: 30%;">
-                        <form class="search-form" action="/shops/shops-information/{{shopID}}/search" method="post" style="display: flex;flex-direction:row;justify-content:flex-end;">
-                            <input type="text" name="search_term" placeholder="Tìm sản phẩm tại cửa hàng" width="100" class="btn-search-prd-shop">
-                            <button class="btn-search-prd-shoping" onclick="javascript: $('.search-form').submit();">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
                     </li>
                 </ul>
             </div>
@@ -59,11 +51,11 @@
             {{#each this.category}}
             <div class="cate-sidebar">
                 <div class="cate-name-sidebar">
-                    <a href="/shops/shops-information/{{shopID}}/{{maCap1}}/byCat1" style="color: black; font-weight: bold;">{{tenCap1}}</a>
+                    <a href="/shop/shops-information/{{shopID}}/{{maCap1}}/byCat1" style="color: black; font-weight: bold;">{{tenCap1}}</a>
                 </div>
                 {{#each this.tenCap2}}
                 <div class="catesub-name-sidebar">
-                    <a href="/shops/shops-information/{{shopID}}/{{danhmuccap2}}/byCat2" style="color: black;">{{subCat}}</a>
+                    <a href="/shop/shops-information/{{shopID}}/{{danhmuccap2}}/byCat2" style="color: black;">{{subCat}}</a>
                 </div>
                 {{/each}}
             </div>
@@ -79,9 +71,9 @@
             <div class="container_product_sort">
                 <div class="sort-name-select">
                     <div class="tittle-sort">Sắp xếp theo</div>
-                    <div class="sort-name selected-sort">Chọn lọc</div>
-                    <div class="sort-name">Giá thấp</div>
-                    <div class="sort-name">Giá cao</div>
+                    <div class="sort-name clickable-row {{#if isAll}}selected-sort{{/if}} {{#if isCap1}}selected-sort{{/if}}{{#if isCap2}}selected-sort{{/if}}" data-href='/shop/shops-information/{{shopID}}'>Chọn lọc</div>
+                    <div class="sort-name clickable-row {{#if isLow}}selected-sort{{/if}}" data-href='/shop/shops-information/{{shopID}}/asc'>Giá thấp</div>
+                    <div class="sort-name clickable-row {{#if isHigh}}selected-sort{{/if}}" data-href='/shop/shops-information/{{shopID}}/des'>Giá cao</div>
                 </div>
             </div>
 
@@ -133,11 +125,412 @@
 
             </div>
 
-            <div class="container-pagination">
+            <div class="container-pagination" id="xemthem">
                 <div class="btn-pagination">
                     Xem thêm
                 </div>
             </div>
+
+            {{#if isAll}}
+                <div class="container-pagination clickable-row" id="thugon" data-href='/shop/shops-information/{{shopID}}'>
+                    <div class="btn-pagination">
+                        Thu gọn lại
+                    </div>
+                </div>
+            {{/if}}
+
+            {{#if isHigh}}
+                <div class="container-pagination clickable-row" id="thugon" data-href='/shop/shops-information/{{shopID}}/des'>
+                    <div class="btn-pagination">
+                        Thu gọn lại
+                    </div>
+                </div>
+            {{/if}}
+
+            {{#if isLow}}
+                <div class="container-pagination clickable-row" id="thugon" data-href='/shop/shops-information/{{shopID}}/asc'>
+                    <div class="btn-pagination">
+                        Thu gọn lại
+                    </div>
+                </div>
+            {{/if}}
+
+            {{#if isCap1}}
+                <div class="container-pagination clickable-row" id="thugon" data-href='/shop/shops-information/{{shopID}}/{{CatID}}/byCat1'>
+                    <div class="btn-pagination">
+                        Thu gọn lại
+                    </div>
+                </div>
+            {{/if}}
+
+            {{#if isCap2}}
+                <div class="container-pagination clickable-row" id="thugon" data-href='/shop/shops-information/{{shopID}}/{{CatID}}/byCat2'>
+                    <div class="btn-pagination">
+                        Thu gọn lại
+                    </div>
+                </div>
+            {{/if}}
+
         </div>
     </div>
 </div>
+<script src="/resources/js/jquery-3.2.1.min.js"></script>
+{{#if isAll}}
+    <script>
+        var count=1;
+        var maxpage={{maxpage}};
+        var shopID={{shopID}};
+        $('#thugon').hide();
+        if (maxpage==1)
+        {
+            $('#xemthem').hide();
+        }
+        $('#xemthem').click(function(){
+            count++;
+            if (count==maxpage)
+            {
+                $('#xemthem').hide();
+                $('#thugon').show();
+            }
+            $.getJSON({
+                url:`/shop/bills_discard.json/${shopID}?page=${count}`,
+                success: function(data){
+                    for (item of data)
+                    {
+                        $('.row').append(
+                            `
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                                    <div class="pi-pic">
+                                        <div style="display: flex;">`+
+                                            `
+                                        </div>
+
+                                        <a href="/products/${item.maso}">
+                                            <img src="${item.avatar}" alt="" style="height: 250px;">
+                                        </a>
+                                        <div class="pi-links">
+                                            <a href="javascript: muaNgay('#NewfrmAddToCart${item.maso}');" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
+                                            <form method="POST" class ="frmAddToCart" id="NewfrmAddToCart${item.maso}" action="/add_to_cart">
+                                                <input  type="hidden" name="id" value="${item.maso}">
+                                                <input  type="hidden" name="sl" value="1">
+                                                <a href="javascript: addToCart('#NewfrmAddToCart${item.maso}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <a href="/products/${item.maso}">
+                                        <div class="pi-text">
+                                            <h6>${item.giaban}</h6>
+                                            <p>${item.ten} </p>
+                                        </div>
+                                    </a>
+                                    <div class="p-review">
+                                        <p href=""><i class="flaticon-shopping-cart"></i> ${item.luotmua}  lượt mua</p>
+                                    </div>
+                                    <div class="p-rating">`+
+                                        `
+                                        ${item.star}
+                                        `+
+                                        `
+                                            (${item.luotdanhgia} đánh giá)
+                                    </div>
+                                </div>
+                    </div>
+                            `
+                            );
+                    }
+                }
+            })
+        });
+    </script>
+{{/if}}
+
+{{#if isLow}}
+    <script>
+        var count=1;
+        var maxpage={{maxpage}};
+        var shopID={{shopID}};
+        $('#thugon').hide();
+        if (maxpage==1)
+        {
+            $('#xemthem').hide();
+        }
+        $('#xemthem').click(function(){
+            count++;
+            if (count==maxpage)
+            {
+                $('#xemthem').hide();
+                $('#thugon').show();
+            }
+            $.getJSON({
+                url:`/shop/bills_discard_low.json/${shopID}?page=${count}`,
+                success: function(data){
+                    for (item of data)
+                    {
+                        $('.row').append(
+                            `
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                                    <div class="pi-pic">
+                                        <div style="display: flex;">`+
+                                            `
+                                        </div>
+
+                                        <a href="/products/${item.maso}">
+                                            <img src="${item.avatar}" alt="" style="height: 250px;">
+                                        </a>
+                                        <div class="pi-links">
+                                            <a href="javascript: muaNgay('#NewfrmAddToCart${item.maso}');" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
+                                            <form method="POST" class ="frmAddToCart" id="NewfrmAddToCart${item.maso}" action="/add_to_cart">
+                                                <input  type="hidden" name="id" value="${item.maso}">
+                                                <input  type="hidden" name="sl" value="1">
+                                                <a href="javascript: addToCart('#NewfrmAddToCart${item.maso}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <a href="/products/${item.maso}">
+                                        <div class="pi-text">
+                                            <h6>${item.giaban}</h6>
+                                            <p>${item.ten} </p>
+                                        </div>
+                                    </a>
+                                    <div class="p-review">
+                                        <p href=""><i class="flaticon-shopping-cart"></i> ${item.luotmua}  lượt mua</p>
+                                    </div>
+                                    <div class="p-rating">`+
+                                        `
+                                        ${item.star}
+                                        `+
+                                        `
+                                            (${item.luotdanhgia} đánh giá)
+                                    </div>
+                                </div>
+                    </div>
+                            `
+                            );
+                    }
+                }
+            })
+        });
+    </script>
+{{/if}}
+
+{{#if isHigh}}
+    <script>
+        var count=1;
+        var maxpage={{maxpage}};
+        var shopID={{shopID}};
+        $('#thugon').hide();
+        if (maxpage==1)
+        {
+            $('#xemthem').hide();
+        }
+        $('#xemthem').click(function(){
+            count++;
+            if (count==maxpage)
+            {
+                $('#xemthem').hide();
+                $('#thugon').show();
+            }
+            $.getJSON({
+                url:`/shop/bills_discard_high.json/${shopID}?page=${count}`,
+                success: function(data){
+                    for (item of data)
+                    {
+                        $('.row').append(
+                            `
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                                    <div class="pi-pic">
+                                        <div style="display: flex;">`+
+                                            `
+                                        </div>
+
+                                        <a href="/products/${item.maso}">
+                                            <img src="${item.avatar}" alt="" style="height: 250px;">
+                                        </a>
+                                        <div class="pi-links">
+                                            <a href="javascript: muaNgay('#NewfrmAddToCart${item.maso}');" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
+                                            <form method="POST" class ="frmAddToCart" id="NewfrmAddToCart${item.maso}" action="/add_to_cart">
+                                                <input  type="hidden" name="id" value="${item.maso}">
+                                                <input  type="hidden" name="sl" value="1">
+                                                <a href="javascript: addToCart('#NewfrmAddToCart${item.maso}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <a href="/products/${item.maso}">
+                                        <div class="pi-text">
+                                            <h6>${item.giaban}</h6>
+                                            <p>${item.ten} </p>
+                                        </div>
+                                    </a>
+                                    <div class="p-review">
+                                        <p href=""><i class="flaticon-shopping-cart"></i> ${item.luotmua}  lượt mua</p>
+                                    </div>
+                                    <div class="p-rating">`+
+                                        `
+                                        ${item.star}
+                                        `+
+                                        `
+                                            (${item.luotdanhgia} đánh giá)
+                                    </div>
+                                </div>
+                    </div>
+                            `
+                            );
+                    }
+                }
+            })
+        });
+    </script>
+{{/if}}
+
+
+{{#if isCap1}}
+    <script>
+        var count=1;
+        var maxpage={{maxpage}};
+        var shopID={{shopID}};
+        var CatID={{CatID}};
+        $('#thugon').hide();
+        if (maxpage==1)
+        {
+            $('#xemthem').hide();
+        }
+        $('#xemthem').click(function(){
+            count++;
+            if (count==maxpage)
+            {
+                $('#xemthem').hide();
+                $('#thugon').show();
+            }
+            $.getJSON({
+                url:`/shop/bills_discard_cap1.json/${shopID}/${CatID}?page=${count}`,
+                success: function(data){
+                    for (item of data)
+                    {
+                        $('.row').append(
+                            `
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                                    <div class="pi-pic">
+                                        <div style="display: flex;">`+
+                                            `
+                                        </div>
+
+                                        <a href="/products/${item.maso}">
+                                            <img src="${item.avatar}" alt="" style="height: 250px;">
+                                        </a>
+                                        <div class="pi-links">
+                                            <a href="javascript: muaNgay('#NewfrmAddToCart${item.maso}');" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
+                                            <form method="POST" class ="frmAddToCart" id="NewfrmAddToCart${item.maso}" action="/add_to_cart">
+                                                <input  type="hidden" name="id" value="${item.maso}">
+                                                <input  type="hidden" name="sl" value="1">
+                                                <a href="javascript: addToCart('#NewfrmAddToCart${item.maso}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <a href="/products/${item.maso}">
+                                        <div class="pi-text">
+                                            <h6>${item.giaban}</h6>
+                                            <p>${item.ten} </p>
+                                        </div>
+                                    </a>
+                                    <div class="p-review">
+                                        <p href=""><i class="flaticon-shopping-cart"></i> ${item.luotmua}  lượt mua</p>
+                                    </div>
+                                    <div class="p-rating">`+
+                                        `
+                                        ${item.star}
+                                        `+
+                                        `
+                                            (${item.luotdanhgia} đánh giá)
+                                    </div>
+                                </div>
+                    </div>
+                            `
+                            );
+                    }
+                }
+            })
+        });
+    </script>
+{{/if}}
+
+{{#if isCap2}}
+    <script>
+        var count=1;
+        var maxpage={{maxpage}};
+        var shopID={{shopID}};
+        var CatID={{CatID}};
+        $('#thugon').hide();
+        if (maxpage==1)
+        {
+            $('#xemthem').hide();
+        }
+        $('#xemthem').click(function(){
+            count++;
+            if (count==maxpage)
+            {
+                $('#xemthem').hide();
+                $('#thugon').show();
+            }
+            $.getJSON({
+                url:`/shop/bills_discard_cap2.json/${shopID}/${CatID}?page=${count}`,
+                success: function(data){
+                    for (item of data)
+                    {
+                        $('.row').append(
+                            `
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                                    <div class="pi-pic">
+                                        <div style="display: flex;">`+
+                                            `
+                                        </div>
+
+                                        <a href="/products/${item.maso}">
+                                            <img src="${item.avatar}" alt="" style="height: 250px;">
+                                        </a>
+                                        <div class="pi-links">
+                                            <a href="javascript: muaNgay('#NewfrmAddToCart${item.maso}');" class="add-card"><i class="flaticon-shopping-cart"></i><span>Mua ngay</span></a>
+                                            <form method="POST" class ="frmAddToCart" id="NewfrmAddToCart${item.maso}" action="/add_to_cart">
+                                                <input  type="hidden" name="id" value="${item.maso}">
+                                                <input  type="hidden" name="sl" value="1">
+                                                <a href="javascript: addToCart('#NewfrmAddToCart${item.maso}');" class="add-card"><i class="flaticon-bag"></i><span>Thêm vào giỏ</span></a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <a href="/products/${item.maso}">
+                                        <div class="pi-text">
+                                            <h6>${item.giaban}</h6>
+                                            <p>${item.ten} </p>
+                                        </div>
+                                    </a>
+                                    <div class="p-review">
+                                        <p href=""><i class="flaticon-shopping-cart"></i> ${item.luotmua}  lượt mua</p>
+                                    </div>
+                                    <div class="p-rating">`+
+                                        `
+                                        ${item.star}
+                                        `+
+                                        `
+                                            (${item.luotdanhgia} đánh giá)
+                                    </div>
+                                </div>
+                    </div>
+                            `
+                            );
+                    }
+                }
+            })
+        });
+    </script>
+{{/if}}
+    <script>
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>

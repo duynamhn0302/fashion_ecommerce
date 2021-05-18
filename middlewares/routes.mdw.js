@@ -154,6 +154,7 @@ module.exports = function (app) {
   app.use('/products/', require('../controllers/products.route'));
   app.use('/users/',auth.authUser, require('../controllers/users.route'));
   app.use('/shops/',auth.authShop, require('../controllers/shops.route'));
+  app.use('/shop/', require('../controllers/shop.route'));
   app.use('/account/',require('../controllers/account.route'));
 
   app.get('/err', function (req, res) {

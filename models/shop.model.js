@@ -1,5 +1,6 @@
 const db = require('../utils/db');
 const { paginate } = require('./../config/default.json');
+const { paginate_if } = require('./../config/default.json');
 const { single } = require('./products.model');
 const productsModel = require('./products.model');
 
@@ -53,16 +54,93 @@ module.exports = {
         rows =  await productsModel.informationForListProduct(rows)
         return rows;
     },
+
+    async getProductByShopIDByOffset(shopID,offset){
+        const sql = `SELECT s.*
+        FROM sanpham s 
+        WHERE s.cuahang=${shopID} and s.status = 1
+        GROUP BY maso
+        limit ${paginate_if.limit} offset ${offset}`;
+        var [rows,fields] = await db.load(sql);
+        console.log(rows)
+        rows =  await productsModel.informationForListProduct(rows)
+        return rows;
+    },
+
+    async getProductByShopIDByOffsetByLow(shopID,offset){
+        const sql = `SELECT s.*
+        FROM sanpham s 
+        WHERE s.cuahang=${shopID} and s.status = 1
+        GROUP BY maso
+        ORDER BY giaban ASC
+        limit ${paginate_if.limit} offset ${offset}`;
+        var [rows,fields] = await db.load(sql);
+        console.log(rows)
+        rows =  await productsModel.informationForListProduct(rows)
+        return rows;
+    },
+
+    async getProductByShopIDByOffsetByHigh(shopID,offset){
+        const sql = `SELECT s.*
+        FROM sanpham s 
+        WHERE s.cuahang=${shopID} and s.status = 1
+        GROUP BY maso
+        ORDER BY giaban DESC
+        limit ${paginate_if.limit} offset ${offset}`;
+        var [rows,fields] = await db.load(sql);
+        console.log(rows)
+        rows =  await productsModel.informationForListProduct(rows)
+        return rows;
+    },
+
+    async getProductByShopIDByLow(shopID){
+        const sql = `SELECT s.*
+         FROM sanpham s 
+        WHERE s.cuahang=${shopID} and s.status = 1
+        GROUP BY maso
+        ORDER BY giaban ASC`;
+        var [rows,fields] = await db.load(sql);
+        console.log(rows)
+        rows =  await productsModel.informationForListProduct(rows)
+        return rows;
+    },
+    async getProductByShopIDByHigh(shopID){
+        const sql = `SELECT s.*
+         FROM sanpham s 
+        WHERE s.cuahang=${shopID} and s.status = 1
+        GROUP BY maso
+        ORDER BY giaban DESC`;
+        var [rows,fields] = await db.load(sql);
+        console.log(rows)
+        rows =  await productsModel.informationForListProduct(rows)
+        return rows;
+    },
+
     async getProductByShopIDcat(shopID,catID){
         const sql = `SELECT temp1.*, d.danhmuccap1
         FROM(SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
-        WHERE s.cuahang=${shopID}and s.status = 1
+        WHERE s.cuahang=${shopID} and s.status = 1
         GROUP BY maso) as temp1 join danhmuccap2 d on temp1.danhmuccap2=d.maso
         WHERE danhmuccap1=${catID}`;
         var [rows,fields] = await db.load(sql);
         if(rows.length===0) return null;
+        rows =  await productsModel.informationForListProduct(rows)
         return rows;
     },
+
+    async getProductByShopIDcatOffset(shopID,catID,offset){
+        const sql = `SELECT temp1.*, d.danhmuccap1
+        FROM(SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
+        WHERE s.cuahang=${shopID} and s.status = 1
+        GROUP BY maso) as temp1 join danhmuccap2 d on temp1.danhmuccap2=d.maso
+        WHERE danhmuccap1=${catID}
+        limit ${paginate_if.limit} offset ${offset}`;
+        var [rows,fields] = await db.load(sql);
+        if(rows.length===0) return null;
+        rows =  await productsModel.informationForListProduct(rows)
+        return rows;
+    },
+
     async getShopIf(billID){
         const sql = `SELECT temp1.*,c.maso as macuahang,c.ten
         FROM
@@ -141,6 +219,15 @@ module.exports = {
         const sql = `SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
         WHERE s.cuahang=${shopID} and s.danhmuccap2=${catSubID}
         GROUP BY maso`;
+        var [rows,fields] = await db.load(sql);
+        rows =  await productsModel.informationForListProduct(rows)
+        return rows;
+    },
+    async getProductByShopIDcatSubOffset(shopID,catSubID,offset){
+        const sql = `SELECT s.*,h.link FROM sanpham s join hinhanhsanpham h on s.maso=h.sanpham
+        WHERE s.cuahang=${shopID} and s.danhmuccap2=${catSubID}
+        GROUP BY maso
+        limit ${paginate_if.limit} offset ${offset}`;
         var [rows,fields] = await db.load(sql);
         rows =  await productsModel.informationForListProduct(rows)
         return rows;
