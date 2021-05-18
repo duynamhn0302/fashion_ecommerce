@@ -3,11 +3,7 @@
     "host": "localhost",
     "port": 3306,
     "user": "root",
-<<<<<<< HEAD
     "password": "123456",
-=======
-    "password": "123123",
->>>>>>> b8b926a226546984181bb8d0077f773e59535388
     "database": "fashion_ecommerce",
     "waitForConnections": true,
     "connectionLimit": 50,

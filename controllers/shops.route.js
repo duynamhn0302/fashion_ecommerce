@@ -149,6 +149,7 @@ router.get("/products", async function (req, res) {
     res.redirect('/login');
   }
   let shopID=await shopModel.getShopID(+user.maso);
+  
   let listProductByShopID = await shopModel.getProductByShopID(shopID.maso);
   let getShopIf=await shopModel.getShopIfByID(shopID.maso);
   console.log(getShopIf);
@@ -357,7 +358,7 @@ router.get('/bills', async function (req, res) {
     res.redirect('/login');
   }
   let shopId=await shopModel.getShopID(+user.maso);
-
+  let getShopIf=await shopModel.getShopIfByID(+shopId.maso);
 //Tất cả đơn hàng
 
   let getInfoBill=await shopModel.getInfoBill(shopId.maso);
@@ -510,8 +511,8 @@ router.get('/bills', async function (req, res) {
   getDiscardBillByOffset=await shopModel.addStatusFinished(getDiscardBillByOffset);
   getDiscardBillByOffset=await shopModel.addDateModified(getDiscardBillByOffset);
   await shopModel.rowProperties(getDiscardBillByOffset);
-
   res.render('vwShop/shop_bill',{
+    getShopIf,
     getInfoBill,
     getConfirmBill,
     getTravellingBill,
@@ -547,7 +548,7 @@ router.get('/bills', async function (req, res) {
     totalPageD: +nPagesD,
     prevPageD: +pageD - 1,
     nextPageD: +pageD + 1,
-
+    getShopIf,
 
 
 
@@ -714,7 +715,7 @@ router.get('/bills_discard.json', async function(req, res) {
   if (page < 1) page = 1;
 
   let shopId=await shopModel.getShopID(+user.maso);
-
+  let getShopIf=await shopModel.getShopIfByID(+shopId.maso);
   let getDiscardBill=await shopModel.getInfoBillByStatus(shopId.maso,4);
 
   if (getDiscardBill==null)
@@ -751,8 +752,14 @@ router.get('/bills_discard.json', async function(req, res) {
 //Chi tiết đơn hàng
 router.get('/bills-detail/:id', async function (req, res) {
   let id=+req.params.id;
+  let user = req.session.authUser;
+  if (user==null)
+  {
+    res.redirect('/login');
+  }
   let listBillDetail=await shopModel.getDetailBillInfo(id);
-
+  let shopId=await shopModel.getShopID(+user.maso);
+  let getShopIf=await shopModel.getShopIfByID(+shopId.maso);
   let listSanPham=await shopModel.getListProductByBill(id);
 
   for (item of listSanPham)
@@ -784,6 +791,7 @@ router.get('/bills-detail/:id', async function (req, res) {
   console.log(listBillDetail);
 
   res.render('vwShop/shop_bill_detail',{
+    getShopIf,
     listBillDetail,
     layout: 'shop_manage.hbs'
     });
@@ -868,7 +876,15 @@ router.post('/search', async function (req, res) {
 });
 
 router.get('/new',auth.authShop,async function (req, res) {
+  let user = req.session.authUser;
+  if (user==null)
+  {
+    res.redirect('/login');
+  }
+  let shopId=await shopModel.getShopID(+user.maso);
+  let getShopIf=await shopModel.getShopIfByID(+shopId.maso);
   res.render('vwShop/shop_create_product',{
+      getShopIf,
       layout: 'shop_manage.hbs'
     });
 })
@@ -989,6 +1005,8 @@ router.get('/edit-product/:id',auth.authShop, async function(req,res){
   const product = await productModel.getSingleProductById(req.params.id);
   const cat1Num = await productModel.getCat1ofCat2(product.danhmuccap2);
   const pics = await productModel.getPic(req.params.id);
+  let shopId=await shopModel.getShopID(+user.maso);
+  let getShopIf=await shopModel.getShopIfByID(+shopId.maso);
   req.session.edit_product_id = req.params.id;
   var link = []; 
   for(var i=0;i<pics.length;i++){
@@ -1005,6 +1023,7 @@ router.get('/edit-product/:id',auth.authShop, async function(req,res){
     }
     if(req.session.shop.maso === product.cuahang){
       res.render('vwShop/shop_create_product',{
+        getShopIf,
         layout: 'shop_manage.hbs',
         product: product,
         cat1Num: cat1Num.danhmuccap1,

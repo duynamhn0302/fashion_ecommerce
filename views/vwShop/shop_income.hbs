@@ -14,13 +14,12 @@
         </div>
         <div class="account_bar">
             <div class="account_bar_inner">
-                {{#with getShopIf}}
                 <div class="img_shop_account">
-                    <img src="{{avatar}}" alt="" class="img_account_inner">
+                    <img src="{{authUser.avatar}}" alt="" class="img_account_inner">
                 </div>
-                {{/with}}
+        
                 <div class="name_account">
-                    Divisia Shop
+                    {{getShopIf.ten}}
                 </div>
                 <div class="down_arrow">
                     <i class="fas fa-angle-down"></i>

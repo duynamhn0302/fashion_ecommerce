@@ -191,18 +191,18 @@ router.get("/shopping-cart", async function (req, res) {
   let empty = products === null ? true : false;
   let outOfProduct = false;
   //get product
+  
   if (!empty) {
     for (let i = 0; i < products.length; i++) {
       let images = await productsModel.getImages(products[i].maso);
       let shop = await cartModel.getShopNameFromProductId(products[i].maso);
-      products[i].giaban = productsModel.formatPrice(products[i].giaban);
+     
       products[i].hinhanh = images[0].link;
       products[i].cuahang = shop.ten;
       if (products[i].conlai === 0)
         outOfProduct = true;
     }
   }
-
   res.render("../views/users_views/Cart.hbs", {
     layout: "main.hbs",
     products,

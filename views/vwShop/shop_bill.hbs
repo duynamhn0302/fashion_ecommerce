@@ -20,7 +20,7 @@
                     <img src="{{authUser.avatar}}" alt="" class="img_account_inner">
                 </div>
                 <div class="name_account">
-                    {{shop.name}}
+                    {{getShopIf.ten}}
                 </div>
                 <div class="down_arrow">
                     <i class="fas fa-angle-down"></i>
@@ -59,9 +59,7 @@
     <div class="container_bill">
         <div class="container_bill_items">
             <div class="link_path">
-                <span class="root_link">Trang trủ</span>
-                <span class="fas fa-greater-than" style="color: rgb(180, 180, 180); font-size: 13px;"></span>
-                <span class="root_link" style="font-weight: 500;">Danh sách đơn hàng - Division</span>
+                <span class="root_link">Danh sách đơn hàng </span>
             </div>
             <div class="input_search">
                 <input id = "myInput" type="text" placeholder="Tìm kiếm đơn hàng" class="input_search_menu" height="10">
