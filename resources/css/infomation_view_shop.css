@@ -145,6 +145,7 @@
     padding: 18px 18px 18px 0px;
     align-items: baseline;
     background: white;
+    cursor: pointer;
 }
 
 .sort-name{
@@ -165,6 +166,7 @@
 
 .container-contains-product{
     background: white;
+    padding-bottom: 20px;
 }
 
 .container-pagination{
@@ -172,7 +174,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 .btn-pagination{

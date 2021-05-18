@@ -118,10 +118,11 @@ $(document).ready(function () {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            swal.fire(
-              "Đã xoá",
-              "Sản phẩm vừa được xoá khỏi giỏ hàng",
-              "success"
+            swal.fire( {
+              title: "Sản phẩm vừa được xoá khỏi giỏ hàng",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1000,}
             );
             let form = $(this)
               .parent()

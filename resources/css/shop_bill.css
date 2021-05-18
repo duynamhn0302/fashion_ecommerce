@@ -494,12 +494,20 @@ table{
 }
 
 .cate-name-sidebar a{
-    pointer-events: none;
     color: #212529;
 }
 
 .catesub-name-sidebar a{
-    pointer-events: none;
+    color: #212529;
+}
+
+.cate-name-sidebar a:hover{
+    text-decoration: none;
+    color: #212529;
+}
+
+.catesub-name-sidebar a:hover{
+    text-decoration: none;
     color: #212529;
 }
 

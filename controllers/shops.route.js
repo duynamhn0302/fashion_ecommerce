@@ -18,6 +18,86 @@ router.get('/', async function (req, res) {
     res.redirect('information');
 });
 
+//Xem danh sách theo giá tăng dần
+router.get("/shops-information/:id/asc", async function (req, res) {
+  const shopID = +req.params.id;
+
+  let shopInfo = await shopModel.single(shopID);
+  shopInfo.ngaymo = moment(shopInfo.ngaymo).format('DD-MM-YYYY');
+
+  let listProductByShopID = await shopModel.getProductByShopID(shopID);
+
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+
+  let isLow=true;
+
+  res.render("vwShopInfo/shop_detail", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+    shopInfo,
+    isLow
+  });
+});
+
+//Xem danh sách theo giá giảm dần
+router.get("/shops-information/:id/des", async function (req, res) {
+  const shopID = +req.params.id;
+
+  let shopInfo = await shopModel.single(shopID);
+  shopInfo.ngaymo = moment(shopInfo.ngaymo).format('DD-MM-YYYY');
+
+  let listProductByShopID = await shopModel.getProductByShopID(shopID);
+
+  let catList = await shopModel.getCatByShopID(shopID);
+  let subCatList = await shopModel.getSubCatByShopID(shopID);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+
+  let isHigh=true;
+
+  res.render("vwShopInfo/shop_detail", {
+    listProductByShopID,
+    category,
+    totalProduct: listProductByShopID.length,
+    shopID,
+    shopInfo,
+    isHigh
+  });
+});
+
 router.get("/shops-information/:id", async function (req, res) {
   const shopID = +req.params.id;
 
@@ -45,12 +125,15 @@ router.get("/shops-information/:id", async function (req, res) {
     category.push(allCat);
   }
 
+  let isAll=true;
+
   res.render("vwShopInfo/shop_detail", {
     listProductByShopID,
     category,
     totalProduct: listProductByShopID.length,
     shopID,
-    shopInfo
+    shopInfo,
+    isAll
   });
 });
 
@@ -142,6 +225,92 @@ router.post("/edit-shop/:id/", async function (req, res) {
   res.redirect(`/shops/products/`);
 });
 
+router.get("/products/:id/byCat2", async function (req, res) {
+  let user = req.session.authUser;
+  let CatID=+req.params.id;
+  if (user==null)
+  {
+    res.redirect('/login');
+  }
+
+
+  let shopID=await shopModel.getShopID(+user.maso);
+  let listProductByShopID = await shopModel.getProductByShopIDcatSub(shopID.maso,CatID);
+  let getShopIf=await shopModel.getShopIfByID(shopID.maso);
+
+  let catList = await shopModel.getCatByShopID(shopID.maso);
+  let subCatList = await shopModel.getSubCatByShopID(shopID.maso);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+
+  console.log(getShopIf);
+  res.render('vwShop/shop_products',{
+    layout: 'shop_manage.hbs',
+    listProductByShopID,
+    getShopIf,
+    shopID: shopID.maso,
+    category,
+    totalProduct: listProductByShopID.length,
+  })
+});
+
+router.get("/products/:id/byCat1", async function (req, res) {
+  let user = req.session.authUser;
+  let CatID=+req.params.id;
+  if (user==null)
+  {
+    res.redirect('/login');
+  }
+
+
+  let shopID=await shopModel.getShopID(+user.maso);
+  let listProductByShopID = await shopModel.getProductByShopIDcat(shopID.maso,CatID);
+  let getShopIf=await shopModel.getShopIfByID(shopID.maso);
+
+  let catList = await shopModel.getCatByShopID(shopID.maso);
+  let subCatList = await shopModel.getSubCatByShopID(shopID.maso);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+
+  console.log(getShopIf);
+  res.render('vwShop/shop_products',{
+    layout: 'shop_manage.hbs',
+    listProductByShopID,
+    getShopIf,
+    shopID: shopID.maso,
+    category,
+    totalProduct: listProductByShopID.length,
+  })
+});
+
 router.get("/products", async function (req, res) {
   let user = req.session.authUser;
   if (user==null)
@@ -152,11 +321,34 @@ router.get("/products", async function (req, res) {
   
   let listProductByShopID = await shopModel.getProductByShopID(shopID.maso);
   let getShopIf=await shopModel.getShopIfByID(shopID.maso);
+
+  let catList = await shopModel.getCatByShopID(shopID.maso);
+  let subCatList = await shopModel.getSubCatByShopID(shopID.maso);
+  let category = [];
+  for (item of catList) {
+    let allCat = {};
+    allCat.tenCap1 = item.Cat;
+    allCat.maCap1=item.danhmuccap1
+    allCat.shopID=shopID;
+    let arrSub = [];
+    for (sub of subCatList) {
+      if (item.danhmuccap1 === sub.danhmuccap1) {
+        sub.shopID=shopID;
+        arrSub.push(sub);
+      }
+    }
+    allCat.tenCap2 = arrSub;
+    category.push(allCat);
+  }
+
   console.log(getShopIf);
   res.render('vwShop/shop_products',{
     layout: 'shop_manage.hbs',
     listProductByShopID,
-    getShopIf
+    getShopIf,
+    shopID: shopID.maso,
+    category,
+    totalProduct: listProductByShopID.length,
   })
 });
 
