@@ -44,8 +44,13 @@
                     <form method="POST" id="frmLogout" action="/logout"></form>
                         <script>
                             function logout(){
-                                $.post('/logout',function(data,status){
-                                    window.location.replace(data.location);
+                                $.post('/shops/unloadFakeProduct',{},function(data,status){
+                                    //finished unload fakeProduct
+                                    if(data === true){
+                                        $.post('/logout',function(data,status){
+                                            window.location.replace(data.location);
+                                        })
+                                    }
                                 })
                             }
                         </script>
