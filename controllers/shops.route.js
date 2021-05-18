@@ -299,7 +299,7 @@ router.get('/incomes', async function (req, res) {
       return "Tháng " + mm + ", " + yyyy;
   }
 
-  var today = new Date()
+  var today = new Date(new Date().getTime() + 24*60*60*1000)
   var date = new Date(), y = date.getFullYear(), m = date.getMonth();
   var tomonth = new Date(y, m + 1, 0);
   var last7Months = []

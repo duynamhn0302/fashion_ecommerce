@@ -135,7 +135,7 @@
                             <nav class="blog-pagination justify-content-center d-flex">
                                 <ul class="pagination">
                                     <li class="page-item {{#if firstPage}}disabled{{/if}}">
-                                        <a href="?page={{prevPage}}" class="page-link" aria-label="Previous">
+                                        <a href="?sort={{sort}}&page={{prevPage}}" class="page-link" aria-label="Previous">
                                             <i class="fas fa-angle-left"></i>
                                         </a>
                                     </li>
@@ -146,13 +146,13 @@
                                     </li>
                                     {{else}}
                                     <li class="page-item">
-                                        <a class="page-link" href="?page={{value}}">{{value}}</a>
+                                        <a class="page-link" href="?sort={{sort}}&page={{value}}">{{value}}</a>
                                     </li>
 
                                     {{/if}}
                                     {{/each}}
                                     <li class="page-item {{#if lastPage}}disabled{{/if}}">
-                                        <a href="?page={{nextPage}}" class="page-link" aria-label="Next">
+                                        <a href="?sort={{sort}}&page={{nextPage}}" class="page-link" aria-label="Next">
                                             <i class="fas fa-angle-right"></i>
                                         </a>
                                     </li>

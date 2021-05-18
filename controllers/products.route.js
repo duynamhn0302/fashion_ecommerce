@@ -20,6 +20,7 @@ router.get("/", async function (req, res) {
     page_numbers.push({
       value: i,
       isCurrentPage: i === +page,
+      sort
     });
   }
 
@@ -50,6 +51,7 @@ router.get("/", async function (req, res) {
     currentPage: page,
     increase: sort === "asc" ,
     descrease: sort === "desc" ,
+    sort
   });
 });
 //Xem chi tiet sanpham
@@ -109,6 +111,7 @@ router.get("/byCat1/:id", async function (req, res) {
     page_numbers.push({
       value: i,
       isCurrentPage: i === +page,
+      sort
     });
   }
 
@@ -128,7 +131,6 @@ router.get("/byCat1/:id", async function (req, res) {
       allProductsFromCate1[i].avatar = img[0].link;
     }
     
-
   res.render("../views/vwProducts/byCat1.hbs", {
     layout: "main.hbs",
     products: allProductsFromCate1,
@@ -145,6 +147,7 @@ router.get("/byCat1/:id", async function (req, res) {
     currentPage: page,
     increase: sort === "asc" ,
     descrease: sort === "desc" ,
+    sort,
   });
 });
 //Xem ds sản phẩm theo danh mục 2
@@ -164,6 +167,7 @@ router.get("/byCat2/:id", async function (req, res) {
     page_numbers.push({
       value: i,
       isCurrentPage: i === +page,
+      sort
     });
   }
 
@@ -202,6 +206,7 @@ router.get("/byCat2/:id", async function (req, res) {
     currentPage: page,
     increase: sort === "asc" ,
     descrease: sort === "desc" ,
+    sort
   });
 });
 
@@ -212,7 +217,8 @@ router.get("/search/keyword", async function (req, res) {
   var sort = req.query.sort || "asc"
   var page = req.query.page || 1;
   
-  const total = await productsModel.countSearchRelevant(keyword);
+  var total = await productsModel.countSearchRelevant(keyword);
+  total = total.length
   let nPages = Math.floor(total / paginate.limit);
   if (total % paginate.limit > 0) nPages++;
 
@@ -221,6 +227,8 @@ router.get("/search/keyword", async function (req, res) {
     page_numbers.push({
       value: i,
       isCurrentPage: i === +page,
+      sort,
+      search_term: keyword
     });
   }
 
@@ -250,6 +258,7 @@ router.get("/search/keyword", async function (req, res) {
     currentPage: page,
     increase: sort === "asc" ,
     descrease: sort === "desc" ,
+    sort
   });
 });
 
