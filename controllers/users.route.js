@@ -300,20 +300,10 @@ router.post("/pay-cart", async function (req, res) {
   //   ngaythang: moment(newDate).format("YYYY-MM-DD"),
   // });
 
-  await Promise.all(
-    productsInCart.map(async (product) => {
-      await cartModel.removeCartAfterPayment(
-        { maso: +req.body.cartId },
-        { giohang: +req.body.cartId }
-      );
-      let productNumber = await productsModel.single(product.sanpham);
-      let productNumberLeft = productNumber.soluong - product.soluong;
 
-      await productsModel.reduceProductNumberAfterPayment(
-        { soluong: productNumberLeft },
-        { maso: product.sanpham }
-      );
-    })
+  await cartModel.removeCartAfterPayment(
+    { maso: +req.body.cartId },
+    { giohang: +req.body.cartId }
   );
 
   res.redirect("/users/shopping-cart");
