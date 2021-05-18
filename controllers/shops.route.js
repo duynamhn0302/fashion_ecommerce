@@ -899,6 +899,7 @@ router.post('/unloadFakeProduct',async function(req,res){
     //do notthing
   }
   req.session.fakeProduct = null;
+  req.session.edit_product_id = null;
   res.json(true);
 })
 
