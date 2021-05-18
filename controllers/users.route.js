@@ -46,7 +46,7 @@ router.post("/rating-product/:id", async function (req, res) {
   res.redirect("/users/orders");
 });
 
-router.post('/add-to-cart', auth.auth,async function(req,res){
+router.post('/add-to-cart', auth.authUser,async function(req,res){
   const productId = +req.body.id;      // nhan vao hai bien la id,sl
   const productQuantity = +req.body.sl;
   console.log(req.session.cart.maso)

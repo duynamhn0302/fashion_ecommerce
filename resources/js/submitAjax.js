@@ -9,6 +9,8 @@ function addToCart(formId){
             window.location.assign('/login');
         if (data.success){
             //add thanh cong, lam cai j do
+            $('#add-success-img-container').html('<i  class="far fa-check-circle"></i>');
+            $('#msg').text('Thêm vào giỏ hàng thành công');
             $('#add-success').addClass('d-show1');
             $('#add-success').addClass('roll-in-right');
             setTimeout(function(e){
@@ -25,7 +27,7 @@ function addToCart(formId){
             e.preventDefault();
         }
         else{
-            $('#add-success-img-container').html('<i id = class="far fa-exclamation"></i>')
+            $('#add-success-img-container').html('<i class="fa fa-exclamation"></i>')
             $('#msg').text('Sản phẩm trong kho không đủ')
             $('#add-success').addClass('d-show1');
             $('#add-success').addClass('roll-in-right');

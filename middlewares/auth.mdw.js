@@ -56,11 +56,13 @@ module.exports = {
 
     authUser(req,res,next){
         if(req.session.auth===false){
-            req.session.retUrl = req.originalUrl;
+            if (req.method != "POST")
+                req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
         }else{      //req.session.auth === true
             if(req.session.authUser.vaitro === 2){        //admin
-                req.session.retUrl = req.originalUrl;
+                if (req.method != "POST")
+                    req.session.retUrl = req.originalUrl;
                 return res.redirect('/');
             }
         }
@@ -69,11 +71,13 @@ module.exports = {
 
     authShop(req,res,next){
         if(req.session.auth===false){
-            req.session.retUrl = req.originalUrl;
+            if (req.method != "POST")
+                req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
         }else{      //req.session.auth === true
             if(req.session.authUser.vaitro !== 1){        //user,admin
-                req.session.retUrl = req.originalUrl;
+                if (req.method != "POST")
+                    req.session.retUrl = req.originalUrl;
                 return res.redirect('/admin');
             }
         }
@@ -82,11 +86,13 @@ module.exports = {
 
     authAdmin(req,res,next){
         if(req.session.auth===false){
-            req.session.retUrl = req.originalUrl;
+            if (req.method != "POST")
+                req.session.retUrl = req.originalUrl;
             return res.redirect('/login');
         }else{      //req.session.auth === true
             if(req.session.authUser.vaitro !== 2){        //user,shopper
-                req.session.retUrl = req.originalUrl;
+                if (req.method != "POST")
+                    req.session.retUrl = req.originalUrl;
                 return res.redirect('/');
             }
         }
