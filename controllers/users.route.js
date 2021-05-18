@@ -195,6 +195,7 @@ router.get("/shopping-cart", async function (req, res) {
     for (let i = 0; i < products.length; i++) {
       let images = await productsModel.getImages(products[i].maso);
       let shop = await cartModel.getShopNameFromProductId(products[i].maso);
+      products[i].giaban = productsModel.formatPrice(products[i].giaban);
       products[i].hinhanh = images[0].link;
       products[i].cuahang = shop.ten;
       if (products[i].conlai === 0)
@@ -324,6 +325,8 @@ router.get("/payment-preview/:id", async (req, res) => {
   let products = [];
   let cart = await cartModel.singleByCartId(cartId);
 
+  cart.tonggiatien = productsModel.formatPrice(cart.tonggiatien);
+
   for (let i = 0; i < productsResult.length; i++) {
     let productDetail = await productsModel.getSingleProductById(productsResult[i].sanpham);
     let images = await productsModel.getImages(productsResult[i].sanpham);
@@ -333,8 +336,8 @@ router.get("/payment-preview/:id", async (req, res) => {
       soluong : productsResult[i].soluong,
       hinhanh : images[0].link,
       cuahang : shop.ten,
-      dongia: +productDetail.giaban,
-      gia: +productDetail.giaban * +productsResult[i].soluong,
+      dongia: productsModel.formatPrice(+productDetail.giaban),
+      gia: productsModel.formatPrice(+productDetail.giaban * +productsResult[i].soluong),
     }
     products.push(product);
   }

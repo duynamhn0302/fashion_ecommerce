@@ -54,7 +54,7 @@
 									<h4 id="product_name">{{ten}}</h4>
 								</a>
 								
-								<span id="product_price">{{giaban}} đ</span>
+								<span id="product_price">{{giaban}}</span>
 								<span id="product_id">#{{maso}}</span>
 								<span id="product_size">Size {{kichthuoc}}</span>
 								<span id="shop">{{cuahang}}</span>
@@ -79,7 +79,7 @@
 								</form>
 							</div>
 							<div class="col-3 product_total_price">
-								<h4 class="product_price_total">{{#unless conlai}} 0 {{else}} {{giaban}} {{/unless}}</h4><h4> đ</h4>
+								<h4 class="product_price_total">{{#unless conlai}} 0 {{else}} {{giaban}} {{/unless}}</h4>
 							</div>
 							<div class="col-1 delete_button_container">
 								<button class="delete_button" type="button"><i class="fas fa-trash"></i></button>
@@ -95,7 +95,7 @@
 						<span style="margin-top: 35px;">Tổng tiền</span>
 					</div>
 					<div class="col-2 total_price_container">
-						<h3 id="total_cart_price">0 đ</h3>
+						<h3 id="total_cart_price">0</h3>
 						<button class="site-btn sb-line sb-dark pay_btn {{#if outOfProduct}} disable_btn {{/if}}" {{#if outOfProduct}} disabled {{/if}} > Thanh toán</button>
 					</div>
 				</div>

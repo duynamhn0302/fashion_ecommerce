@@ -75,7 +75,7 @@ $(document).ready(function () {
     let method = form.attr("method");
     let total = 0;
     $(".product_price_total").each(function () {
-      total += +this.innerText.replace(/\đ/g, "");
+      total += +this.innerText.replace(/[₫.]/g, "");
     });
     let data = form.serialize();
     data += `&tongsanpham=${+$(".flaticon-bag").siblings("span")[0]
@@ -157,17 +157,19 @@ $(document).ready(function () {
   function calculateSingleProductTotalPrice() {
     $(".product_price_total").each(function () {
       $(this).html(
+        new Intl.NumberFormat('vi-VI', { style: 'currency', currency: 'VND' }).format(
         +$(this)
           .parent()
           .siblings(".product_details")
           .find("#product_price")[0]
-          .innerText.replace(/\đ/g, "") *
+          .innerText.replace(/[₫.]/g, "") *
           +$(this)
             .parent()
             .siblings(".product_quantity")
             .children(".quantity")
             .children("input")
             .val()
+        )
       );
     });
   }
@@ -179,15 +181,16 @@ $(document).ready(function () {
       .parent()
       .siblings(".product_total_price")
       .find(".product_price_total")
-      .html(
+      .html(new Intl.NumberFormat('vi-VI', { style: 'currency', currency: 'VND' }).format(
         +param
           .parent()
           .parent()
           .parent()
           .siblings(".product_details")
           .find("#product_price")[0]
-          .innerText.replace(/\đ/g, "") *
+          .innerText.replace(/[₫.]/g, "") *
           +param.parent().siblings("input").val()
+        )
       );
     param
       .parent()
@@ -201,11 +204,11 @@ $(document).ready(function () {
   function calculateAllProductTotalPrice() {
     let total = 0;
     $(".product_price_total").each(function () {
-      total += +this.innerText;
+      total += +this.innerText.replace(/[₫.]/g, "");
     });
     $(".total_price_container")
       .children("#total_cart_price")
-      .html(total + "đ");
+      .html(new Intl.NumberFormat('vi-VI', { style: 'currency', currency: 'VND' }).format(total));
   }
 
   function getProductsNumber() {
