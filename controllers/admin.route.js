@@ -78,21 +78,7 @@ router.get('/statistics', auth.authAdmin,  async function (req, res, next){
         console.log(error);
       }
 });
-//view products
-router.get('/products', auth.authAdmin, async function (req, res, next){
-    const products = await productsModel.allProductAdmin()
-    for(var i = 0; i < products.length; i++){
-        const luot = await productsModel.getLuotMua(products[i].maso)
-        if (luot === 0)
-            products[i].luotmua = 0
-        else
-            products[i].luotmua = luot.soluong
-    }
-    res.status(200).render("vwAdmin/admin-products", {
-        layout: 'admin.hbs',
-        products,
-    })
-});
+
   
 
 router.post('/deleteAccount', async (req, res) =>{
