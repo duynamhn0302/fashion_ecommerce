@@ -69,16 +69,6 @@
                         <li>
                             <label data-tab-target="#tab2" class="tab_2">Hồ sơ cửa hàng</label>
                         </li>
-                        <li>
-                            <form class="search-form" action="/shops/shops-information/{{shopID}}/search" method="post">
-                                <input type="text" name="search_term" placeholder="Tìm sản phẩm tại cửa hàng"
-                                    width="100" class="btn-search-prd-shop" />
-                                <button class="btn-search-prd-shoping"
-                                    onclick="javascript: $('.search-form').submit();">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </form>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -89,16 +79,19 @@
                 <div class="tittle-menu-cate">
                     Danh mục sản phẩm
                 </div>
+                <div class="cate-sidebar">
+                    <div class="cate-name-sidebar">
+                        <a href="/shops/products/" style="color: black; font-weight: bold;">Tất cả sản phẩm</a>
+                    </div>
+                </div>
                 {{#each this.category}}
                 <div class="cate-sidebar">
                     <div class="cate-name-sidebar">
-                        <a href="/shops/shops-information/{{shopID}}/{{maCap1}}/byCat1"
-                            style="color: black; font-weight: bold;">{{tenCap1}}</a>
+                        <a href="/shops/products/{{maCap1}}/byCat1" style="color: black; font-weight: bold;">{{tenCap1}}</a>
                     </div>
                     {{#each this.tenCap2}}
                     <div class="catesub-name-sidebar">
-                        <a href="/shops/shops-information/{{shopID}}/{{danhmuccap2}}/byCat2"
-                            style="color: black;">{{subCat}}</a>
+                        <a href="/shops/products/{{danhmuccap2}}/byCat2" style="color: black;">{{subCat}}</a>
                     </div>
                     {{/each}}
                 </div>
@@ -109,15 +102,6 @@
                 <div class="container-tab-name-select">
                     <div class="tab-name-select">Tất cả sản phẩm: </div>
                     <div class="number-result">{{totalProduct}} Kết quả</div>
-                </div>
-
-                <div class="container_product_sort">
-                    <div class="sort-name-select">
-                        <div class="tittle-sort">Sắp xếp theo</div>
-                        <div class="sort-name selected-sort">Chọn lọc</div>
-                        <div class="sort-name">Giá thấp</div>
-                        <div class="sort-name">Giá cao</div>
-                    </div>
                 </div>
 
                 <div class="container-contains-product">
@@ -164,11 +148,6 @@
 
                 </div>
 
-                <div class="container-pagination">
-                    <div class="btn-pagination">
-                        Xem thêm
-                    </div>
-                </div>
             </div>
         </div>
 
