@@ -126,6 +126,10 @@ input[type=number] {
   color: whitesmoke;
 }
 
+.fileinput-upload-button{
+  display: none;
+}
+
 @media only screen and (max-width: 576px) {
   .body_container {
     flex-direction: column;
