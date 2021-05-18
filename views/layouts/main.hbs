@@ -62,7 +62,7 @@
 					</div>
 					<div class="col-xl-6 col-lg-5">
 						<div id = "searchForm" class="header-search-form" method="GET" action="/products/search/keyword">
-							<input id = "myInput" type="text" name="search" placeholder="Tìm kiếm ...">
+							<input id = "myInput" type="text" name="search" placeholder="Tìm kiếm ..." value="{{search_term}}">
 							<button id = "submitButton" onclick="javascript: submitSearch()"><i class="flaticon-search"></i></button>
 						</div>
 						<script>
@@ -306,13 +306,8 @@
 {{!-- Phần add giỏ hàng thành công --}}
 	<link rel="stylesheet" href="/resources/css/css_nhung_phan_lat_vat.css"/>
 	<div id="add-success" class="">
-<<<<<<< HEAD
-		<div id="add-success-img-container" class="d-flex">
-			<i id = class="far fa-check-circle"></i>
-=======
 		<div id="add-success-img-container" class="d-flex1">
 			<i class="far fa-check-circle"></i>
->>>>>>> ca385a65b349835f11ca2cbc336885fb2c130840
 		</div>
 		<div class="d-flex1">
 			<span id = "msg">Thêm vào giỏ hàng thành công</span>

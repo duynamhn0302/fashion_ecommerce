@@ -177,8 +177,9 @@ module.exports = {
         return rows[0];
     },
     async allProductAdmin(){
-      const sql = `select sanpham.*, cuahang.ten as tencuahang from sanpham join 
-          cuahang on sanpham.cuahang = cuahang.maso where sanpham.status = 1`;
+      const sql = `select sanpham.*, cuahang.ten as tencuahang, danhmuccap2.ten as tendmc2 from (sanpham join 
+          cuahang on sanpham.cuahang = cuahang.maso ) join danhmuccap2 on sanpham.danhmuccap2 = danhmuccap2.maso
+          where sanpham.status = 1`;
       var [rows, fields] = await db.load(sql);
       rows =  await this.informationForListProduct(rows)
       return rows;
@@ -246,7 +247,8 @@ module.exports = {
         return rows[0].total;
       },
       async countAllByCate2(cate2ID) {
-        const sql = `select COUNT(*) as total from (danhmuccap1 join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 WHERE sanpham.status = 1 and danhmuccap2.maso = ${cate2ID}`;
+        const sql = `select COUNT(*) as total from (danhmuccap1 join danhmuccap2 on danhmuccap1.maso = danhmuccap2.danhmuccap1) 
+        join sanpham on danhmuccap2.maso = sanpham.danhmuccap2 WHERE sanpham.status = 1 and danhmuccap2.maso = ${cate2ID}`;
         const [rows, fields] = await db.load(sql);
         return rows[0].total;
       },
@@ -263,9 +265,15 @@ module.exports = {
         return rows;
       },
       async countSearchRelevant(text) {
-        const sql = `select count(*) as c from sanpham where sanpham.status = 1 and match(ten) against ('${text}' IN NATURAL LANGUAGE MODE)`;
+        const sql = `select sanpham.*
+        from sanpham join danhmuccap2 on sanpham.danhmuccap2 = danhmuccap2.maso join danhmuccap1 on danhmuccap2.danhmuccap1 = danhmuccap1.maso join cuahang on sanpham.cuahang = cuahang.maso
+        where sanpham.status = 1 and
+        (match(sanpham.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
+        or match(danhmuccap1.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
+        or match(danhmuccap2.ten) against ('${text}' IN NATURAL LANGUAGE MODE)
+        or match(cuahang.ten) against ('${text}' IN NATURAL LANGUAGE MODE))`;
         const [rows, fields] = await db.load(sql);
-        return rows[0].c;
+        return rows;
       },
       async getPaidDate(billId, userId) {
         const sql = `select lichsutinhtrangdon.ngaythang

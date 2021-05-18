@@ -74,7 +74,7 @@ module.exports = {
         }else{      //req.session.auth === true
             if(req.session.authUser.vaitro !== 1){        //user,admin
                 req.session.retUrl = req.originalUrl;
-                return res.redirect('/');
+                return res.redirect('/admin');
             }
         }
         next(); //shopper

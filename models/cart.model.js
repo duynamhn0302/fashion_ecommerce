@@ -81,7 +81,7 @@ module.exports = {
     },
 
     async cartProductsAmountChanged(productId, amount, cartId, all, totalPrice) {
-        console.log(totalPrice)
+        
         const [rows, fields] = await db.load(`UPDATE chitietgiohang SET soluong = ${amount} WHERE sanpham = ${productId} and giohang = ${cartId}`);
 
         const [rows1, fields1] = await db.load(`UPDATE giohang SET tongsosanpham = ${all}, tonggiatien = ${totalPrice} WHERE maso = ${cartId}`);
@@ -96,6 +96,8 @@ module.exports = {
     },
 
     async cartProductsUpdateAfterRemoving(all, totalPrice, cartId) {
+        if(totalPrice === null)
+            totalPrice = 0
         const [rows, fields] = await db.load(`UPDATE giohang SET tongsosanpham = ${all}, tonggiatien = ${totalPrice} WHERE maso = ${cartId}`);
 
         return rows.length ? rows : null;
