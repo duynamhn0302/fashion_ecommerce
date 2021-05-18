@@ -299,6 +299,8 @@ input[type="number"] {
     padding: 0 0 0 5px;
     font-size: 1rem;
     flex: 0 0 2%;
+    margin-left: -9px;
+    margin-top: 40px;
   }
 
   .delete_button {
