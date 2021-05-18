@@ -117,6 +117,12 @@ input[type="submit"]:hover{
     color:black;
 }
 
+@media only screen and (max-width:500px){
+    .login{
+        width:100% !important;
+    }
+}
+
 @keyframes slide-out-elliptic-top-bck {
   0% {
     transform: translateY(0) rotateX(0) scale(1);
@@ -292,7 +298,7 @@ input[type="submit"]:hover{
                     },50);
                     setTimeout(function(){
                         window.location.replace('account/verification');
-                    },750);
+                    },550);
                 }else{
                     $('#username').val("");
                     $('#username').focus();

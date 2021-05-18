@@ -14,9 +14,6 @@ body {
 	background-repeat: no-repeat;
 	background-size: cover;
 	min-width: 400px;
-	overflow: scroll;
-}
-body {
 	font: 16px/1.2 "Roboto", sans-serif;
 	color: #333;
 }
@@ -90,18 +87,17 @@ input[type="checkbox"] + span {
 	top: 50%;
 	left: 40%;
 	transform: translate(-50%, -50%);
-	z-index: 1;
-	overflow: hidden;
+	z-index: 100;
 }
 
 /* signup_form */
 .signup_form {
 	width: 340px;
 	padding: 36px;
-	padding-left:20px;
+	padding-left:0px;
 }
 .signup_form .header {
-	color: rgb(230, 150, 164);
+	color: #ff1169;
 	font-size: 24px;
 	font-weight: bold;
 	text-align: center;
@@ -140,26 +136,60 @@ input[type="checkbox"] + span {
 
 /* figure */
 figure {
-	width: 240px;
+	width: 260px;
 	margin:0;
 	padding:0;
+	z-index:0;
+}
+
+figure img{
+	width:100%;
+	height:100%;
+	margin:0;
+	z-index:-1;
 }
 
 button {
 	padding:10px 15px;
 	--angle: 0deg;
+	outline:none;
 	width:auto;
 	height:auto;
 	border-collapse: separate;
-	border-radius: 3px;
-	border: 3px solid;
+	border-radius: 5px;
+	border: 2px solid;
 	border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
 	font-size: 15px;
 	animation: 1s rotate linear infinite;
-	background: #333;
+	background: #ff1169;
 	color: white;
 	cursor: pointer;
   }
+
+  .myButton {
+	box-shadow:inset 0px 1px 0px 0px #fbafe3;
+	background:linear-gradient(to bottom, #ff5bb0 5%, #ef027d 100%);
+	background-color:#ff1169;
+	border-radius:42px;
+	border:1px solid #ee1eb5;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:13px 31px;
+	text-decoration:none;
+	text-shadow:2px 2px 0px #c70067;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #ef027d 5%, #ff5bb0 100%);
+	background-color:#ef027d;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
   
   @keyframes rotate {
 	to {
@@ -185,13 +215,15 @@ button {
 	}
 }
 
-@media only screen and (max-width: 500px){
+@media only screen and (max-width: 550px){
 	figure{
 		display: none;
 	}
 
 	.signup_form{
 		margin: 0 auto;
+		width:80%;
+		left:10%;
 	}
 	.btn-trans{
 		margin: 0 auto;

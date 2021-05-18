@@ -4,16 +4,16 @@ $(document).ready(function(){
     var email = $('#email');
     var phone = $('#phone');
     var address = $('#address');
-    var cause = $('#cause');
-    var source = $('#source');
-    var btn = $('.btn-trans');
+    // var cause = $('#cause');
+    // var source = $('#source');
+    // var btn = $('.btn-trans');
     var sub = $('#sub');
-    var normal = $('#normal');
-    var error = $('#error');
+    // var normal = $('#normal');
+    // var error = $('#error');
     
     //initiate state
     $('#name').focus();
-    error.css('display','none');
+    // error.css('display','none');
 
     $('body').keypress(function(e){
         if(e.keyCode==13)
@@ -24,12 +24,12 @@ $(document).ready(function(){
         var nameVal = name.val().length;
         if(nameVal === 0 ){
             console.log("name empty");
-            cause.text("Please fill up your");
-            source.text('Shop name');
-            error.css('display','inherit');
-            normal.css('display','none');
-            btn.addClass("btn-trans-error");
-            name.focus();
+            swal("Nhắc nhở","Xin hãy điền tên shop","warning").then((value) => {
+                name.focus();
+            })
+            // error.css('display','inherit');
+            // normal.css('display','none');
+            // btn.addClass("btn-trans-error");
             return false;
         }
         return true;
@@ -37,22 +37,24 @@ $(document).ready(function(){
     
     function checkemailNull(){
         if(email.val().length === 0 ){
-            cause.text('Please fill up your');
-            source.text('Shop email');
-            btn.addClass('btn-trans-error');
-            error.css('display','inherit');
-            normal.css('display','none');
-            email.focus();
+            swal("Nhắc nhở","Xin hãy điền email shop","warning").then((value) => {
+                email.focus();
+            })
+            // btn.addClass('btn-trans-error');
+            // error.css('display','inherit');
+            // normal.css('display','none');
+            // email.focus();
             return false;
         }else{
             var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             if (!filter.test(email.val())) { 
-                cause.text('Invalid');
-                source.text('Shop email');
-                btn.addClass('btn-trans-error');
-                error.css('display','inherit');
-                normal.css('display','none');
-                email.focus();
+                swal("Thông báo","Email shop không hợp lệ","info").then((value) => {
+                    email.focus();
+                })
+                // btn.addClass('btn-trans-error');
+                // error.css('display','inherit');
+                // normal.css('display','none');
+                // email.focus();
                 return false; 
             }
         }
@@ -62,23 +64,25 @@ $(document).ready(function(){
     function checkphoneNull(){
         var phoneVal = phone.val();
         if(phoneVal.length === 0 ){
-            cause.text('Fill up your');
-            source.text('Shop phone number');
-            btn.addClass('btn-trans-error');
-            error.css('display','inherit');
-            normal.css('display','none');
-            phone.focus();
+            swal("Nhắc nhở","Xin hãy điền số điện thoại","warning").then((value) => {
+                phone.focus();
+            })
+            // btn.addClass('btn-trans-error');
+            // error.css('display','inherit');
+            // normal.css('display','none');
+            // phone.focus();
             return false;
         }
         var phoneno = /^\d{10}$/;
         if(phoneVal.match(phoneno)){}
         else{
-            cause.text('Invalid');
-            source.text('Shop phone number');
-            btn.addClass('btn-trans-error');
-            error.css('display','inherit');
-            normal.css('display','none');
-            phone.focus();
+            swal("Nhắc nhở","Số điện thoại không hợp lệ","warning").then((value) => {
+                phone.focus();
+            })
+            // btn.addClass('btn-trans-error');
+            // error.css('display','inherit');
+            // normal.css('display','none');
+            // phone.focus();
             return false;
         }
         return true;
@@ -88,12 +92,13 @@ $(document).ready(function(){
         var addressVal = address.val().length;
         if(addressVal === 0 ){
             console.log("address empty");
-            cause.text("Please fill up your");
-            source.text('Shop address');
-            error.css('display','inherit');
-            normal.css('display','none');
-            btn.addClass("btn-trans-error");
-            address.focus();
+            swal("Nhắc nhở","Xin hãy điền địa chỉ của shop","warning").then((value) => {
+                addtress.focus();
+            })
+            // error.css('display','inherit');
+            // normal.css('display','none');
+            // btn.addClass("btn-trans-error");
+            // address.focus();
             return false;
         }
         return true;
@@ -102,12 +107,13 @@ $(document).ready(function(){
     function checktermNull(){
         var checkbox = $('#check');
         if(!checkbox.is(':checked')){
-            cause.text('You have not accepted');
-            source.text('terms.');
-            btn.addClass('btn-trans-error');
-            error.css('display','inherit');
-            normal.css('display','none');
-            checkbox.focus();
+            swal("Nhắc nhở","Bạn chưa đồng ý với các chính sách và điều khoản thành lập shop","warning").then((value) => {
+                checkbox.focus();
+            })
+            // btn.addClass('btn-trans-error');
+            // error.css('display','inherit');
+            // normal.css('display','none');
+            // checkbox.focus();
             return false;
         }
         return true;
@@ -119,12 +125,12 @@ $(document).ready(function(){
         if(checkphoneNull() === false){return;}
         if(!checkAddressNull()) return;
         if(!checktermNull())    return;
-        btn.removeClass('btn-trans-error');
-        cause.text('Success !!');
-        source.text('');
-        setTimeout(function(){
-            cause.text('Transferring you to another page !!!');
-        },1000);
+        // btn.removeClass('btn-trans-error');
+        // cause.text('Success !!');
+        // source.text('');
+        // setTimeout(function(){
+        //     cause.text('Transferring you to another page !!!');
+        // },1000);
         var return_mode = 0;
         var retUrl = '/';
         $.post("/account/add-shop",{
@@ -136,23 +142,23 @@ $(document).ready(function(){
             return_mode = data.return_mode;
             // retUrl = data.retUrl;
             if(return_mode===0){
-                $('.overlay').addClass('overlay-show');
+                swal("Thông báo","Đăng ký không thành công\nXin thử lại sau ít phút.","error").then((value) => {
+                    setTimeout(function(){
+                        window.location.replace('/');
+                    },500);
+                })
             }else{
                 setTimeout(function(){
                     window.location.replace(retUrl);
-                },1000);
+                },500);
             }
         });   
     });
 
-    $(".close").on('click',function(){
-        $('.overlay').removeClass('overlay-show');
-        setTimeout(function(){
-            window.location.replace('/');
-        },500);
-    })
-
-    $('input').keypress(function(){
-        topbar.removeClass('success error');
-    });
+    // $(".close").on('click',function(){
+    //     $('.overlay').removeClass('overlay-show');
+    //     setTimeout(function(){
+    //         window.location.replace('/');
+    //     },500);
+    // })
 });

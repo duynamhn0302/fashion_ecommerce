@@ -30,22 +30,23 @@ router.get("/shops-information/:id/asc", async function (req, res) {
   let catList = await shopModel.getCatByShopID(shopID);
   let subCatList = await shopModel.getSubCatByShopID(shopID);
   let category = [];
-  for (item of catList) {
-    let allCat = {};
-    allCat.tenCap1 = item.Cat;
-    allCat.maCap1=item.danhmuccap1
-    allCat.shopID=shopID;
-    let arrSub = [];
-    for (sub of subCatList) {
-      if (item.danhmuccap1 === sub.danhmuccap1) {
-        sub.shopID=shopID;
-        arrSub.push(sub);
+  if (catList != null && catList.length != 0){
+    for (item of catList) {
+      let allCat = {};
+      allCat.tenCap1 = item.Cat;
+      allCat.maCap1=item.danhmuccap1
+      allCat.shopID=shopID;
+      let arrSub = [];
+      for (sub of subCatList) {
+        if (item.danhmuccap1 === sub.danhmuccap1) {
+          sub.shopID=shopID;
+          arrSub.push(sub);
+        }
       }
+      allCat.tenCap2 = arrSub;
+      category.push(allCat);
     }
-    allCat.tenCap2 = arrSub;
-    category.push(allCat);
   }
-
   let isLow=true;
 
   res.render("vwShopInfo/shop_detail", {
@@ -70,22 +71,23 @@ router.get("/shops-information/:id/des", async function (req, res) {
   let catList = await shopModel.getCatByShopID(shopID);
   let subCatList = await shopModel.getSubCatByShopID(shopID);
   let category = [];
-  for (item of catList) {
-    let allCat = {};
-    allCat.tenCap1 = item.Cat;
-    allCat.maCap1=item.danhmuccap1
-    allCat.shopID=shopID;
-    let arrSub = [];
-    for (sub of subCatList) {
-      if (item.danhmuccap1 === sub.danhmuccap1) {
-        sub.shopID=shopID;
-        arrSub.push(sub);
+  if (catList != null && catList.length != 0){
+    for (item of catList) {
+      let allCat = {};
+      allCat.tenCap1 = item.Cat;
+      allCat.maCap1=item.danhmuccap1
+      allCat.shopID=shopID;
+      let arrSub = [];
+      for (sub of subCatList) {
+        if (item.danhmuccap1 === sub.danhmuccap1) {
+          sub.shopID=shopID;
+          arrSub.push(sub);
+        }
       }
+      allCat.tenCap2 = arrSub;
+      category.push(allCat);
     }
-    allCat.tenCap2 = arrSub;
-    category.push(allCat);
   }
-
   let isHigh=true;
 
   res.render("vwShopInfo/shop_detail", {
@@ -109,22 +111,23 @@ router.get("/shops-information/:id", async function (req, res) {
   let catList = await shopModel.getCatByShopID(shopID);
   let subCatList = await shopModel.getSubCatByShopID(shopID);
   let category = [];
-  for (item of catList) {
-    let allCat = {};
-    allCat.tenCap1 = item.Cat;
-    allCat.maCap1=item.danhmuccap1
-    allCat.shopID=shopID;
-    let arrSub = [];
-    for (sub of subCatList) {
-      if (item.danhmuccap1 === sub.danhmuccap1) {
-        sub.shopID=shopID;
-        arrSub.push(sub);
+  if (catList != null && catList.length != 0){
+    for (item of catList) {
+      let allCat = {};
+      allCat.tenCap1 = item.Cat;
+      allCat.maCap1=item.danhmuccap1
+      allCat.shopID=shopID;
+      let arrSub = [];
+      for (sub of subCatList) {
+        if (item.danhmuccap1 === sub.danhmuccap1) {
+          sub.shopID=shopID;
+          arrSub.push(sub);
+        }
       }
+      allCat.tenCap2 = arrSub;
+      category.push(allCat);
     }
-    allCat.tenCap2 = arrSub;
-    category.push(allCat);
   }
-
   let isAll=true;
 
   res.render("vwShopInfo/shop_detail", {
@@ -149,20 +152,22 @@ router.get("/shops-information/:id/:idcat/byCat1", async function (req, res) {
   console.log(catList);
   // console.log(subCatList);
   let category = [];
-  for (item of catList) {
-    let allCat = {};
-    allCat.tenCap1 = item.Cat;
-    allCat.maCap1=item.danhmuccap1
-    allCat.shopID=shopID;
-    let arrSub = [];
-    for (sub of subCatList) {
-      if (item.danhmuccap1 === sub.danhmuccap1) {
-        sub.shopID=shopID;
-        arrSub.push(sub);
+  if (catList != null && catList.length != 0){
+    for (item of catList) {
+      let allCat = {};
+      allCat.tenCap1 = item.Cat;
+      allCat.maCap1=item.danhmuccap1
+      allCat.shopID=shopID;
+      let arrSub = [];
+      for (sub of subCatList) {
+        if (item.danhmuccap1 === sub.danhmuccap1) {
+          sub.shopID=shopID;
+          arrSub.push(sub);
+        }
       }
+      allCat.tenCap2 = arrSub;
+      category.push(allCat);
     }
-    allCat.tenCap2 = arrSub;
-    category.push(allCat);
   }
   console.log(category);
 
@@ -184,20 +189,22 @@ router.get("/shops-information/:id/:idCat/byCat2", async function (req, res) {
   let subCatList = await shopModel.getSubCatByShopID(shopID);
   console.log(catList);
   let category = [];
-  for (item of catList) {
-    let allCat = {};
-    allCat.tenCap1 = item.Cat;
-    allCat.maCap1=item.danhmuccap1
-    allCat.shopID=shopID;
-    let arrSub = [];
-    for (sub of subCatList) {
-      if (item.danhmuccap1 === sub.danhmuccap1) {
-        sub.shopID=shopID;
-        arrSub.push(sub);
+  if (catList != null && catList.length != 0){
+    for (item of catList) {
+      let allCat = {};
+      allCat.tenCap1 = item.Cat;
+      allCat.maCap1=item.danhmuccap1
+      allCat.shopID=shopID;
+      let arrSub = [];
+      for (sub of subCatList) {
+        if (item.danhmuccap1 === sub.danhmuccap1) {
+          sub.shopID=shopID;
+          arrSub.push(sub);
+        }
       }
+      allCat.tenCap2 = arrSub;
+      category.push(allCat);
     }
-    allCat.tenCap2 = arrSub;
-    category.push(allCat);
   }
   console.log(category);
 
@@ -241,22 +248,23 @@ router.get("/products/:id/byCat2", async function (req, res) {
   let catList = await shopModel.getCatByShopID(shopID.maso);
   let subCatList = await shopModel.getSubCatByShopID(shopID.maso);
   let category = [];
-  for (item of catList) {
-    let allCat = {};
-    allCat.tenCap1 = item.Cat;
-    allCat.maCap1=item.danhmuccap1
-    allCat.shopID=shopID;
-    let arrSub = [];
-    for (sub of subCatList) {
-      if (item.danhmuccap1 === sub.danhmuccap1) {
-        sub.shopID=shopID;
-        arrSub.push(sub);
+  if (catList != null && catList.length != 0){
+    for (item of catList) {
+      let allCat = {};
+      allCat.tenCap1 = item.Cat;
+      allCat.maCap1=item.danhmuccap1
+      allCat.shopID=shopID;
+      let arrSub = [];
+      for (sub of subCatList) {
+        if (item.danhmuccap1 === sub.danhmuccap1) {
+          sub.shopID=shopID;
+          arrSub.push(sub);
+        }
       }
+      allCat.tenCap2 = arrSub;
+      category.push(allCat);
     }
-    allCat.tenCap2 = arrSub;
-    category.push(allCat);
   }
-
   console.log(getShopIf);
   res.render('vwShop/shop_products',{
     layout: 'shop_manage.hbs',
@@ -284,22 +292,23 @@ router.get("/products/:id/byCat1", async function (req, res) {
   let catList = await shopModel.getCatByShopID(shopID.maso);
   let subCatList = await shopModel.getSubCatByShopID(shopID.maso);
   let category = [];
-  for (item of catList) {
-    let allCat = {};
-    allCat.tenCap1 = item.Cat;
-    allCat.maCap1=item.danhmuccap1
-    allCat.shopID=shopID;
-    let arrSub = [];
-    for (sub of subCatList) {
-      if (item.danhmuccap1 === sub.danhmuccap1) {
-        sub.shopID=shopID;
-        arrSub.push(sub);
+  if (catList != null && catList.length != 0){
+    for (item of catList) {
+      let allCat = {};
+      allCat.tenCap1 = item.Cat;
+      allCat.maCap1=item.danhmuccap1
+      allCat.shopID=shopID;
+      let arrSub = [];
+      for (sub of subCatList) {
+        if (item.danhmuccap1 === sub.danhmuccap1) {
+          sub.shopID=shopID;
+          arrSub.push(sub);
+        }
       }
+      allCat.tenCap2 = arrSub;
+      category.push(allCat);
     }
-    allCat.tenCap2 = arrSub;
-    category.push(allCat);
   }
-
   console.log(getShopIf);
   res.render('vwShop/shop_products',{
     layout: 'shop_manage.hbs',
@@ -325,22 +334,23 @@ router.get("/products", async function (req, res) {
   let catList = await shopModel.getCatByShopID(shopID.maso);
   let subCatList = await shopModel.getSubCatByShopID(shopID.maso);
   let category = [];
-  for (item of catList) {
-    let allCat = {};
-    allCat.tenCap1 = item.Cat;
-    allCat.maCap1=item.danhmuccap1
-    allCat.shopID=shopID;
-    let arrSub = [];
-    for (sub of subCatList) {
-      if (item.danhmuccap1 === sub.danhmuccap1) {
-        sub.shopID=shopID;
-        arrSub.push(sub);
+  if (catList != null && catList.length != 0){
+    for (item of catList) {
+      let allCat = {};
+      allCat.tenCap1 = item.Cat;
+      allCat.maCap1=item.danhmuccap1
+      allCat.shopID=shopID;
+      let arrSub = [];
+      for (sub of subCatList) {
+        if (item.danhmuccap1 === sub.danhmuccap1) {
+          sub.shopID=shopID;
+          arrSub.push(sub);
+        }
       }
+      allCat.tenCap2 = arrSub;
+      category.push(allCat);
     }
-    allCat.tenCap2 = arrSub;
-    category.push(allCat);
   }
-
   console.log(getShopIf);
   res.render('vwShop/shop_products',{
     layout: 'shop_manage.hbs',
@@ -373,19 +383,20 @@ router.get("/products/:id", async function (req, res) {
   // console.log(catList);
   // console.log(subCatList);
   let category = [];
-  for (item of catList) {
-    let allCat = {};
-    allCat.tenCap1 = item.Cat;
-    let arrSub = [];
-    for (sub of subCatList) {
-      if (item.danhmuccap1 === sub.danhmuccap1) {
-        arrSub.push(sub);
+  if (category != null && category.length != 0){
+    for (item of catList) {
+      let allCat = {};
+      allCat.tenCap1 = item.Cat;
+      let arrSub = [];
+      for (sub of subCatList) {
+        if (item.danhmuccap1 === sub.danhmuccap1) {
+          arrSub.push(sub);
+        }
       }
+      allCat.tenCap2 = arrSub;
+      category.push(allCat);
     }
-    allCat.tenCap2 = arrSub;
-    category.push(allCat);
   }
-
   res.render("vwShopInfo/shop_detail_for_search", {
     listProductByShopID,
     category,
@@ -979,9 +990,8 @@ router.get('/bills-detail/:id', async function (req, res) {
   }
   listBillDetail.statusChangeName=statusChangeName;
 
-
-  console.log(listBillDetail);
-
+  listBillDetail.getShopIf = getShopIf
+  listBillDetail.authUser = user
   res.render('vwShop/shop_bill_detail',{
     getShopIf,
     listBillDetail,

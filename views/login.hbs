@@ -125,6 +125,12 @@ input[type="submit"]:hover{
     background: #e91e62bd !important;
 }
 
+@media only screen and (max-width:500px){
+    .login{
+        width:100% !important;
+    }
+}
+
 @keyframes rotate-out-right {
   0% {
     transform: rotate(0);
@@ -241,7 +247,7 @@ input[type="submit"]:hover{
                     setTimeout(function(){
                         const url = retUrl || '/';
                         window.location.replace(url);
-                    },750);
+                    },550);
                 }else{
                     if(return_mode === 1){
                         alertify.errorAlert("Sai mật khẩu !!");
