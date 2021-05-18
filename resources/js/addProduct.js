@@ -174,7 +174,16 @@ $(document).ready(function(){
     })
 })
 
+$('#back-to-home').on('click',function(e){
+    e.preventDefault();
+    $.post('/shops/unloadFakeProduct',{},function(data,status){
+        //finished unload fakeProduct
+        setTimeout(function(){window.location.href = "/"},0);
+    })
+})
+
 window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
     if(save === 0){
         $.post('/shops/unloadFakeProduct',{},function(data,status){
             //finished unload fakeProduct
