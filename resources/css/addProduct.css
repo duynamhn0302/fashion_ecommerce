@@ -140,6 +140,10 @@ a.fileinput-upload-button{
     margin-top:6px;
 }
 
+body{
+    min-width:300px;
+}
+
 @media only screen and (max-width:830px){
     .container_income{
         padding-left: 0px;
@@ -147,5 +151,18 @@ a.fileinput-upload-button{
     }
     .sidebar{
         z-index:0;
+    }
+}
+
+@media only screen and (max-width:600px){
+    .add-shop-ttc-name, .add-shop-ttc-category, .add-shop-category-1, .add-shop-category-2,
+    .add-shop-ttc ,.w-50{
+        width:100% !important;
+    }
+    .add-shop-ttc-category{
+        display:block;
+    }
+    .container-combo-box, .w-90{
+        width:96%;
     }
 }
