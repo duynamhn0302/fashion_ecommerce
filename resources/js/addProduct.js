@@ -11,7 +11,7 @@ $.post('/shops/cat-1',function(data,status){
         </div>`)
         }
     }
-    if(cat1Num !== null){
+    if(cat1Num !== 0){
         $('#cat-1-select .item-select-cbx:nth-of-type('+cat1Num+")").click();
         $(`#cat-2-select .item-select-cbx[data-maso="${cat2Num}"]`).click();
     }
@@ -75,6 +75,14 @@ $(document).ready(function(){
         $(this).addClass('active');
     })
 
+    $('#size').on('click','.item-select-cbx',function(){
+        const temp = $(this).parent('div').prev('.combo_box').children('div').children('.selected');
+        temp.text($(this).text());
+        temp.next('i').toggleClass('rotate');
+        $(this).siblings('.active').removeClass('active');
+        $(this).addClass('active');
+    })
+
     function checkVal(){
         if($('#tensanpham').val().length === 0){
             alert('Xin hãy nhập tên sản phẩm');
@@ -92,7 +100,7 @@ $(document).ready(function(){
             alert('Xin hãy nhập nơi sản xuất');
             return false;
         }
-        if($('#kichthuoc').val().length === 0){
+        if($('#kichthuoc').text().length === 0){
             alert('Xin hãy nhập kích thước');
             return false;
         }
@@ -118,27 +126,29 @@ $(document).ready(function(){
     $('#save').on('click',function(e){
         if(!checkVal()) return;
         if(!checkMinimumPhoto()) return;
+        // alert(edit);
         const data = {
             tensanpham: $('#tensanpham').val(),
             danhmuccap2: +$('#span-2').attr('data-maso'),
             noisanxuat: $('#noisanxuat').val(),
-            kichthuoc: $('#kichthuoc').val(),
+            kichthuoc: $('#kichthuoc').text().trim(),
             gioitinhsudung: $('#gioitinhsudung').text().replace(/\s/g, ""),
             mota: editor.getData(),
             giaban: +$('#giaban').val(),
             soluong: +$('#soluong').val()
         }
-        console.log(data);
+        // console.log(data);
         
         if(!edit){       //dang moi san pham
             save = 1; 
             $.post('/shops/add-product',data,function(data,status){
-                alert('Thành công');
+                // alert('Thành công');
                 window.location.replace('/shops/products');
             })
         }else{          //cap nhat san pham
+            save = 1;
             $.post('/shops/edit-product',data,function(data,status){
-                alert('Thành công');
+                // alert('Thành công');
                 window.location.replace('/shops/products');
             })
         }
@@ -148,7 +158,7 @@ $(document).ready(function(){
         e.preventDefault();
         $('#tensanpham').val('')
         $('#noisanxuat').val('')
-        $('#kichthuoc').val('')
+        $('#kichthuoc').text('')
         $('#editor').text('')
         $('#giaban').val('')
         $('#soluong').val('')

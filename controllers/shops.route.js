@@ -866,30 +866,38 @@ router.get('/new', async function (req, res) {
 
 router.post('/cat-1',async function(req,res){
   const names = await productModel.allCategories();
-  var fakedata;
-    req.session.fakeProduct = {   //du lieu gia
-      ten: '',
-      noisx: '',
-      mota:'',
-      kichthuoc:'',
-      gioitinhsudung: true,
-      giaban: 0,
-      soluong: 0,
-      diemdanhgia: 0,
-      luotdanhgia: 0,
-      danhmuccap2: 1,
-      cuahang:1,
-      status:1,
-      ngaymo: null,
-    };
-    fakedata = await productModel.addProduct(req.session.fakeProduct);
+  req.session.fakeProduct = {   //du lieu gia khi add sp
+    ten: '',
+    noisx: '',
+    mota:'',
+    kichthuoc:'',
+    gioitinhsudung: true,
+    giaban: 0,
+    soluong: 0,
+    diemdanhgia: 0,
+    luotdanhgia: 0,
+    danhmuccap2: 1,
+    cuahang:1,
+    status:1,
+    ngaymo: null,
+  };
+  console.log(req.session.edit_product_id);
+  if(typeof(req.session.edit_product_id)==='undefined' || req.session.edit_product_id === null){
+    const fakedata = await productModel.addProduct(req.session.fakeProduct);
     req.session.fakeProduct['maso'] = fakedata.insertId;
+  }else{
+    req.session.fakeProduct['maso'] = +req.session.edit_product_id;
+  }
   res.json(names);
 })
 
 router.post('/unloadFakeProduct',async function(req,res){
-  await productModel.delPic(req.session.fakeProduct.maso);
-  await productModel.delProduct(req.session.fakeProduct.maso);
+  if(typeof(req.session.edit_product_id)==='undefined' || req.session.edit_product_id ===null){
+    await productModel.delPic(req.session.fakeProduct.maso);
+    await productModel.delProduct(req.session.fakeProduct.maso);
+  }else{
+    //do notthing
+  }
   req.session.fakeProduct = null;
   res.json(true);
 })
@@ -1023,7 +1031,9 @@ router.post('/edit-product',auth.authShop,async function(req,res){
     ten: req.body.tensanpham,
     cuahang: req.session.shop.maso,
   }
-  const condition = {maso:req.session.edit_product_id};
+  const condition = {maso: +req.session.edit_product_id};
+  // console.log(new_data);
+  // console.log(condition);
   await productModel.modifyProduct(new_data,condition);
   req.session.edit_product_id = null;
   res.json(true);
