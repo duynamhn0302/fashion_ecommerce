@@ -203,7 +203,7 @@
                                     <tbody>
                                             {{#each this.listSanPham}}
                                             <tr>
-                                                <td class="product_cart_bill">
+                                                <td class="product_cart_bill clickable-row" data-href='/products/{{maso}}'>
                                                     <img src="{{link}}" alt="">
                                                     <div class="ctn-product-properties">
                                                         <div class="name-prod">
@@ -229,6 +229,13 @@
                                             {{#if checkDuocReview}}
                                                 {{#if checkReview}}
                                                 {{else}}
+                                                <script>
+                                                    jQuery(document).ready(function($) {
+                                                        $(".clickable-row").click(function() {
+                                                            window.location = $(this).data("href");
+                                                        });
+                                                    });
+                                                </script>
                                                 <script>
                                                     var myEl_{{maso}} = document.getElementById('click_review_{{{maso}}}');
                                                     var idProduct_{{maso}}= document.getElementById('id_product');
