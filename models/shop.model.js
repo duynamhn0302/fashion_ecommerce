@@ -206,7 +206,7 @@ module.exports = {
                                 SELECT donhang.*, sanpham.cuahang, lichsutinhtrangdon.*
                                 from ((donhang join chitietdonhang on donhang.maso = chitietdonhang.donhang) join sanpham on sanpham.maso = chitietdonhang.sanpham)
                                 join lichsutinhtrangdon on donhang.maso = lichsutinhtrangdon.donhang
-                                WHERE donhang.tinhtrangdon = 3  and lichsutinhtrangdon.ngaythang <= '${date}'
+                                WHERE lichsutinhtrangdon.tinhtrang = 3  and lichsutinhtrangdon.ngaythang <= '${date}'
                                 GROUP BY donhang.maso) spDaBan 
                     where spDaBan.cuahang = ${idShop}
                     GROUP BY spDaBan.cuahang`;
@@ -401,7 +401,7 @@ module.exports = {
                 FROM(
                     SELECT d.maso,d.tonggiatien,l.ngaythang
                     FROM donhang d join lichsutinhtrangdon l on d.maso=l.donhang
-                    WHERE l.tinhtrang=1) as temp join chitietdonhang c on temp.maso=c.donhang) as temp1 join sanpham s on temp1.sanpham=s.maso
+                    WHERE l.tinhtrang=3) as temp join chitietdonhang c on temp.maso=c.donhang) as temp1 join sanpham s on temp1.sanpham=s.maso
             WHERE s.cuahang=${shopID} AND DATEDIFF(temp1.ngaythang,"${dateToday}")<=30
             GROUP BY temp1.maso) as temp2`;
         const [rows,fields] = await db.load(sql);

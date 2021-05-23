@@ -12,7 +12,7 @@ router.post('/check-account',async function(req,res,next){
 
     const user = await userModel.singleByUsername(username);
     // console.log(user);
-    if(user === null){
+    if(user === null || user.status == 0){
         return_mode = 0   //->  tài khoản không hợp lệ, username không tồn tại trong csdl
     }else if(!bcrypt.compareSync(password, user.password)){
         return_mode = 1;    //->    username có tồn tại nhưng sai mật khẩu

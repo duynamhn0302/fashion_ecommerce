@@ -238,8 +238,8 @@ $(document).on("click", ".open-Confirm", function () {
      $(".modal-body #content").text( title + content );
      var type = $(this).data('type');
      if(type === "delProduct")
-        $(".modal-footer #form").attr('action', "/admin/deleteShop");
-    else (type === "delAcc")
+        $(".modal-footer #form").attr('action', "/admin/deleteProduct");
+    else if (type === "delAcc")
         $(".modal-footer #form").attr('action', "/admin/deleteAccount");
      $(".modal-footer #del").attr('value', id);
 ;

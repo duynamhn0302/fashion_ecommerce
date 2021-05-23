@@ -27,7 +27,7 @@
 				</div>
 				<div class="col-lg-6 product-details">
 					<h2 class="p-title">{{product.ten}}</h2>
-					<h3 class="p-price">{{product.giaban}} VND</h3>
+					<h3 class="p-price">{{product.giaban}} </h3>
 					<h4 class="p-stock">Số lượng: <span>{{product.soluong}}</span></h4>
 					
 					<div class="p-rating">
@@ -65,8 +65,8 @@
                     </div>
 					<div style="display: flex;">
 						<a  href="javascript: muaNgay(`#frmAddToCart{{product.maso}}`);" class="site-btn"><span>Mua ngay</span></a>
-						
-							<a   href="javascript: addToCart(`#frmAddToCart{{product.maso}}`);"class="site-btn sb-line sb-dark"><span style="font-size: smaller;">Thêm vào giỏ</span></a>
+						 
+							<a  style="margin-left: 5px;" href="javascript: addToCart(`#frmAddToCart{{product.maso}}`);"class="site-btn sb-line sb-dark"><span style="font-size: smaller;">Thêm vào giỏ</span></a>
 						
 					</div>
 					
@@ -85,7 +85,7 @@
 									<img src="{{shop.avatar}}" alt="avatar" class="image-auth" style="border-radius: 50%; ">
 									<a href="/shop/shops-information/{{shop.maso}}" class="name-user-auth" style="font-weight: bold;max-width:300px;">{{shop.ten}} </a>
 								</div>
-								<div style="margin-left: 60px;">
+								<div style="margin-left: 40px;">
 									<p>Địa chỉ: {{shop.diachi}}</p>
 									<p>Số điện thoại: {{shop.sdt}}</p>
 									<p>Email: {{shop.email}}</p>
@@ -117,7 +117,9 @@
 										<p><img src="{{avatar}}" alt="avatar" class="image-auth"></p>
 										<p class="name-user-auth">{{hoten}}</p>
 									</div>
+									
 									<div class="panel-body" style="margin-left: 30px; ">
+										<span style="font-size: smaller;">{{ngaythang}}</span>
 										<div class="p-rating">
 											{{sosao}}
 											<i class="fa fa-star-o"></i>

@@ -2,7 +2,7 @@ const express = require("express");
 const categoryModel = require("../models/category.model");
 const productsModel = require("../models/products.model");
 const { paginate } = require("./../config/default.json");
-
+const moment = require('moment');
 const router = express.Router();
 //Xem ds tất cả sản phẩm
 router.get("/", async function (req, res) {
@@ -74,7 +74,10 @@ router.get('/:id', async function (req, res, next) {
     images[0].isActive = true;
     const avatar = images[0]
     var relativeProduct = await productsModel.getRelativeProduct(id)
-    const comment = await productsModel.getComment(id)
+    var comment = await productsModel.getComment(id)
+    for(var i = 0; i < comment.length; i++){
+      comment[i].ngaythang = moment(comment[i].ngaythang).format('DD-MM-YYYY')
+    }
     var luotmua = await productsModel.getLuotMua(id)
     const star = productsModel.convertRating(product.diemdanhgia)
     product.giaban = productsModel.formatPrice(product.giaban)
